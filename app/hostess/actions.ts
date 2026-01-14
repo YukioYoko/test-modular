@@ -1,9 +1,10 @@
+// app/hostess/actions.ts
 'use server'
 
-import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
-import { revalidatePath } from 'next/cache' // Importante para refrescar UI
-import { Comandas } from '@/generated/prisma/client';
+import { revalidatePath } from 'next/cache'
+import crypto from 'crypto'
+
 
 export async function getMesas() {
   // Consultamos todas las mesas en la base de datos
@@ -14,6 +15,95 @@ export async function getMesas() {
   });
   return mesas;
 }
+
+export async function juntarMesas(idsMesas: number[]) {
+  try {
+    const sessionToken = crypto.randomUUID();
+    
+    // Usamos el primer ID como referencia para el junta_id_mesa
+    const juntaId = idsMesas[0];
+
+    // 1. Actualizar todas las mesas del grupo
+    await prisma.mesa.updateMany({
+      where: { id_mesa: { in: idsMesas } },
+      data: {
+        estado: 'Ocupada',
+        junta_id_mesa: juntaId // Todas comparten el mismo ID de grupo
+      }
+    });
+
+    // 2. Crear UNA sola comanda para el grupo
+    // Nota: Guardamos el juntaId en id_mesa de la comanda para identificar el grupo
+    await prisma.comandas.create({
+      data: {
+        id_mesa: juntaId,
+        id_mesero: 1,
+        estado: 'Abierta',
+        tocken: sessionToken,
+        fecha_hora: new Date()
+      }
+    });
+
+    revalidatePath('/hostess');
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    // El QR mandará a la mesa principal del grupo
+    const qrUrl = `${baseUrl}/check-in?mesa=${juntaId}&token=${sessionToken}`;
+
+    return { success: true, url: qrUrl };
+  } catch (error) {
+    return { success: false, error: "Error al juntar mesas" };
+  }
+}
+
+export async function verificacion(idMesa: number) {
+  try {
+    // 1. Buscamos la mesa para ver si pertenece a un grupo
+    const mesa = await prisma.mesa.findUnique({ where: { id_mesa: idMesa } });
+    if (!mesa) throw new Error("Mesa no encontrada");
+
+    if (mesa.estado !== 'Libre') return true ;
+    else return false;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function desactivarMesas(idMesa: number) {
+  try {
+    // 1. Buscamos la mesa para ver si pertenece a un grupo
+    const mesa = await prisma.mesa.findUnique({ where: { id_mesa: idMesa } });
+    if (!mesa) throw new Error("Mesa no encontrada");
+
+    // Si tiene junta_id_mesa, liberamos a todas las que tengan ese ID
+    const criteria = mesa.junta_id_mesa 
+      ? { junta_id_mesa: mesa.junta_id_mesa } 
+      : { id_mesa: idMesa };
+
+
+    
+    // 2. Actualizamos la(s) comanda(s) relacionada(s)
+    const idComandaReferencia = mesa.junta_id_mesa || idMesa;
+    await prisma.comandas.updateMany({
+      where: { id_mesa: idComandaReferencia, estado: 'Abierta' },
+      data: { estado: 'Pagada', tocken: null}
+    });
+
+    // 3. Liberamos las mesas
+    await prisma.mesa.updateMany({
+      where: criteria,
+      data: {
+        estado: 'Libre',
+        junta_id_mesa: null // Limpiamos el grupo
+      }
+    });
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: "Error al desactivar" };
+  }
+}
+
 
 export async function activarMesas(idMesa: number) {
   try {
@@ -58,52 +148,5 @@ export async function activarMesas(idMesa: number) {
   } catch (error) {
     console.error("Error al activar mesa:", error);
     return { success: false, error: "No se pudo activar" };
-  }
-}
-
-export async function desactivarMesas(idMesa: number) {
-  try {
-    // 1. Buscar la mesa
-    const table = await prisma.mesa.findUnique({
-      where: { id_mesa: idMesa }
-    });
-
-    if (!table) throw new Error("La mesa no existe");
-
-    // 2. Buscar la comanda abierta para esa mesa
-    const pedido = await prisma.comandas.findFirst({
-      where: {
-        id_mesa: idMesa,
-        estado: 'Abierta'
-      }
-    });
-
-    if (!pedido) throw new Error("No hay una comanda abierta para esta mesa");
-
-    // 3. Actualizar la comanda usando su ID único
-    await prisma.comandas.update({
-      where: { 
-        id_comanda: pedido.id_comanda // Usa el ID único aquí
-      },
-      data: {
-        estado: 'Pagada',
-        tocken: null
-      }
-    });
-
-    // 4. Liberar la mesa
-    await prisma.mesa.update({
-      where: { id_mesa: idMesa },
-      data: { 
-        estado: 'Libre'
-      }
-    });
-    
-    revalidatePath('/hostess');
-
-    return { success: true };
-  } catch (error) {
-    console.error(error);
-    return { success: false , error};
   }
 }

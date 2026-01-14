@@ -8,22 +8,16 @@ export default async function CheckInPage({
 }: { 
   searchParams: Promise<{ mesa?: string, token?: string }> 
 }) {
-  // Esperamos los parámetros antes de usarlos
   const params = await searchParams;
-  
   const idMesa = params.mesa ? parseInt(params.mesa) : null;
   const token = params.token || null;
 
-  // Validación de seguridad: si no hay datos en la URL, redirigir
-  if (!idMesa || !token) {
-    redirect('/acceso-denegado');
-  }
+  if (!idMesa || !token) redirect('/acceso-denegado');
 
-  // 1. Validamos que la mesa esté ocupada y el token coincida
   const comandaActiva = await prisma.comandas.findFirst({
     where: {
       id_mesa: idMesa,
-      tocken: token, // Usamos 'tocken' como está en tu DB
+      tocken: token, 
       estado: 'Abierta'
     }
   });
