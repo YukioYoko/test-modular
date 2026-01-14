@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id             Int      @id @default(autoincrement())
+  usuario        String   @unique
+  email          String   @unique
+  password       String
+  fecha_creacion DateTime @default(now())
+}
+
+model Mesero {
+  id_mesero Int        @id @default(autoincrement())
+  nombre    String?
+  turno     String?
+  comandas  Comandas[]
+
+  @@map("meseros")
+}
+
+model Producto {
+  id_producto Int              @id @default(autoincrement())
+  nombre      String?
+  precio      Decimal          @db.Decimal(10, 2)
+  categoria   String?
+  tiempo_prep Int?
+  pasos       String?
+  detalles    DetalleComanda[]
+  recetas     Receta[]
+
+  @@map("productos")
+}
+
+model Mesa {
+  id_mesa       Int        @id @default(autoincrement())
+  numero_mesa   Int        @unique
+  capacidad     Int?
+  estado        String?
+  junta_id_mesa Int?
+  comandas      Comandas[]
+
+  @@map("mesas")
+}
+
+model Comandas {
+  id_comanda Int              @id @default(autoincrement())
+  id_mesa    Int
+  id_mesero  Int
+  fecha_hora DateTime         @default(now())
+  estado     String?
+  tocken     String?
+  mesa       Mesa             @relation(fields: [id_mesa], references: [id_mesa])
+  mesero     Mesero           @relation(fields: [id_mesero], references: [id_mesero])
+  detalles   DetalleComanda[]
+
+  @@map("comandas")
+}
+
+model DetalleComanda {
+  id_comanda       Int
+  id_producto      Int
+  cantidad         Int      @default(1)
+  notas_especiales String?
+  comanda          Comandas @relation(fields: [id_comanda], references: [id_comanda])
+  producto         Producto @relation(fields: [id_producto], references: [id_producto])
+
+  @@id([id_comanda, id_producto])
+  @@map("detalle_comanda")
+}
+
+model Ingrediente {
+  id_ingrediente Int      @id @default(autoincrement())
+  nombre         String?
+  tipo           String?
+  recetas        Receta[]
+  stocks         Stock[]
+
+  @@map("ingredientes")
+}
+
+model Stock {
+  id_stock       Int         @id @default(autoincrement())
+  id_ingrediente Int
+  marca          Int?
+  cantidad_ml    Float?
+  cantidad_gr    Float?
+  cantidad_pz    Float?
+  ingrediente    Ingrediente @relation(fields: [id_ingrediente], references: [id_ingrediente])
+
+  @@map("stock")
+}
+
+model Receta {
+  id_receta      Int         @id @default(autoincrement())
+  id_producto    Int
+  id_ingrediente Int
+  cantidad       Float?
+  ingrediente    Ingrediente @relation(fields: [id_ingrediente], references: [id_ingrediente])
+  producto       Producto    @relation(fields: [id_producto], references: [id_producto])
+
+  @@map("receta")
+}
