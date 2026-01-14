@@ -19,6 +19,7 @@ model Mesero {
   id_mesero Int        @id @default(autoincrement())
   nombre    String?
   turno     String?
+  
   comandas  Comandas[]
 
   @@map("meseros")
@@ -31,6 +32,7 @@ model Producto {
   categoria   String?
   tiempo_prep Int?
   pasos       String?
+  
   detalles    DetalleComanda[]
   recetas     Receta[]
 
@@ -43,6 +45,7 @@ model Mesa {
   capacidad     Int?
   estado        String?
   junta_id_mesa Int?
+  
   comandas      Comandas[]
 
   @@map("mesas")
@@ -54,7 +57,8 @@ model Comandas {
   id_mesero  Int
   fecha_hora DateTime         @default(now())
   estado     String?
-  tocken     String?
+  token     String?
+  
   mesa       Mesa             @relation(fields: [id_mesa], references: [id_mesa])
   mesero     Mesero           @relation(fields: [id_mesero], references: [id_mesero])
   detalles   DetalleComanda[]
@@ -78,6 +82,7 @@ model Ingrediente {
   id_ingrediente Int      @id @default(autoincrement())
   nombre         String?
   tipo           String?
+  
   recetas        Receta[]
   stocks         Stock[]
 
@@ -91,6 +96,7 @@ model Stock {
   cantidad_ml    Float?
   cantidad_gr    Float?
   cantidad_pz    Float?
+  
   ingrediente    Ingrediente @relation(fields: [id_ingrediente], references: [id_ingrediente])
 
   @@map("stock")
@@ -101,6 +107,7 @@ model Receta {
   id_producto    Int
   id_ingrediente Int
   cantidad       Float?
+  
   ingrediente    Ingrediente @relation(fields: [id_ingrediente], references: [id_ingrediente])
   producto       Producto    @relation(fields: [id_producto], references: [id_producto])
 

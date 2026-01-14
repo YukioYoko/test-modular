@@ -39,7 +39,7 @@ export async function juntarMesas(idsMesas: number[]) {
         id_mesa: juntaId,
         id_mesero: 1,
         estado: 'Abierta',
-        tocken: sessionToken,
+        token: sessionToken,
         fecha_hora: new Date()
       }
     });
@@ -86,7 +86,7 @@ export async function desactivarMesas(idMesa: number) {
     const idComandaReferencia = mesa.junta_id_mesa || idMesa;
     await prisma.comandas.updateMany({
       where: { id_mesa: idComandaReferencia, estado: 'Abierta' },
-      data: { estado: 'Pagada', tocken: null}
+      data: { estado: 'Pagada', token: null}
     });
 
     // 3. Liberamos las mesas
@@ -124,7 +124,7 @@ export async function activarMesas(idMesa: number) {
             id_mesa: idMesa,   
             id_mesero: 1,
             estado: 'Abierta',    
-            tocken: sessionToken,   
+            token: sessionToken,   
         }
     });
 
