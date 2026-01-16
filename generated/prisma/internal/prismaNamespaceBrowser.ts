@@ -56,7 +56,7 @@ export const ModelName = {
   Producto: 'Producto',
   Mesa: 'Mesa',
   Comandas: 'Comandas',
-  DetalleComanda: 'DetalleComanda',
+  detalle_comanda: 'detalle_comanda',
   Ingrediente: 'Ingrediente',
   Stock: 'Stock',
   Receta: 'Receta'
@@ -83,6 +83,7 @@ export const UsuarioScalarFieldEnum = {
   usuario: 'usuario',
   email: 'email',
   password: 'password',
+  rol: 'rol',
   fecha_creacion: 'fecha_creacion'
 } as const
 
@@ -127,20 +128,21 @@ export const ComandasScalarFieldEnum = {
   id_mesero: 'id_mesero',
   fecha_hora: 'fecha_hora',
   estado: 'estado',
-  tocken: 'tocken'
+  token: 'token'
 } as const
 
 export type ComandasScalarFieldEnum = (typeof ComandasScalarFieldEnum)[keyof typeof ComandasScalarFieldEnum]
 
 
-export const DetalleComandaScalarFieldEnum = {
+export const Detalle_comandaScalarFieldEnum = {
   id_comanda: 'id_comanda',
   id_producto: 'id_producto',
   cantidad: 'cantidad',
-  notas_especiales: 'notas_especiales'
+  notas_especiales: 'notas_especiales',
+  status: 'status'
 } as const
 
-export type DetalleComandaScalarFieldEnum = (typeof DetalleComandaScalarFieldEnum)[keyof typeof DetalleComandaScalarFieldEnum]
+export type Detalle_comandaScalarFieldEnum = (typeof Detalle_comandaScalarFieldEnum)[keyof typeof Detalle_comandaScalarFieldEnum]
 
 
 export const IngredienteScalarFieldEnum = {

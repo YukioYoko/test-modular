@@ -107,12 +107,12 @@ export default function HostessClient({ mesasIniciales }: { mesasIniciales: any[
       </div>
 {/* Visualización del QR generado */}
       {urlGenerada && (
-        <div className="mt-8 p-6 bg-white border-2 border-dashed border-gray-300 rounded-xl text-center">
+        <div className="flex flex-col mt-8 p-6 bg-white border-2 border-dashed border-gray-300 rounded-xl text-center">
           <h3 className="font-bold mb-4 text-gray-700">QR para el Cliente:</h3>
           <div className="flex justify-center mb-4">
             <QRCodeSVG value={urlGenerada} size={180} />
           </div>
-          <p className="text-xs text-gray-500 break-all">{urlGenerada}</p>
+          <a href={urlGenerada} target='_blank' className="text-xs text-gray-500 break-all my-4">{urlGenerada}</a>
           <button 
             onClick={() => setUrlGenerada(null)}
             className="mt-4 text-blue-600 font-bold"

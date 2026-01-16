@@ -74,14 +74,14 @@ export async function desactivarMesas(idMesa: number) {
     // 1. Buscamos la mesa para ver si pertenece a un grupo
     const mesa = await prisma.mesa.findUnique({ where: { id_mesa: idMesa } });
     if (!mesa) throw new Error("Mesa no encontrada");
-
+    if(mesa.estado === "Libre") throw new Error("La mesa no esta ocupada");
     // Si tiene junta_id_mesa, liberamos a todas las que tengan ese ID
     const criteria = mesa.junta_id_mesa 
       ? { junta_id_mesa: mesa.junta_id_mesa } 
       : { id_mesa: idMesa };
 
 
-    
+    const comanda = await prisma.comandas.findFirst({ where: { id_mesa: idMesa } });
     // 2. Actualizamos la(s) comanda(s) relacionada(s)
     const idComandaReferencia = mesa.junta_id_mesa || idMesa;
     await prisma.comandas.updateMany({
@@ -98,6 +98,11 @@ export async function desactivarMesas(idMesa: number) {
       }
     });
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
+    revalidatePath('/hostess');
+    revalidatePath(`${baseUrl}/menu=${comanda?.id_comanda}&token=${comanda?.token}`);
+
     return { success: true };
   } catch (error) {
     return { success: false, error: "Error al desactivar" };
@@ -112,9 +117,10 @@ export async function activarMesas(idMesa: number) {
     });
 
     if (!table) throw new Error("La mesa no existe");
-
+    
+    if(table.estado === "Ocupada") throw new Error("La mesa ya esta ocupada");
     const sessionToken = crypto.randomUUID();
-    const date = new Date();
+    
 
     // Actualizar estado de la mesa
     

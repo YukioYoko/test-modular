@@ -43,10 +43,10 @@ export type Mesa = Prisma.MesaModel
  */
 export type Comandas = Prisma.ComandasModel
 /**
- * Model DetalleComanda
+ * Model detalle_comanda
  * 
  */
-export type DetalleComanda = Prisma.DetalleComandaModel
+export type detalle_comanda = Prisma.detalle_comandaModel
 /**
  * Model Ingrediente
  * 

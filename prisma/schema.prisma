@@ -5,13 +5,15 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+                
 }
 
 model Usuario {
-  id             Int      @id @default(autoincrement())
-  usuario        String   @unique
-  email          String   @unique
-  password       String
+  id              Int      @id @default(autoincrement())
+  usuario         String   @unique
+  email           String   @unique
+  password        String
+  rol             String
   fecha_creacion DateTime @default(now())
 }
 
@@ -19,7 +21,6 @@ model Mesero {
   id_mesero Int        @id @default(autoincrement())
   nombre    String?
   turno     String?
-  
   comandas  Comandas[]
 
   @@map("meseros")
@@ -32,21 +33,19 @@ model Producto {
   categoria   String?
   tiempo_prep Int?
   pasos       String?
-  
-  detalles    DetalleComanda[]
+  detalles    detalle_comanda[]
   recetas     Receta[]
 
   @@map("productos")
 }
 
 model Mesa {
-  id_mesa       Int        @id @default(autoincrement())
-  numero_mesa   Int        @unique
-  capacidad     Int?
-  estado        String?
-  junta_id_mesa Int?
-  
-  comandas      Comandas[]
+  id_mesa        Int        @id @default(autoincrement())
+  numero_mesa    Int        @unique
+  capacidad      Int?
+  estado         String?
+  junta_id_mesa  Int?
+  comandas       Comandas[]
 
   @@map("mesas")
 }
@@ -57,20 +56,22 @@ model Comandas {
   id_mesero  Int
   fecha_hora DateTime         @default(now())
   estado     String?
-  token     String?
+  token      String?
   
   mesa       Mesa             @relation(fields: [id_mesa], references: [id_mesa])
   mesero     Mesero           @relation(fields: [id_mesero], references: [id_mesero])
-  detalles   DetalleComanda[]
+  detalles   detalle_comanda[]
 
   @@map("comandas")
 }
 
-model DetalleComanda {
+model detalle_comanda {
   id_comanda       Int
   id_producto      Int
   cantidad         Int      @default(1)
   notas_especiales String?
+  status String
+  
   comanda          Comandas @relation(fields: [id_comanda], references: [id_comanda])
   producto         Producto @relation(fields: [id_producto], references: [id_producto])
 
@@ -82,7 +83,6 @@ model Ingrediente {
   id_ingrediente Int      @id @default(autoincrement())
   nombre         String?
   tipo           String?
-  
   recetas        Receta[]
   stocks         Stock[]
 

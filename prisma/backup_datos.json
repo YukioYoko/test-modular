@@ -1,0 +1,442 @@
+{
+  "productos": [
+    {
+      "id_producto": 1,
+      "nombre": "Pizza Margherita",
+      "precio": "180.5",
+      "categoria": "Pizzas",
+      "tiempo_prep": 20,
+      "pasos": "Extender masa, a¤adir salsa y queso, hornear."
+    },
+    {
+      "id_producto": 2,
+      "nombre": "Hamburguesa Cl sica",
+      "precio": "150",
+      "categoria": "Hamburguesas",
+      "tiempo_prep": 15,
+      "pasos": "Asar carne, montar pan con vegetales."
+    },
+    {
+      "id_producto": 3,
+      "nombre": "Papas Fritas",
+      "precio": "60",
+      "categoria": "Entradas",
+      "tiempo_prep": 8,
+      "pasos": "Fre¡r papas en aceite caliente."
+    },
+    {
+      "id_producto": 4,
+      "nombre": "Ensalada Caesar",
+      "precio": "110",
+      "categoria": "Ensaladas",
+      "tiempo_prep": 10,
+      "pasos": "Mezclar lechuga, aderezo y croutones."
+    },
+    {
+      "id_producto": 5,
+      "nombre": "Pasta Alfredo",
+      "precio": "165",
+      "categoria": "Pastas",
+      "tiempo_prep": 18,
+      "pasos": "Cocer pasta y mezclar con salsa blanca."
+    },
+    {
+      "id_producto": 6,
+      "nombre": "Tacos de Pollo (3pza)",
+      "precio": "95",
+      "categoria": "Antojitos",
+      "tiempo_prep": 12,
+      "pasos": "Guisar pollo y armar tacos."
+    },
+    {
+      "id_producto": 7,
+      "nombre": "Cappuccino",
+      "precio": "55",
+      "categoria": "Bebidas Calientes",
+      "tiempo_prep": 5,
+      "pasos": "Extraer espresso y espumar leche."
+    },
+    {
+      "id_producto": 8,
+      "nombre": "Limonada Natural",
+      "precio": "45",
+      "categoria": "Bebidas Fr¡as",
+      "tiempo_prep": 4,
+      "pasos": "Exprimir limones y mezclar con agua."
+    },
+    {
+      "id_producto": 9,
+      "nombre": "Club Sandwich",
+      "precio": "130",
+      "categoria": "Sandwiches",
+      "tiempo_prep": 12,
+      "pasos": "Tostar pan, armar capas de pollo y jam¢n."
+    },
+    {
+      "id_producto": 10,
+      "nombre": "Sopa de Tomate",
+      "precio": "75",
+      "categoria": "Sopas",
+      "tiempo_prep": 15,
+      "pasos": "Licuar tomates y sazonar."
+    },
+    {
+      "id_producto": 11,
+      "nombre": "Brownie con Helado",
+      "precio": "85",
+      "categoria": "Postres",
+      "tiempo_prep": 5,
+      "pasos": "Calentar brownie y a¤adir bola de helado."
+    },
+    {
+      "id_producto": 12,
+      "nombre": "Lasagna de Res",
+      "precio": "195",
+      "categoria": "Pastas",
+      "tiempo_prep": 25,
+      "pasos": "Armar capas y gratinar en horno."
+    },
+    {
+      "id_producto": 13,
+      "nombre": "Boneless BBQ",
+      "precio": "140",
+      "categoria": "Entradas",
+      "tiempo_prep": 15,
+      "pasos": "Empanizar pollo y ba¤ar en salsa."
+    },
+    {
+      "id_producto": 14,
+      "nombre": "Hot Dog Especial",
+      "precio": "70",
+      "categoria": "Hamburguesas",
+      "tiempo_prep": 10,
+      "pasos": "Calentar pan y salchicha, a¤adir toppings."
+    },
+    {
+      "id_producto": 15,
+      "nombre": "Malteada de Vainilla",
+      "precio": "75",
+      "categoria": "Bebidas Fr¡as",
+      "tiempo_prep": 6,
+      "pasos": "Licuar helado con leche."
+    },
+    {
+      "id_producto": 16,
+      "nombre": "Espresso Doble",
+      "precio": "40",
+      "categoria": "Bebidas Calientes",
+      "tiempo_prep": 3,
+      "pasos": "Extracci¢n directa de m quina."
+    },
+    {
+      "id_producto": 17,
+      "nombre": "Nuggets de Pollo",
+      "precio": "90",
+      "categoria": "Ni¤os",
+      "tiempo_prep": 10,
+      "pasos": "Fre¡r piezas de pollo."
+    },
+    {
+      "id_producto": 18,
+      "nombre": "Enchiladas Verdes",
+      "precio": "125",
+      "categoria": "Antojitos",
+      "tiempo_prep": 20,
+      "pasos": "Rellenar tortillas y ba¤ar en salsa verde."
+    },
+    {
+      "id_producto": 19,
+      "nombre": "Corte New York",
+      "precio": "350",
+      "categoria": "Cortes",
+      "tiempo_prep": 25,
+      "pasos": "Asar al t‚rmino solicitado."
+    },
+    {
+      "id_producto": 20,
+      "nombre": "Cheesecake de Fresa",
+      "precio": "90",
+      "categoria": "Postres",
+      "tiempo_prep": 2,
+      "pasos": "Servir fr¡o con mermelada."
+    }
+  ],
+  "mesas": [
+    {
+      "id_mesa": 1,
+      "numero_mesa": 1,
+      "capacidad": 4,
+      "estado": "Libre",
+      "junta_id_mesa": null
+    },
+    {
+      "id_mesa": 2,
+      "numero_mesa": 2,
+      "capacidad": 2,
+      "estado": "Libre",
+      "junta_id_mesa": null
+    },
+    {
+      "id_mesa": 3,
+      "numero_mesa": 3,
+      "capacidad": 6,
+      "estado": "Libre",
+      "junta_id_mesa": null
+    },
+    {
+      "id_mesa": 4,
+      "numero_mesa": 4,
+      "capacidad": 4,
+      "estado": "Libre",
+      "junta_id_mesa": null
+    },
+    {
+      "id_mesa": 5,
+      "numero_mesa": 5,
+      "capacidad": 2,
+      "estado": "Libre",
+      "junta_id_mesa": null
+    },
+    {
+      "id_mesa": 6,
+      "numero_mesa": 6,
+      "capacidad": 6,
+      "estado": "Libre",
+      "junta_id_mesa": null
+    }
+  ],
+  "ingredientes": [
+    {
+      "id_ingrediente": 1,
+      "nombre": "Harina",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 2,
+      "nombre": "Jitomate",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 3,
+      "nombre": "Queso Mozzarella",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 4,
+      "nombre": "Carne de Res",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 5,
+      "nombre": "Pan de Hamburguesa",
+      "tipo": "Pza"
+    },
+    {
+      "id_ingrediente": 6,
+      "nombre": "Lechuga",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 7,
+      "nombre": "Papas",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 8,
+      "nombre": "Aceite",
+      "tipo": "Ml"
+    },
+    {
+      "id_ingrediente": 9,
+      "nombre": "Pollo",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 10,
+      "nombre": "Pasta",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 11,
+      "nombre": "Caf‚ en grano",
+      "tipo": "Gr"
+    },
+    {
+      "id_ingrediente": 12,
+      "nombre": "Leche",
+      "tipo": "Ml"
+    },
+    {
+      "id_ingrediente": 13,
+      "nombre": "Huevo",
+      "tipo": "Pza"
+    },
+    {
+      "id_ingrediente": 14,
+      "nombre": "Lim¢n",
+      "tipo": "Pza"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "usuario": "Yukio",
+      "email": "1234@gmail.com",
+      "password": "1234",
+      "rol": "hostess",
+      "fecha_creacion": "2026-01-14T23:40:36.950Z"
+    }
+  ],
+  "receta": [
+    {
+      "id_receta": 1,
+      "id_producto": 1,
+      "id_ingrediente": 1,
+      "cantidad": 250
+    },
+    {
+      "id_receta": 2,
+      "id_producto": 1,
+      "id_ingrediente": 2,
+      "cantidad": 100
+    },
+    {
+      "id_receta": 3,
+      "id_producto": 2,
+      "id_ingrediente": 4,
+      "cantidad": 180
+    },
+    {
+      "id_receta": 4,
+      "id_producto": 2,
+      "id_ingrediente": 5,
+      "cantidad": 1
+    },
+    {
+      "id_receta": 5,
+      "id_producto": 7,
+      "id_ingrediente": 11,
+      "cantidad": 18
+    },
+    {
+      "id_receta": 6,
+      "id_producto": 7,
+      "id_ingrediente": 12,
+      "cantidad": 150
+    }
+  ],
+  "stock": [
+    {
+      "id_stock": 1,
+      "id_ingrediente": 1,
+      "marca": 101,
+      "cantidad_ml": null,
+      "cantidad_gr": 10000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 2,
+      "id_ingrediente": 2,
+      "marca": 102,
+      "cantidad_ml": null,
+      "cantidad_gr": 5000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 3,
+      "id_ingrediente": 3,
+      "marca": 103,
+      "cantidad_ml": null,
+      "cantidad_gr": 3000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 4,
+      "id_ingrediente": 4,
+      "marca": 104,
+      "cantidad_ml": null,
+      "cantidad_gr": 8000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 5,
+      "id_ingrediente": 5,
+      "marca": 105,
+      "cantidad_ml": null,
+      "cantidad_gr": null,
+      "cantidad_pz": 100
+    },
+    {
+      "id_stock": 6,
+      "id_ingrediente": 6,
+      "marca": 102,
+      "cantidad_ml": null,
+      "cantidad_gr": 2000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 7,
+      "id_ingrediente": 7,
+      "marca": 102,
+      "cantidad_ml": null,
+      "cantidad_gr": 15000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 8,
+      "id_ingrediente": 8,
+      "marca": 106,
+      "cantidad_ml": 5000,
+      "cantidad_gr": null,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 9,
+      "id_ingrediente": 9,
+      "marca": 104,
+      "cantidad_ml": null,
+      "cantidad_gr": 6000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 10,
+      "id_ingrediente": 10,
+      "marca": 101,
+      "cantidad_ml": null,
+      "cantidad_gr": 4000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 11,
+      "id_ingrediente": 11,
+      "marca": 107,
+      "cantidad_ml": null,
+      "cantidad_gr": 2000,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 12,
+      "id_ingrediente": 12,
+      "marca": 108,
+      "cantidad_ml": 10000,
+      "cantidad_gr": null,
+      "cantidad_pz": null
+    },
+    {
+      "id_stock": 13,
+      "id_ingrediente": 13,
+      "marca": 109,
+      "cantidad_ml": null,
+      "cantidad_gr": null,
+      "cantidad_pz": 180
+    },
+    {
+      "id_stock": 14,
+      "id_ingrediente": 14,
+      "marca": 102,
+      "cantidad_ml": null,
+      "cantidad_gr": null,
+      "cantidad_pz": 60
+    }
+  ]
+}

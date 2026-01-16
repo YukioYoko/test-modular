@@ -2,7 +2,6 @@
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 
-
 export default async function CheckInPage({ 
   searchParams 
 }: { 
@@ -17,7 +16,7 @@ export default async function CheckInPage({
   const comandaActiva = await prisma.comandas.findFirst({
     where: {
       id_mesa: idMesa,
-      tocken: token, 
+      token: token, 
       estado: 'Abierta'
     }
   });
