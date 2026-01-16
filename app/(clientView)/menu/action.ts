@@ -1,52 +1,42 @@
-'use server'
-
-import { prisma } from '@/lib/prisma'
-import { revalidatePath } from 'next/cache'
-
+// action.ts
 export async function sendOrder(idComanda: number, carrito: any[], token: string | null) {
   try {
     const comanda = await prisma.comandas.findFirst({
-      where: {
-        id_comanda: idComanda,
-        token: token,
-        estado: 'Abierta' 
-      }
+      where: { id_comanda: idComanda, token: token, estado: 'Abierta' }
     });
 
-    if (!comanda) {
-      return { error: "La comanda no es válida o ya está cerrada" };
-    }
+    if (!comanda) return { error: "Sesión expirada" };
 
-    // 2. Usar una Transacción de Prisma
-    // No uses .map() con await directamente; Promise.all o $transaction es lo correcto.
-    await prisma.$transaction(
-      carrito.map((item) =>
-        prisma.detalle_comanda.upsert({
-          where: {
-            id_comanda_id_producto: {
-              id_comanda: idComanda,
-              id_producto: item.prod,
-            },
-          },
-          update: {
-            cantidad: { increment: item.cantidad }, // Si el mesero agrega más después
-          },
-          create: {
+    await prisma.$transaction(async (tx) => {
+      for (const item of carrito) {
+        // 1. Creamos el detalle del producto
+        const nuevoDetalle = await tx.detalleComanda.create({
+          data: {
             id_comanda: idComanda,
             id_producto: item.prod,
             cantidad: item.cantidad,
-            notas_especiales: item.notas || "",
-            status:"En preparacion"
-          },
-        })
-      )
-    );
+            notas_especiales: item.nota,
+            status: "En espera"
+          }
+        });
+
+        // 2. Si el item tiene aditamentos, los guardamos vinculados al id_detalle
+        if (item.aditamentos && item.aditamentos.length > 0) {
+          await tx.comandaAditamentos.createMany({
+            data: item.aditamentos.map((idAdi: number) => ({
+              id_detalle: nuevoDetalle.id_detalle,
+              id_aditamento: idAdi,
+              confirmacion: true
+            }))
+          });
+        }
+      }
+    });
 
     revalidatePath('/menu');
+    revalidatePath('/pedido');
     return { success: true };
-
   } catch (e) {
-    console.error("Error en sendOrder:", e);
-    return { error: "Error interno al procesar el pedido" };
+    return { error: "Error al guardar el pedido" };
   }
 }

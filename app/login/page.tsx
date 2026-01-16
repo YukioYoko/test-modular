@@ -1,77 +1,81 @@
 'use client';
 
-import { useState } from 'react';
-import { loginUsuario } from './actions'; // Importamos la lógica del servidor
+import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+import { loginUsuario } from './actions';
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition(); // Mejor que un state manual
+  const router = useRouter();
 
-  async function handleSubmit(formData: FormData) {
-    setLoading(true);
+  async function clientAction(formData: FormData) {
     setError(null);
-    const datosFormulario = Object.fromEntries(formData.entries());
-  console.log("Datos enviados:", datosFormulario);
-    const resultado = await loginUsuario(formData);
 
-    if (resultado?.error) {
-      setError(resultado.error);
-      setLoading(false);
-      
-    } else {
-      // Si el login es exitoso, redirigimos al dashboard de la veterinaria
-      window.location.href = '/hostess';
-    }
+    startTransition(async () => {
+      const resultado = await loginUsuario(formData);
+
+      if (resultado?.error) {
+        setError(resultado.error);
+      } else if (resultado?.success) {
+        // Redirección basada en el rol si es necesario
+        router.push('/hostess');
+        router.refresh(); // Limpia el cache de la ruta
+      }
+    });
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800">
-          Sistema Veterinaria - Login
-        </h1>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50">
+      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-slate-100">
+        <header className="mb-8 text-center">
+          <h1 className="text-3xl font-extrabold text-slate-900">Restaurante POS</h1>
+          <p className="text-slate-500 mt-2">Inicia sesión para acceder al sistema</p>
+        </header>
         
-        <form action={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+        <form action={clientAction} className="space-y-5">
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-700 ml-1">Correo Electrónico</label>
             <input
               name="email"
               type="email"
               required
-              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
-              placeholder="correo@ejemplo.com"
+              placeholder="chef@restaurante.com"
+              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all text-slate-800"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Contraseña</label>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-700 ml-1">Contraseña</label>
             <input
               name="password"
               type="password"
               required
-              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
               placeholder="••••••••"
+              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all text-slate-800"
             />
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 p-2 rounded">
+            <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg animate-pulse">
               {error}
-            </p>
+            </div>
           )}
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full py-2 px-4 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
+            disabled={isPending}
+            className="w-full py-3 px-4 font-bold text-white bg-orange-600 rounded-lg hover:bg-orange-700 active:scale-[0.98] disabled:bg-orange-300 transition-all shadow-lg shadow-orange-200"
           >
-            {loading ? 'Verificando...' : 'Iniciar Sesión'}
+            {isPending ? 'Verificando...' : 'Entrar al Sistema'}
           </button>
         </form>
 
-        <p className="text-xs text-center text-gray-500">
-          Acceso exclusivo para personal de la clínica
-        </p>
+        <footer className="mt-8 pt-6 border-t border-slate-100 text-center">
+          <p className="text-xs text-slate-400">
+            &copy; 2026 Restaurante Management System
+          </p>
+        </footer>
       </div>
     </div>
   );

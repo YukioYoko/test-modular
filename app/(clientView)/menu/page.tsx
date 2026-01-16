@@ -16,16 +16,28 @@ export default async function MenuPage({ searchParams }: { searchParams: Promise
 
   if (!valido || valido.token !== token) redirect('/login');
 
-  // 2. Obtención de productos
-  const productosRaw = await prisma.producto.findMany({
-    orderBy: { categoria: 'asc' }
-  });
+  // 2. Obtención de productos con sus aditamentos permitidos
+const productosRaw = await prisma.producto.findMany({
+  include: {
+    aditamentos: {
+      include: {
+        aditamento: true // Traemos el nombre y precio del aditamento
+      }
+    }
+  },
+  orderBy: { categoria: 'asc' }
+});
 
-  // 3. TRANSFORMACIÓN CRÍTICA: Convertir Decimal a Number
-  const productos = productosRaw.map(p => ({
-    ...p,
-    precio: Number(p.precio) // Esto soluciona el error de "Decimal objects are not supported"
-  }));
+const productos = productosRaw.map(p => ({
+  ...p,
+  precio: Number(p.precio),
+  // Simplificamos la estructura para el cliente
+  opcionesAditamentos: p.aditamentos.map(a => ({
+    id: a.aditamento.id_aditamento,
+    nombre: a.aditamento.nombre,
+    precio: a.aditamento.precio
+  }))
+}));
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
