@@ -1,11 +1,15 @@
 Npm install
 
-Crean en pgAdmin la base llamada modular, y crean el archivo .env, agregan DATABASE_URL="postgresql://User:Contra@localhost:5432/Modular"
+Crean en pgAdmin la base llamada modular, y crean el archivo .env, agregan 
+DATABASE_URL="postgresql://User:Contra@localhost:5432/Modular"
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anon-publica
 
 Una vez creado ejecutan los siguientes comandos
 
 npx prisma db push
 npx prisma generate
+npm install @supabase/supabase-js
 
 Ya que lo generaron inserten los registros, estan en un json en la carpeta de prisma (pidanselo a chatgpt que les genere el insert)
 
