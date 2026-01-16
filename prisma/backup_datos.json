@@ -201,7 +201,7 @@
       "id_mesa": 6,
       "numero_mesa": 6,
       "capacidad": 6,
-      "estado": "Libre",
+      "estado": "Ocupada",
       "junta_id_mesa": null
     }
   ],
