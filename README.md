@@ -6,6 +6,7 @@ Una vez creado ejecutan los siguientes comandos
 
 npx prisma db push
 npx prisma generate
+npm install @supabase/supabase-js
 
 Ya que lo generaron inserten los registros, estan en un json en la carpeta de prisma (pidanselo a chatgpt que les genere el insert)
 
