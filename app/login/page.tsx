@@ -19,7 +19,12 @@ export default function LoginPage() {
         setError(resultado.error);
       } else if (resultado?.success) {
         // Redirección basada en el rol si es necesario
-        router.push('/hostess');
+        if(resultado.rol === "Hostess")
+          router.push('/hostess');
+        if (resultado.rol === "Admin")
+          router.push('/admin')
+        if(resultado.rol === "Cocina")
+          router.push('/cocina')
         router.refresh(); // Limpia el cache de la ruta
       }
     });
