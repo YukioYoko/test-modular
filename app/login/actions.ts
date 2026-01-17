@@ -1,38 +1,55 @@
 'use server'
 
-import {prisma} from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
+import { cookies } from 'next/headers'
+// Nota: En producción, usa una librería como 'jose' para firmar JWTs
+// o simplemente delega esto a NextAuth.js para máxima seguridad.
 
 export async function loginUsuario(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
+  // 1. Validación básica de entrada
+  if (!email || !password) {
+    return { error: 'Por favor, rellena todos los campos' }
+  }
+
   try {
-    console.log(email, password);
-    // 1. Buscar al usuario en la base de datos "Veterinaria"
+    // 2. Buscar usuario con selección específica (no traer password si no es necesario)
     const usuario = await prisma.usuario.findUnique({
-      where: { email: email },
+      where: { email: email.toLowerCase() },
     })
 
     if (!usuario) {
       return { error: 'Credenciales inválidas' }
     }
 
-    // 2. Comparar el hash de la contraseña
-    // Recuerda que al registrar usuarios debes usar bcrypt.hash()
-    //const esValida = await bcrypt.compare(password, usuario.password)
+    // 3. Comparar Hash (¡Crucial para producción!)
+    // Asumiendo que al crear el usuario usaste bcrypt.hash(password, 10)
+    const esValida = await bcrypt.compare(password, usuario.password)
 
-    //if (!esValida) {
-    if (password !== usuario.password){
+    if (!esValida) {
       return { error: 'Credenciales inválidas' }
     }
 
-    // 3. Login exitoso
-    // Aquí es donde normalmente configurarías una cookie o JWT
-    return { success: true }
+    // 4. Gestión de Sesión (Ejemplo simplificado con cookies)
+    // En un entorno real, aquí generarías un token JWT firmado
+    const cookieStore = await cookies()
+    cookieStore.set('session_user', JSON.stringify({ 
+      id: usuario.id, 
+      rol: usuario.rol 
+    }), {
+      httpOnly: true, // Protege contra ataques XSS
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24, // 1 día
+      path: '/hostess',
+    })
+
+    return { success: true, rol: usuario.rol }
 
   } catch (err) {
-    console.error(err)
-    return { error: 'Error de conexión con el servidor' }
+    console.error("Login Error:", err)
+    return { error: 'Error interno del servidor' }
   }
 }

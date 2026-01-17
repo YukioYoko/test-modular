@@ -389,7 +389,7 @@ export const ModelName = {
   Producto: 'Producto',
   Mesa: 'Mesa',
   Comandas: 'Comandas',
-  DetalleComanda: 'DetalleComanda',
+  detalle_comanda: 'detalle_comanda',
   Ingrediente: 'Ingrediente',
   Stock: 'Stock',
   Receta: 'Receta'
@@ -408,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "mesero" | "producto" | "mesa" | "comandas" | "detalleComanda" | "ingrediente" | "stock" | "receta"
+    modelProps: "usuario" | "mesero" | "producto" | "mesa" | "comandas" | "detalle_comanda" | "ingrediente" | "stock" | "receta"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -782,77 +782,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    DetalleComanda: {
-      payload: Prisma.$DetalleComandaPayload<ExtArgs>
-      fields: Prisma.DetalleComandaFieldRefs
+    detalle_comanda: {
+      payload: Prisma.$detalle_comandaPayload<ExtArgs>
+      fields: Prisma.detalle_comandaFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.DetalleComandaFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload> | null
+          args: Prisma.detalle_comandaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.DetalleComandaFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>
+          args: Prisma.detalle_comandaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>
         }
         findFirst: {
-          args: Prisma.DetalleComandaFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload> | null
+          args: Prisma.detalle_comandaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.DetalleComandaFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>
+          args: Prisma.detalle_comandaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>
         }
         findMany: {
-          args: Prisma.DetalleComandaFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>[]
+          args: Prisma.detalle_comandaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>[]
         }
         create: {
-          args: Prisma.DetalleComandaCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>
+          args: Prisma.detalle_comandaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>
         }
         createMany: {
-          args: Prisma.DetalleComandaCreateManyArgs<ExtArgs>
+          args: Prisma.detalle_comandaCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.DetalleComandaCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>[]
+          args: Prisma.detalle_comandaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>[]
         }
         delete: {
-          args: Prisma.DetalleComandaDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>
+          args: Prisma.detalle_comandaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>
         }
         update: {
-          args: Prisma.DetalleComandaUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>
+          args: Prisma.detalle_comandaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>
         }
         deleteMany: {
-          args: Prisma.DetalleComandaDeleteManyArgs<ExtArgs>
+          args: Prisma.detalle_comandaDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.DetalleComandaUpdateManyArgs<ExtArgs>
+          args: Prisma.detalle_comandaUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.DetalleComandaUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>[]
+          args: Prisma.detalle_comandaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>[]
         }
         upsert: {
-          args: Prisma.DetalleComandaUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleComandaPayload>
+          args: Prisma.detalle_comandaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$detalle_comandaPayload>
         }
         aggregate: {
-          args: Prisma.DetalleComandaAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDetalleComanda>
+          args: Prisma.Detalle_comandaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDetalle_comanda>
         }
         groupBy: {
-          args: Prisma.DetalleComandaGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DetalleComandaGroupByOutputType>[]
+          args: Prisma.detalle_comandaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Detalle_comandaGroupByOutputType>[]
         }
         count: {
-          args: Prisma.DetalleComandaCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DetalleComandaCountAggregateOutputType> | number
+          args: Prisma.detalle_comandaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Detalle_comandaCountAggregateOutputType> | number
         }
       }
     }
@@ -1122,6 +1122,7 @@ export const UsuarioScalarFieldEnum = {
   usuario: 'usuario',
   email: 'email',
   password: 'password',
+  rol: 'rol',
   fecha_creacion: 'fecha_creacion'
 } as const
 
@@ -1172,14 +1173,15 @@ export const ComandasScalarFieldEnum = {
 export type ComandasScalarFieldEnum = (typeof ComandasScalarFieldEnum)[keyof typeof ComandasScalarFieldEnum]
 
 
-export const DetalleComandaScalarFieldEnum = {
+export const Detalle_comandaScalarFieldEnum = {
   id_comanda: 'id_comanda',
   id_producto: 'id_producto',
   cantidad: 'cantidad',
-  notas_especiales: 'notas_especiales'
+  notas_especiales: 'notas_especiales',
+  status: 'status'
 } as const
 
-export type DetalleComandaScalarFieldEnum = (typeof DetalleComandaScalarFieldEnum)[keyof typeof DetalleComandaScalarFieldEnum]
+export type Detalle_comandaScalarFieldEnum = (typeof Detalle_comandaScalarFieldEnum)[keyof typeof Detalle_comandaScalarFieldEnum]
 
 
 export const IngredienteScalarFieldEnum = {
@@ -1412,7 +1414,7 @@ export type GlobalOmitConfig = {
   producto?: Prisma.ProductoOmit
   mesa?: Prisma.MesaOmit
   comandas?: Prisma.ComandasOmit
-  detalleComanda?: Prisma.DetalleComandaOmit
+  detalle_comanda?: Prisma.detalle_comandaOmit
   ingrediente?: Prisma.IngredienteOmit
   stock?: Prisma.StockOmit
   receta?: Prisma.RecetaOmit

@@ -232,7 +232,7 @@ export type ProductoWhereInput = {
   categoria?: Prisma.StringNullableFilter<"Producto"> | string | null
   tiempo_prep?: Prisma.IntNullableFilter<"Producto"> | number | null
   pasos?: Prisma.StringNullableFilter<"Producto"> | string | null
-  detalles?: Prisma.DetalleComandaListRelationFilter
+  detalles?: Prisma.Detalle_comandaListRelationFilter
   recetas?: Prisma.RecetaListRelationFilter
 }
 
@@ -243,7 +243,7 @@ export type ProductoOrderByWithRelationInput = {
   categoria?: Prisma.SortOrderInput | Prisma.SortOrder
   tiempo_prep?: Prisma.SortOrderInput | Prisma.SortOrder
   pasos?: Prisma.SortOrderInput | Prisma.SortOrder
-  detalles?: Prisma.DetalleComandaOrderByRelationAggregateInput
+  detalles?: Prisma.detalle_comandaOrderByRelationAggregateInput
   recetas?: Prisma.RecetaOrderByRelationAggregateInput
 }
 
@@ -257,7 +257,7 @@ export type ProductoWhereUniqueInput = Prisma.AtLeast<{
   categoria?: Prisma.StringNullableFilter<"Producto"> | string | null
   tiempo_prep?: Prisma.IntNullableFilter<"Producto"> | number | null
   pasos?: Prisma.StringNullableFilter<"Producto"> | string | null
-  detalles?: Prisma.DetalleComandaListRelationFilter
+  detalles?: Prisma.Detalle_comandaListRelationFilter
   recetas?: Prisma.RecetaListRelationFilter
 }, "id_producto">
 
@@ -293,7 +293,7 @@ export type ProductoCreateInput = {
   categoria?: string | null
   tiempo_prep?: number | null
   pasos?: string | null
-  detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
+  detalles?: Prisma.detalle_comandaCreateNestedManyWithoutProductoInput
   recetas?: Prisma.RecetaCreateNestedManyWithoutProductoInput
 }
 
@@ -304,7 +304,7 @@ export type ProductoUncheckedCreateInput = {
   categoria?: string | null
   tiempo_prep?: number | null
   pasos?: string | null
-  detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+  detalles?: Prisma.detalle_comandaUncheckedCreateNestedManyWithoutProductoInput
   recetas?: Prisma.RecetaUncheckedCreateNestedManyWithoutProductoInput
 }
 
@@ -314,7 +314,7 @@ export type ProductoUpdateInput = {
   categoria?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiempo_prep?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
+  detalles?: Prisma.detalle_comandaUpdateManyWithoutProductoNestedInput
   recetas?: Prisma.RecetaUpdateManyWithoutProductoNestedInput
 }
 
@@ -325,7 +325,7 @@ export type ProductoUncheckedUpdateInput = {
   categoria?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiempo_prep?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+  detalles?: Prisma.detalle_comandaUncheckedUpdateManyWithoutProductoNestedInput
   recetas?: Prisma.RecetaUncheckedUpdateManyWithoutProductoNestedInput
 }
 
@@ -503,7 +503,7 @@ export type ProductoCreateWithoutRecetasInput = {
   categoria?: string | null
   tiempo_prep?: number | null
   pasos?: string | null
-  detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
+  detalles?: Prisma.detalle_comandaCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateWithoutRecetasInput = {
@@ -513,7 +513,7 @@ export type ProductoUncheckedCreateWithoutRecetasInput = {
   categoria?: string | null
   tiempo_prep?: number | null
   pasos?: string | null
-  detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+  detalles?: Prisma.detalle_comandaUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoCreateOrConnectWithoutRecetasInput = {
@@ -538,7 +538,7 @@ export type ProductoUpdateWithoutRecetasInput = {
   categoria?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiempo_prep?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
+  detalles?: Prisma.detalle_comandaUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateWithoutRecetasInput = {
@@ -548,7 +548,7 @@ export type ProductoUncheckedUpdateWithoutRecetasInput = {
   categoria?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiempo_prep?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+  detalles?: Prisma.detalle_comandaUncheckedUpdateManyWithoutProductoNestedInput
 }
 
 
@@ -580,7 +580,7 @@ export type ProductoCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
  * ProductoCountOutputType without action
  */
 export type ProductoCountOutputTypeCountDetallesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DetalleComandaWhereInput
+  where?: Prisma.detalle_comandaWhereInput
 }
 
 /**
@@ -642,7 +642,7 @@ export type ProductoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $ProductoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Producto"
   objects: {
-    detalles: Prisma.$DetalleComandaPayload<ExtArgs>[]
+    detalles: Prisma.$detalle_comandaPayload<ExtArgs>[]
     recetas: Prisma.$RecetaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1046,7 +1046,7 @@ readonly fields: ProductoFieldRefs;
  */
 export interface Prisma__ProductoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  detalles<T extends Prisma.Producto$detallesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetalleComandaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  detalles<T extends Prisma.Producto$detallesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$detalle_comandaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recetas<T extends Prisma.Producto$recetasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$recetasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecetaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1475,23 +1475,23 @@ export type ProductoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
  */
 export type Producto$detallesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DetalleComanda
+   * Select specific fields to fetch from the detalle_comanda
    */
-  select?: Prisma.DetalleComandaSelect<ExtArgs> | null
+  select?: Prisma.detalle_comandaSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DetalleComanda
+   * Omit specific fields from the detalle_comanda
    */
-  omit?: Prisma.DetalleComandaOmit<ExtArgs> | null
+  omit?: Prisma.detalle_comandaOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DetalleComandaInclude<ExtArgs> | null
-  where?: Prisma.DetalleComandaWhereInput
-  orderBy?: Prisma.DetalleComandaOrderByWithRelationInput | Prisma.DetalleComandaOrderByWithRelationInput[]
-  cursor?: Prisma.DetalleComandaWhereUniqueInput
+  include?: Prisma.detalle_comandaInclude<ExtArgs> | null
+  where?: Prisma.detalle_comandaWhereInput
+  orderBy?: Prisma.detalle_comandaOrderByWithRelationInput | Prisma.detalle_comandaOrderByWithRelationInput[]
+  cursor?: Prisma.detalle_comandaWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DetalleComandaScalarFieldEnum | Prisma.DetalleComandaScalarFieldEnum[]
+  distinct?: Prisma.Detalle_comandaScalarFieldEnum | Prisma.Detalle_comandaScalarFieldEnum[]
 }
 
 /**
