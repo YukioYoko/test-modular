@@ -3,29 +3,37 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useTransition } from 'react';
-import { actualizarEstatusPedido } from './actions';
+import { actualizarEstatusPedido } from './action';
 
 export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: any[] }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Escuchar cambios en la tabla detalle_comanda
-    const channel = supabase
-      .channel('cambios-cocina')
-      .on(
-        'postgres_changes',
-        { event: '*', table: 'detalle_comanda' },
-        () => {
-          // Refrescamos los Server Components sin perder el estado del cliente
-          router.refresh(); 
-        }
-      )
-      .subscribe();
+  const channel = supabase
+    .channel('cambios-cocina')
+    .on(
+      'postgres_changes' as any, // Forzamos el tipo si TS da problemas
+      { 
+        event: '*', 
+        schema: 'public', 
+        table: 'detalle_comanda' 
+      },
+      (payload) => {
+        console.log('Cambio detectado:', payload);
+        // router.refresh() pide a Next.js que vuelva a ejecutar getPedidosCocina()
+        startTransition(() => {
+          router.refresh();
+        });
+      }
+    )
+    .subscribe((status) => {
+      console.log("Estado de suscripción:", status);
+    });
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [router]);
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}, [router]);
    
   const [isPending, startTransition] = useTransition();
 
@@ -48,7 +56,10 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
               <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-bold">
                 MESA {pedido.comanda.id_mesa}
               </span>
-              <span className="text-[10px] font-mono text-slate-400">
+              <span 
+                className="text-[10px] font-mono text-slate-400" 
+                suppressHydrationWarning // <--- Esto silencia el error de diferencia servidor/cliente
+              >
                 {new Date(pedido.comanda.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             </div>

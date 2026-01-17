@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import LoadingScreen from '@/components/LoadingScreen';
+import {LoadingScreen} from '@/components';
 
 export default function HomePage() {
   const router = useRouter();
