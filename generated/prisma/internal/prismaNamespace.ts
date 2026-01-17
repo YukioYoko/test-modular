@@ -1166,7 +1166,7 @@ export const ComandasScalarFieldEnum = {
   id_mesero: 'id_mesero',
   fecha_hora: 'fecha_hora',
   estado: 'estado',
-  tocken: 'tocken'
+  token: 'token'
 } as const
 
 export type ComandasScalarFieldEnum = (typeof ComandasScalarFieldEnum)[keyof typeof ComandasScalarFieldEnum]
