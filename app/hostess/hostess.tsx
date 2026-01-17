@@ -101,6 +101,7 @@ export default function HostessClient({ mesasIniciales }: { mesasIniciales: Mesa
             <div className="bg-slate-50 p-6 rounded-2xl flex justify-center mb-6">
               <QRCodeSVG value={urlQR} size={200} />
             </div>
+            <a href={urlQR} target='_blank' className='text-black'>{urlQR}</a>
             <button 
               onClick={() => setUrlQR(null)}
               className="w-full py-4 bg-slate-100 text-slate-800 rounded-xl font-bold hover:bg-slate-200 transition-all"

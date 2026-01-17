@@ -1,7 +1,7 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function LoadingScreen({ isLoading }: { isLoading: boolean }) {
+export const LoadingScreen = ({ isLoading }: { isLoading: boolean }) => {
   return (
     <AnimatePresence>
       {isLoading && (

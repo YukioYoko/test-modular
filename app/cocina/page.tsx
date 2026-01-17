@@ -1,4 +1,4 @@
-import { getPedidosCocina } from './actions';
+import { getPedidosCocina } from './action';
 import CocinaClient from './CocinaClient';
 
 export default async function CocinaPage() {

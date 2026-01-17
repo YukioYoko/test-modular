@@ -19,6 +19,13 @@ export async function gestionarMesas(idsMesas: number[], operacion: 'activar' | 
     const idReferencia = idsMesas[0];
 
     const resultado = await prisma.$transaction(async (tx) => {
+      const veri = await tx.comandas.findFirst({
+        where:{
+          id_mesa: idReferencia,
+          estado: 'Abierta'
+        }
+      })
+      if (veri) return veri.token
       // 1. Actualizar mesas
       await tx.mesa.updateMany({
         where: { id_mesa: { in: idsMesas } },
@@ -40,7 +47,14 @@ export async function gestionarMesas(idsMesas: number[], operacion: 'activar' | 
 
       return comanda;
     });
-
+    
+    if(typeof(resultado) === 'string' ) {
+      revalidatePath('/hostess');
+      return { 
+      success: true, 
+      url: `${BASE_URL}/check-in?mesa=${idReferencia}&token=${resultado}` 
+    };
+    }
     revalidatePath('/hostess');
     
     return { 
@@ -49,7 +63,7 @@ export async function gestionarMesas(idsMesas: number[], operacion: 'activar' | 
     };
   } catch (error) {
     console.error("Error en gestión de mesas:", error);
-    return { success: false, error: "No se pudo procesar la solicitud" };
+    return { success: false, error: "No se pudo procesar la solicitud", url: "" };
   }
 }
 
@@ -78,6 +92,6 @@ export async function liberarMesas(idMesa: number) {
     revalidatePath('/hostess');
     return { success: true };
   } catch (error) {
-    return { success: false, error: "Error al liberar mesa" };
+    return { success: false, error: "Error al liberar mesa", url:""};
   }
 }

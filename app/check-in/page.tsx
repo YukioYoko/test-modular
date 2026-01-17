@@ -14,15 +14,18 @@ export default async function CheckInPage({ searchParams }: PageProps) {
   const idMesa = params.mesa ? parseInt(params.mesa) : null;
   const token = params.token || null;
 
-  if (!idMesa || isNaN(idMesa) || !token) {
+  if (!idMesa || !token) {
     console.error("Acceso inválido: Parámetros faltantes o malformados");
     redirect('/acceso-denegado');
   }
 
+  // Declaramos la variable fuera para que sea accesible tras el bloque try/catch
+  let comandaActiva = null;
+  let errorOcurrido = false;
+
   try {
     // 2. Verificación de Comanda Activa
-    // Buscamos la comanda que coincida con la mesa y el token de sesión único
-    const comandaActiva = await prisma.comandas.findFirst({
+    comandaActiva = await prisma.comandas.findFirst({
       where: {
         id_mesa: idMesa,
         token: token,
@@ -31,26 +34,30 @@ export default async function CheckInPage({ searchParams }: PageProps) {
       select: {
         id_comanda: true,
         token: true
-        // Solo traemos lo necesario para optimizar la consulta
       }
     });
-
-    // 3. Redirección lógica
-    if (comandaActiva) {
-      // Usamos URLSearchParams para construir una URL segura y limpia
-      const destination = new URLSearchParams({
-        comanda: comandaActiva.id_comanda.toString(),
-        token: comandaActiva.token || ''
-      });
-      
-      redirect(`/menu?${destination.toString()}`);
-    } else {
-      // Si la comanda ya se cerró o el token expiró/es falso
-      redirect('/acceso-denegado?reason=expired');
-    }
-    
   } catch (error) {
     console.error("Database error durante check-in:", error);
+    errorOcurrido = true;
+  }
+
+  // 3. Manejo de Redirecciones (FUERA del bloque try/catch)
+  
+  // Si hubo un error de base de datos, redirigimos a una página de error genérica
+  if (errorOcurrido) {
     redirect('/error-sistema');
+  }
+
+  if (comandaActiva) {
+    // Usamos URLSearchParams para construir una URL segura y limpia
+    const destination = new URLSearchParams({
+      comanda: comandaActiva.id_comanda.toString(),
+      token: comandaActiva.token || ''
+    });
+
+    redirect(`/menu?${destination.toString()}`);
+  } else {
+    // Si la comanda no existe, está cerrada o el token es inválido
+    redirect('/acceso-denegado');
   }
 }

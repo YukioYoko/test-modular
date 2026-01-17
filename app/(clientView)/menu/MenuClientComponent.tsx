@@ -98,14 +98,27 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
       {/* Botón enviar (igual que el anterior, manejando el carrito con aditamentos) */}
       {carrito.length > 0 && (
         <div className="fixed bottom-24 left-1/2 -translate-x-1/2 w-[90%] max-w-md">
-           <button onClick={() => startTransition(() => sendOrder(idComanda, carrito, token))} 
-            disabled={isPending}
-            className="w-full bg-slate-900 text-white p-5 rounded-2xl font-bold shadow-2xl flex justify-between">
-            <span>{isPending ? 'Procesando...' : `Pedir ${carrito.length} items`}</span>
-            <span>🚀 Enviar</span>
-          </button>
+            <button 
+              onClick={() => {
+                startTransition(async () => {
+                  const result = await sendOrder(idComanda, carrito, token);
+                  
+                  if (result.error) {
+                    alert(result.error); // O un toast de notificación
+                  } else if (result.success) {
+                    alert("¡Pedido enviado con éxito!");
+                    setCarrito([]); // Limpiar carrito tras éxito
+                  }
+                });
+              }} 
+              disabled={isPending}
+              className="w-full bg-slate-900 text-white p-5 rounded-2xl font-bold shadow-2xl flex justify-between disabled:opacity-50"
+            >
+             <span>{isPending ? 'Procesando...' : `Pedir ${carrito.length} items`}</span>
+              <span>🚀 Enviar</span>
+           </button>
         </div>
-      )}
+     )}
     </div>
   );
 }

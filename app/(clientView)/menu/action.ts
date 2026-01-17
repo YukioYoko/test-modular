@@ -1,4 +1,8 @@
+'use server'
 // action.ts
+import { prisma } from '@/lib/prisma';
+//import { revalidatePath } from 'next/cache';
+
 export async function sendOrder(idComanda: number, carrito: any[], token: string | null) {
   try {
     const comanda = await prisma.comandas.findFirst({
@@ -8,33 +12,30 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
     if (!comanda) return { error: "Sesión expirada" };
 
     await prisma.$transaction(async (tx) => {
-      for (const item of carrito) {
-        // 1. Creamos el detalle del producto
-        const nuevoDetalle = await tx.detalleComanda.create({
-          data: {
-            id_comanda: idComanda,
-            id_producto: item.prod,
-            cantidad: item.cantidad,
-            notas_especiales: item.nota,
-            status: "En espera"
-          }
-        });
-
-        // 2. Si el item tiene aditamentos, los guardamos vinculados al id_detalle
-        if (item.aditamentos && item.aditamentos.length > 0) {
-          await tx.comandaAditamentos.createMany({
-            data: item.aditamentos.map((idAdi: number) => ({
-              id_detalle: nuevoDetalle.id_detalle,
-              id_aditamento: idAdi,
-              confirmacion: true
-            }))
-          });
-        }
+  for (const item of carrito) {
+    const nuevoDetalle = await tx.detalleComanda.create({
+      data: {
+        id_comanda: idComanda,
+        id_producto: item.prod,
+        cantidad: item.cantidad,
+        notas_especiales: item.nota,
+        status: "En espera"
       }
     });
 
-    revalidatePath('/menu');
-    revalidatePath('/pedido');
+    if (item.aditamentos?.length > 0) {
+  await tx.comandaAditamentos.createMany({
+    data: item.aditamentos.map((idAdi: number) => ({
+      id_detalle: nuevoDetalle.id_detalle, // ¡IMPORTANTE! Debe ser el ID del detalle que acabas de crear
+      id_aditamento: idAdi,
+      // id_comanda: idComanda, // Generalmente esto no va aquí si ya está ligado al detalle
+      confirmacion: true
+    }))
+  });
+}
+  }
+});
+
     return { success: true };
   } catch (e) {
     return { error: "Error al guardar el pedido" };
