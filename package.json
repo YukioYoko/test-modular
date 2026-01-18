@@ -16,13 +16,17 @@
     "@prisma/client": "^7.2.0",
     "@supabase/supabase-js": "^2.90.1",
     "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "express": "^5.2.1",
     "framer-motion": "^12.26.2",
     "next": "16.1.1",
     "pg": "^8.16.3",
     "qrcode.react": "^4.2.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

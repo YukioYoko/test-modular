@@ -1,52 +1,72 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import { useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { actualizarEstatusPedido } from './action';
+import { io } from 'socket.io-client';
+// import { useRouter } from 'next/navigation'; // Lo comentamos por ahora para probar
 
 export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: any[] }) {
-  const router = useRouter();
-
-  useEffect(() => {
-  const channel = supabase
-    .channel('cambios-cocina')
-    .on(
-      'postgres_changes' as any, // Forzamos el tipo si TS da problemas
-      { 
-        event: '*', 
-        schema: 'public', 
-        table: 'detalle_comanda' 
-      },
-      (payload) => {
-        console.log('Cambio detectado:', payload);
-        // router.refresh() pide a Next.js que vuelva a ejecutar getPedidosCocina()
-        startTransition(() => {
-          router.refresh();
-        });
-      }
-    )
-    .subscribe((status) => {
-      console.log("Estado de suscripción:", status);
-    });
-
-  return () => {
-    supabase.removeChannel(channel);
-  };
-}, [router]);
-   
+  // const router = useRouter(); // Desactivado temporalmente para evitar el conflicto
   const [isPending, startTransition] = useTransition();
+  
+  // Estado local de pedidos
+  const [pedidos, setPedidos] = useState<any[]>(pedidosIniciales);
 
-  const cambiarEstatus = (id: number, estatus: string) => {
-    startTransition(async () => {
-      await actualizarEstatusPedido(id, estatus);
+  // EFECTO 1: Manejo del Socket (Conexión y Escucha)
+  useEffect(() => {
+    // 1. Conectamos DENTRO del efecto para que solo ocurra al montar el componente
+    const socket = io("http://localhost:3001");
+
+    socket.on("connect", () => {
+      console.log("Conectado al servidor de sockets:", socket.id);
     });
+
+    socket.on("nuevo_pedido_cocina", (data) => {
+      console.log("🔥 SOCKET RECIBIDO EN COCINA:", data);
+
+      const nuevosPedidos = data.items;
+
+      // 3. Actualizamos estado EVITANDO el router.refresh inmediato
+      setPedidos((prev) => {
+        const idsExistentes = new Set(prev.map(p => p.id_detalle));
+        const unicos = nuevosPedidos.filter((p: any) => !idsExistentes.has(p.id_detalle));
+        return [...prev, ...unicos];
+      });
+      
+      // NOTA: No hacemos router.refresh() aquí inmediatamente para evitar que 
+      // la BD sobreescriba nuestros datos temporales antes de estar lista.
+    });
+
+    // Limpieza: Desconectar al salir de la página
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+   
+  // EFECTO 2: Sincronización con Base de Datos (Cuando carga la página)
+  useEffect(() => {
+    // Solo actualizamos si pedidosIniciales cambia (ej. al recargar la página manualmente)
+    setPedidos(pedidosIniciales);
+  }, [pedidosIniciales]);
+
+  const cambiarEstatus = (id: number | string, estatus: string) => {
+    const socket = io("http://localhost:3001");
+
+    startTransition(async () => {
+      await actualizarEstatusPedido(id as number, estatus);
+    });
+
+    socket.emit("change_status", {
+      
+    })
+
   };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {pedidosIniciales.map((pedido) => (
-        <div key={pedido.id_detalle} 
+      {pedidos.map((pedido, index) => (
+        <div 
+          // Usamos index como fallback en key por si hay IDs temporales repetidos
+          key={pedido.id_detalle || index} 
           className={`bg-white rounded-3xl shadow-xl overflow-hidden border-t-8 transition-all ${
             pedido.status === 'En preparacion' ? 'border-blue-500' : 'border-amber-500 animate-pulse'
           }`}
@@ -54,13 +74,20 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
           <div className="p-5">
             <div className="flex justify-between items-start mb-4">
               <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-bold">
-                MESA {pedido.comanda.id_mesa}
+                {/* Fallback si no viene id_mesa */}
+                MESA {pedido.comanda?.id_mesa || '?'} 
               </span>
               <span 
-                className="text-[10px] font-mono text-slate-400" 
-                suppressHydrationWarning // <--- Esto silencia el error de diferencia servidor/cliente
+                className="text-[10px] font-mono text-slate-400"
+                suppressHydrationWarning={true}  // 👈 AGREGA ESTA LÍNEA EXACTA
               >
-                {new Date(pedido.comanda.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {pedido.comanda?.fecha_hora 
+                  ? new Date(pedido.comanda.fecha_hora).toLocaleTimeString('es-MX', { // Recomendación: Fuerza el español
+                      hour: '2-digit', 
+                      minute: '2-digit', 
+                      hour12: true 
+                    })
+                  : 'Ahora'}
               </span>
             </div>
 
@@ -68,12 +95,12 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
               {pedido.cantidad}x {pedido.producto.nombre}
             </h3>
 
-            {/* Aditamentos Destacados */}
-            {pedido.aditamentos.length > 0 && (
+            {/* Aditamentos */}
+            {pedido.aditamentos && pedido.aditamentos.length > 0 && (
               <div className="flex flex-wrap gap-1 my-3">
-                {pedido.aditamentos.map((a: any) => (
-                  <span key={a.aditamento.id_aditamento} className="bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-1 rounded-md uppercase">
-                    + {a.aditamento.nombre}
+                {pedido.aditamentos.map((a: any, i: number) => (
+                  <span key={i} className="bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-1 rounded-md uppercase">
+                    + {a.aditamento ? a.aditamento.nombre : 'Extra'}
                   </span>
                 ))}
               </div>
@@ -113,3 +140,33 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
     </div>
   );
 }
+
+
+
+
+/*   useEffect(() => {
+  const channel = supabase
+    .channel('cambios-cocina')
+    .on(
+      'postgres_changes' as any, // Forzamos el tipo si TS da problemas
+      { 
+        event: '*', 
+        schema: 'public', 
+        table: 'detalle_comanda' 
+      },
+      (payload) => {
+        console.log('Cambio detectado:', payload);
+        // router.refresh() pide a Next.js que vuelva a ejecutar getPedidosCocina()
+        startTransition(() => {
+          router.refresh();
+        });
+      }
+    )
+    .subscribe((status) => {
+      console.log("Estado de suscripción:", status);
+    });
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}, [router]); */

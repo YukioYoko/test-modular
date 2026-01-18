@@ -1,28 +1,19 @@
+//import { supabase } from '@/lib/supabase';
+//import { useRouter } from 'next/navigation';
 'use client';
 'use client';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { io } from 'socket.io-client';
+
 
 export default function PedidoClientComponent({ productos, total }: { productos: any[], total: number }) {
-  const router = useRouter();
-
+  //const router = useRouter();
+  
   useEffect(() => {
-    const channel = supabase
-      .channel('estatus-cliente')
-      .on(
-        'postgres_changes',
-        { event: 'UPDATE', table: 'detalle_comanda' },
-        () => {
-          router.refresh(); // Actualiza el estatus visualmente
-        }
-      )
-      .subscribe();
+    const socket = io("http://localhost:3001");
+    
+  })
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [router]);
   
 const STATUS_COLORS: { [key: string]: string } = {
   "En espera": "bg-amber-100 text-amber-700 border-amber-200",
@@ -93,3 +84,21 @@ const STATUS_COLORS: { [key: string]: string } = {
     </div>
   );
 }
+
+
+/*   useEffect(() => {
+    const channel = supabase
+      .channel('estatus-cliente')
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', table: 'detalle_comanda' },
+        () => {
+          router.refresh(); // Actualiza el estatus visualmente
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [router]); */

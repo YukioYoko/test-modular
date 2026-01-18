@@ -30,22 +30,22 @@ export default function RegisterForm() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Nombre de Usuario</label>
-          <input name="usuario" type="text" required className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400" placeholder="ej. juan_mesero" />
+          <input name="usuario" type="text" required className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400 text-gray-400" placeholder="ej. juan_mesero" />
         </div>
 
         <div>
           <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Email</label>
-          <input name="email" type="email" required className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400" placeholder="correo@restaurante.com" />
+          <input name="email" type="email" required className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400 text-gray-400" placeholder="correo@restaurante.com" />
         </div>
 
         <div>
           <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Contraseña</label>
-          <input name="password" type="password" required className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400" placeholder="••••••••" />
+          <input name="password" type="password" required className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400 text-gray-400" placeholder="••••••••" />
         </div>
 
         <div>
           <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Rol en el Sistema</label>
-          <select name="rol" className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400">
+          <select name="rol" className="w-full p-3 bg-gray-50 border rounded-xl outline-orange-400 text-gray-400">
             <option value="mesero">Mesero</option>
             <option value="hostess">Hostess</option>
             <option value="admin">Administrador</option>
