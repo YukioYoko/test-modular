@@ -45,6 +45,7 @@ export type ComandasMinAggregateOutputType = {
   fecha_hora: Date | null
   estado: string | null
   token: string | null
+  token: string | null
 }
 
 export type ComandasMaxAggregateOutputType = {
@@ -53,6 +54,7 @@ export type ComandasMaxAggregateOutputType = {
   id_mesero: number | null
   fecha_hora: Date | null
   estado: string | null
+  token: string | null
   token: string | null
 }
 
@@ -86,6 +88,7 @@ export type ComandasMinAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
+  token?: true
 }
 
 export type ComandasMaxAggregateInputType = {
@@ -95,6 +98,7 @@ export type ComandasMaxAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
+  token?: true
 }
 
 export type ComandasCountAggregateInputType = {
@@ -103,6 +107,7 @@ export type ComandasCountAggregateInputType = {
   id_mesero?: true
   fecha_hora?: true
   estado?: true
+  token?: true
   token?: true
   _all?: true
 }
@@ -200,6 +205,7 @@ export type ComandasGroupByOutputType = {
   fecha_hora: Date
   estado: string
   token: string | null
+  token: string | null
   _count: ComandasCountAggregateOutputType | null
   _avg: ComandasAvgAggregateOutputType | null
   _sum: ComandasSumAggregateOutputType | null
@@ -232,6 +238,7 @@ export type ComandasWhereInput = {
   fecha_hora?: Prisma.DateTimeFilter<"Comandas"> | Date | string
   estado?: Prisma.StringFilter<"Comandas"> | string
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
+  token?: Prisma.StringNullableFilter<"Comandas"> | string | null
   mesa?: Prisma.XOR<Prisma.MesaScalarRelationFilter, Prisma.MesaWhereInput>
   mesero?: Prisma.XOR<Prisma.MeseroScalarRelationFilter, Prisma.MeseroWhereInput>
   detalles?: Prisma.DetalleComandaListRelationFilter
@@ -243,6 +250,7 @@ export type ComandasOrderByWithRelationInput = {
   id_mesero?: Prisma.SortOrder
   fecha_hora?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  token?: Prisma.SortOrderInput | Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   mesa?: Prisma.MesaOrderByWithRelationInput
   mesero?: Prisma.MeseroOrderByWithRelationInput
@@ -259,6 +267,7 @@ export type ComandasWhereUniqueInput = Prisma.AtLeast<{
   fecha_hora?: Prisma.DateTimeFilter<"Comandas"> | Date | string
   estado?: Prisma.StringFilter<"Comandas"> | string
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
+  token?: Prisma.StringNullableFilter<"Comandas"> | string | null
   mesa?: Prisma.XOR<Prisma.MesaScalarRelationFilter, Prisma.MesaWhereInput>
   mesero?: Prisma.XOR<Prisma.MeseroScalarRelationFilter, Prisma.MeseroWhereInput>
   detalles?: Prisma.DetalleComandaListRelationFilter
@@ -270,6 +279,7 @@ export type ComandasOrderByWithAggregationInput = {
   id_mesero?: Prisma.SortOrder
   fecha_hora?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  token?: Prisma.SortOrderInput | Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ComandasCountOrderByAggregateInput
   _avg?: Prisma.ComandasAvgOrderByAggregateInput
@@ -288,11 +298,13 @@ export type ComandasScalarWhereWithAggregatesInput = {
   fecha_hora?: Prisma.DateTimeWithAggregatesFilter<"Comandas"> | Date | string
   estado?: Prisma.StringWithAggregatesFilter<"Comandas"> | string
   token?: Prisma.StringNullableWithAggregatesFilter<"Comandas"> | string | null
+  token?: Prisma.StringNullableWithAggregatesFilter<"Comandas"> | string | null
 }
 
 export type ComandasCreateInput = {
   fecha_hora?: Date | string
   estado?: string
+  token?: string | null
   token?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
   mesero: Prisma.MeseroCreateNestedOneWithoutComandasInput

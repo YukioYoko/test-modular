@@ -2,6 +2,9 @@
 import { useState, useTransition } from 'react';
 import { sendOrder } from './action';
 import { useSearchParams } from 'next/navigation';
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3001")
 
 export default function MenuClientComponent({ productos, idComanda }: { productos: any[], idComanda: number }) {
   const params = useSearchParams();
@@ -101,16 +104,25 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
             <button 
               onClick={() => {
                 startTransition(async () => {
+                  // 1. Guardamos en BD y esperamos la respuesta CON los datos reales
                   const result = await sendOrder(idComanda, carrito, token);
                   
-                  if (result.error) {
-                    alert(result.error); // O un toast de notificación
-                  } else if (result.success) {
-                    alert("¡Pedido enviado con éxito!");
-                    setCarrito([]); // Limpiar carrito tras éxito
+                  if (result.success && result.ordenCreada) { // Validamos que traiga la orden
+
+                    // 2. Enviamos por Socket los DATOS REALES DE LA BD (no el carrito)
+                    try {
+                      socket.emit("new_order", {
+                        // Ya no enviamos "items: carrito", enviamos lo que regresó Prisma
+                        items: result.ordenCreada, 
+                        fecha: new Date().toISOString()
+                      });
+                    } catch(err) { console.log(err); }
+
+                    alert("¡Pedido enviado!");
+                    setCarrito([]); 
                   }
                 });
-              }} 
+              }}
               disabled={isPending}
               className="w-full bg-slate-900 text-white p-5 rounded-2xl font-bold shadow-2xl flex justify-between disabled:opacity-50"
             >

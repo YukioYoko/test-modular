@@ -5,7 +5,7 @@ Crean en pgAdmin la base llamada modular, y crean el archivo .env, agregan
 
 # Formato: postgresql://USUARIO:CONTRASEÑA@HOST:PUERTO/NOMBRE_BD
 #DATABASE_URL="postgresql://postgres:yuko141002@localhost:5432/Foodlify"
-DATABASE_URL="postgresql://neondb_owner:npg_Qqc7DRHTp6lS@ep-withered-river-ahnhmx9o-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL="postgresql://neondb_owner:npg_Qqc7DRHTp6lS@ep-withered-river-ahnhmx9o-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require" 
 # Connect to Supabase via connection pooling
 #DATABASE_URL="postgresql://postgres.pionbvcfoddhwpnhlech:m4bm94Gng0Vurs5Q@aws-1-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
 
