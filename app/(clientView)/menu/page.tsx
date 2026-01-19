@@ -41,10 +41,7 @@ const productos = productosRaw.map(p => ({
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      <header className="bg-white p-4 shadow-sm sticky top-0 z-10">
-        <h1 className="text-xl font-black text-orange-600">MENÚ DIGITAL</h1>
-        <p className="text-xs text-gray-500">Ordenando para la Comanda #{idComanda}</p>
-      </header>
+      
 
       <main className="p-4">
         {/* Ahora los productos son objetos planos seguros para el Client Component */}

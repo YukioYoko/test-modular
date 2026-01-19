@@ -1,6 +1,6 @@
 
 
-import {NavBar} from '@/components'
+import {Header, NavBar} from '@/components'
 
 
 export default function MenuLayout({
@@ -11,6 +11,7 @@ export default function MenuLayout({
   return (
     <div>
       <NavBar/>
+      <Header/>
       <main>
         
         {children}

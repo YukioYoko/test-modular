@@ -1,12 +1,13 @@
 'use client';
 import { useState, useTransition } from 'react';
 import { sendOrder } from './action';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { io } from "socket.io-client";
 
 const socket = io("http://localhost:3001")
 
 export default function MenuClientComponent({ productos, idComanda }: { productos: any[], idComanda: number }) {
+  const router = useRouter();
   const params = useSearchParams();
   const token = params.get('token');
   const [isPending, startTransition] = useTransition();
@@ -46,17 +47,25 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
     setAditamentosSel(prev => ({ ...prev, [prod.id_producto]: [] }));
   };
 
+  const verProducto = (id_producto: number) => {
+    const comanda = params.get('comanda');
+    const token = params.get('token');
+
+    // Navegamos a una nueva página de detalle pasando todo
+    router.push(`/menu/${id_producto}?comanda=${comanda}&token=${token}`);
+  }
+
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-32">
       {productos.map((prod) => (
-        <div key={prod.id_producto} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+        <button key={prod.id_producto} onClick={() => verProducto(prod.id_producto)} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
           <div className="flex justify-between items-start mb-4">
             <div>
               <h3 className="font-bold text-slate-800 text-lg">{prod.nombre}</h3>
               <p className="text-emerald-600 font-black">${prod.precio.toFixed(2)}</p>
             </div>
             <button 
-              onClick={() => agregarAlCarrito(prod)}
+              onClick={(e) => {e.stopPropagation();agregarAlCarrito(prod);}}
               className="bg-orange-600 text-white px-6 py-3 rounded-2xl font-bold active:scale-95 transition-all shadow-lg shadow-orange-100"
             >
               Agregar
@@ -95,7 +104,7 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
             onChange={(e) => setNotasTemp({...notasTemp, [prod.id_producto]: e.target.value})}
             className="w-full bg-slate-50 border-none p-3 rounded-xl text-sm focus:ring-2 focus:ring-orange-500 text-slate-700"
           />
-        </div>
+        </button>
       ))}
       
       {/* Botón enviar (igual que el anterior, manejando el carrito con aditamentos) */}
