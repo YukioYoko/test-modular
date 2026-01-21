@@ -45,6 +45,7 @@ export type ProductoMinAggregateOutputType = {
   categoria: string | null
   tiempo_prep: number | null
   pasos: string | null
+  descripcion: string | null
 }
 
 export type ProductoMaxAggregateOutputType = {
@@ -54,6 +55,7 @@ export type ProductoMaxAggregateOutputType = {
   categoria: string | null
   tiempo_prep: number | null
   pasos: string | null
+  descripcion: string | null
 }
 
 export type ProductoCountAggregateOutputType = {
@@ -63,6 +65,7 @@ export type ProductoCountAggregateOutputType = {
   categoria: number
   tiempo_prep: number
   pasos: number
+  descripcion: number
   _all: number
 }
 
@@ -86,6 +89,7 @@ export type ProductoMinAggregateInputType = {
   categoria?: true
   tiempo_prep?: true
   pasos?: true
+  descripcion?: true
 }
 
 export type ProductoMaxAggregateInputType = {
@@ -95,6 +99,7 @@ export type ProductoMaxAggregateInputType = {
   categoria?: true
   tiempo_prep?: true
   pasos?: true
+  descripcion?: true
 }
 
 export type ProductoCountAggregateInputType = {
@@ -104,6 +109,7 @@ export type ProductoCountAggregateInputType = {
   categoria?: true
   tiempo_prep?: true
   pasos?: true
+  descripcion?: true
   _all?: true
 }
 
@@ -200,6 +206,7 @@ export type ProductoGroupByOutputType = {
   categoria: string
   tiempo_prep: number
   pasos: string | null
+  descripcion: string | null
   _count: ProductoCountAggregateOutputType | null
   _avg: ProductoAvgAggregateOutputType | null
   _sum: ProductoSumAggregateOutputType | null
@@ -232,9 +239,9 @@ export type ProductoWhereInput = {
   categoria?: Prisma.StringFilter<"Producto"> | string
   tiempo_prep?: Prisma.IntFilter<"Producto"> | number
   pasos?: Prisma.StringNullableFilter<"Producto"> | string | null
+  descripcion?: Prisma.StringNullableFilter<"Producto"> | string | null
   detalles?: Prisma.DetalleComandaListRelationFilter
   aditamentos?: Prisma.ProductoAditamentosListRelationFilter
-  recetas?: Prisma.RecetaListRelationFilter
 }
 
 export type ProductoOrderByWithRelationInput = {
@@ -244,9 +251,9 @@ export type ProductoOrderByWithRelationInput = {
   categoria?: Prisma.SortOrder
   tiempo_prep?: Prisma.SortOrder
   pasos?: Prisma.SortOrderInput | Prisma.SortOrder
+  descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   detalles?: Prisma.DetalleComandaOrderByRelationAggregateInput
   aditamentos?: Prisma.ProductoAditamentosOrderByRelationAggregateInput
-  recetas?: Prisma.RecetaOrderByRelationAggregateInput
 }
 
 export type ProductoWhereUniqueInput = Prisma.AtLeast<{
@@ -259,9 +266,9 @@ export type ProductoWhereUniqueInput = Prisma.AtLeast<{
   categoria?: Prisma.StringFilter<"Producto"> | string
   tiempo_prep?: Prisma.IntFilter<"Producto"> | number
   pasos?: Prisma.StringNullableFilter<"Producto"> | string | null
+  descripcion?: Prisma.StringNullableFilter<"Producto"> | string | null
   detalles?: Prisma.DetalleComandaListRelationFilter
   aditamentos?: Prisma.ProductoAditamentosListRelationFilter
-  recetas?: Prisma.RecetaListRelationFilter
 }, "id_producto">
 
 export type ProductoOrderByWithAggregationInput = {
@@ -271,6 +278,7 @@ export type ProductoOrderByWithAggregationInput = {
   categoria?: Prisma.SortOrder
   tiempo_prep?: Prisma.SortOrder
   pasos?: Prisma.SortOrderInput | Prisma.SortOrder
+  descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductoCountOrderByAggregateInput
   _avg?: Prisma.ProductoAvgOrderByAggregateInput
   _max?: Prisma.ProductoMaxOrderByAggregateInput
@@ -288,6 +296,7 @@ export type ProductoScalarWhereWithAggregatesInput = {
   categoria?: Prisma.StringWithAggregatesFilter<"Producto"> | string
   tiempo_prep?: Prisma.IntWithAggregatesFilter<"Producto"> | number
   pasos?: Prisma.StringNullableWithAggregatesFilter<"Producto"> | string | null
+  descripcion?: Prisma.StringNullableWithAggregatesFilter<"Producto"> | string | null
 }
 
 export type ProductoCreateInput = {
@@ -296,9 +305,9 @@ export type ProductoCreateInput = {
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
   aditamentos?: Prisma.ProductoAditamentosCreateNestedManyWithoutProductoInput
-  recetas?: Prisma.RecetaCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateInput = {
@@ -308,9 +317,9 @@ export type ProductoUncheckedCreateInput = {
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
   aditamentos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
-  recetas?: Prisma.RecetaUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUpdateInput = {
@@ -319,9 +328,9 @@ export type ProductoUpdateInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
   aditamentos?: Prisma.ProductoAditamentosUpdateManyWithoutProductoNestedInput
-  recetas?: Prisma.RecetaUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateInput = {
@@ -331,9 +340,9 @@ export type ProductoUncheckedUpdateInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
   aditamentos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
-  recetas?: Prisma.RecetaUncheckedUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoCreateManyInput = {
@@ -343,6 +352,7 @@ export type ProductoCreateManyInput = {
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
 }
 
 export type ProductoUpdateManyMutationInput = {
@@ -351,6 +361,7 @@ export type ProductoUpdateManyMutationInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductoUncheckedUpdateManyInput = {
@@ -360,6 +371,7 @@ export type ProductoUncheckedUpdateManyInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductoCountOrderByAggregateInput = {
@@ -369,6 +381,7 @@ export type ProductoCountOrderByAggregateInput = {
   categoria?: Prisma.SortOrder
   tiempo_prep?: Prisma.SortOrder
   pasos?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrder
 }
 
 export type ProductoAvgOrderByAggregateInput = {
@@ -384,6 +397,7 @@ export type ProductoMaxOrderByAggregateInput = {
   categoria?: Prisma.SortOrder
   tiempo_prep?: Prisma.SortOrder
   pasos?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrder
 }
 
 export type ProductoMinOrderByAggregateInput = {
@@ -393,6 +407,7 @@ export type ProductoMinOrderByAggregateInput = {
   categoria?: Prisma.SortOrder
   tiempo_prep?: Prisma.SortOrder
   pasos?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrder
 }
 
 export type ProductoSumOrderByAggregateInput = {
@@ -446,28 +461,14 @@ export type ProductoUpdateOneRequiredWithoutDetallesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductoUpdateToOneWithWhereWithoutDetallesInput, Prisma.ProductoUpdateWithoutDetallesInput>, Prisma.ProductoUncheckedUpdateWithoutDetallesInput>
 }
 
-export type ProductoCreateNestedOneWithoutRecetasInput = {
-  create?: Prisma.XOR<Prisma.ProductoCreateWithoutRecetasInput, Prisma.ProductoUncheckedCreateWithoutRecetasInput>
-  connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutRecetasInput
-  connect?: Prisma.ProductoWhereUniqueInput
-}
-
-export type ProductoUpdateOneRequiredWithoutRecetasNestedInput = {
-  create?: Prisma.XOR<Prisma.ProductoCreateWithoutRecetasInput, Prisma.ProductoUncheckedCreateWithoutRecetasInput>
-  connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutRecetasInput
-  upsert?: Prisma.ProductoUpsertWithoutRecetasInput
-  connect?: Prisma.ProductoWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductoUpdateToOneWithWhereWithoutRecetasInput, Prisma.ProductoUpdateWithoutRecetasInput>, Prisma.ProductoUncheckedUpdateWithoutRecetasInput>
-}
-
 export type ProductoCreateWithoutAditamentosInput = {
   nombre: string
   precio?: runtime.Decimal | runtime.DecimalJsLike | number | string
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
-  recetas?: Prisma.RecetaCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateWithoutAditamentosInput = {
@@ -477,8 +478,8 @@ export type ProductoUncheckedCreateWithoutAditamentosInput = {
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
-  recetas?: Prisma.RecetaUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoCreateOrConnectWithoutAditamentosInput = {
@@ -503,8 +504,8 @@ export type ProductoUpdateWithoutAditamentosInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
-  recetas?: Prisma.RecetaUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateWithoutAditamentosInput = {
@@ -514,8 +515,8 @@ export type ProductoUncheckedUpdateWithoutAditamentosInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
-  recetas?: Prisma.RecetaUncheckedUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoCreateWithoutDetallesInput = {
@@ -524,8 +525,8 @@ export type ProductoCreateWithoutDetallesInput = {
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
   aditamentos?: Prisma.ProductoAditamentosCreateNestedManyWithoutProductoInput
-  recetas?: Prisma.RecetaCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateWithoutDetallesInput = {
@@ -535,8 +536,8 @@ export type ProductoUncheckedCreateWithoutDetallesInput = {
   categoria: string
   tiempo_prep?: number
   pasos?: string | null
+  descripcion?: string | null
   aditamentos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
-  recetas?: Prisma.RecetaUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoCreateOrConnectWithoutDetallesInput = {
@@ -561,8 +562,8 @@ export type ProductoUpdateWithoutDetallesInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditamentos?: Prisma.ProductoAditamentosUpdateManyWithoutProductoNestedInput
-  recetas?: Prisma.RecetaUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateWithoutDetallesInput = {
@@ -572,65 +573,7 @@ export type ProductoUncheckedUpdateWithoutDetallesInput = {
   categoria?: Prisma.StringFieldUpdateOperationsInput | string
   tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditamentos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
-  recetas?: Prisma.RecetaUncheckedUpdateManyWithoutProductoNestedInput
-}
-
-export type ProductoCreateWithoutRecetasInput = {
-  nombre: string
-  precio?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  categoria: string
-  tiempo_prep?: number
-  pasos?: string | null
-  detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
-  aditamentos?: Prisma.ProductoAditamentosCreateNestedManyWithoutProductoInput
-}
-
-export type ProductoUncheckedCreateWithoutRecetasInput = {
-  id_producto?: number
-  nombre: string
-  precio?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  categoria: string
-  tiempo_prep?: number
-  pasos?: string | null
-  detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
-  aditamentos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
-}
-
-export type ProductoCreateOrConnectWithoutRecetasInput = {
-  where: Prisma.ProductoWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductoCreateWithoutRecetasInput, Prisma.ProductoUncheckedCreateWithoutRecetasInput>
-}
-
-export type ProductoUpsertWithoutRecetasInput = {
-  update: Prisma.XOR<Prisma.ProductoUpdateWithoutRecetasInput, Prisma.ProductoUncheckedUpdateWithoutRecetasInput>
-  create: Prisma.XOR<Prisma.ProductoCreateWithoutRecetasInput, Prisma.ProductoUncheckedCreateWithoutRecetasInput>
-  where?: Prisma.ProductoWhereInput
-}
-
-export type ProductoUpdateToOneWithWhereWithoutRecetasInput = {
-  where?: Prisma.ProductoWhereInput
-  data: Prisma.XOR<Prisma.ProductoUpdateWithoutRecetasInput, Prisma.ProductoUncheckedUpdateWithoutRecetasInput>
-}
-
-export type ProductoUpdateWithoutRecetasInput = {
-  nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  categoria?: Prisma.StringFieldUpdateOperationsInput | string
-  tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
-  pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
-  aditamentos?: Prisma.ProductoAditamentosUpdateManyWithoutProductoNestedInput
-}
-
-export type ProductoUncheckedUpdateWithoutRecetasInput = {
-  id_producto?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  categoria?: Prisma.StringFieldUpdateOperationsInput | string
-  tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
-  pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditamentos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
 }
 
@@ -642,13 +585,11 @@ export type ProductoUncheckedUpdateWithoutRecetasInput = {
 export type ProductoCountOutputType = {
   detalles: number
   aditamentos: number
-  recetas: number
 }
 
 export type ProductoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detalles?: boolean | ProductoCountOutputTypeCountDetallesArgs
   aditamentos?: boolean | ProductoCountOutputTypeCountAditamentosArgs
-  recetas?: boolean | ProductoCountOutputTypeCountRecetasArgs
 }
 
 /**
@@ -675,13 +616,6 @@ export type ProductoCountOutputTypeCountAditamentosArgs<ExtArgs extends runtime.
   where?: Prisma.ProductoAditamentosWhereInput
 }
 
-/**
- * ProductoCountOutputType without action
- */
-export type ProductoCountOutputTypeCountRecetasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.RecetaWhereInput
-}
-
 
 export type ProductoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_producto?: boolean
@@ -690,9 +624,9 @@ export type ProductoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   categoria?: boolean
   tiempo_prep?: boolean
   pasos?: boolean
+  descripcion?: boolean
   detalles?: boolean | Prisma.Producto$detallesArgs<ExtArgs>
   aditamentos?: boolean | Prisma.Producto$aditamentosArgs<ExtArgs>
-  recetas?: boolean | Prisma.Producto$recetasArgs<ExtArgs>
   _count?: boolean | Prisma.ProductoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["producto"]>
 
@@ -703,6 +637,7 @@ export type ProductoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   categoria?: boolean
   tiempo_prep?: boolean
   pasos?: boolean
+  descripcion?: boolean
 }, ExtArgs["result"]["producto"]>
 
 export type ProductoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -712,6 +647,7 @@ export type ProductoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   categoria?: boolean
   tiempo_prep?: boolean
   pasos?: boolean
+  descripcion?: boolean
 }, ExtArgs["result"]["producto"]>
 
 export type ProductoSelectScalar = {
@@ -721,13 +657,13 @@ export type ProductoSelectScalar = {
   categoria?: boolean
   tiempo_prep?: boolean
   pasos?: boolean
+  descripcion?: boolean
 }
 
-export type ProductoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_producto" | "nombre" | "precio" | "categoria" | "tiempo_prep" | "pasos", ExtArgs["result"]["producto"]>
+export type ProductoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_producto" | "nombre" | "precio" | "categoria" | "tiempo_prep" | "pasos" | "descripcion", ExtArgs["result"]["producto"]>
 export type ProductoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detalles?: boolean | Prisma.Producto$detallesArgs<ExtArgs>
   aditamentos?: boolean | Prisma.Producto$aditamentosArgs<ExtArgs>
-  recetas?: boolean | Prisma.Producto$recetasArgs<ExtArgs>
   _count?: boolean | Prisma.ProductoCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -738,7 +674,6 @@ export type $ProductoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     detalles: Prisma.$DetalleComandaPayload<ExtArgs>[]
     aditamentos: Prisma.$ProductoAditamentosPayload<ExtArgs>[]
-    recetas: Prisma.$RecetaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_producto: number
@@ -747,6 +682,7 @@ export type $ProductoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     categoria: string
     tiempo_prep: number
     pasos: string | null
+    descripcion: string | null
   }, ExtArgs["result"]["producto"]>
   composites: {}
 }
@@ -1143,7 +1079,6 @@ export interface Prisma__ProductoClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   detalles<T extends Prisma.Producto$detallesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetalleComandaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aditamentos<T extends Prisma.Producto$aditamentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$aditamentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductoAditamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  recetas<T extends Prisma.Producto$recetasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$recetasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecetaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1179,6 +1114,7 @@ export interface ProductoFieldRefs {
   readonly categoria: Prisma.FieldRef<"Producto", 'String'>
   readonly tiempo_prep: Prisma.FieldRef<"Producto", 'Int'>
   readonly pasos: Prisma.FieldRef<"Producto", 'String'>
+  readonly descripcion: Prisma.FieldRef<"Producto", 'String'>
 }
     
 
@@ -1612,30 +1548,6 @@ export type Producto$aditamentosArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ProductoAditamentosScalarFieldEnum | Prisma.ProductoAditamentosScalarFieldEnum[]
-}
-
-/**
- * Producto.recetas
- */
-export type Producto$recetasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Receta
-   */
-  select?: Prisma.RecetaSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Receta
-   */
-  omit?: Prisma.RecetaOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.RecetaInclude<ExtArgs> | null
-  where?: Prisma.RecetaWhereInput
-  orderBy?: Prisma.RecetaOrderByWithRelationInput | Prisma.RecetaOrderByWithRelationInput[]
-  cursor?: Prisma.RecetaWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.RecetaScalarFieldEnum | Prisma.RecetaScalarFieldEnum[]
 }
 
 /**

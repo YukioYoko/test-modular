@@ -3,6 +3,7 @@ import { useState, useTransition } from 'react';
 import { sendOrder } from './action';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io } from "socket.io-client";
+import { URLSearchParams } from 'url';
 
 const socket = io("http://localhost:3001")
 
@@ -48,17 +49,18 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
   };
 
   const verProducto = (id_producto: number) => {
-    const comanda = params.get('comanda');
-    const token = params.get('token');
-
+    const comanda = params.get('comanda') || "";
+    const token = params.get('token') || "";
+    
+    
     // Navegamos a una nueva página de detalle pasando todo
-    router.push(`/menu/${id_producto}?comanda=${comanda}&token=${token}`);
+    router.push(`/menu/${id_producto.toString()}?comanda=${comanda}&token=${token}`);
   }
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-32">
       {productos.map((prod) => (
-        <button key={prod.id_producto} onClick={() => verProducto(prod.id_producto)} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+        <div key={prod.id_producto} onClick={() => verProducto(prod.id_producto)} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
           <div className="flex justify-between items-start mb-4">
             <div>
               <h3 className="font-bold text-slate-800 text-lg">{prod.nombre}</h3>
@@ -82,7 +84,7 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
                   return (
                     <button
                       key={adi.id}
-                      onClick={() => toggleAditamento(prod.id_producto, adi.id)}
+                      onClick={(e) => {e.stopPropagation();toggleAditamento(prod.id_producto, adi.id)}}
                       className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
                         estaSeleccionado 
                         ? 'bg-orange-600 border-orange-600 text-white shadow-md' 
@@ -104,7 +106,7 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
             onChange={(e) => setNotasTemp({...notasTemp, [prod.id_producto]: e.target.value})}
             className="w-full bg-slate-50 border-none p-3 rounded-xl text-sm focus:ring-2 focus:ring-orange-500 text-slate-700"
           />
-        </button>
+        </div>
       ))}
       
       {/* Botón enviar (igual que el anterior, manejando el carrito con aditamentos) */}

@@ -1,7 +1,7 @@
 // app/menu/page.tsx
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import MenuClientComponent from './MenuClientComponent';
+import  MenuClientComponent  from './MenuClientComponent';
 
 export default async function MenuPage({ searchParams }: { searchParams: Promise<{ comanda: string, token?: string }> }) {
   

@@ -1,30 +1,23 @@
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-/* =========================
-   USUARIOS
-========================= */
 
 model Usuario {
-  id             Int      @id @default(autoincrement())
-  usuario        String   @unique
-  email          String   @unique
+  id             Int       @id @default(autoincrement())
+  usuario        String    @unique
+  email          String    @unique
   password       String
   rol            String
-  fecha_creacion DateTime @default(now())
+  fecha_creacion DateTime? @default(now())
 
   @@map("Usuario")
 }
-
-/* =========================
-   MESEROS / MESAS
-========================= */
 
 model Mesero {
   id_mesero Int        @id @default(autoincrement())
@@ -46,10 +39,6 @@ model Mesa {
   @@map("mesas")
 }
 
-/* =========================
-   PRODUCTOS / ADITAMENTOS
-========================= */
-
 model Producto {
   id_producto Int                   @id @default(autoincrement())
   nombre      String
@@ -57,10 +46,10 @@ model Producto {
   categoria   String
   tiempo_prep Int                   @default(0)
   pasos       String?
-
+  descripcion String?
   detalles    DetalleComanda[]
   aditamentos ProductoAditamentos[]
-  recetas     Receta[]
+  imagen ProductoImagen[]
 
   @@map("productos")
 }
@@ -69,9 +58,8 @@ model Aditamento {
   id_aditamento Int                   @id @default(autoincrement())
   nombre        String
   precio        Float                 @default(0.0)
-
-  productos     ProductoAditamentos[]
   comandas      ComandaAditamentos[]
+  productos     ProductoAditamentos[]
 
   @@map("aditamentos")
 }
@@ -79,44 +67,37 @@ model Aditamento {
 model ProductoAditamentos {
   id_producto   Int
   id_aditamento Int
-
-  producto   Producto   @relation(fields: [id_producto], references: [id_producto])
-  aditamento Aditamento @relation(fields: [id_aditamento], references: [id_aditamento])
+  aditamento    Aditamento @relation(fields: [id_aditamento], references: [id_aditamento], onDelete: Cascade, onUpdate: NoAction)
+  producto      Producto   @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([id_producto, id_aditamento])
   @@map("producto_aditamentos")
 }
 
-/* =========================
-   COMANDAS
-========================= */
-
 model Comandas {
-  id_comanda Int      @id @default(autoincrement())
+  id_comanda Int              @id @default(autoincrement())
   id_mesa    Int
   id_mesero  Int
-  fecha_hora DateTime @default(now())
-  estado     String   @default("Abierta")
+  fecha_hora DateTime?        @default(now())
+  estado     String           @default("Abierta")
   token      String?
-
-  mesa     Mesa    @relation(fields: [id_mesa], references: [id_mesa])
-  mesero   Mesero  @relation(fields: [id_mesero], references: [id_mesero])
-  detalles DetalleComanda[]
+  mesa       Mesa             @relation(fields: [id_mesa], references: [id_mesa], onDelete: NoAction, onUpdate: NoAction)
+  mesero     Mesero           @relation(fields: [id_mesero], references: [id_mesero], onDelete: NoAction, onUpdate: NoAction)
+  detalles   DetalleComanda[]
 
   @@map("comandas")
 }
 
 model DetalleComanda {
-  id_detalle       Int      @id @default(autoincrement())
+  id_detalle       Int                  @id @default(autoincrement())
   id_comanda       Int
   id_producto      Int
-  cantidad         Int      @default(1)
-  notas_especiales String?  @default("")
-  status           String   @default("En espera")
-
-  comanda    Comandas  @relation(fields: [id_comanda], references: [id_comanda])
-  producto   Producto  @relation(fields: [id_producto], references: [id_producto])
-  aditamentos ComandaAditamentos[]
+  cantidad         Int                  @default(1)
+  notas_especiales String?              @default("")
+  status           String               @default("En espera")
+  aditamentos      ComandaAditamentos[]
+  comanda          Comandas             @relation(fields: [id_comanda], references: [id_comanda], onDelete: NoAction, onUpdate: NoAction)
+  producto         Producto             @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("detalle_comanda")
 }
@@ -124,51 +105,18 @@ model DetalleComanda {
 model ComandaAditamentos {
   id_detalle    Int
   id_aditamento Int
-  confirmacion  Boolean @default(false)
-
-  detalle    DetalleComanda @relation(fields: [id_detalle], references: [id_detalle])
-  aditamento Aditamento     @relation(fields: [id_aditamento], references: [id_aditamento])
+  confirmacion  Boolean        @default(false)
+  aditamento    Aditamento     @relation(fields: [id_aditamento], references: [id_aditamento], onDelete: NoAction, onUpdate: NoAction)
+  detalle       DetalleComanda @relation(fields: [id_detalle], references: [id_detalle], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([id_detalle, id_aditamento])
   @@map("comanda_aditamentos")
 }
 
-/* =========================
-   INGREDIENTES / RECETAS
-========================= */
+model ProductoImagen{
+  id_imagen Int @id @default(autoincrement())
+  url String
 
-model Ingrediente {
-  id_ingrediente Int      @id @default(autoincrement())
-  nombre         String
-  tipo           String   @default("Pza")
-
-  recetas Receta[]
-  stocks  Stock[]
-
-  @@map("ingredientes")
-}
-
-model Stock {
-  id_stock       Int   @id @default(autoincrement())
-  id_ingrediente Int
-  marca          String? @default("")
-  cantidad_ml    Float?
-  cantidad_gr    Float?
-  cantidad_pz    Float?
-
-  ingrediente Ingrediente @relation(fields: [id_ingrediente], references: [id_ingrediente], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("stock")
-}
-
-model Receta {
-  id_receta      Int   @id @default(autoincrement())
-  id_producto    Int
-  id_ingrediente Int
-  cantidad       Float @default(0.0)
-
-  producto    Producto    @relation(fields: [id_producto], references: [id_producto])
-  ingrediente Ingrediente @relation(fields: [id_ingrediente], references: [id_ingrediente])
-
-  @@map("receta")
+  producto Producto @relation(fields: [id_producto], references: [id_producto])
+  id_producto Int
 }

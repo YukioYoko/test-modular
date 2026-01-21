@@ -43,20 +43,9 @@ export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
       <main className="p-6 max-w-2xl mx-auto space-y-6">
         <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
           <h2 className="text-3xl font-black text-slate-800 mb-2">{producto.nombre}</h2>
+          <h2 className="text-xl font-black text-slate-800 mb-2">{producto.descripcion}</h2>
           <p className="text-2xl font-black text-emerald-600 mb-4">${producto.precio.toFixed(2)}</p>
-
-          {/* Sección de Ingredientes extraídos de la Receta */}
-          <div className="mb-6">
-            <h3 className="text-xs font-bold text-slate-400 uppercase mb-3">Ingredientes incluidos:</h3>
-            <div className="flex flex-wrap gap-2">
-              {producto.ingredientes.map((ing: any, i: number) => (
-                <span key={i} className="bg-slate-100 text-slate-600 px-3 py-1 rounded-lg text-xs font-medium">
-                  {ing.nombre} ({ing.cantidad}{ing.tipo})
-                </span>
-              ))}
-            </div>
-          </div>
-
+        <p className="text-l font-black text-slate-800 mb-2">{producto.pasos}</p>
           {/* Aditamentos */}
           <div className="space-y-3 mb-6">
             <h3 className="text-xs font-bold text-slate-400 uppercase">Añadir extras:</h3>

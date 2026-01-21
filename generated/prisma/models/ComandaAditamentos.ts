@@ -204,16 +204,16 @@ export type ComandaAditamentosWhereInput = {
   id_detalle?: Prisma.IntFilter<"ComandaAditamentos"> | number
   id_aditamento?: Prisma.IntFilter<"ComandaAditamentos"> | number
   confirmacion?: Prisma.BoolFilter<"ComandaAditamentos"> | boolean
-  detalle?: Prisma.XOR<Prisma.DetalleComandaScalarRelationFilter, Prisma.DetalleComandaWhereInput>
   aditamento?: Prisma.XOR<Prisma.AditamentoScalarRelationFilter, Prisma.AditamentoWhereInput>
+  detalle?: Prisma.XOR<Prisma.DetalleComandaScalarRelationFilter, Prisma.DetalleComandaWhereInput>
 }
 
 export type ComandaAditamentosOrderByWithRelationInput = {
   id_detalle?: Prisma.SortOrder
   id_aditamento?: Prisma.SortOrder
   confirmacion?: Prisma.SortOrder
-  detalle?: Prisma.DetalleComandaOrderByWithRelationInput
   aditamento?: Prisma.AditamentoOrderByWithRelationInput
+  detalle?: Prisma.DetalleComandaOrderByWithRelationInput
 }
 
 export type ComandaAditamentosWhereUniqueInput = Prisma.AtLeast<{
@@ -224,8 +224,8 @@ export type ComandaAditamentosWhereUniqueInput = Prisma.AtLeast<{
   id_detalle?: Prisma.IntFilter<"ComandaAditamentos"> | number
   id_aditamento?: Prisma.IntFilter<"ComandaAditamentos"> | number
   confirmacion?: Prisma.BoolFilter<"ComandaAditamentos"> | boolean
-  detalle?: Prisma.XOR<Prisma.DetalleComandaScalarRelationFilter, Prisma.DetalleComandaWhereInput>
   aditamento?: Prisma.XOR<Prisma.AditamentoScalarRelationFilter, Prisma.AditamentoWhereInput>
+  detalle?: Prisma.XOR<Prisma.DetalleComandaScalarRelationFilter, Prisma.DetalleComandaWhereInput>
 }, "id_detalle_id_aditamento">
 
 export type ComandaAditamentosOrderByWithAggregationInput = {
@@ -250,8 +250,8 @@ export type ComandaAditamentosScalarWhereWithAggregatesInput = {
 
 export type ComandaAditamentosCreateInput = {
   confirmacion?: boolean
-  detalle: Prisma.DetalleComandaCreateNestedOneWithoutAditamentosInput
   aditamento: Prisma.AditamentoCreateNestedOneWithoutComandasInput
+  detalle: Prisma.DetalleComandaCreateNestedOneWithoutAditamentosInput
 }
 
 export type ComandaAditamentosUncheckedCreateInput = {
@@ -262,8 +262,8 @@ export type ComandaAditamentosUncheckedCreateInput = {
 
 export type ComandaAditamentosUpdateInput = {
   confirmacion?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  detalle?: Prisma.DetalleComandaUpdateOneRequiredWithoutAditamentosNestedInput
   aditamento?: Prisma.AditamentoUpdateOneRequiredWithoutComandasNestedInput
+  detalle?: Prisma.DetalleComandaUpdateOneRequiredWithoutAditamentosNestedInput
 }
 
 export type ComandaAditamentosUncheckedUpdateInput = {
@@ -546,24 +546,24 @@ export type ComandaAditamentosSelect<ExtArgs extends runtime.Types.Extensions.In
   id_detalle?: boolean
   id_aditamento?: boolean
   confirmacion?: boolean
-  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
   aditamento?: boolean | Prisma.AditamentoDefaultArgs<ExtArgs>
+  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comandaAditamentos"]>
 
 export type ComandaAditamentosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_detalle?: boolean
   id_aditamento?: boolean
   confirmacion?: boolean
-  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
   aditamento?: boolean | Prisma.AditamentoDefaultArgs<ExtArgs>
+  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comandaAditamentos"]>
 
 export type ComandaAditamentosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_detalle?: boolean
   id_aditamento?: boolean
   confirmacion?: boolean
-  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
   aditamento?: boolean | Prisma.AditamentoDefaultArgs<ExtArgs>
+  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comandaAditamentos"]>
 
 export type ComandaAditamentosSelectScalar = {
@@ -574,23 +574,23 @@ export type ComandaAditamentosSelectScalar = {
 
 export type ComandaAditamentosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_detalle" | "id_aditamento" | "confirmacion", ExtArgs["result"]["comandaAditamentos"]>
 export type ComandaAditamentosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
   aditamento?: boolean | Prisma.AditamentoDefaultArgs<ExtArgs>
+  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
 }
 export type ComandaAditamentosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
   aditamento?: boolean | Prisma.AditamentoDefaultArgs<ExtArgs>
+  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
 }
 export type ComandaAditamentosIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
   aditamento?: boolean | Prisma.AditamentoDefaultArgs<ExtArgs>
+  detalle?: boolean | Prisma.DetalleComandaDefaultArgs<ExtArgs>
 }
 
 export type $ComandaAditamentosPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ComandaAditamentos"
   objects: {
-    detalle: Prisma.$DetalleComandaPayload<ExtArgs>
     aditamento: Prisma.$AditamentoPayload<ExtArgs>
+    detalle: Prisma.$DetalleComandaPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_detalle: number
@@ -990,8 +990,8 @@ readonly fields: ComandaAditamentosFieldRefs;
  */
 export interface Prisma__ComandaAditamentosClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  detalle<T extends Prisma.DetalleComandaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DetalleComandaDefaultArgs<ExtArgs>>): Prisma.Prisma__DetalleComandaClient<runtime.Types.Result.GetResult<Prisma.$DetalleComandaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   aditamento<T extends Prisma.AditamentoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AditamentoDefaultArgs<ExtArgs>>): Prisma.Prisma__AditamentoClient<runtime.Types.Result.GetResult<Prisma.$AditamentoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  detalle<T extends Prisma.DetalleComandaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DetalleComandaDefaultArgs<ExtArgs>>): Prisma.Prisma__DetalleComandaClient<runtime.Types.Result.GetResult<Prisma.$DetalleComandaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

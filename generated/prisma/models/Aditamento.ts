@@ -204,16 +204,16 @@ export type AditamentoWhereInput = {
   id_aditamento?: Prisma.IntFilter<"Aditamento"> | number
   nombre?: Prisma.StringFilter<"Aditamento"> | string
   precio?: Prisma.FloatFilter<"Aditamento"> | number
-  productos?: Prisma.ProductoAditamentosListRelationFilter
   comandas?: Prisma.ComandaAditamentosListRelationFilter
+  productos?: Prisma.ProductoAditamentosListRelationFilter
 }
 
 export type AditamentoOrderByWithRelationInput = {
   id_aditamento?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   precio?: Prisma.SortOrder
-  productos?: Prisma.ProductoAditamentosOrderByRelationAggregateInput
   comandas?: Prisma.ComandaAditamentosOrderByRelationAggregateInput
+  productos?: Prisma.ProductoAditamentosOrderByRelationAggregateInput
 }
 
 export type AditamentoWhereUniqueInput = Prisma.AtLeast<{
@@ -223,8 +223,8 @@ export type AditamentoWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AditamentoWhereInput | Prisma.AditamentoWhereInput[]
   nombre?: Prisma.StringFilter<"Aditamento"> | string
   precio?: Prisma.FloatFilter<"Aditamento"> | number
-  productos?: Prisma.ProductoAditamentosListRelationFilter
   comandas?: Prisma.ComandaAditamentosListRelationFilter
+  productos?: Prisma.ProductoAditamentosListRelationFilter
 }, "id_aditamento">
 
 export type AditamentoOrderByWithAggregationInput = {
@@ -250,31 +250,31 @@ export type AditamentoScalarWhereWithAggregatesInput = {
 export type AditamentoCreateInput = {
   nombre: string
   precio?: number
-  productos?: Prisma.ProductoAditamentosCreateNestedManyWithoutAditamentoInput
   comandas?: Prisma.ComandaAditamentosCreateNestedManyWithoutAditamentoInput
+  productos?: Prisma.ProductoAditamentosCreateNestedManyWithoutAditamentoInput
 }
 
 export type AditamentoUncheckedCreateInput = {
   id_aditamento?: number
   nombre: string
   precio?: number
-  productos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutAditamentoInput
   comandas?: Prisma.ComandaAditamentosUncheckedCreateNestedManyWithoutAditamentoInput
+  productos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutAditamentoInput
 }
 
 export type AditamentoUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   precio?: Prisma.FloatFieldUpdateOperationsInput | number
-  productos?: Prisma.ProductoAditamentosUpdateManyWithoutAditamentoNestedInput
   comandas?: Prisma.ComandaAditamentosUpdateManyWithoutAditamentoNestedInput
+  productos?: Prisma.ProductoAditamentosUpdateManyWithoutAditamentoNestedInput
 }
 
 export type AditamentoUncheckedUpdateInput = {
   id_aditamento?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   precio?: Prisma.FloatFieldUpdateOperationsInput | number
-  productos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutAditamentoNestedInput
   comandas?: Prisma.ComandaAditamentosUncheckedUpdateManyWithoutAditamentoNestedInput
+  productos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutAditamentoNestedInput
 }
 
 export type AditamentoCreateManyInput = {
@@ -453,13 +453,13 @@ export type AditamentoUncheckedUpdateWithoutComandasInput = {
  */
 
 export type AditamentoCountOutputType = {
-  productos: number
   comandas: number
+  productos: number
 }
 
 export type AditamentoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  productos?: boolean | AditamentoCountOutputTypeCountProductosArgs
   comandas?: boolean | AditamentoCountOutputTypeCountComandasArgs
+  productos?: boolean | AditamentoCountOutputTypeCountProductosArgs
 }
 
 /**
@@ -475,15 +475,15 @@ export type AditamentoCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * AditamentoCountOutputType without action
  */
-export type AditamentoCountOutputTypeCountProductosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductoAditamentosWhereInput
+export type AditamentoCountOutputTypeCountComandasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComandaAditamentosWhereInput
 }
 
 /**
  * AditamentoCountOutputType without action
  */
-export type AditamentoCountOutputTypeCountComandasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ComandaAditamentosWhereInput
+export type AditamentoCountOutputTypeCountProductosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductoAditamentosWhereInput
 }
 
 
@@ -491,8 +491,8 @@ export type AditamentoSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id_aditamento?: boolean
   nombre?: boolean
   precio?: boolean
-  productos?: boolean | Prisma.Aditamento$productosArgs<ExtArgs>
   comandas?: boolean | Prisma.Aditamento$comandasArgs<ExtArgs>
+  productos?: boolean | Prisma.Aditamento$productosArgs<ExtArgs>
   _count?: boolean | Prisma.AditamentoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aditamento"]>
 
@@ -516,8 +516,8 @@ export type AditamentoSelectScalar = {
 
 export type AditamentoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_aditamento" | "nombre" | "precio", ExtArgs["result"]["aditamento"]>
 export type AditamentoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  productos?: boolean | Prisma.Aditamento$productosArgs<ExtArgs>
   comandas?: boolean | Prisma.Aditamento$comandasArgs<ExtArgs>
+  productos?: boolean | Prisma.Aditamento$productosArgs<ExtArgs>
   _count?: boolean | Prisma.AditamentoCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AditamentoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -526,8 +526,8 @@ export type AditamentoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $AditamentoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Aditamento"
   objects: {
-    productos: Prisma.$ProductoAditamentosPayload<ExtArgs>[]
     comandas: Prisma.$ComandaAditamentosPayload<ExtArgs>[]
+    productos: Prisma.$ProductoAditamentosPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_aditamento: number
@@ -927,8 +927,8 @@ readonly fields: AditamentoFieldRefs;
  */
 export interface Prisma__AditamentoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  productos<T extends Prisma.Aditamento$productosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Aditamento$productosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductoAditamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   comandas<T extends Prisma.Aditamento$comandasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Aditamento$comandasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComandaAditamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  productos<T extends Prisma.Aditamento$productosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Aditamento$productosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductoAditamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1349,30 +1349,6 @@ export type AditamentoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Aditamento.productos
- */
-export type Aditamento$productosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductoAditamentos
-   */
-  select?: Prisma.ProductoAditamentosSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProductoAditamentos
-   */
-  omit?: Prisma.ProductoAditamentosOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductoAditamentosInclude<ExtArgs> | null
-  where?: Prisma.ProductoAditamentosWhereInput
-  orderBy?: Prisma.ProductoAditamentosOrderByWithRelationInput | Prisma.ProductoAditamentosOrderByWithRelationInput[]
-  cursor?: Prisma.ProductoAditamentosWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProductoAditamentosScalarFieldEnum | Prisma.ProductoAditamentosScalarFieldEnum[]
-}
-
-/**
  * Aditamento.comandas
  */
 export type Aditamento$comandasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1394,6 +1370,30 @@ export type Aditamento$comandasArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ComandaAditamentosScalarFieldEnum | Prisma.ComandaAditamentosScalarFieldEnum[]
+}
+
+/**
+ * Aditamento.productos
+ */
+export type Aditamento$productosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductoAditamentos
+   */
+  select?: Prisma.ProductoAditamentosSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductoAditamentos
+   */
+  omit?: Prisma.ProductoAditamentosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductoAditamentosInclude<ExtArgs> | null
+  where?: Prisma.ProductoAditamentosWhereInput
+  orderBy?: Prisma.ProductoAditamentosOrderByWithRelationInput | Prisma.ProductoAditamentosOrderByWithRelationInput[]
+  cursor?: Prisma.ProductoAditamentosWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductoAditamentosScalarFieldEnum | Prisma.ProductoAditamentosScalarFieldEnum[]
 }
 
 /**

@@ -9,7 +9,7 @@ export const LoadingScreen = ({ isLoading }: { isLoading: boolean }) => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-900"
+          className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-slate-900"
         >
           {/* Contenedor del Logo */}
           <motion.div

@@ -1,29 +1,24 @@
 import { prisma } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
-import ProductoDetalleClient from './ProductoDetalleClient';
+import ProductoDetalleClient from './ProdcutoDetalleClient';
 
 export default async function ProductoPage({
   params,
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ comanda?: string; token?: string }>;
+  searchParams: Promise<{ producto: string | ""; comanda?: string; token?: string }>;
 }) {
   const { id } = await params;
-  const { comanda, token } = await searchParams;
-
+  const { comanda, token, producto } = await searchParams;
+  
   // Validación de sesión básica
-  if (!comanda || !token) redirect('/login');
+  if (!comanda || !token ) redirect('/login');
 
   // Consulta con Join de 3 niveles: Producto -> Receta -> Ingrediente
   const productoRaw = await prisma.producto.findUnique({
-    where: { id_producto: parseInt(id) },
+    where: { id_producto: parseInt('4') },
     include: {
-      recetas: {
-        include: {
-          ingrediente: true,
-        },
-      },
       aditamentos: {
         include: {
           aditamento: true,
@@ -39,15 +34,10 @@ export default async function ProductoPage({
     id_producto: productoRaw.id_producto,
     nombre: productoRaw.nombre,
     precio: Number(productoRaw.precio),
+    descripcion: productoRaw.descripcion,
     categoria: productoRaw.categoria,
     tiempo_prep: productoRaw.tiempo_prep,
     pasos: productoRaw.pasos,
-    // Mapeo de la receta para mostrar ingredientes
-    ingredientes: productoRaw.recetas.map((r) => ({
-      nombre: r.ingrediente.nombre,
-      cantidad: Number(r.cantidad),
-      tipo: r.ingrediente.tipo,
-    })),
     // Mapeo de aditamentos permitidos
     aditamentos: productoRaw.aditamentos.map((a) => ({
       id: a.aditamento.id_aditamento,

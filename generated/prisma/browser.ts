@@ -62,18 +62,3 @@ export type DetalleComanda = Prisma.DetalleComandaModel
  * 
  */
 export type ComandaAditamentos = Prisma.ComandaAditamentosModel
-/**
- * Model Ingrediente
- * 
- */
-export type Ingrediente = Prisma.IngredienteModel
-/**
- * Model Stock
- * 
- */
-export type Stock = Prisma.StockModel
-/**
- * Model Receta
- * 
- */
-export type Receta = Prisma.RecetaModel

@@ -45,7 +45,6 @@ export type ComandasMinAggregateOutputType = {
   fecha_hora: Date | null
   estado: string | null
   token: string | null
-  token: string | null
 }
 
 export type ComandasMaxAggregateOutputType = {
@@ -54,7 +53,6 @@ export type ComandasMaxAggregateOutputType = {
   id_mesero: number | null
   fecha_hora: Date | null
   estado: string | null
-  token: string | null
   token: string | null
 }
 
@@ -88,7 +86,6 @@ export type ComandasMinAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
-  token?: true
 }
 
 export type ComandasMaxAggregateInputType = {
@@ -98,7 +95,6 @@ export type ComandasMaxAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
-  token?: true
 }
 
 export type ComandasCountAggregateInputType = {
@@ -107,7 +103,6 @@ export type ComandasCountAggregateInputType = {
   id_mesero?: true
   fecha_hora?: true
   estado?: true
-  token?: true
   token?: true
   _all?: true
 }
@@ -202,9 +197,8 @@ export type ComandasGroupByOutputType = {
   id_comanda: number
   id_mesa: number
   id_mesero: number
-  fecha_hora: Date
+  fecha_hora: Date | null
   estado: string
-  token: string | null
   token: string | null
   _count: ComandasCountAggregateOutputType | null
   _avg: ComandasAvgAggregateOutputType | null
@@ -235,9 +229,8 @@ export type ComandasWhereInput = {
   id_comanda?: Prisma.IntFilter<"Comandas"> | number
   id_mesa?: Prisma.IntFilter<"Comandas"> | number
   id_mesero?: Prisma.IntFilter<"Comandas"> | number
-  fecha_hora?: Prisma.DateTimeFilter<"Comandas"> | Date | string
+  fecha_hora?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringFilter<"Comandas"> | string
-  token?: Prisma.StringNullableFilter<"Comandas"> | string | null
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
   mesa?: Prisma.XOR<Prisma.MesaScalarRelationFilter, Prisma.MesaWhereInput>
   mesero?: Prisma.XOR<Prisma.MeseroScalarRelationFilter, Prisma.MeseroWhereInput>
@@ -248,9 +241,8 @@ export type ComandasOrderByWithRelationInput = {
   id_comanda?: Prisma.SortOrder
   id_mesa?: Prisma.SortOrder
   id_mesero?: Prisma.SortOrder
-  fecha_hora?: Prisma.SortOrder
+  fecha_hora?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
-  token?: Prisma.SortOrderInput | Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   mesa?: Prisma.MesaOrderByWithRelationInput
   mesero?: Prisma.MeseroOrderByWithRelationInput
@@ -264,9 +256,8 @@ export type ComandasWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ComandasWhereInput | Prisma.ComandasWhereInput[]
   id_mesa?: Prisma.IntFilter<"Comandas"> | number
   id_mesero?: Prisma.IntFilter<"Comandas"> | number
-  fecha_hora?: Prisma.DateTimeFilter<"Comandas"> | Date | string
+  fecha_hora?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringFilter<"Comandas"> | string
-  token?: Prisma.StringNullableFilter<"Comandas"> | string | null
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
   mesa?: Prisma.XOR<Prisma.MesaScalarRelationFilter, Prisma.MesaWhereInput>
   mesero?: Prisma.XOR<Prisma.MeseroScalarRelationFilter, Prisma.MeseroWhereInput>
@@ -277,9 +268,8 @@ export type ComandasOrderByWithAggregationInput = {
   id_comanda?: Prisma.SortOrder
   id_mesa?: Prisma.SortOrder
   id_mesero?: Prisma.SortOrder
-  fecha_hora?: Prisma.SortOrder
+  fecha_hora?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
-  token?: Prisma.SortOrderInput | Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ComandasCountOrderByAggregateInput
   _avg?: Prisma.ComandasAvgOrderByAggregateInput
@@ -295,16 +285,14 @@ export type ComandasScalarWhereWithAggregatesInput = {
   id_comanda?: Prisma.IntWithAggregatesFilter<"Comandas"> | number
   id_mesa?: Prisma.IntWithAggregatesFilter<"Comandas"> | number
   id_mesero?: Prisma.IntWithAggregatesFilter<"Comandas"> | number
-  fecha_hora?: Prisma.DateTimeWithAggregatesFilter<"Comandas"> | Date | string
+  fecha_hora?: Prisma.DateTimeNullableWithAggregatesFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringWithAggregatesFilter<"Comandas"> | string
-  token?: Prisma.StringNullableWithAggregatesFilter<"Comandas"> | string | null
   token?: Prisma.StringNullableWithAggregatesFilter<"Comandas"> | string | null
 }
 
 export type ComandasCreateInput = {
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
-  token?: string | null
   token?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
   mesero: Prisma.MeseroCreateNestedOneWithoutComandasInput
@@ -315,14 +303,14 @@ export type ComandasUncheckedCreateInput = {
   id_comanda?: number
   id_mesa: number
   id_mesero: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
 }
 
 export type ComandasUpdateInput = {
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesa?: Prisma.MesaUpdateOneRequiredWithoutComandasNestedInput
@@ -334,7 +322,7 @@ export type ComandasUncheckedUpdateInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesa?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesero?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
@@ -344,13 +332,13 @@ export type ComandasCreateManyInput = {
   id_comanda?: number
   id_mesa: number
   id_mesero: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
 }
 
 export type ComandasUpdateManyMutationInput = {
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -359,7 +347,7 @@ export type ComandasUncheckedUpdateManyInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesa?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesero?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -517,7 +505,7 @@ export type ComandasUpdateOneRequiredWithoutDetallesNestedInput = {
 }
 
 export type ComandasCreateWithoutMeseroInput = {
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
@@ -527,7 +515,7 @@ export type ComandasCreateWithoutMeseroInput = {
 export type ComandasUncheckedCreateWithoutMeseroInput = {
   id_comanda?: number
   id_mesa: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
@@ -566,13 +554,13 @@ export type ComandasScalarWhereInput = {
   id_comanda?: Prisma.IntFilter<"Comandas"> | number
   id_mesa?: Prisma.IntFilter<"Comandas"> | number
   id_mesero?: Prisma.IntFilter<"Comandas"> | number
-  fecha_hora?: Prisma.DateTimeFilter<"Comandas"> | Date | string
+  fecha_hora?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringFilter<"Comandas"> | string
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
 }
 
 export type ComandasCreateWithoutMesaInput = {
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
   mesero: Prisma.MeseroCreateNestedOneWithoutComandasInput
@@ -582,7 +570,7 @@ export type ComandasCreateWithoutMesaInput = {
 export type ComandasUncheckedCreateWithoutMesaInput = {
   id_comanda?: number
   id_mesero: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
@@ -615,7 +603,7 @@ export type ComandasUpdateManyWithWhereWithoutMesaInput = {
 }
 
 export type ComandasCreateWithoutDetallesInput = {
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
@@ -626,7 +614,7 @@ export type ComandasUncheckedCreateWithoutDetallesInput = {
   id_comanda?: number
   id_mesa: number
   id_mesero: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
 }
@@ -648,7 +636,7 @@ export type ComandasUpdateToOneWithWhereWithoutDetallesInput = {
 }
 
 export type ComandasUpdateWithoutDetallesInput = {
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesa?: Prisma.MesaUpdateOneRequiredWithoutComandasNestedInput
@@ -659,7 +647,7 @@ export type ComandasUncheckedUpdateWithoutDetallesInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesa?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesero?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -667,13 +655,13 @@ export type ComandasUncheckedUpdateWithoutDetallesInput = {
 export type ComandasCreateManyMeseroInput = {
   id_comanda?: number
   id_mesa: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
 }
 
 export type ComandasUpdateWithoutMeseroInput = {
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesa?: Prisma.MesaUpdateOneRequiredWithoutComandasNestedInput
@@ -683,7 +671,7 @@ export type ComandasUpdateWithoutMeseroInput = {
 export type ComandasUncheckedUpdateWithoutMeseroInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesa?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
@@ -692,7 +680,7 @@ export type ComandasUncheckedUpdateWithoutMeseroInput = {
 export type ComandasUncheckedUpdateManyWithoutMeseroInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesa?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -700,13 +688,13 @@ export type ComandasUncheckedUpdateManyWithoutMeseroInput = {
 export type ComandasCreateManyMesaInput = {
   id_comanda?: number
   id_mesero: number
-  fecha_hora?: Date | string
+  fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
 }
 
 export type ComandasUpdateWithoutMesaInput = {
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesero?: Prisma.MeseroUpdateOneRequiredWithoutComandasNestedInput
@@ -716,7 +704,7 @@ export type ComandasUpdateWithoutMesaInput = {
 export type ComandasUncheckedUpdateWithoutMesaInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesero?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
@@ -725,7 +713,7 @@ export type ComandasUncheckedUpdateWithoutMesaInput = {
 export type ComandasUncheckedUpdateManyWithoutMesaInput = {
   id_comanda?: Prisma.IntFieldUpdateOperationsInput | number
   id_mesero?: Prisma.IntFieldUpdateOperationsInput | number
-  fecha_hora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -832,7 +820,7 @@ export type $ComandasPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id_comanda: number
     id_mesa: number
     id_mesero: number
-    fecha_hora: Date
+    fecha_hora: Date | null
     estado: string
     token: string | null
   }, ExtArgs["result"]["comandas"]>

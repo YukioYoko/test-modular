@@ -59,10 +59,7 @@ export const ModelName = {
   ProductoAditamentos: 'ProductoAditamentos',
   Comandas: 'Comandas',
   DetalleComanda: 'DetalleComanda',
-  ComandaAditamentos: 'ComandaAditamentos',
-  Ingrediente: 'Ingrediente',
-  Stock: 'Stock',
-  Receta: 'Receta'
+  ComandaAditamentos: 'ComandaAditamentos'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -119,7 +116,8 @@ export const ProductoScalarFieldEnum = {
   precio: 'precio',
   categoria: 'categoria',
   tiempo_prep: 'tiempo_prep',
-  pasos: 'pasos'
+  pasos: 'pasos',
+  descripcion: 'descripcion'
 } as const
 
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
@@ -173,37 +171,6 @@ export const ComandaAditamentosScalarFieldEnum = {
 } as const
 
 export type ComandaAditamentosScalarFieldEnum = (typeof ComandaAditamentosScalarFieldEnum)[keyof typeof ComandaAditamentosScalarFieldEnum]
-
-
-export const IngredienteScalarFieldEnum = {
-  id_ingrediente: 'id_ingrediente',
-  nombre: 'nombre',
-  tipo: 'tipo'
-} as const
-
-export type IngredienteScalarFieldEnum = (typeof IngredienteScalarFieldEnum)[keyof typeof IngredienteScalarFieldEnum]
-
-
-export const StockScalarFieldEnum = {
-  id_stock: 'id_stock',
-  id_ingrediente: 'id_ingrediente',
-  marca: 'marca',
-  cantidad_ml: 'cantidad_ml',
-  cantidad_gr: 'cantidad_gr',
-  cantidad_pz: 'cantidad_pz'
-} as const
-
-export type StockScalarFieldEnum = (typeof StockScalarFieldEnum)[keyof typeof StockScalarFieldEnum]
-
-
-export const RecetaScalarFieldEnum = {
-  id_receta: 'id_receta',
-  id_producto: 'id_producto',
-  id_ingrediente: 'id_ingrediente',
-  cantidad: 'cantidad'
-} as const
-
-export type RecetaScalarFieldEnum = (typeof RecetaScalarFieldEnum)[keyof typeof RecetaScalarFieldEnum]
 
 
 export const SortOrder = {
