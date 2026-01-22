@@ -1,7 +1,8 @@
 // app/menu/page.tsx
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import  MenuClientComponent  from './MenuClientComponent';
+import RecomendacionMenu from '@/components/recomendacion/RecomendacionMenu';
+import MenuCategoriasComponent from './MenuCategoriasComponent';
 
 export default async function MenuPage({ searchParams }: { searchParams: Promise<{ comanda: string, token?: string }> }) {
   
@@ -40,12 +41,11 @@ const productos = productosRaw.map(p => ({
 }));
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      
-
+    <div className="min-h-screen bg-orange-grad pb-20">
       <main className="p-4">
+        <RecomendacionMenu/>
         {/* Ahora los productos son objetos planos seguros para el Client Component */}
-        <MenuClientComponent productos={productos} idComanda={idComanda} />
+        <MenuCategoriasComponent productos={productos} idComanda={idComanda} />
       </main>
     </div>
   );

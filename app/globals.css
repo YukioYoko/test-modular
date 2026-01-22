@@ -19,13 +19,13 @@ body {
 
 /* Fondo principal */
 .bg-app {
-  background-color: #ffffff;
+  background-color:  #f8f3f3;
   color: #0f172a;
 }
 
 /* Dark mode forzado */
 .dark .bg-app {
-  background-color: #020617;
+  background-color: #181618;
   color: #e5e7eb;
 }
 
@@ -35,7 +35,7 @@ body {
 }
 
 .dark .bg-card {
-  background-color: #0f172a;
+  background-color: var(--notBlack);
 }
 
 /* Inputs */
@@ -43,19 +43,32 @@ body {
   background-color: #f8fafc;
   border: 1px solid #e2e8f0;
   color: #0f172a;
+
 }
 
 .dark .input-app {
-  background-color: #1e293b;
+  background-color: var(--notBlack);
   border-color: #334155;
   color: #e5e7eb;
+
 }
+
 
 /* =========================
    GRADIENTE FOODLIFY
 ========================= */
 .bg-orange-grad {
   background: linear-gradient(180deg, #fb9e50 0%, #c44529 100%);
+}
+
+.bg-purple-grad {
+  background: linear-gradient(180deg, var(--lightPurple2) 0%, var(--lightPurple) 100%);
+}
+
+.ring-light-purple{
+  &:focus {
+        --tw-ring-color: var(--lightPurple) /* oklch(75% 0.183 55.934) */;
+    }
 }
 
 /* =========================
@@ -66,4 +79,32 @@ body {
     background-color 0.4s ease,
     color 0.4s ease,
     border-color 0.4s ease;
+}
+
+:root {
+  /* Registro de colores para usar como clases de Tailwind */
+  --darkOrange: #C44529;
+  --lightOrange: #FB9E50;
+  --pinky: #EA496D;
+  --lightGray: #D9D9D9;
+  --lightGray2: #C2C2C2;
+  --darkGray: #9D9D9D;
+  --notBlack: #242424;
+  --lightPurple: #B97ECA;
+  --lightPurple2: #2F2569;
+  --darkPurple: #241E30;
+  --borderPurple: #362E45;
+  --notWhite: #F2F2F2;
+  
+  --color-pinky: var(--pinky);
+  --color-light-purple: var(--lightPurple);
+  --color-dark-purple: var(--darkPurple);
+  --color-not-black: var(--notBlack);
+  --color-not-white: var(--notWhite);
+  --color-dark-orange: var(--darkOrange);
+  --color-light-orange: var(--lightOrange);
+  --color-lightGray: var(--lightGray);
+  /* Mantienes tus fuentes y otros */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }

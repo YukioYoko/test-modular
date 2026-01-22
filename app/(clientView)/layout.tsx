@@ -1,6 +1,6 @@
 
 
-import {Header, NavBar} from '@/components'
+import {Header} from '@/components'
 
 
 export default function MenuLayout({
@@ -10,9 +10,9 @@ export default function MenuLayout({
 }>) {
   return (
     <div>
-      <NavBar/>
+      
       <Header/>
-      <main>
+      <main className='bg-orange-grad'>
         
         {children}
       </main>
