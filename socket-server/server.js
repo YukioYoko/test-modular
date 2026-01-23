@@ -1,4 +1,3 @@
-// socket-server/server.js
 import express from 'express';
 import http from 'http';
 import { Server } from "socket.io";
@@ -9,36 +8,37 @@ app.use(cors());
 
 const server = http.createServer(app);
 
-// Configuración de CORS para permitir que tu Next.js se conecte
 const io = new Server(server, {
   cors: {
-    origin: "https://testfoodlify.vercel.app", // La URL de tu Next.js
+    // Permite tu dominio de Vercel y local para pruebas
+    origin: ["https://testfoodlify.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST"]
   }
 });
 
 io.on('connection', (socket) => {
-  console.log(`Usuario conectado: ${socket.id}`);
+  console.log(`Conectado: ${socket.id}`);
 
-  // CORRECCIÓN AQUÍ:
-  // Escuchamos "new_order" (que es lo que envía tu MenuClient)
+  // 1. Recibir nuevo pedido (Desde el Cliente/Mesero)
   socket.on('new_order', (data) => {
-    console.log('📦 Pedido recibido del Cliente:', data);
-    
-    // Emitimos "nuevo_pedido_cocina" (que es lo que escucha tu CocinaClient)
+    console.log('📦 Nuevo pedido recibido');
     io.emit('nuevo_pedido_cocina', data); 
   });
 
-  socket.on('disconnect', () => {
-    console.log('Usuario desconectado');
+  // 2. Recibir cambio de estatus (Desde la Pantalla de Cocina)
+  socket.on("change_status", (data) => {
+    console.log('🔄 Estatus actualizado:', data);
+    // Notificamos a todos (incluyendo al cliente si lo necesita)
+    io.emit("estatus_cambiado", data);
   });
 
-  socket.on("change_status", (data) => {
-    console.log('🔄 Cambio de estatus recibido:', data);
-    io.emit("estatus_cambiado", data);
-  })
+  socket.on('disconnect', () => {
+    console.log('Desconectado');
+  });
 });
 
-server.listen(3001, () => {
-  console.log('Servidor de Sockets corriendo en puerto 3001');
+// Railway asigna el puerto automáticamente
+const PORT = process.env.PORT || 3001;
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor de Sockets activo en puerto ${PORT}`);
 });

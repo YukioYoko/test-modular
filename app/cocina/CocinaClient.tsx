@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState, useTransition, useRef } from 'react';
 import { actualizarEstatusPedido } from './action';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 // import { useRouter } from 'next/navigation'; // Lo comentamos por ahora para probar
 
 export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: any[] }) {
@@ -10,18 +11,16 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
   
   // Estado local de pedidos
   const [pedidos, setPedidos] = useState<any[]>(pedidosIniciales);
-
+  const socketRef = useRef<Socket | null>(null);
   // EFECTO 1: Manejo del Socket (Conexión y Escucha)
   useEffect(() => {
     // 1. Conectamos DENTRO del efecto para que solo ocurra al montar el componente
-    const socket = io("http://localhost:3001");
+    socketRef.current = io("http://localhost:3001");
 
-    socket.on("connect", () => {
-      console.log("Conectado al servidor de sockets:", socket.id);
-    });
+    socketRef.current = io(SOCKET_URL);
 
-    socket.on("nuevo_pedido_cocina", (data) => {
-      console.log("🔥 SOCKET RECIBIDO EN COCINA:", data);
+    socketRef.current.on("nuevo_pedido_cocina", (data:any) => {
+      console.log("🔥 NUEVO PEDIDO RECIBIDO:", data);
 
       const nuevosPedidos = data.items;
 
@@ -38,7 +37,7 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
 
     // Limpieza: Desconectar al salir de la página
     return () => {
-      socket.disconnect();
+      socketRef.current?.disconnect();
     };
   }, []);
    
