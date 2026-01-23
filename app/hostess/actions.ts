@@ -1,11 +1,11 @@
 'use server'
-
+import "dotenv/config";
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import crypto from 'crypto'
 
 // Centralizamos la URL base
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 export async function getMesas() {
   return await prisma.mesa.findMany({
