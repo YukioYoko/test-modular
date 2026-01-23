@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { getMesas } from './actions';
 import HostessClient from './hostess';
 
