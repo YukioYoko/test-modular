@@ -12,7 +12,7 @@ const server = http.createServer(app);
 // Configuración de CORS para permitir que tu Next.js se conecte
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // La URL de tu Next.js
+    origin: "https://testfoodlify.vercel.app", // La URL de tu Next.js
     methods: ["GET", "POST"]
   }
 });
