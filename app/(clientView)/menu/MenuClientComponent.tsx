@@ -1,11 +1,11 @@
 'use client';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect, useRef } from 'react';
 import { sendOrder } from './action';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { URLSearchParams } from 'url';
 
-const socket = io("http://localhost:3001")
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
 export default function MenuClientComponent({ productos, idComanda }: { productos: any[], idComanda: number }) {
   const router = useRouter();
@@ -14,11 +14,24 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
   const [isPending, startTransition] = useTransition();
   const [carrito, setCarrito] = useState<any[]>([]);
   
+  const socketRef = useRef<Socket | null>(null);
   // Estados temporales por producto
   const [notasTemp, setNotasTemp] = useState<{ [key: number]: string }>({});
   const [aditamentosSeleccionados, setAditamentosSel] = useState<{ [key: number]: number[] }>({});
 
-  const toggleAditamento = (idProd: number, idAdi: number) => {
+   useEffect(() => {
+      socketRef.current = io(SOCKET_URL);
+  
+      socketRef.current.on("connect", () => {
+        console.log("✅ Cliente conectado al Socket de Foodlify");
+      });
+  
+      return () => {
+        socketRef.current?.disconnect();
+      };
+    }, []);
+  
+    const toggleAditamento = (idProd: number, idAdi: number) => {
     setAditamentosSel(prev => {
       const actuales = prev[idProd] || [];
       const nuevos = actuales.includes(idAdi) 
@@ -122,7 +135,7 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
 
                     // 2. Enviamos por Socket los DATOS REALES DE LA BD (no el carrito)
                     try {
-                      socket.emit("new_order", {
+                      socketRef.current?.emit("new_order", {
                         // Ya no enviamos "items: carrito", enviamos lo que regresó Prisma
                         items: result.ordenCreada, 
                         fecha: new Date().toISOString()
