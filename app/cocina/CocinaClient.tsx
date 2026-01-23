@@ -15,7 +15,6 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
   // EFECTO 1: Manejo del Socket (Conexión y Escucha)
   useEffect(() => {
     // 1. Conectamos DENTRO del efecto para que solo ocurra al montar el componente
-    socketRef.current = io("http://localhost:3001");
 
     socketRef.current = io(SOCKET_URL);
 
@@ -48,13 +47,13 @@ export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: a
   }, [pedidosIniciales]);
 
   const cambiarEstatus = (id: number | string, estatus: string) => {
-    const socket = io("http://localhost:3001");
+    socketRef.current = io(SOCKET_URL);
 
     startTransition(async () => {
       await actualizarEstatusPedido(id as number, estatus);
     });
 
-    socket.emit("change_status", {
+    socketRef.current.emit("change_status", {
       
     })
 
