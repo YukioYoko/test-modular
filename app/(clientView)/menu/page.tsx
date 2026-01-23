@@ -1,4 +1,5 @@
 // app/menu/page.tsx
+export const dynamic = 'force-dynamic'
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import RecomendacionMenu from '@/components/recomendacion/RecomendacionMenu';
