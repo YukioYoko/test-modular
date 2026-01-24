@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
 import MenuClientComponent from './MenuClientComponent';
 
+
 export default async function ProductoPage({
   params,
   searchParams,
