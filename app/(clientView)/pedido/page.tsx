@@ -54,7 +54,7 @@ export default async function PedidoPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="min-h-screen bg-slate-50 pb-32">
-      <header className="bg-white px-6 py-6 shadow-sm sticky top-0 border-b border-slate-100">
+      <header className="bg-white px-6 py-6 shadow-sm sticky top-0 z-10 border-b border-slate-100">
         <h1 className="text-2xl font-black text-slate-900">Mi Pedido</h1>
         <div className="flex justify-between items-center mt-1">
           <p className="text-sm text-slate-500 font-medium">Mesa #{comanda.id_mesa}</p>

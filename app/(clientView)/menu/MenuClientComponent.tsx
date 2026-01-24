@@ -1,6 +1,6 @@
 'use client';
 import { useState, useTransition, useEffect, useRef } from 'react';
-import { sendOrder } from './[slug]/action';
+import { sendOrder } from './action';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io, Socket } from "socket.io-client";
 import { URLSearchParams } from 'url';

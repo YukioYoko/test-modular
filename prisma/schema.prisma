@@ -7,6 +7,7 @@ datasource db {
   provider = "postgresql"
 }
 
+
 model Usuario {
   id             Int       @id @default(autoincrement())
   usuario        String    @unique
@@ -48,7 +49,7 @@ model Producto {
   descripcion String?
   detalles    DetalleComanda[]
   aditamentos ProductoAditamentos[]
-  imagen      ProductoImagen[]      // Relación con imágenes
+  imagen ProductoImagen[]
 
   @@map("productos")
 }
@@ -74,7 +75,7 @@ model ProductoAditamentos {
 }
 
 model Comandas {
-  id_comanda Int              @id @default(autoincrement()) // Agregado autoincrement para coincidir con SERIAL
+  id_comanda Int              @id @default(autoincrement())
   id_mesa    Int
   id_mesero  Int
   fecha_hora DateTime?        @default(now())
@@ -112,11 +113,10 @@ model ComandaAditamentos {
   @@map("comanda_aditamentos")
 }
 
-model ProductoImagen {
-  id_imagen   Int      @id @default(autoincrement())
-  url         String
-  id_producto Int
-  producto    Producto @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+model ProductoImagen{
+  id_imagen Int @id @default(autoincrement())
+  url String
 
-  @@map("producto_imagen") // Asegúrate de que la tabla en SQL se llame así
+  producto Producto @relation(fields: [id_producto], references: [id_producto])
+  id_producto Int
 }

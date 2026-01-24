@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
-import MenuClientComponent from './MenuClientComponent';
+import ProductoDetalleClient from './ProdcutoDetalleClient';
 
 export default async function ProductoPage({
   params,
@@ -17,7 +17,7 @@ export default async function ProductoPage({
 
   // Consulta con Join de 3 niveles: Producto -> Receta -> Ingrediente
   const productoRaw = await prisma.producto.findUnique({
-    where: { id_producto: parseInt(id) },
+    where: { id_producto: parseInt('4') },
     include: {
       aditamentos: {
         include: {
@@ -47,9 +47,9 @@ export default async function ProductoPage({
   };
 
   return (
-    <MenuClientComponent 
-      productos={productoFormateado} 
-      idComanda={token} 
+    <ProductoDetalleClient 
+      producto={productoFormateado} 
+      urlRetorno={`/menu?comanda=${comanda}&token=${token}`} 
     />
   );
 }
