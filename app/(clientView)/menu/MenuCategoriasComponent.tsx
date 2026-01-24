@@ -1,18 +1,16 @@
 'use client';
 import { useState, useTransition, useEffect, useRef } from 'react';
-import { sendOrder } from './action';
+import { sendOrder } from './[cat]/[slug]/action';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io, Socket } from "socket.io-client";
 
 // 1. URL de tu servidor en Railway (usa una variable de entorno en Vercel)
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
-export default function MenuCategoriasComponent({ productos, idComanda }: { productos: any[], idComanda: number }) {
+export default function MenuCategoriasComponent({ cat, idComanda }: { cat: string, idComanda: number }) {
   const router = useRouter();
   const params = useSearchParams();
   const token = params.get('token');
-  const [isPending, startTransition] = useTransition();
-  const [carrito, setCarrito] = useState<any[]>([]);
   
   // 2. Referencia para mantener el socket activo sin reconectar en cada render
   const socketRef = useRef<Socket | null>(null);
@@ -30,37 +28,9 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
     };
   }, []);
 
-  const [notasTemp, setNotasTemp] = useState<{ [key: number]: string }>({});
-  const [aditamentosSeleccionados, setAditamentosSel] = useState<{ [key: number]: number[] }>({});
 
-  const toggleAditamento = (idProd: number, idAdi: number) => {
-    setAditamentosSel(prev => {
-      const actuales = prev[idProd] || [];
-      const nuevos = actuales.includes(idAdi) 
-        ? actuales.filter(id => id !== idAdi) 
-        : [...actuales, idAdi];
-      return { ...prev, [idProd]: nuevos };
-    });
-  };
 
-  const agregarAlCarrito = (prod: any) => {
-    const notaActual = notasTemp[prod.id_producto] || "";
-    const aditamentosActuales = aditamentosSeleccionados[prod.id_producto] || [];
-
-    setCarrito((prev) => [
-      ...prev, 
-      { 
-        prod: prod.id_producto, 
-        nombre: prod.nombre, 
-        cantidad: 1, 
-        nota: notaActual,
-        aditamentos: aditamentosActuales 
-      }
-    ]);
-    
-    setNotasTemp(prev => ({ ...prev, [prod.id_producto]: "" }));
-    setAditamentosSel(prev => ({ ...prev, [prod.id_producto]: [] }));
-  };
+  
 
   const verProducto = (id_producto: number) => {
     const comanda = params.get('comanda') || "";
@@ -69,22 +39,7 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
     router.push(`/menu/${id_producto}?comanda=${comanda}&token=${currentToken}`);
   }
 
-  const enviarPedido = () => {
-    startTransition(async () => {
-      const result = await sendOrder(idComanda, carrito, token);
-      
-      if (result.success && result.ordenCreada) {
-        // 3. Emitimos el evento usando la referencia del socket
-        socketRef.current?.emit("new_order", {
-          items: result.ordenCreada, 
-          fecha: new Date().toISOString()
-        });
-
-        alert("¡Pedido enviado a cocina!");
-        setCarrito([]); 
-      }
-    });
-  };
+  
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-32">

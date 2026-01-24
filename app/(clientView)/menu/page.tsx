@@ -18,35 +18,57 @@ export default async function MenuPage({ searchParams }: { searchParams: Promise
 
   if (!valido || valido.token !== token) redirect('/login');
 
-  // 2. Obtención de productos con sus aditamentos permitidos
+  // 2. Obtención de categorías únicas usando groupBy
+// 1. Obtenemos las categorías únicas
+const categoriasRaw = await prisma.producto.groupBy({
+  by: ['categoria'],
+  orderBy: { categoria: 'asc' },
+});
+
+// 2. Obtenemos todos los productos (seleccionando solo los campos necesarios)
 const productosRaw = await prisma.producto.findMany({
-  include: {
-    aditamentos: {
-      include: {
-        aditamento: true // Traemos el nombre y precio del aditamento
+  select: {
+    id_producto: true,
+    nombre: true,
+    precio: true,
+    categoria: true,
+    descripcion: true,
+    tiempo_prep: true,
+    // En lugar de include, anidamos la relación dentro del select
+    imagen: {
+      select: {
+        url: true, // Cambia 'url' por el nombre real de tu columna de imagen
+        alt: true
       }
     }
   },
-  orderBy: { categoria: 'asc' }
+  orderBy: { 
+    nombre: 'asc' 
+  }
 });
 
-const productos = productosRaw.map(p => ({
-  ...p,
-  precio: Number(p.precio),
-  // Simplificamos la estructura para el cliente
-  opcionesAditamentos: p.aditamentos.map(a => ({
-    id: a.aditamento.id_aditamento,
-    nombre: a.aditamento.nombre,
-    precio: a.aditamento.precio
-  }))
-}));
+// 3. Creamos el objeto final agrupado
+const menuEstructurado = categoriasRaw.map(catObj => {
+  return {
+    nombreCategoria: catObj.categoria,
+    productos: productosRaw.filter(prod => prod.categoria === catObj.categoria)
+  };
+});
 
   return (
     <div className="min-h-screen bg-orange-grad pb-20">
       <main className="p-4">
-        <RecomendacionMenu/>
-        {/* Ahora los productos son objetos planos seguros para el Client Component */}
-        <MenuCategoriasComponent productos={productos} idComanda={idComanda} />
+        <RecomendacionMenu />
+        
+        {/* Agregué el return en el map y el atributo key */}
+        {listaCategorias.map((cat) => (
+          <MenuCategoriasComponent 
+            key={cat} 
+            categoria={cat} 
+            idComanda={idComanda} 
+          />
+        ))}
+        
       </main>
     </div>
   );
