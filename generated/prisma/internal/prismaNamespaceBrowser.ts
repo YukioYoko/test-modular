@@ -59,7 +59,8 @@ export const ModelName = {
   ProductoAditamentos: 'ProductoAditamentos',
   Comandas: 'Comandas',
   DetalleComanda: 'DetalleComanda',
-  ComandaAditamentos: 'ComandaAditamentos'
+  ComandaAditamentos: 'ComandaAditamentos',
+  ProductoImagen: 'ProductoImagen'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -171,6 +172,15 @@ export const ComandaAditamentosScalarFieldEnum = {
 } as const
 
 export type ComandaAditamentosScalarFieldEnum = (typeof ComandaAditamentosScalarFieldEnum)[keyof typeof ComandaAditamentosScalarFieldEnum]
+
+
+export const ProductoImagenScalarFieldEnum = {
+  id_imagen: 'id_imagen',
+  url: 'url',
+  id_producto: 'id_producto'
+} as const
+
+export type ProductoImagenScalarFieldEnum = (typeof ProductoImagenScalarFieldEnum)[keyof typeof ProductoImagenScalarFieldEnum]
 
 
 export const SortOrder = {

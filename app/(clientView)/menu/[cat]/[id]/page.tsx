@@ -2,16 +2,19 @@ import { prisma } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
 import ProductoDetalleClient from './ProdcutoDetalleClient';
 
+// app/(clientView)/menu/[cat]/[id]/page.tsx
+
 export default async function ProductoPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{ producto: string | ""; comanda?: string; token?: string }>;
+  // Debe incluir 'cat' porque está dentro de la carpeta [cat]
+  params: Promise<{ cat: string; id: string }>; 
+  searchParams: Promise<{ comanda?: string; token?: string }>;
 }) {
-  const { id } = await params;
-  const { comanda, token, producto } = await searchParams;
-  
+  // Extraemos ambos para asegurar que Next.js mapee la ruta correctamente
+  const { id, cat } = await params; 
+  const { comanda, token } = await searchParams;
   // Validación de sesión básica
   if (!comanda || !token ) redirect('/login');
 
@@ -49,7 +52,7 @@ export default async function ProductoPage({
   return (
     <ProductoDetalleClient 
       producto={productoFormateado} 
-      urlRetorno={`/menu?comanda=${comanda}&token=${token}`} 
+      urlRetorno={`/menu/${cat}?comanda=${comanda}&token=${token}`} 
     />
   );
 }

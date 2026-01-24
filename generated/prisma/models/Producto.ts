@@ -242,6 +242,7 @@ export type ProductoWhereInput = {
   descripcion?: Prisma.StringNullableFilter<"Producto"> | string | null
   detalles?: Prisma.DetalleComandaListRelationFilter
   aditamentos?: Prisma.ProductoAditamentosListRelationFilter
+  imagen?: Prisma.ProductoImagenListRelationFilter
 }
 
 export type ProductoOrderByWithRelationInput = {
@@ -254,6 +255,7 @@ export type ProductoOrderByWithRelationInput = {
   descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   detalles?: Prisma.DetalleComandaOrderByRelationAggregateInput
   aditamentos?: Prisma.ProductoAditamentosOrderByRelationAggregateInput
+  imagen?: Prisma.ProductoImagenOrderByRelationAggregateInput
 }
 
 export type ProductoWhereUniqueInput = Prisma.AtLeast<{
@@ -269,6 +271,7 @@ export type ProductoWhereUniqueInput = Prisma.AtLeast<{
   descripcion?: Prisma.StringNullableFilter<"Producto"> | string | null
   detalles?: Prisma.DetalleComandaListRelationFilter
   aditamentos?: Prisma.ProductoAditamentosListRelationFilter
+  imagen?: Prisma.ProductoImagenListRelationFilter
 }, "id_producto">
 
 export type ProductoOrderByWithAggregationInput = {
@@ -308,6 +311,7 @@ export type ProductoCreateInput = {
   descripcion?: string | null
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
   aditamentos?: Prisma.ProductoAditamentosCreateNestedManyWithoutProductoInput
+  imagen?: Prisma.ProductoImagenCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateInput = {
@@ -320,6 +324,7 @@ export type ProductoUncheckedCreateInput = {
   descripcion?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
   aditamentos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
+  imagen?: Prisma.ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUpdateInput = {
@@ -331,6 +336,7 @@ export type ProductoUpdateInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
   aditamentos?: Prisma.ProductoAditamentosUpdateManyWithoutProductoNestedInput
+  imagen?: Prisma.ProductoImagenUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateInput = {
@@ -343,6 +349,7 @@ export type ProductoUncheckedUpdateInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
   aditamentos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
+  imagen?: Prisma.ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoCreateManyInput = {
@@ -461,6 +468,20 @@ export type ProductoUpdateOneRequiredWithoutDetallesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductoUpdateToOneWithWhereWithoutDetallesInput, Prisma.ProductoUpdateWithoutDetallesInput>, Prisma.ProductoUncheckedUpdateWithoutDetallesInput>
 }
 
+export type ProductoCreateNestedOneWithoutImagenInput = {
+  create?: Prisma.XOR<Prisma.ProductoCreateWithoutImagenInput, Prisma.ProductoUncheckedCreateWithoutImagenInput>
+  connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutImagenInput
+  connect?: Prisma.ProductoWhereUniqueInput
+}
+
+export type ProductoUpdateOneRequiredWithoutImagenNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductoCreateWithoutImagenInput, Prisma.ProductoUncheckedCreateWithoutImagenInput>
+  connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutImagenInput
+  upsert?: Prisma.ProductoUpsertWithoutImagenInput
+  connect?: Prisma.ProductoWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductoUpdateToOneWithWhereWithoutImagenInput, Prisma.ProductoUpdateWithoutImagenInput>, Prisma.ProductoUncheckedUpdateWithoutImagenInput>
+}
+
 export type ProductoCreateWithoutAditamentosInput = {
   nombre: string
   precio?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -469,6 +490,7 @@ export type ProductoCreateWithoutAditamentosInput = {
   pasos?: string | null
   descripcion?: string | null
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
+  imagen?: Prisma.ProductoImagenCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateWithoutAditamentosInput = {
@@ -480,6 +502,7 @@ export type ProductoUncheckedCreateWithoutAditamentosInput = {
   pasos?: string | null
   descripcion?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+  imagen?: Prisma.ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoCreateOrConnectWithoutAditamentosInput = {
@@ -506,6 +529,7 @@ export type ProductoUpdateWithoutAditamentosInput = {
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
+  imagen?: Prisma.ProductoImagenUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateWithoutAditamentosInput = {
@@ -517,6 +541,7 @@ export type ProductoUncheckedUpdateWithoutAditamentosInput = {
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+  imagen?: Prisma.ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoCreateWithoutDetallesInput = {
@@ -527,6 +552,7 @@ export type ProductoCreateWithoutDetallesInput = {
   pasos?: string | null
   descripcion?: string | null
   aditamentos?: Prisma.ProductoAditamentosCreateNestedManyWithoutProductoInput
+  imagen?: Prisma.ProductoImagenCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoUncheckedCreateWithoutDetallesInput = {
@@ -538,6 +564,7 @@ export type ProductoUncheckedCreateWithoutDetallesInput = {
   pasos?: string | null
   descripcion?: string | null
   aditamentos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
+  imagen?: Prisma.ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
 }
 
 export type ProductoCreateOrConnectWithoutDetallesInput = {
@@ -564,6 +591,7 @@ export type ProductoUpdateWithoutDetallesInput = {
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditamentos?: Prisma.ProductoAditamentosUpdateManyWithoutProductoNestedInput
+  imagen?: Prisma.ProductoImagenUpdateManyWithoutProductoNestedInput
 }
 
 export type ProductoUncheckedUpdateWithoutDetallesInput = {
@@ -575,6 +603,69 @@ export type ProductoUncheckedUpdateWithoutDetallesInput = {
   pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditamentos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
+  imagen?: Prisma.ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
+}
+
+export type ProductoCreateWithoutImagenInput = {
+  nombre: string
+  precio?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  categoria: string
+  tiempo_prep?: number
+  pasos?: string | null
+  descripcion?: string | null
+  detalles?: Prisma.DetalleComandaCreateNestedManyWithoutProductoInput
+  aditamentos?: Prisma.ProductoAditamentosCreateNestedManyWithoutProductoInput
+}
+
+export type ProductoUncheckedCreateWithoutImagenInput = {
+  id_producto?: number
+  nombre: string
+  precio?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  categoria: string
+  tiempo_prep?: number
+  pasos?: string | null
+  descripcion?: string | null
+  detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+  aditamentos?: Prisma.ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
+}
+
+export type ProductoCreateOrConnectWithoutImagenInput = {
+  where: Prisma.ProductoWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductoCreateWithoutImagenInput, Prisma.ProductoUncheckedCreateWithoutImagenInput>
+}
+
+export type ProductoUpsertWithoutImagenInput = {
+  update: Prisma.XOR<Prisma.ProductoUpdateWithoutImagenInput, Prisma.ProductoUncheckedUpdateWithoutImagenInput>
+  create: Prisma.XOR<Prisma.ProductoCreateWithoutImagenInput, Prisma.ProductoUncheckedCreateWithoutImagenInput>
+  where?: Prisma.ProductoWhereInput
+}
+
+export type ProductoUpdateToOneWithWhereWithoutImagenInput = {
+  where?: Prisma.ProductoWhereInput
+  data: Prisma.XOR<Prisma.ProductoUpdateWithoutImagenInput, Prisma.ProductoUncheckedUpdateWithoutImagenInput>
+}
+
+export type ProductoUpdateWithoutImagenInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  categoria?: Prisma.StringFieldUpdateOperationsInput | string
+  tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
+  pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  detalles?: Prisma.DetalleComandaUpdateManyWithoutProductoNestedInput
+  aditamentos?: Prisma.ProductoAditamentosUpdateManyWithoutProductoNestedInput
+}
+
+export type ProductoUncheckedUpdateWithoutImagenInput = {
+  id_producto?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  categoria?: Prisma.StringFieldUpdateOperationsInput | string
+  tiempo_prep?: Prisma.IntFieldUpdateOperationsInput | number
+  pasos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+  aditamentos?: Prisma.ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
 }
 
 
@@ -585,11 +676,13 @@ export type ProductoUncheckedUpdateWithoutDetallesInput = {
 export type ProductoCountOutputType = {
   detalles: number
   aditamentos: number
+  imagen: number
 }
 
 export type ProductoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detalles?: boolean | ProductoCountOutputTypeCountDetallesArgs
   aditamentos?: boolean | ProductoCountOutputTypeCountAditamentosArgs
+  imagen?: boolean | ProductoCountOutputTypeCountImagenArgs
 }
 
 /**
@@ -616,6 +709,13 @@ export type ProductoCountOutputTypeCountAditamentosArgs<ExtArgs extends runtime.
   where?: Prisma.ProductoAditamentosWhereInput
 }
 
+/**
+ * ProductoCountOutputType without action
+ */
+export type ProductoCountOutputTypeCountImagenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductoImagenWhereInput
+}
+
 
 export type ProductoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_producto?: boolean
@@ -627,6 +727,7 @@ export type ProductoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   descripcion?: boolean
   detalles?: boolean | Prisma.Producto$detallesArgs<ExtArgs>
   aditamentos?: boolean | Prisma.Producto$aditamentosArgs<ExtArgs>
+  imagen?: boolean | Prisma.Producto$imagenArgs<ExtArgs>
   _count?: boolean | Prisma.ProductoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["producto"]>
 
@@ -664,6 +765,7 @@ export type ProductoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type ProductoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detalles?: boolean | Prisma.Producto$detallesArgs<ExtArgs>
   aditamentos?: boolean | Prisma.Producto$aditamentosArgs<ExtArgs>
+  imagen?: boolean | Prisma.Producto$imagenArgs<ExtArgs>
   _count?: boolean | Prisma.ProductoCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -674,6 +776,7 @@ export type $ProductoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     detalles: Prisma.$DetalleComandaPayload<ExtArgs>[]
     aditamentos: Prisma.$ProductoAditamentosPayload<ExtArgs>[]
+    imagen: Prisma.$ProductoImagenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_producto: number
@@ -1079,6 +1182,7 @@ export interface Prisma__ProductoClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   detalles<T extends Prisma.Producto$detallesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetalleComandaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aditamentos<T extends Prisma.Producto$aditamentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$aditamentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductoAditamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  imagen<T extends Prisma.Producto$imagenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$imagenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductoImagenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1548,6 +1652,30 @@ export type Producto$aditamentosArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ProductoAditamentosScalarFieldEnum | Prisma.ProductoAditamentosScalarFieldEnum[]
+}
+
+/**
+ * Producto.imagen
+ */
+export type Producto$imagenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductoImagen
+   */
+  select?: Prisma.ProductoImagenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductoImagen
+   */
+  omit?: Prisma.ProductoImagenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductoImagenInclude<ExtArgs> | null
+  where?: Prisma.ProductoImagenWhereInput
+  orderBy?: Prisma.ProductoImagenOrderByWithRelationInput | Prisma.ProductoImagenOrderByWithRelationInput[]
+  cursor?: Prisma.ProductoImagenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductoImagenScalarFieldEnum | Prisma.ProductoImagenScalarFieldEnum[]
 }
 
 /**

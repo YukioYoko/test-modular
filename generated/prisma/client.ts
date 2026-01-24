@@ -84,3 +84,8 @@ export type DetalleComanda = Prisma.DetalleComandaModel
  * 
  */
 export type ComandaAditamentos = Prisma.ComandaAditamentosModel
+/**
+ * Model ProductoImagen
+ * 
+ */
+export type ProductoImagen = Prisma.ProductoImagenModel

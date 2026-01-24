@@ -392,7 +392,8 @@ export const ModelName = {
   ProductoAditamentos: 'ProductoAditamentos',
   Comandas: 'Comandas',
   DetalleComanda: 'DetalleComanda',
-  ComandaAditamentos: 'ComandaAditamentos'
+  ComandaAditamentos: 'ComandaAditamentos',
+  ProductoImagen: 'ProductoImagen'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "mesero" | "mesa" | "producto" | "aditamento" | "productoAditamentos" | "comandas" | "detalleComanda" | "comandaAditamentos"
+    modelProps: "usuario" | "mesero" | "mesa" | "producto" | "aditamento" | "productoAditamentos" | "comandas" | "detalleComanda" | "comandaAditamentos" | "productoImagen"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProductoImagen: {
+      payload: Prisma.$ProductoImagenPayload<ExtArgs>
+      fields: Prisma.ProductoImagenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductoImagenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductoImagenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductoImagenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductoImagenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>
+        }
+        findMany: {
+          args: Prisma.ProductoImagenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>[]
+        }
+        create: {
+          args: Prisma.ProductoImagenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>
+        }
+        createMany: {
+          args: Prisma.ProductoImagenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductoImagenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductoImagenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>
+        }
+        update: {
+          args: Prisma.ProductoImagenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductoImagenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductoImagenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductoImagenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductoImagenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoImagenPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductoImagenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductoImagen>
+        }
+        groupBy: {
+          args: Prisma.ProductoImagenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductoImagenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductoImagenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductoImagenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1210,6 +1285,15 @@ export const ComandaAditamentosScalarFieldEnum = {
 } as const
 
 export type ComandaAditamentosScalarFieldEnum = (typeof ComandaAditamentosScalarFieldEnum)[keyof typeof ComandaAditamentosScalarFieldEnum]
+
+
+export const ProductoImagenScalarFieldEnum = {
+  id_imagen: 'id_imagen',
+  url: 'url',
+  id_producto: 'id_producto'
+} as const
+
+export type ProductoImagenScalarFieldEnum = (typeof ProductoImagenScalarFieldEnum)[keyof typeof ProductoImagenScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1422,6 +1506,7 @@ export type GlobalOmitConfig = {
   comandas?: Prisma.ComandasOmit
   detalleComanda?: Prisma.DetalleComandaOmit
   comandaAditamentos?: Prisma.ComandaAditamentosOmit
+  productoImagen?: Prisma.ProductoImagenOmit
 }
 
 /* Types for Logging */

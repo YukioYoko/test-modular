@@ -16,10 +16,10 @@ export const NavBar = ({ isOpen, closeNav }: NavBarProps) => {
 
   const navLinks = [
     { name: "Menú", href: "/menu" },
-     { name: "Entradas", href: "/entradas" },
-    { name: "Platillos", href: "/platillos" },
-     { name: "Postres", href: "/postres" },
-    { name: "Bebidas", href: "/bebidas" },
+     { name: "Entradas", href: "/menu/Entrada" },
+    { name: "Platillos", href: "/menu/Platillo" },
+     { name: "Postres", href: "/menu/Postre" },
+    { name: "Bebidas", href: "/menu/Bebida" },
     { name: "Mi Pedido", href: "/pedido" },
     { name: "Pedir Cuenta", href: "/cuenta" },
   ];
