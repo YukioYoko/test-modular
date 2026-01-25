@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('tanker.css');
 
 /* =========================
    RESET BÁSICO
@@ -108,4 +107,6 @@ body {
   /* Mantienes tus fuentes y otros */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-tanker: var(--font-tanker);
 }
+

@@ -75,7 +75,7 @@ export default function LoginPage() {
                   'polygon(0% 0%, 100% 0%, 100% 0%, 89% 100%, 0% 100%)',
               }}
             />
-            <h1 className="relative text-5xl font-black text-white italic">
+            <h1 className="font-tanker relative text-5xl text-white  ">
               FOODLIFY
             </h1>
 
