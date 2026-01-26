@@ -30,12 +30,18 @@ export type ComandasAvgAggregateOutputType = {
   id_comanda: number | null
   id_mesa: number | null
   id_mesero: number | null
+  sub_total: number | null
+  impuestos: number | null
+  total: number | null
 }
 
 export type ComandasSumAggregateOutputType = {
   id_comanda: number | null
   id_mesa: number | null
   id_mesero: number | null
+  sub_total: number | null
+  impuestos: number | null
+  total: number | null
 }
 
 export type ComandasMinAggregateOutputType = {
@@ -45,6 +51,12 @@ export type ComandasMinAggregateOutputType = {
   fecha_hora: Date | null
   estado: string | null
   token: string | null
+  sub_total: number | null
+  impuestos: number | null
+  total: number | null
+  pagado: boolean | null
+  fecha_pagado: Date | null
+  transaccion_id: string | null
 }
 
 export type ComandasMaxAggregateOutputType = {
@@ -54,6 +66,12 @@ export type ComandasMaxAggregateOutputType = {
   fecha_hora: Date | null
   estado: string | null
   token: string | null
+  sub_total: number | null
+  impuestos: number | null
+  total: number | null
+  pagado: boolean | null
+  fecha_pagado: Date | null
+  transaccion_id: string | null
 }
 
 export type ComandasCountAggregateOutputType = {
@@ -63,6 +81,12 @@ export type ComandasCountAggregateOutputType = {
   fecha_hora: number
   estado: number
   token: number
+  sub_total: number
+  impuestos: number
+  total: number
+  pagado: number
+  fecha_pagado: number
+  transaccion_id: number
   _all: number
 }
 
@@ -71,12 +95,18 @@ export type ComandasAvgAggregateInputType = {
   id_comanda?: true
   id_mesa?: true
   id_mesero?: true
+  sub_total?: true
+  impuestos?: true
+  total?: true
 }
 
 export type ComandasSumAggregateInputType = {
   id_comanda?: true
   id_mesa?: true
   id_mesero?: true
+  sub_total?: true
+  impuestos?: true
+  total?: true
 }
 
 export type ComandasMinAggregateInputType = {
@@ -86,6 +116,12 @@ export type ComandasMinAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
+  sub_total?: true
+  impuestos?: true
+  total?: true
+  pagado?: true
+  fecha_pagado?: true
+  transaccion_id?: true
 }
 
 export type ComandasMaxAggregateInputType = {
@@ -95,6 +131,12 @@ export type ComandasMaxAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
+  sub_total?: true
+  impuestos?: true
+  total?: true
+  pagado?: true
+  fecha_pagado?: true
+  transaccion_id?: true
 }
 
 export type ComandasCountAggregateInputType = {
@@ -104,6 +146,12 @@ export type ComandasCountAggregateInputType = {
   fecha_hora?: true
   estado?: true
   token?: true
+  sub_total?: true
+  impuestos?: true
+  total?: true
+  pagado?: true
+  fecha_pagado?: true
+  transaccion_id?: true
   _all?: true
 }
 
@@ -200,6 +248,12 @@ export type ComandasGroupByOutputType = {
   fecha_hora: Date | null
   estado: string
   token: string | null
+  sub_total: number
+  impuestos: number
+  total: number
+  pagado: boolean
+  fecha_pagado: Date | null
+  transaccion_id: string | null
   _count: ComandasCountAggregateOutputType | null
   _avg: ComandasAvgAggregateOutputType | null
   _sum: ComandasSumAggregateOutputType | null
@@ -232,6 +286,12 @@ export type ComandasWhereInput = {
   fecha_hora?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringFilter<"Comandas"> | string
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
+  sub_total?: Prisma.FloatFilter<"Comandas"> | number
+  impuestos?: Prisma.FloatFilter<"Comandas"> | number
+  total?: Prisma.FloatFilter<"Comandas"> | number
+  pagado?: Prisma.BoolFilter<"Comandas"> | boolean
+  fecha_pagado?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
+  transaccion_id?: Prisma.StringNullableFilter<"Comandas"> | string | null
   mesa?: Prisma.XOR<Prisma.MesaScalarRelationFilter, Prisma.MesaWhereInput>
   mesero?: Prisma.XOR<Prisma.MeseroScalarRelationFilter, Prisma.MeseroWhereInput>
   detalles?: Prisma.DetalleComandaListRelationFilter
@@ -244,6 +304,12 @@ export type ComandasOrderByWithRelationInput = {
   fecha_hora?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
+  pagado?: Prisma.SortOrder
+  fecha_pagado?: Prisma.SortOrderInput | Prisma.SortOrder
+  transaccion_id?: Prisma.SortOrderInput | Prisma.SortOrder
   mesa?: Prisma.MesaOrderByWithRelationInput
   mesero?: Prisma.MeseroOrderByWithRelationInput
   detalles?: Prisma.DetalleComandaOrderByRelationAggregateInput
@@ -259,6 +325,12 @@ export type ComandasWhereUniqueInput = Prisma.AtLeast<{
   fecha_hora?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringFilter<"Comandas"> | string
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
+  sub_total?: Prisma.FloatFilter<"Comandas"> | number
+  impuestos?: Prisma.FloatFilter<"Comandas"> | number
+  total?: Prisma.FloatFilter<"Comandas"> | number
+  pagado?: Prisma.BoolFilter<"Comandas"> | boolean
+  fecha_pagado?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
+  transaccion_id?: Prisma.StringNullableFilter<"Comandas"> | string | null
   mesa?: Prisma.XOR<Prisma.MesaScalarRelationFilter, Prisma.MesaWhereInput>
   mesero?: Prisma.XOR<Prisma.MeseroScalarRelationFilter, Prisma.MeseroWhereInput>
   detalles?: Prisma.DetalleComandaListRelationFilter
@@ -271,6 +343,12 @@ export type ComandasOrderByWithAggregationInput = {
   fecha_hora?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
+  pagado?: Prisma.SortOrder
+  fecha_pagado?: Prisma.SortOrderInput | Prisma.SortOrder
+  transaccion_id?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ComandasCountOrderByAggregateInput
   _avg?: Prisma.ComandasAvgOrderByAggregateInput
   _max?: Prisma.ComandasMaxOrderByAggregateInput
@@ -288,12 +366,24 @@ export type ComandasScalarWhereWithAggregatesInput = {
   fecha_hora?: Prisma.DateTimeNullableWithAggregatesFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringWithAggregatesFilter<"Comandas"> | string
   token?: Prisma.StringNullableWithAggregatesFilter<"Comandas"> | string | null
+  sub_total?: Prisma.FloatWithAggregatesFilter<"Comandas"> | number
+  impuestos?: Prisma.FloatWithAggregatesFilter<"Comandas"> | number
+  total?: Prisma.FloatWithAggregatesFilter<"Comandas"> | number
+  pagado?: Prisma.BoolWithAggregatesFilter<"Comandas"> | boolean
+  fecha_pagado?: Prisma.DateTimeNullableWithAggregatesFilter<"Comandas"> | Date | string | null
+  transaccion_id?: Prisma.StringNullableWithAggregatesFilter<"Comandas"> | string | null
 }
 
 export type ComandasCreateInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
   mesero: Prisma.MeseroCreateNestedOneWithoutComandasInput
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutComandaInput
@@ -306,6 +396,12 @@ export type ComandasUncheckedCreateInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
 }
 
@@ -313,6 +409,12 @@ export type ComandasUpdateInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesa?: Prisma.MesaUpdateOneRequiredWithoutComandasNestedInput
   mesero?: Prisma.MeseroUpdateOneRequiredWithoutComandasNestedInput
   detalles?: Prisma.DetalleComandaUpdateManyWithoutComandaNestedInput
@@ -325,6 +427,12 @@ export type ComandasUncheckedUpdateInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
 }
 
@@ -335,12 +443,24 @@ export type ComandasCreateManyInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
 }
 
 export type ComandasUpdateManyMutationInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ComandasUncheckedUpdateManyInput = {
@@ -350,6 +470,12 @@ export type ComandasUncheckedUpdateManyInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ComandasListRelationFilter = {
@@ -369,12 +495,21 @@ export type ComandasCountOrderByAggregateInput = {
   fecha_hora?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   token?: Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
+  pagado?: Prisma.SortOrder
+  fecha_pagado?: Prisma.SortOrder
+  transaccion_id?: Prisma.SortOrder
 }
 
 export type ComandasAvgOrderByAggregateInput = {
   id_comanda?: Prisma.SortOrder
   id_mesa?: Prisma.SortOrder
   id_mesero?: Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
 }
 
 export type ComandasMaxOrderByAggregateInput = {
@@ -384,6 +519,12 @@ export type ComandasMaxOrderByAggregateInput = {
   fecha_hora?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   token?: Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
+  pagado?: Prisma.SortOrder
+  fecha_pagado?: Prisma.SortOrder
+  transaccion_id?: Prisma.SortOrder
 }
 
 export type ComandasMinOrderByAggregateInput = {
@@ -393,12 +534,21 @@ export type ComandasMinOrderByAggregateInput = {
   fecha_hora?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   token?: Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
+  pagado?: Prisma.SortOrder
+  fecha_pagado?: Prisma.SortOrder
+  transaccion_id?: Prisma.SortOrder
 }
 
 export type ComandasSumOrderByAggregateInput = {
   id_comanda?: Prisma.SortOrder
   id_mesa?: Prisma.SortOrder
   id_mesero?: Prisma.SortOrder
+  sub_total?: Prisma.SortOrder
+  impuestos?: Prisma.SortOrder
+  total?: Prisma.SortOrder
 }
 
 export type ComandasScalarRelationFilter = {
@@ -490,6 +640,10 @@ export type ComandasUncheckedUpdateManyWithoutMesaNestedInput = {
   deleteMany?: Prisma.ComandasScalarWhereInput | Prisma.ComandasScalarWhereInput[]
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type ComandasCreateNestedOneWithoutDetallesInput = {
   create?: Prisma.XOR<Prisma.ComandasCreateWithoutDetallesInput, Prisma.ComandasUncheckedCreateWithoutDetallesInput>
   connectOrCreate?: Prisma.ComandasCreateOrConnectWithoutDetallesInput
@@ -508,6 +662,12 @@ export type ComandasCreateWithoutMeseroInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutComandaInput
 }
@@ -518,6 +678,12 @@ export type ComandasUncheckedCreateWithoutMeseroInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
 }
 
@@ -557,12 +723,24 @@ export type ComandasScalarWhereInput = {
   fecha_hora?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
   estado?: Prisma.StringFilter<"Comandas"> | string
   token?: Prisma.StringNullableFilter<"Comandas"> | string | null
+  sub_total?: Prisma.FloatFilter<"Comandas"> | number
+  impuestos?: Prisma.FloatFilter<"Comandas"> | number
+  total?: Prisma.FloatFilter<"Comandas"> | number
+  pagado?: Prisma.BoolFilter<"Comandas"> | boolean
+  fecha_pagado?: Prisma.DateTimeNullableFilter<"Comandas"> | Date | string | null
+  transaccion_id?: Prisma.StringNullableFilter<"Comandas"> | string | null
 }
 
 export type ComandasCreateWithoutMesaInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   mesero: Prisma.MeseroCreateNestedOneWithoutComandasInput
   detalles?: Prisma.DetalleComandaCreateNestedManyWithoutComandaInput
 }
@@ -573,6 +751,12 @@ export type ComandasUncheckedCreateWithoutMesaInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   detalles?: Prisma.DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
 }
 
@@ -606,6 +790,12 @@ export type ComandasCreateWithoutDetallesInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
   mesa: Prisma.MesaCreateNestedOneWithoutComandasInput
   mesero: Prisma.MeseroCreateNestedOneWithoutComandasInput
 }
@@ -617,6 +807,12 @@ export type ComandasUncheckedCreateWithoutDetallesInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
 }
 
 export type ComandasCreateOrConnectWithoutDetallesInput = {
@@ -639,6 +835,12 @@ export type ComandasUpdateWithoutDetallesInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesa?: Prisma.MesaUpdateOneRequiredWithoutComandasNestedInput
   mesero?: Prisma.MeseroUpdateOneRequiredWithoutComandasNestedInput
 }
@@ -650,6 +852,12 @@ export type ComandasUncheckedUpdateWithoutDetallesInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ComandasCreateManyMeseroInput = {
@@ -658,12 +866,24 @@ export type ComandasCreateManyMeseroInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
 }
 
 export type ComandasUpdateWithoutMeseroInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesa?: Prisma.MesaUpdateOneRequiredWithoutComandasNestedInput
   detalles?: Prisma.DetalleComandaUpdateManyWithoutComandaNestedInput
 }
@@ -674,6 +894,12 @@ export type ComandasUncheckedUpdateWithoutMeseroInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
 }
 
@@ -683,6 +909,12 @@ export type ComandasUncheckedUpdateManyWithoutMeseroInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ComandasCreateManyMesaInput = {
@@ -691,12 +923,24 @@ export type ComandasCreateManyMesaInput = {
   fecha_hora?: Date | string | null
   estado?: string
   token?: string | null
+  sub_total?: number
+  impuestos?: number
+  total?: number
+  pagado?: boolean
+  fecha_pagado?: Date | string | null
+  transaccion_id?: string | null
 }
 
 export type ComandasUpdateWithoutMesaInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mesero?: Prisma.MeseroUpdateOneRequiredWithoutComandasNestedInput
   detalles?: Prisma.DetalleComandaUpdateManyWithoutComandaNestedInput
 }
@@ -707,6 +951,12 @@ export type ComandasUncheckedUpdateWithoutMesaInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
 }
 
@@ -716,6 +966,12 @@ export type ComandasUncheckedUpdateManyWithoutMesaInput = {
   fecha_hora?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_total?: Prisma.FloatFieldUpdateOperationsInput | number
+  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pagado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fecha_pagado?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  transaccion_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -756,6 +1012,12 @@ export type ComandasSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   fecha_hora?: boolean
   estado?: boolean
   token?: boolean
+  sub_total?: boolean
+  impuestos?: boolean
+  total?: boolean
+  pagado?: boolean
+  fecha_pagado?: boolean
+  transaccion_id?: boolean
   mesa?: boolean | Prisma.MesaDefaultArgs<ExtArgs>
   mesero?: boolean | Prisma.MeseroDefaultArgs<ExtArgs>
   detalles?: boolean | Prisma.Comandas$detallesArgs<ExtArgs>
@@ -769,6 +1031,12 @@ export type ComandasSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fecha_hora?: boolean
   estado?: boolean
   token?: boolean
+  sub_total?: boolean
+  impuestos?: boolean
+  total?: boolean
+  pagado?: boolean
+  fecha_pagado?: boolean
+  transaccion_id?: boolean
   mesa?: boolean | Prisma.MesaDefaultArgs<ExtArgs>
   mesero?: boolean | Prisma.MeseroDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comandas"]>
@@ -780,6 +1048,12 @@ export type ComandasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fecha_hora?: boolean
   estado?: boolean
   token?: boolean
+  sub_total?: boolean
+  impuestos?: boolean
+  total?: boolean
+  pagado?: boolean
+  fecha_pagado?: boolean
+  transaccion_id?: boolean
   mesa?: boolean | Prisma.MesaDefaultArgs<ExtArgs>
   mesero?: boolean | Prisma.MeseroDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comandas"]>
@@ -791,9 +1065,15 @@ export type ComandasSelectScalar = {
   fecha_hora?: boolean
   estado?: boolean
   token?: boolean
+  sub_total?: boolean
+  impuestos?: boolean
+  total?: boolean
+  pagado?: boolean
+  fecha_pagado?: boolean
+  transaccion_id?: boolean
 }
 
-export type ComandasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_comanda" | "id_mesa" | "id_mesero" | "fecha_hora" | "estado" | "token", ExtArgs["result"]["comandas"]>
+export type ComandasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_comanda" | "id_mesa" | "id_mesero" | "fecha_hora" | "estado" | "token" | "sub_total" | "impuestos" | "total" | "pagado" | "fecha_pagado" | "transaccion_id", ExtArgs["result"]["comandas"]>
 export type ComandasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mesa?: boolean | Prisma.MesaDefaultArgs<ExtArgs>
   mesero?: boolean | Prisma.MeseroDefaultArgs<ExtArgs>
@@ -823,6 +1103,12 @@ export type $ComandasPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     fecha_hora: Date | null
     estado: string
     token: string | null
+    sub_total: number
+    impuestos: number
+    total: number
+    pagado: boolean
+    fecha_pagado: Date | null
+    transaccion_id: string | null
   }, ExtArgs["result"]["comandas"]>
   composites: {}
 }
@@ -1255,6 +1541,12 @@ export interface ComandasFieldRefs {
   readonly fecha_hora: Prisma.FieldRef<"Comandas", 'DateTime'>
   readonly estado: Prisma.FieldRef<"Comandas", 'String'>
   readonly token: Prisma.FieldRef<"Comandas", 'String'>
+  readonly sub_total: Prisma.FieldRef<"Comandas", 'Float'>
+  readonly impuestos: Prisma.FieldRef<"Comandas", 'Float'>
+  readonly total: Prisma.FieldRef<"Comandas", 'Float'>
+  readonly pagado: Prisma.FieldRef<"Comandas", 'Boolean'>
+  readonly fecha_pagado: Prisma.FieldRef<"Comandas", 'DateTime'>
+  readonly transaccion_id: Prisma.FieldRef<"Comandas", 'String'>
 }
     
 

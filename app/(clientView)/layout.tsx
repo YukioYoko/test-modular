@@ -1,7 +1,6 @@
-
-
-import {Header} from '@/components'
-
+"use client";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { Header } from "@/components";
 
 export default function MenuLayout({
   children,
@@ -10,12 +9,16 @@ export default function MenuLayout({
 }>) {
   return (
     <div>
-      
-      <Header/>
-      <main className='bg-orange-grad'>
-        
-        {children}
-      </main>
+      <PayPalScriptProvider
+        options={{
+          clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "",
+          intent: "capture",
+          currency: "MXN",
+        }}
+      >
+        <Header />
+        <main className="bg-orange-grad">{children}</main>
+      </PayPalScriptProvider>
     </div>
   );
 }

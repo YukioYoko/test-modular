@@ -415,10 +415,6 @@ export type ComandaAditamentosUncheckedUpdateManyWithoutDetalleNestedInput = {
   deleteMany?: Prisma.ComandaAditamentosScalarWhereInput | Prisma.ComandaAditamentosScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ComandaAditamentosCreateWithoutAditamentoInput = {
   confirmacion?: boolean
   detalle: Prisma.DetalleComandaCreateNestedOneWithoutAditamentosInput

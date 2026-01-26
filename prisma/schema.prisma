@@ -80,6 +80,12 @@ model Comandas {
   fecha_hora DateTime?        @default(now())
   estado     String           @default("Abierta")
   token      String?
+  sub_total  Float            @default(0.0)
+  impuestos  Float            @default(0.0)
+  total      Float            @default(0.0)
+  pagado     Boolean          @default(false)
+  fecha_pagado DateTime?
+  transaccion_id String? 
   mesa       Mesa             @relation(fields: [id_mesa], references: [id_mesa], onDelete: NoAction, onUpdate: NoAction)
   mesero     Mesero           @relation(fields: [id_mesero], references: [id_mesero], onDelete: NoAction, onUpdate: NoAction)
   detalles   DetalleComanda[]
