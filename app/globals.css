@@ -65,6 +65,10 @@ body {
   background: linear-gradient(180deg, var(--lightPurple2) 0%, var(--lightPurple) 100%);
 }
 
+.bg-green-grad {
+  background: linear-gradient(180deg, var(--mint-green) 0%, var(--dark-mint-green) 100%);
+}
+
 .ring-light-purple{
   &:focus {
         --tw-ring-color: var(--lightPurple) /* oklch(75% 0.183 55.934) */;
@@ -108,5 +112,14 @@ body {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-tanker: var(--font-tanker);
+
+
+  /* THEMA VERDE */
+  --light-green: #E9F5DB;
+  --mint-green: #CFE1B9;
+  --dark-mint-green: #B5C99A;
+  --dark-green: #97A97C;
+  --darker-green: #87986A;
+  --militar-green: #718355;
 }
 

@@ -6,12 +6,74 @@ import "./globals.css";
 const tanker = localFont({
   src: [
     {
-      path: '../public/fonts/tanker/Tanker-Regular.woff2',
+      path: './fonts/tanker/Tanker-Regular.woff2',
       weight: '400',
       style: 'normal'
     }
   ],
-  variable: '--font-tanker',
+  variable: '--tanker',
+  display: 'swap',
+});
+
+const satoshi = localFont({
+  src: [
+    // --- LIGHT (300) ---
+    {
+      path: './fonts/satochi/Satoshi-Light.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satochi/Satoshi-LightItalic.woff2',
+      weight: '300',
+      style: 'italic',
+    },
+    // --- REGULAR (400) ---
+    {
+      path: './fonts/satochi/Satoshi-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satochi/Satoshi-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    // --- MEDIUM (500) ---
+    {
+      path: './fonts/satochi/Satoshi-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satochi/Satoshi-MediumItalic.woff2',
+      weight: '500',
+      style: 'italic',
+    },
+    // --- BOLD (700) ---
+    {
+      path: './fonts/satochi/Satoshi-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satochi/Satoshi-BoldItalic.woff2',
+      weight: '700',
+      style: 'italic',
+    },
+    // --- BLACK (900) ---
+    {
+      path: './fonts/satochi/Satoshi-Black.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satochi/Satoshi-BlackItalic.woff2',
+      weight: '900',
+      style: 'italic',
+    },
+  ],
+  variable: '--satoshi',
   display: 'swap',
 });
 
@@ -38,7 +100,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${tanker.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${tanker.variable} ${satoshi.variable} antialiased`}
       >
         {children}
       </body>

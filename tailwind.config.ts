@@ -11,12 +11,18 @@ const config: Config = {
     extend: {
       fontFamily: {
         // La clave 'tanker' define la clase 'font-tanker'
-        tanker: ['var(--font-tanker)', 'sans-serif'],
+        tanker: ['var(--tanker)', 'sans-serif'],
+        satoshi: ['var(--satoshi)', 'sans-serif'],
       },
       colors: {
         // Asegúrate de no haber borrado tus colores personalizados aquí
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'mint-green': "var(--mint-green)",
+        'dark-mint-green': "var(--dark-mint-green)",
+        'dark-green': "var(--dark-green)",
+        'darker-green': "var(--darker-green)",
+        'militar-green': "var(--militar-green)",
       },
     },
   },
