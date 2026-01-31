@@ -11,6 +11,16 @@ export default async function MenuPage({ searchParams }: { searchParams: Promise
   const idComanda = parseInt(params.comanda);
   const token = params.token;
 
+  const navLinks = [
+    { name: "Menú", href: "/menu" },
+     { name: "Entradas", href: "/entradas" },
+    { name: "Platillos", href: "/platillos" },
+     { name: "Postres", href: "/postres" },
+    { name: "Bebidas", href: "/bebidas" },
+    { name: "Mi Pedido", href: "/pedido" },
+    { name: "Pedir Cuenta", href: "/cuenta" },
+  ];
+
   // 1. Validación de seguridad
   const valido = await prisma.comandas.findFirst({
     where: { id_comanda: idComanda }
@@ -42,10 +52,27 @@ const productos = productosRaw.map(p => ({
 }));
 
   return (
-    <div className="min-h-screen bg-orange-grad pb-20">
+    <div className="min-h-screen bg-(--notWhite) pb-20">
       <main className="p-4">
+        <div className='flex mb-6 gap-3 w-full place-content-left'>
+
+          {navLinks.map( (link) => {
+            if(link.href !== '/cuenta' && link.href !== '/pedido'){
+              return (
+                 <div
+                  key={link.name}
+                  className='bg-white p-2 rounded-full shadow-md hover:shadow-lg transition-shadow cursor-pointer'
+                 >
+                  <h3 className='font-(family-name:--satoshi) font-bold text-center px-2'>{link.name}</h3>
+                 </div>
+              );
+            }
+          }
+        ) }
+        
+
+        </div>
         <RecomendacionMenu/>
-        {/* Ahora los productos son objetos planos seguros para el Client Component */}
         <MenuCategoriasComponent productos={productos} idComanda={idComanda} />
       </main>
     </div>

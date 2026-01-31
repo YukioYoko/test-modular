@@ -73,7 +73,7 @@ export const NavBar = ({ isOpen, closeNav }: NavBarProps) => {
             <span className="text-sm font-bold uppercase tracking-wider">
               {link.name}
             </span>
-            {isActive && <div className="w-2 h-2 bg-orange-600 rounded-full" />}
+            {isActive && <div className="w-2 h-2 bg-(--mint-green) rounded-full" />}
           </Link>
         );
         }

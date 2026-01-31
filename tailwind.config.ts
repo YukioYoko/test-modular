@@ -23,6 +23,7 @@ const config: Config = {
         'dark-green': "var(--dark-green)",
         'darker-green': "var(--darker-green)",
         'militar-green': "var(--militar-green)",
+        'not-white': "var(--notWhite)",
       },
     },
   },

@@ -97,13 +97,13 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
             </div>
             <button 
               onClick={() => agregarAlCarrito(prod)}
-              className="bg-orange-600 text-white px-6 py-3 rounded-2xl font-bold active:scale-95 transition-all shadow-lg"
+              className="bg-(--mint-green) text-white rounded-full font-bold active:scale-95 transition-all shadow-lg w-7 h-7 text-center "
             >
-              Agregar
+              +
             </button>
           </div>
 
-          {prod.opcionesAditamentos?.length > 0 && (
+          {/* {prod.opcionesAditamentos?.length > 0 && (
             <div className="mb-4">
               <p className="text-[10px] font-bold text-slate-400 uppercase mb-2">Personaliza:</p>
               <div className="flex flex-wrap gap-2">
@@ -123,15 +123,15 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
                 })}
               </div>
             </div>
-          )}
+          )} */}
           
-          <input 
+          {/* <input 
             type="text" 
             placeholder="¿Instrucciones especiales?" 
             value={notasTemp[prod.id_producto] || ""}
             onChange={(e) => setNotasTemp({...notasTemp, [prod.id_producto]: e.target.value})}
             className="w-full bg-slate-50 border-none p-3 rounded-xl text-sm"
-          />
+          /> */}
         </div>
       ))}
       
@@ -140,10 +140,10 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
             <button 
               onClick={enviarPedido}
               disabled={isPending}
-              className="w-full bg-slate-900 text-white p-5 rounded-2xl font-bold shadow-2xl flex justify-between items-center disabled:opacity-50"
+              className="w-full bg-(--militar-green) text-white p-5 rounded-2xl font-bold shadow-2xl flex justify-between items-center disabled:opacity-50"
             >
               <span>{isPending ? 'Enviando...' : `Pedir ${carrito.length} items`}</span>
-              <span className="bg-orange-600 px-3 py-1 rounded-lg text-sm">🚀 ENVIAR</span>
+              <span className="bg-(--notWhite) px-3 py-1 rounded-lg text-sm text-black">🚀 ENVIAR</span>
             </button>
         </div>
       )}
