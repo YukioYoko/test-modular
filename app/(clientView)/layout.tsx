@@ -1,6 +1,7 @@
-
+'use client'
 
 import {Header} from '@/components'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 
 export default function MenuLayout({
@@ -9,6 +10,13 @@ export default function MenuLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <PayPalScriptProvider options={{
+      clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? '',
+      intent: 'capture',
+      currency:'MXN'
+    }}>
+
+    
     <div>
       
       <Header/>
@@ -17,5 +25,6 @@ export default function MenuLayout({
         {children}
       </main>
     </div>
+</PayPalScriptProvider>
   );
 }

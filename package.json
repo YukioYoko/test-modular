@@ -12,6 +12,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.9.2",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "@supabase/supabase-js": "^2.90.1",
@@ -25,6 +26,7 @@
     "qrcode.react": "^4.2.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-paypal-js": "^0.0.1-security",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3"
   },
