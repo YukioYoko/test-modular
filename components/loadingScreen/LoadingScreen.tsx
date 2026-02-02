@@ -9,7 +9,7 @@ export const LoadingScreen = ({ isLoading }: { isLoading: boolean }) => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-orange-grad"
+          className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-green-grad"
         >
           {/* Contenedor del Logo */}
           <motion.div
@@ -23,10 +23,10 @@ export const LoadingScreen = ({ isLoading }: { isLoading: boolean }) => {
             className="relative"
           >
             {/* Círculo de luz detrás del logo */}
-            <div className="absolute inset-0 bg-darkorange blur-3xl opacity-20 rounded-full scale-150"></div>
+            <div className="absolute inset-0 bg-dark-green blur-3xl opacity-20 rounded-full scale-150"></div>
             
             <h1 className="text-5xl font-black text-white tracking-tighter relative">
-              FOODLIFY<span className="text-(--color-dark-orange)">POS</span>
+              FOODLIFY<span className="text-(--color-darker-green)">POS</span>
             </h1>
           </motion.div>
 
@@ -38,11 +38,11 @@ export const LoadingScreen = ({ isLoading }: { isLoading: boolean }) => {
               initial={{ x: "-100%" }}
               animate={{ x: "100%" }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              className="w-full h-full bg-orange-500"
+              className="w-full h-full bg-green-100"
             />
           </motion.div>
 
-          <p className="mt-4 text-(--color-lightGray) text-xs font-bold uppercase tracking-[0.2em]">
+          <p className="mt-4 text-(--color-dark-green) text-xs font-bold uppercase tracking-[0.2em]">
             Cargando sistema...
           </p>
         </motion.div>

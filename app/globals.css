@@ -121,5 +121,10 @@ body {
   --dark-green: #97A97C;
   --darker-green: #87986A;
   --militar-green: #718355;
+
+
+  --color-darker-green: var(--darker-green);
+  --color-dark-green: var(--dark-green);
+  
 }
 

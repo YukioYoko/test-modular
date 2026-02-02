@@ -1,14 +1,26 @@
-'use server'
+"use server";
 
-import { prisma } from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
-export async function registrarPagoExitoso(idComanda: number, transaccionId: string, desglose: any) {
+export async function registrarPagoExitoso(
+  idComanda: number,
+  transaccionId: string,
+  desglose: any,
+) {
+  const authToken = await getPaypalBearerToken();
+
+  if( !authToken ){
+    return{
+      success: false,
+      message: 'No se pudo obtener token de verificacion'
+    }
+  }
   try {
     // 1. Buscamos la comanda para saber qué mesa liberar
     const comandaActual = await prisma.comandas.findUnique({
       where: { id_comanda: idComanda },
-      select: { id_mesa: true }
+      select: { id_mesa: true },
     });
 
     if (!comandaActual) throw new Error("Comanda no encontrada");
@@ -19,27 +31,69 @@ export async function registrarPagoExitoso(idComanda: number, transaccionId: str
       prisma.comandas.update({
         where: { id_comanda: idComanda },
         data: {
-          estado: 'Cerrada',
+          estado: "Cerrada",
           pagado: true,
           fecha_pagado: new Date(),
           transaccion_id: transaccionId,
           sub_total: desglose.sub_total,
           impuestos: desglose.ivaTotal,
           total: desglose.total,
-        }
+        },
       }),
       // Liberar la mesa para la hostess
       prisma.mesa.update({
         where: { id_mesa: comandaActual.id_mesa },
-        data: { estado: 'Libre' }
-      })
+        data: { estado: "Libre" },
+      }),
     ]);
 
-    revalidatePath('/cuenta');
-    revalidatePath('/hostess'); 
+    revalidatePath("/cuenta");
+    revalidatePath("/hostess");
     return { success: true };
   } catch (error) {
     console.error("Error en DB:", error);
-    return { success: false, error: "No se pudo actualizar el registro del pago." };
+    return {
+      success: false,
+      error: "No se pudo actualizar el registro del pago.",
+    };
   }
 }
+
+const getPaypalBearerToken = async (): Promise<string|null> => {
+  const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
+  const PAYPAL_SECRET = process.env.PAYPAL_SECRET;
+  const oath2Url = process.env.PAYPAL_OAUTH_UR ?? '';
+
+
+  const base64Token = Buffer.from(
+    `${ PAYPAL_CLIENT_ID }:${ PAYPAL_SECRET }`, 
+    "utf-8"
+  ).toString('base64')
+
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Basic ${base64Token}`,
+  );
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+  const urlencoded = new URLSearchParams();
+  urlencoded.append("grant_type", "client_credentials");
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: urlencoded,
+  };
+
+  try{
+    const result = await fetch(oath2Url, requestOptions).then((response) => response.json())
+    
+    return result.access_token;
+
+  }catch(error){
+    console.log(error);
+    return null
+  }
+
+};
