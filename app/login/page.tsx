@@ -37,7 +37,7 @@ export default function LoginPage() {
       const result = await loginUsuario(formData);
       if (result?.success) {
         if (result.rol === 'hostess') router.push('/hostess');
-        else if (result.rol === 'admin') router.push('/admin');
+        else if (result.rol === 'admin') router.push('/home');
         else if (result.rol === 'cocina') router.push('/cocina');
         router.refresh();
       } else {

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { PayPalOrderStatus } from "@/src/interfaces";
 import { revalidatePath } from "next/cache";
 
 export async function registrarPagoExitoso(
@@ -14,6 +15,25 @@ export async function registrarPagoExitoso(
     return{
       success: false,
       message: 'No se pudo obtener token de verificacion'
+    }
+  }
+
+  const resp = await verifyPayPalPayment(transaccionId, authToken);
+
+  if( !resp ){
+    return{
+      success: false,
+      message: 'Error al verificar el pago'
+    }
+  }
+
+  const { status, purchase_units} = resp;
+  //const { }
+
+  if ( status !== 'COMPLETED'){
+    return{
+      success: false,
+      message: 'No se ha realizado el pago'
     }
   }
   try {
@@ -97,3 +117,29 @@ const getPaypalBearerToken = async (): Promise<string|null> => {
   }
 
 };
+
+const verifyPayPalPayment = async( paypalTransactionId: string, bearerToken: string ): Promise<PayPalOrderStatus|null> =>{
+
+const paypalOrderUrl = `${ process.env.PAYPAL_ORDERS_URL}/${paypalTransactionId}`
+
+const myHeaders = new Headers();
+  myHeaders.append(
+  "Authorization",
+  `Bearer ${ bearerToken }`,
+);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+};
+
+try{
+  const response = await fetch(paypalOrderUrl, requestOptions).then( r => r.json());
+  return response;
+}catch (error){
+  console.log(error);
+  return null;
+}
+
+
+}
