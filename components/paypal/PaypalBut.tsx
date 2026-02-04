@@ -51,7 +51,7 @@ export default function PaypalBut({ amount, idComanda, desglose }: Props) {
             if (result.success) {
               router.push('/hostess'); // O la página de éxito que prefieras
             } else {
-              alert("Error: El pago se procesó pero la mesa sigue ocupada. Contacta al mesero.");
+              alert(`Error: El pago se procesó pero la mesa sigue ocupada. Contacta al mesero. ${result.message}`);
             }
           } catch (err) {
             console.error("Error capturando orden:", err);
