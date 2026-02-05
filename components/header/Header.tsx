@@ -41,9 +41,12 @@ export const Header = () => {
         {/* Sintaxis correcta para pasar la prop */}
         <NavBar isOpen={nav} closeNav={() => setNav(false)} />
       </div>
-      <div className="fixed right-0 justify-end align-middle mr-4">
+      {if (!id_comanda){
+        return {<div className="fixed right-0 justify-end align-middle mr-4">
         <LogoutButton />
-      </div>
+      </div>}
+      }}
+      
 
     </header>
   );
