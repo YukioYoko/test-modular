@@ -36,15 +36,16 @@ export async function loginUsuario(formData: FormData) {
     // 4. Gestión de Sesión (Ejemplo simplificado con cookies)
     // En un entorno real, aquí generarías un token JWT firmado
     const cookieStore = await cookies()
-    cookieStore.set('session_user', JSON.stringify({ 
-      id: usuario.id, 
-      rol: usuario.rol 
-    }), {
-      httpOnly: true, // Protege contra ataques XSS
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24, // 1 día
-      path: '/hostess',
-    })
+    // BUSCA ESTA LÍNEA Y CÁMBIALA:
+cookieStore.set('session_user', JSON.stringify({ 
+  id: usuario.id, 
+  rol: usuario.rol 
+}), {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  maxAge: 60 * 60 * 24,
+  path: '/', // <--- CAMBIA ESTO A '/' PARA QUE FUNCIONE EN TODO EL SITIO
+})
 
     return { success: true, rol: usuario.rol }
 

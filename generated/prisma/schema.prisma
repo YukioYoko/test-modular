@@ -46,6 +46,8 @@ model Producto {
   descripcion String?
   tiempo_prep Int                   @default(0)
   pasos       String?
+  eliminado   Boolean               @default(false)
+  activo      Boolean               @default(false)
   detalles    DetalleComanda[]
   aditamentos ProductoAditamentos[]
   imagen      ProductoImagen[]
@@ -74,21 +76,23 @@ model ProductoAditamentos {
 }
 
 model Comandas {
-  id_comanda     Int              @id @default(autoincrement())
+  id_comanda     Int       @id @default(autoincrement())
   id_mesa        Int
   id_mesero      Int
-  fecha_hora     DateTime?        @default(now())
-  estado         String           @default("Abierta")
+  fecha_hora     DateTime? @default(now())
+  estado         String    @default("Abierta")
   token          String?
   fecha_pagado   DateTime?
-  impuestos      Float            @default(0.0)
-  pagado         Boolean          @default(false)
-  sub_total      Float            @default(0.0)
-  total          Float            @default(0.0)
+  impuestos      Float     @default(0.0)
+  pagado         Boolean   @default(false)
+  sub_total      Float     @default(0.0)
+  total          Float     @default(0.0)
   transaccion_id String?
-  mesa           Mesa             @relation(fields: [id_mesa], references: [id_mesa], onDelete: NoAction, onUpdate: NoAction)
-  mesero         Mesero           @relation(fields: [id_mesero], references: [id_mesero], onDelete: NoAction, onUpdate: NoAction)
-  detalles       DetalleComanda[]
+  metodo_pago    String?
+
+  mesa     Mesa             @relation(fields: [id_mesa], references: [id_mesa], onDelete: NoAction, onUpdate: NoAction)
+  mesero   Mesero           @relation(fields: [id_mesero], references: [id_mesero], onDelete: NoAction, onUpdate: NoAction)
+  detalles DetalleComanda[]
 
   @@map("comandas")
 }

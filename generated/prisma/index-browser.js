@@ -150,7 +150,9 @@ exports.Prisma.ProductoScalarFieldEnum = {
   categoria: 'categoria',
   descripcion: 'descripcion',
   tiempo_prep: 'tiempo_prep',
-  pasos: 'pasos'
+  pasos: 'pasos',
+  eliminado: 'eliminado',
+  activo: 'activo'
 };
 
 exports.Prisma.AditamentoScalarFieldEnum = {
@@ -176,7 +178,8 @@ exports.Prisma.ComandasScalarFieldEnum = {
   pagado: 'pagado',
   sub_total: 'sub_total',
   total: 'total',
-  transaccion_id: 'transaccion_id'
+  transaccion_id: 'transaccion_id',
+  metodo_pago: 'metodo_pago'
 };
 
 exports.Prisma.DetalleComandaScalarFieldEnum = {

@@ -20,8 +20,11 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
   const [aditamentosSeleccionados, setAditamentosSel] = useState<{ [key: number]: number[] }>({});
 
    useEffect(() => {
-      socketRef.current = io(SOCKET_URL);
-  
+      socketRef.current = io(SOCKET_URL),{
+  reconnection: false,      // Detiene los intentos infinitos
+  autoConnect: false,       // No se conecta solo al cargar
+  transports: ['websocket'] // Evita el error de "polling"
+}; 
       socketRef.current.on("connect", () => {
         console.log("✅ Cliente conectado al Socket de Foodlify");
       });

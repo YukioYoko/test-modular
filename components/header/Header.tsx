@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { NavBar } from "../navBar/NavBar";
+import LogoutButton from "../logout/Logout";
 
 export const Header = () => {
   const params = useSearchParams();
@@ -11,7 +12,7 @@ export const Header = () => {
 
   // Función para manejar el cambio
   const handleNav = () => setNav(!nav);
-  
+
 
   return (
     <header className="flex bg-(--notWhite) p-4 sticky top-0 z-10 justify-center items-center">
@@ -40,6 +41,10 @@ export const Header = () => {
         {/* Sintaxis correcta para pasar la prop */}
         <NavBar isOpen={nav} closeNav={() => setNav(false)} />
       </div>
+      <div className="fixed right-0 justify-end align-middle mr-4">
+        <LogoutButton />
+      </div>
+
     </header>
   );
 };

@@ -5161,6 +5161,8 @@ export namespace Prisma {
     descripcion: string | null
     tiempo_prep: number | null
     pasos: string | null
+    eliminado: boolean | null
+    activo: boolean | null
   }
 
   export type ProductoMaxAggregateOutputType = {
@@ -5171,6 +5173,8 @@ export namespace Prisma {
     descripcion: string | null
     tiempo_prep: number | null
     pasos: string | null
+    eliminado: boolean | null
+    activo: boolean | null
   }
 
   export type ProductoCountAggregateOutputType = {
@@ -5181,6 +5185,8 @@ export namespace Prisma {
     descripcion: number
     tiempo_prep: number
     pasos: number
+    eliminado: number
+    activo: number
     _all: number
   }
 
@@ -5205,6 +5211,8 @@ export namespace Prisma {
     descripcion?: true
     tiempo_prep?: true
     pasos?: true
+    eliminado?: true
+    activo?: true
   }
 
   export type ProductoMaxAggregateInputType = {
@@ -5215,6 +5223,8 @@ export namespace Prisma {
     descripcion?: true
     tiempo_prep?: true
     pasos?: true
+    eliminado?: true
+    activo?: true
   }
 
   export type ProductoCountAggregateInputType = {
@@ -5225,6 +5235,8 @@ export namespace Prisma {
     descripcion?: true
     tiempo_prep?: true
     pasos?: true
+    eliminado?: true
+    activo?: true
     _all?: true
   }
 
@@ -5322,6 +5334,8 @@ export namespace Prisma {
     descripcion: string | null
     tiempo_prep: number
     pasos: string | null
+    eliminado: boolean
+    activo: boolean
     _count: ProductoCountAggregateOutputType | null
     _avg: ProductoAvgAggregateOutputType | null
     _sum: ProductoSumAggregateOutputType | null
@@ -5351,6 +5365,8 @@ export namespace Prisma {
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
+    eliminado?: boolean
+    activo?: boolean
     detalles?: boolean | Producto$detallesArgs<ExtArgs>
     aditamentos?: boolean | Producto$aditamentosArgs<ExtArgs>
     imagen?: boolean | Producto$imagenArgs<ExtArgs>
@@ -5365,6 +5381,8 @@ export namespace Prisma {
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
+    eliminado?: boolean
+    activo?: boolean
   }, ExtArgs["result"]["producto"]>
 
   export type ProductoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5375,6 +5393,8 @@ export namespace Prisma {
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
+    eliminado?: boolean
+    activo?: boolean
   }, ExtArgs["result"]["producto"]>
 
   export type ProductoSelectScalar = {
@@ -5385,9 +5405,11 @@ export namespace Prisma {
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
+    eliminado?: boolean
+    activo?: boolean
   }
 
-  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_producto" | "nombre" | "precio" | "categoria" | "descripcion" | "tiempo_prep" | "pasos", ExtArgs["result"]["producto"]>
+  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_producto" | "nombre" | "precio" | "categoria" | "descripcion" | "tiempo_prep" | "pasos" | "eliminado" | "activo", ExtArgs["result"]["producto"]>
   export type ProductoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     detalles?: boolean | Producto$detallesArgs<ExtArgs>
     aditamentos?: boolean | Producto$aditamentosArgs<ExtArgs>
@@ -5412,6 +5434,8 @@ export namespace Prisma {
       descripcion: string | null
       tiempo_prep: number
       pasos: string | null
+      eliminado: boolean
+      activo: boolean
     }, ExtArgs["result"]["producto"]>
     composites: {}
   }
@@ -5845,6 +5869,8 @@ export namespace Prisma {
     readonly descripcion: FieldRef<"Producto", 'String'>
     readonly tiempo_prep: FieldRef<"Producto", 'Int'>
     readonly pasos: FieldRef<"Producto", 'String'>
+    readonly eliminado: FieldRef<"Producto", 'Boolean'>
+    readonly activo: FieldRef<"Producto", 'Boolean'>
   }
     
 
@@ -8541,6 +8567,7 @@ export namespace Prisma {
     sub_total: number | null
     total: number | null
     transaccion_id: string | null
+    metodo_pago: string | null
   }
 
   export type ComandasMaxAggregateOutputType = {
@@ -8556,6 +8583,7 @@ export namespace Prisma {
     sub_total: number | null
     total: number | null
     transaccion_id: string | null
+    metodo_pago: string | null
   }
 
   export type ComandasCountAggregateOutputType = {
@@ -8571,6 +8599,7 @@ export namespace Prisma {
     sub_total: number
     total: number
     transaccion_id: number
+    metodo_pago: number
     _all: number
   }
 
@@ -8606,6 +8635,7 @@ export namespace Prisma {
     sub_total?: true
     total?: true
     transaccion_id?: true
+    metodo_pago?: true
   }
 
   export type ComandasMaxAggregateInputType = {
@@ -8621,6 +8651,7 @@ export namespace Prisma {
     sub_total?: true
     total?: true
     transaccion_id?: true
+    metodo_pago?: true
   }
 
   export type ComandasCountAggregateInputType = {
@@ -8636,6 +8667,7 @@ export namespace Prisma {
     sub_total?: true
     total?: true
     transaccion_id?: true
+    metodo_pago?: true
     _all?: true
   }
 
@@ -8738,6 +8770,7 @@ export namespace Prisma {
     sub_total: number
     total: number
     transaccion_id: string | null
+    metodo_pago: string | null
     _count: ComandasCountAggregateOutputType | null
     _avg: ComandasAvgAggregateOutputType | null
     _sum: ComandasSumAggregateOutputType | null
@@ -8772,6 +8805,7 @@ export namespace Prisma {
     sub_total?: boolean
     total?: boolean
     transaccion_id?: boolean
+    metodo_pago?: boolean
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
     mesero?: boolean | MeseroDefaultArgs<ExtArgs>
     detalles?: boolean | Comandas$detallesArgs<ExtArgs>
@@ -8791,6 +8825,7 @@ export namespace Prisma {
     sub_total?: boolean
     total?: boolean
     transaccion_id?: boolean
+    metodo_pago?: boolean
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
     mesero?: boolean | MeseroDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comandas"]>
@@ -8808,6 +8843,7 @@ export namespace Prisma {
     sub_total?: boolean
     total?: boolean
     transaccion_id?: boolean
+    metodo_pago?: boolean
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
     mesero?: boolean | MeseroDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comandas"]>
@@ -8825,9 +8861,10 @@ export namespace Prisma {
     sub_total?: boolean
     total?: boolean
     transaccion_id?: boolean
+    metodo_pago?: boolean
   }
 
-  export type ComandasOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_comanda" | "id_mesa" | "id_mesero" | "fecha_hora" | "estado" | "token" | "fecha_pagado" | "impuestos" | "pagado" | "sub_total" | "total" | "transaccion_id", ExtArgs["result"]["comandas"]>
+  export type ComandasOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_comanda" | "id_mesa" | "id_mesero" | "fecha_hora" | "estado" | "token" | "fecha_pagado" | "impuestos" | "pagado" | "sub_total" | "total" | "transaccion_id" | "metodo_pago", ExtArgs["result"]["comandas"]>
   export type ComandasInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
     mesero?: boolean | MeseroDefaultArgs<ExtArgs>
@@ -8863,6 +8900,7 @@ export namespace Prisma {
       sub_total: number
       total: number
       transaccion_id: string | null
+      metodo_pago: string | null
     }, ExtArgs["result"]["comandas"]>
     composites: {}
   }
@@ -9301,6 +9339,7 @@ export namespace Prisma {
     readonly sub_total: FieldRef<"Comandas", 'Float'>
     readonly total: FieldRef<"Comandas", 'Float'>
     readonly transaccion_id: FieldRef<"Comandas", 'String'>
+    readonly metodo_pago: FieldRef<"Comandas", 'String'>
   }
     
 
@@ -13095,7 +13134,9 @@ export namespace Prisma {
     categoria: 'categoria',
     descripcion: 'descripcion',
     tiempo_prep: 'tiempo_prep',
-    pasos: 'pasos'
+    pasos: 'pasos',
+    eliminado: 'eliminado',
+    activo: 'activo'
   };
 
   export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
@@ -13130,7 +13171,8 @@ export namespace Prisma {
     pagado: 'pagado',
     sub_total: 'sub_total',
     total: 'total',
-    transaccion_id: 'transaccion_id'
+    transaccion_id: 'transaccion_id',
+    metodo_pago: 'metodo_pago'
   };
 
   export type ComandasScalarFieldEnum = (typeof ComandasScalarFieldEnum)[keyof typeof ComandasScalarFieldEnum]
@@ -13252,6 +13294,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -13262,13 +13311,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
   /**
    * Deep Input Types
@@ -13449,6 +13491,8 @@ export namespace Prisma {
     descripcion?: StringNullableFilter<"Producto"> | string | null
     tiempo_prep?: IntFilter<"Producto"> | number
     pasos?: StringNullableFilter<"Producto"> | string | null
+    eliminado?: BoolFilter<"Producto"> | boolean
+    activo?: BoolFilter<"Producto"> | boolean
     detalles?: DetalleComandaListRelationFilter
     aditamentos?: ProductoAditamentosListRelationFilter
     imagen?: ProductoImagenListRelationFilter
@@ -13462,6 +13506,8 @@ export namespace Prisma {
     descripcion?: SortOrderInput | SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrderInput | SortOrder
+    eliminado?: SortOrder
+    activo?: SortOrder
     detalles?: DetalleComandaOrderByRelationAggregateInput
     aditamentos?: ProductoAditamentosOrderByRelationAggregateInput
     imagen?: ProductoImagenOrderByRelationAggregateInput
@@ -13478,6 +13524,8 @@ export namespace Prisma {
     descripcion?: StringNullableFilter<"Producto"> | string | null
     tiempo_prep?: IntFilter<"Producto"> | number
     pasos?: StringNullableFilter<"Producto"> | string | null
+    eliminado?: BoolFilter<"Producto"> | boolean
+    activo?: BoolFilter<"Producto"> | boolean
     detalles?: DetalleComandaListRelationFilter
     aditamentos?: ProductoAditamentosListRelationFilter
     imagen?: ProductoImagenListRelationFilter
@@ -13491,6 +13539,8 @@ export namespace Prisma {
     descripcion?: SortOrderInput | SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrderInput | SortOrder
+    eliminado?: SortOrder
+    activo?: SortOrder
     _count?: ProductoCountOrderByAggregateInput
     _avg?: ProductoAvgOrderByAggregateInput
     _max?: ProductoMaxOrderByAggregateInput
@@ -13509,6 +13559,8 @@ export namespace Prisma {
     descripcion?: StringNullableWithAggregatesFilter<"Producto"> | string | null
     tiempo_prep?: IntWithAggregatesFilter<"Producto"> | number
     pasos?: StringNullableWithAggregatesFilter<"Producto"> | string | null
+    eliminado?: BoolWithAggregatesFilter<"Producto"> | boolean
+    activo?: BoolWithAggregatesFilter<"Producto"> | boolean
   }
 
   export type AditamentoWhereInput = {
@@ -13623,6 +13675,7 @@ export namespace Prisma {
     sub_total?: FloatFilter<"Comandas"> | number
     total?: FloatFilter<"Comandas"> | number
     transaccion_id?: StringNullableFilter<"Comandas"> | string | null
+    metodo_pago?: StringNullableFilter<"Comandas"> | string | null
     mesa?: XOR<MesaScalarRelationFilter, MesaWhereInput>
     mesero?: XOR<MeseroScalarRelationFilter, MeseroWhereInput>
     detalles?: DetalleComandaListRelationFilter
@@ -13641,6 +13694,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     total?: SortOrder
     transaccion_id?: SortOrderInput | SortOrder
+    metodo_pago?: SortOrderInput | SortOrder
     mesa?: MesaOrderByWithRelationInput
     mesero?: MeseroOrderByWithRelationInput
     detalles?: DetalleComandaOrderByRelationAggregateInput
@@ -13662,6 +13716,7 @@ export namespace Prisma {
     sub_total?: FloatFilter<"Comandas"> | number
     total?: FloatFilter<"Comandas"> | number
     transaccion_id?: StringNullableFilter<"Comandas"> | string | null
+    metodo_pago?: StringNullableFilter<"Comandas"> | string | null
     mesa?: XOR<MesaScalarRelationFilter, MesaWhereInput>
     mesero?: XOR<MeseroScalarRelationFilter, MeseroWhereInput>
     detalles?: DetalleComandaListRelationFilter
@@ -13680,6 +13735,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     total?: SortOrder
     transaccion_id?: SortOrderInput | SortOrder
+    metodo_pago?: SortOrderInput | SortOrder
     _count?: ComandasCountOrderByAggregateInput
     _avg?: ComandasAvgOrderByAggregateInput
     _max?: ComandasMaxOrderByAggregateInput
@@ -13703,6 +13759,7 @@ export namespace Prisma {
     sub_total?: FloatWithAggregatesFilter<"Comandas"> | number
     total?: FloatWithAggregatesFilter<"Comandas"> | number
     transaccion_id?: StringNullableWithAggregatesFilter<"Comandas"> | string | null
+    metodo_pago?: StringNullableWithAggregatesFilter<"Comandas"> | string | null
   }
 
   export type DetalleComandaWhereInput = {
@@ -14038,6 +14095,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
@@ -14051,6 +14110,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
@@ -14063,6 +14124,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
@@ -14076,6 +14139,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
@@ -14089,6 +14154,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
   }
 
   export type ProductoUpdateManyMutationInput = {
@@ -14098,6 +14165,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ProductoUncheckedUpdateManyInput = {
@@ -14108,6 +14177,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AditamentoCreateInput = {
@@ -14201,6 +14272,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     mesa: MesaCreateNestedOneWithoutComandasInput
     mesero: MeseroCreateNestedOneWithoutComandasInput
     detalles?: DetalleComandaCreateNestedManyWithoutComandaInput
@@ -14219,6 +14291,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
   }
 
@@ -14232,6 +14305,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     mesa?: MesaUpdateOneRequiredWithoutComandasNestedInput
     mesero?: MeseroUpdateOneRequiredWithoutComandasNestedInput
     detalles?: DetalleComandaUpdateManyWithoutComandaNestedInput
@@ -14250,6 +14324,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     detalles?: DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
   }
 
@@ -14266,6 +14341,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
   }
 
   export type ComandasUpdateManyMutationInput = {
@@ -14278,6 +14354,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ComandasUncheckedUpdateManyInput = {
@@ -14293,6 +14370,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DetalleComandaCreateInput = {
@@ -14687,6 +14765,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DetalleComandaListRelationFilter = {
     every?: DetalleComandaWhereInput
     some?: DetalleComandaWhereInput
@@ -14725,6 +14808,8 @@ export namespace Prisma {
     descripcion?: SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrder
+    eliminado?: SortOrder
+    activo?: SortOrder
   }
 
   export type ProductoAvgOrderByAggregateInput = {
@@ -14741,6 +14826,8 @@ export namespace Prisma {
     descripcion?: SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrder
+    eliminado?: SortOrder
+    activo?: SortOrder
   }
 
   export type ProductoMinOrderByAggregateInput = {
@@ -14751,6 +14838,8 @@ export namespace Prisma {
     descripcion?: SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrder
+    eliminado?: SortOrder
+    activo?: SortOrder
   }
 
   export type ProductoSumOrderByAggregateInput = {
@@ -14791,6 +14880,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -14898,11 +14995,6 @@ export namespace Prisma {
     id_aditamento?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type MesaScalarRelationFilter = {
     is?: MesaWhereInput
     isNot?: MesaWhereInput
@@ -14926,6 +15018,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     total?: SortOrder
     transaccion_id?: SortOrder
+    metodo_pago?: SortOrder
   }
 
   export type ComandasAvgOrderByAggregateInput = {
@@ -14950,6 +15043,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     total?: SortOrder
     transaccion_id?: SortOrder
+    metodo_pago?: SortOrder
   }
 
   export type ComandasMinOrderByAggregateInput = {
@@ -14965,6 +15059,7 @@ export namespace Prisma {
     sub_total?: SortOrder
     total?: SortOrder
     transaccion_id?: SortOrder
+    metodo_pago?: SortOrder
   }
 
   export type ComandasSumOrderByAggregateInput = {
@@ -14974,14 +15069,6 @@ export namespace Prisma {
     impuestos?: SortOrder
     sub_total?: SortOrder
     total?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ComandasScalarRelationFilter = {
@@ -15258,6 +15345,10 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DetalleComandaUpdateManyWithoutProductoNestedInput = {
     create?: XOR<DetalleComandaCreateWithoutProductoInput, DetalleComandaUncheckedCreateWithoutProductoInput> | DetalleComandaCreateWithoutProductoInput[] | DetalleComandaUncheckedCreateWithoutProductoInput[]
     connectOrCreate?: DetalleComandaCreateOrConnectWithoutProductoInput | DetalleComandaCreateOrConnectWithoutProductoInput[]
@@ -15486,10 +15577,6 @@ export namespace Prisma {
     connectOrCreate?: DetalleComandaCreateOrConnectWithoutComandaInput | DetalleComandaCreateOrConnectWithoutComandaInput[]
     createMany?: DetalleComandaCreateManyComandaInputEnvelope
     connect?: DetalleComandaWhereUniqueInput | DetalleComandaWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type MesaUpdateOneRequiredWithoutComandasNestedInput = {
@@ -15805,6 +15892,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -15838,6 +15930,14 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -15854,19 +15954,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type ComandasCreateWithoutMeseroInput = {
     fecha_hora?: Date | string | null
     estado?: string
@@ -15877,6 +15964,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     mesa: MesaCreateNestedOneWithoutComandasInput
     detalles?: DetalleComandaCreateNestedManyWithoutComandaInput
   }
@@ -15893,6 +15981,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
   }
 
@@ -15938,6 +16027,7 @@ export namespace Prisma {
     sub_total?: FloatFilter<"Comandas"> | number
     total?: FloatFilter<"Comandas"> | number
     transaccion_id?: StringNullableFilter<"Comandas"> | string | null
+    metodo_pago?: StringNullableFilter<"Comandas"> | string | null
   }
 
   export type ComandasCreateWithoutMesaInput = {
@@ -15950,6 +16040,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     mesero: MeseroCreateNestedOneWithoutComandasInput
     detalles?: DetalleComandaCreateNestedManyWithoutComandaInput
   }
@@ -15966,6 +16057,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutComandaInput
   }
 
@@ -16240,6 +16332,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
   }
@@ -16252,6 +16346,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
   }
@@ -16303,6 +16399,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
   }
@@ -16315,6 +16413,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
   }
@@ -16476,6 +16576,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
     mesa: MesaCreateNestedOneWithoutComandasInput
     mesero: MeseroCreateNestedOneWithoutComandasInput
   }
@@ -16493,6 +16594,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
   }
 
   export type ComandasCreateOrConnectWithoutDetallesInput = {
@@ -16507,6 +16609,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
   }
@@ -16519,6 +16623,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
   }
@@ -16565,6 +16671,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     mesa?: MesaUpdateOneRequiredWithoutComandasNestedInput
     mesero?: MeseroUpdateOneRequiredWithoutComandasNestedInput
   }
@@ -16582,6 +16689,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProductoUpsertWithoutDetallesInput = {
@@ -16602,6 +16710,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
   }
@@ -16614,6 +16724,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
   }
@@ -16717,6 +16829,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
   }
@@ -16729,6 +16843,8 @@ export namespace Prisma {
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
+    eliminado?: boolean
+    activo?: boolean
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
   }
@@ -16756,6 +16872,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
   }
@@ -16768,6 +16886,8 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
   }
@@ -16784,6 +16904,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
   }
 
   export type ComandasUpdateWithoutMeseroInput = {
@@ -16796,6 +16917,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     mesa?: MesaUpdateOneRequiredWithoutComandasNestedInput
     detalles?: DetalleComandaUpdateManyWithoutComandaNestedInput
   }
@@ -16812,6 +16934,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     detalles?: DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
   }
 
@@ -16827,6 +16950,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ComandasCreateManyMesaInput = {
@@ -16841,6 +16965,7 @@ export namespace Prisma {
     sub_total?: number
     total?: number
     transaccion_id?: string | null
+    metodo_pago?: string | null
   }
 
   export type ComandasUpdateWithoutMesaInput = {
@@ -16853,6 +16978,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     mesero?: MeseroUpdateOneRequiredWithoutComandasNestedInput
     detalles?: DetalleComandaUpdateManyWithoutComandaNestedInput
   }
@@ -16869,6 +16995,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
     detalles?: DetalleComandaUncheckedUpdateManyWithoutComandaNestedInput
   }
 
@@ -16884,6 +17011,7 @@ export namespace Prisma {
     sub_total?: FloatFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
     transaccion_id?: NullableStringFieldUpdateOperationsInput | string | null
+    metodo_pago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DetalleComandaCreateManyProductoInput = {

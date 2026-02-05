@@ -67,23 +67,7 @@ export default function AdminHomePage() {
           </div>
         </div>
 
-        {/* CARD PERSONAL (Usando 'usuario' e 'id') */}
-        <div className="bg-white p-7 rounded-[2.5rem] shadow-sm border-b-8 border-(--dark-green)">
-          <h2 className="font-bold text-(--dark-green) uppercase text-[10px] tracking-widest mb-6">Staff en Turno</h2>
-          <div className="space-y-3">
-            {stats.listaPersonal.map((persona: any) => (
-              <div key={persona.id} className="flex items-center gap-4 bg-(--light-green)/50 p-3 rounded-2xl border border-(--mint-green)">
-                <div className="w-10 h-10 bg-(--dark-green) rounded-full flex items-center justify-center text-white text-xs font-black">
-                  {persona.usuario[0].toUpperCase()}
-                </div>
-                <div>
-                  <p className="text-sm font-black text-(--militar-green)">{persona.usuario}</p>
-                  <p className="text-[9px] uppercase font-bold text-(--militar-green)/60">{persona.rol}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+       
 
         {/* TOP CONSUMO */}
         <div className="bg-(--militar-green) p-7 rounded-[2.5rem] shadow-xl text-(--light-green)">
@@ -102,7 +86,27 @@ export default function AdminHomePage() {
           </div>
         </div>
 
+         {/* CARD PERSONAL (Usando 'usuario' e 'id') */}
+        <div className="bg-white p-7 rounded-[2.5rem] shadow-sm border-b-8 border-(--dark-green)">
+          <h2 className="font-bold text-(--dark-green) uppercase text-[10px] tracking-widest mb-6">Staff en Turno</h2>
+          <div className="space-y-3">
+            {stats.listaPersonal.map((persona: any) => (
+              <div key={persona.id} className="flex items-center gap-4 bg-(--light-green)/50 p-3 rounded-2xl border border-(--mint-green)">
+                <div className="w-10 h-10 bg-(--dark-green) rounded-full flex items-center justify-center text-white text-xs font-black">
+                  {persona.usuario[0].toUpperCase()}
+                </div>
+                <div>
+                  <p className="text-sm font-black text-(--militar-green)">{persona.usuario}</p>
+                  <p className="text-[9px] uppercase font-bold text-(--militar-green)/60">{persona.rol}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
+
+      
 
       <footer className="mt-10 bg-white/40 p-6 rounded-[2.5rem] flex justify-between items-center text-(--militar-green) border border-white/60">
          <p className="text-xs font-bold opacity-70">Sincronizado con Neon Database</p>

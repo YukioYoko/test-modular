@@ -9,27 +9,24 @@ export default function PersonalPage() {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [usuarioEdit, setUsuarioEdit] = useState<any>(null);
 
-  // Carga inicial de datos
-  useEffect(() => {
-    refreshData();
-  }, []);
+  useEffect(() => { refreshData(); }, []);
 
   const refreshData = async () => {
     const data = await getPersonal();
     setPersonal(data);
   };
 
-  // Filtrado en tiempo real por Nombre (usuario) o ID
   const personalFiltrado = personal.filter(p => 
     p.usuario.toLowerCase().includes(busqueda.toLowerCase()) || 
-    p.id.toString().includes(busqueda)
+    p.id.toString().includes(busqueda) ||
+    p.email.toLowerCase().includes(busqueda.toLowerCase())
   );
 
   const handleEliminar = async (id: number) => {
-    if (confirm('¿Estás seguro de eliminar este registro? Esta acción no se puede deshacer.')) {
+    if (confirm('¿Seguro que deseas eliminar este colaborador?')) {
       startTransition(async () => {
-        await eliminarPersonal(id);
-        await refreshData();
+        const res = await eliminarPersonal(id);
+        if (res.success) refreshData();
       });
     }
   };
@@ -43,7 +40,7 @@ export default function PersonalPage() {
       const res = await upsertPersonal({ ...data, id: usuarioEdit?.id });
       if (res.success) {
         setModalAbierto(false);
-        await refreshData();
+        refreshData();
       } else {
         alert(res.error);
       }
@@ -51,171 +48,113 @@ export default function PersonalPage() {
   };
 
   return (
-    <div className="p-4 md:p-10 bg-(--light-green) min-h-screen font-sans">
-      
-      {/* SECCIÓN SUPERIOR: Título y Búsqueda */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+    <div className="p-4 md:p-10 bg-(--light-green) min-h-screen font-sans text-(--militar-green)">
+      {/* HEADER */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
         <div>
-          <h1 className="text-4xl font-black text-(--militar-green) tracking-tighter uppercase">Personal</h1>
-          <p className="text-(--dark-green) font-bold text-sm">Panel de control de colaboradores</p>
+          <h1 className="text-4xl font-black uppercase tracking-tighter">Personal</h1>
+          <p className="text-(--dark-green) font-bold text-sm italic">Gestión de accesos y perfiles</p>
         </div>
 
-        <div className="relative w-full md:w-96 group">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none opacity-40 group-focus-within:opacity-100 transition-opacity">
-            <span>🔍</span>
-          </div>
+        <div className="relative w-full md:w-96">
           <input 
             type="text" 
-            placeholder="Buscar por nombre o ID..."
-            className="w-full pl-12 pr-4 py-4 rounded-[1.5rem] bg-white border-none shadow-sm focus:ring-4 focus:ring-(--mint-green) text-(--militar-green) font-medium transition-all"
+            placeholder="Buscar por nombre, email o ID..."
+            className="w-full pl-12 pr-4 py-4 rounded-3xl bg-white border-none shadow-sm focus:ring-4 focus:ring-(--mint-green) font-bold"
             onChange={(e) => setBusqueda(e.target.value)}
           />
+          <span className="absolute left-4 top-4.5 opacity-30">🔍</span>
         </div>
       </div>
 
-      {/* BOTÓN AGREGAR */}
-      <div className="mb-8">
-        <button 
-          onClick={() => { setUsuarioEdit(null); setModalAbierto(true); }}
-          className="bg-(--militar-green) text-white px-8 py-4 rounded-[1.5rem] font-black flex items-center gap-3 hover:bg-(--darker-green) active:scale-95 transition-all shadow-xl shadow-(--militar-green)/20"
-        >
-          <span className="text-xl">+</span> AGREGAR NUEVO
-        </button>
-      </div>
+      <button 
+        onClick={() => { setUsuarioEdit(null); setModalAbierto(true); }}
+        className="mb-8 bg-(--militar-green) text-white px-10 py-4 rounded-2xl font-black hover:scale-105 transition-all shadow-xl shadow-(--militar-green)/20"
+      >
+        + AGREGAR COLABORADOR
+      </button>
 
-      {/* TABLA DE REGISTROS */}
-      <div className="bg-white rounded-[2.5rem] shadow-sm overflow-hidden border border-(--mint-green) transition-opacity duration-300" style={{ opacity: isPending ? 0.6 : 1 }}>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-(--mint-green)/20 text-(--militar-green) text-[10px] uppercase font-black tracking-widest border-b border-(--light-green)">
-              <tr>
-                <th className="p-6">ID</th>
-                <th className="p-6">Colaborador</th>
-                <th className="p-6 text-center">Rol de Acceso</th>
-                <th className="p-6 text-right">Gestión</th>
+      {/* TABLA */}
+      <div className="bg-white rounded-[2.5rem] shadow-sm overflow-hidden border border-(--mint-green)" style={{ opacity: isPending ? 0.7 : 1 }}>
+        <table className="w-full text-left border-collapse">
+          <thead className="bg-(--mint-green)/20 text-[10px] uppercase font-black tracking-widest border-b border-(--light-green)">
+            <tr>
+              <th className="p-6">ID</th>
+              <th className="p-6">Colaborador / Email</th>
+              <th className="p-6 text-center">Rol</th>
+              <th className="p-6 text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-(--light-green)">
+            {personalFiltrado.map((p) => (
+              <tr key={p.id} className="hover:bg-(--light-green)/30 transition-colors">
+                <td className="p-6 font-mono text-xs font-bold text-(--dark-green)">#{p.id}</td>
+                <td className="p-6">
+                  <div className="flex flex-col">
+                    <span className="font-black text-lg leading-none">{p.usuario}</span>
+                    <span className="text-xs font-bold text-(--dark-green) opacity-60">{p.email}</span>
+                  </div>
+                </td>
+                <td className="p-6 text-center">
+                  <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase border ${
+                    p.rol === 'Admin' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-(--mint-green) text-(--militar-green) border-transparent'
+                  }`}>
+                    {p.rol}
+                  </span>
+                </td>
+                <td className="p-6 text-right">
+                  {p.rol !== 'Admin' ? (
+                    <div className="flex justify-end gap-2">
+                      <button onClick={() => { setUsuarioEdit(p); setModalAbierto(true); }} className="p-3 bg-(--light-green) rounded-xl hover:bg-(--mint-green)">✏️</button>
+                      <button onClick={() => handleEliminar(p.id)} className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-colors">🗑️</button>
+                    </div>
+                  ) : (
+                    <span className="text-[10px] font-black opacity-30 italic">Protegido</span>
+                  )}
+                </td>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-(--light-green)">
-              {personalFiltrado.length > 0 ? (
-                personalFiltrado.map((p) => (
-                  <tr key={p.id} className="hover:bg-(--light-green)/30 transition-colors group">
-                    <td className="p-6 font-mono text-xs text-(--dark-green) font-bold">#{p.id}</td>
-                    <td className="p-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-(--mint-green) rounded-2xl flex items-center justify-center text-(--militar-green) font-black uppercase shadow-inner">
-                          {p.usuario[0]}
-                        </div>
-                        <span className="font-black text-(--militar-green) text-lg">{p.usuario}</span>
-                      </div>
-                    </td>
-                    <td className="p-6 text-center">
-                      <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter ${
-                        p.rol === 'Admin' 
-                        ? 'bg-red-100 text-red-600 border border-red-200' 
-                        : 'bg-(--light-green) text-(--militar-green) border border-(--mint-green)'
-                      }`}>
-                        {p.rol}
-                      </span>
-                    </td>
-                    <td className="p-6 text-right">
-                      {p.rol !== 'Admin' ? (
-                        <div className="flex justify-end gap-2">
-                          <button 
-                            onClick={() => { setUsuarioEdit(p); setModalAbierto(true); }}
-                            className="bg-(--light-green) p-3 rounded-xl hover:bg-(--dark-mint-green) text-(--militar-green) transition-all"
-                            title="Editar"
-                          >
-                            ✏️
-                          </button>
-                          <button 
-                            onClick={() => handleEliminar(p.id)}
-                            className="bg-red-50 p-3 rounded-xl hover:bg-red-500 hover:text-white text-red-500 transition-all"
-                            title="Eliminar"
-                          >
-                            🗑️
-                          </button>
-                        </div>
-                      ) : (
-                        <span className="text-[10px] font-bold text-slate-300 italic px-4">Protegido</span>
-                      )}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={4} className="p-20 text-center text-(--dark-green) font-bold italic">
-                    No se encontraron resultados para "{busqueda}"
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {/* MODAL PARA AGREGAR/EDITAR */}
+      {/* MODAL */}
       {modalAbierto && (
         <div className="fixed inset-0 bg-(--militar-green)/60 backdrop-blur-md flex items-center justify-center z-50 p-6">
-          <div className="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl animate-in fade-in zoom-in duration-300">
-            <div className="mb-8">
-              <h2 className="text-3xl font-black text-(--militar-green) tracking-tighter">
-                {usuarioEdit ? 'ACTUALIZAR DATOS' : 'REGISTRO NUEVO'}
-              </h2>
-              <p className="text-(--dark-green) text-sm font-bold">Completa la información del colaborador</p>
-            </div>
+          <div className="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl">
+            <h2 className="text-3xl font-black mb-8 uppercase tracking-tighter">
+              {usuarioEdit ? 'Editar Perfil' : 'Nuevo Colaborador'}
+            </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-(--dark-green) uppercase ml-2 tracking-widest">Nombre de Usuario</label>
-                <input 
-                  name="usuario" 
-                  defaultValue={usuarioEdit?.usuario} 
-                  required 
-                  placeholder="Ej: juan_perez"
-                  className="w-full bg-(--light-green) border-none p-5 rounded-2xl focus:ring-4 focus:ring-(--mint-green) text-(--militar-green) font-bold" 
-                />
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="text-[10px] font-black uppercase ml-2 mb-1 block">Usuario</label>
+                <input name="usuario" defaultValue={usuarioEdit?.usuario} required className="w-full bg-(--light-green) p-5 rounded-2xl border-none font-bold" />
+              </div>
+              <div>
+                <label className="text-[10px] font-black uppercase ml-2 mb-1 block">Email Corporativo</label>
+                <input name="email" type="email" defaultValue={usuarioEdit?.email} required className="w-full bg-(--light-green) p-5 rounded-2xl border-none font-bold" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] font-black uppercase ml-2 mb-1 block">Rol</label>
+                  <select name="rol" defaultValue={usuarioEdit?.rol || 'Mesero'} className="w-full bg-(--light-green) p-5 rounded-2xl border-none font-black">
+                    <option value="cocina">Cocina</option>
+                    <option value="Mesero">Mesero</option>
+                    <option value="hostess">Hostess</option>
+                    <option value="Cajero">Cajero</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] font-black uppercase ml-2 mb-1 block">Contraseña</label>
+                  <input name="password" type="password" placeholder={usuarioEdit ? "Cambiar..." : "****"} required={!usuarioEdit} className="w-full bg-(--light-green) p-5 rounded-2xl border-none font-bold" />
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-(--dark-green) uppercase ml-2 tracking-widest">Puesto Operativo</label>
-                <select 
-                  name="rol" 
-                  defaultValue={usuarioEdit?.rol || 'Mesero'} 
-                  className="w-full bg-(--light-green) border-none p-5 rounded-2xl focus:ring-4 focus:ring-(--mint-green) text-(--militar-green) font-black"
-                >
-                  <option value="Cocinero">🧑‍🍳 COCINERO</option>
-                  <option value="Mesero">🤵 MESERO</option>
-                  <option value="Hostess">📋 HOSTESS</option>
-                  <option value="Cajero">💰 CAJERO</option>
-                </select>
-                <p className="text-[9px] text-(--dark-green) font-bold italic ml-2">* No se permite asignar rol Administrador por seguridad.</p>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-(--dark-green) uppercase ml-2 tracking-widest">Clave de Acceso</label>
-                <input 
-                  name="password" 
-                  type="password" 
-                  placeholder={usuarioEdit ? "Opcional (cambiar contraseña)" : "Crear contraseña"} 
-                  required={!usuarioEdit} 
-                  className="w-full bg-(--light-green) border-none p-5 rounded-2xl focus:ring-4 focus:ring-(--mint-green) text-(--militar-green) font-bold" 
-                />
-              </div>
-
-              <div className="flex gap-4 mt-10 pt-4">
-                <button 
-                  type="button" 
-                  onClick={() => setModalAbierto(false)} 
-                  className="flex-1 py-5 font-black text-(--militar-green) hover:bg-(--light-green) rounded-2xl transition-all uppercase text-xs"
-                >
-                  Cancelar
-                </button>
-                <button 
-                  type="submit" 
-                  disabled={isPending}
-                  className="flex-1 py-5 font-black bg-(--militar-green) text-white rounded-2xl shadow-xl hover:bg-(--darker-green) disabled:opacity-50 transition-all uppercase text-xs"
-                >
-                  {isPending ? 'Procesando...' : 'Confirmar'}
+              <div className="flex gap-4 pt-6">
+                <button type="button" onClick={() => setModalAbierto(false)} className="flex-1 font-black uppercase text-xs">Cancelar</button>
+                <button type="submit" disabled={isPending} className="flex-1 py-5 bg-(--militar-green) text-white rounded-2xl font-black shadow-lg hover:bg-(--darker-green)">
+                  {isPending ? 'Guardando...' : 'Confirmar'}
                 </button>
               </div>
             </form>

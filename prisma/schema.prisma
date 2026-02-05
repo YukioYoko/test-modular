@@ -46,6 +46,8 @@ model Producto {
   descripcion String?
   tiempo_prep Int                   @default(0)
   pasos       String?
+  eliminado   Boolean               @default(false)
+  activo      Boolean               @default(false)
   detalles    DetalleComanda[]
   aditamentos ProductoAditamentos[]
   imagen      ProductoImagen[]
@@ -86,6 +88,8 @@ model Comandas {
   sub_total      Float            @default(0.0)
   total          Float            @default(0.0)
   transaccion_id String?
+  metodo_pago    String?        
+  
   mesa           Mesa             @relation(fields: [id_mesa], references: [id_mesa], onDelete: NoAction, onUpdate: NoAction)
   mesero         Mesero           @relation(fields: [id_mesero], references: [id_mesero], onDelete: NoAction, onUpdate: NoAction)
   detalles       DetalleComanda[]

@@ -36,11 +36,12 @@ export default function LoginPage() {
     startTransition(async () => {
       const result = await loginUsuario(formData);
       if (result?.success) {
-        if (result.rol === 'hostess') router.push('/hostess');
-        else if (result.rol === 'admin') router.push('/home');
-        else if (result.rol === 'cocina') router.push('/cocina');
-        router.refresh();
-      } else {
+  // En lugar de múltiples if, podrías redirigir a una ruta base 
+  // y que el middleware decida, pero tu lógica actual está bien.
+  // Solo asegúrate de que el refresh ocurra.
+  router.push(result.rol === 'admin' ? '/home' : `/${result.rol}`);
+  router.refresh(); 
+} else {
         setError(result?.error || 'Credenciales inválidas');
       }
     });

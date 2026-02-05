@@ -58,6 +58,7 @@ export async function registrarPagoExitoso(
           sub_total: desglose.sub_total,
           impuestos: desglose.ivaTotal,
           total: desglose.total,
+          metodo_pago: 'Tarjeta',
         },
       }),
       // Liberar la mesa para la hostess
