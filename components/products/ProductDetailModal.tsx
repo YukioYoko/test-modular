@@ -68,7 +68,7 @@ export const ProductDetailModal = ({ producto, onClose, onAddToCart }: DetailPro
              {/* Imagen Grande */}
              <div className="relative w-full h-48 mb-6 rounded-3xl overflow-hidden bg-slate-100">
                 <Image 
-                    src={producto.imagen} 
+                    src={producto.imagen || "/ramen-placeholder.png"} 
                     alt={producto.nombre}
                     fill
                     className="object-cover"

@@ -21,6 +21,10 @@
   animation: slide-up 0.3s ease-out forwards;
 }
 
+@keyframes loading {
+  to { width: 100%; }
+}
+
 /* =========================
    RESET BÁSICO
 ========================= */

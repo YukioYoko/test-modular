@@ -4,8 +4,9 @@ import { sendOrder } from './action';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io, Socket } from "socket.io-client";
 import { CartButton } from '@/components/cart/cartButton';
-import { ProductCard } from '@/components/products/ProductCard'; // Importar Card
-import { ProductDetailModal } from '@/components/products/ProductDetailModal'; // Importar Modal
+import { ProductCard } from '@/components/products/ProductCard'; 
+import { ProductDetailModal } from '@/components/products/ProductDetailModal';
+import { OrderSuccessModal } from '@/components/ui/OrderSuccessModal'; // <--- 1. IMPORTAR
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
@@ -16,8 +17,10 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
   const [isPending, startTransition] = useTransition();
   const [carrito, setCarrito] = useState<any[]>([]);
   
-  // Estado para controlar qué producto se está viendo en detalle
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  
+  // 2. NUEVO ESTADO PARA EL MODAL DE ÉXITO
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -26,7 +29,6 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
     return () => { socketRef.current?.disconnect(); };
   }, []);
 
-  // Función 1: Agregar rápido (desde la tarjeta pequeña)
   const agregarRapido = (prod: any, e: React.MouseEvent) => {
     e.stopPropagation(); 
     setCarrito((prev) => [
@@ -43,11 +45,8 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
     ]);
   };
 
-  // Función 2: Agregar desde el Modal de Detalle (Recibe el objeto ya armado)
   const agregarDesdeDetalle = (itemArmado: any) => {
     setCarrito((prev) => [...prev, itemArmado]);
-    // Opcional: Cerrar modal automáticamente si prefieres
-    // setSelectedProduct(null); 
   };
 
   const removerDelCarrito = (index: number) => {
@@ -57,13 +56,17 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
   const enviarPedido = () => {
     startTransition(async () => {
       const result = await sendOrder(idComanda, carrito, token);
+      
       if (result.success && result.ordenCreada) {
+        // Emitir socket
         socketRef.current?.emit("new_order", {
           items: result.ordenCreada, 
           fecha: new Date().toISOString()
         });
-        alert("¡Pedido enviado a cocina!");
-        setCarrito([]); 
+
+        // 3. CAMBIO: En lugar de alert, mostramos el modal y limpiamos
+        setCarrito([]); // Limpiamos el carrito inmediatamente
+        setShowSuccess(true); // Mostramos la animación
       }
     });
   };
@@ -76,22 +79,28 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
           <ProductCard 
             key={prod.id_producto}
             producto={prod}
-            onSelect={() => setSelectedProduct(prod)} // Abre el modal
+            onSelect={() => setSelectedProduct(prod)}
             onQuickAdd={(e) => agregarRapido(prod, e)}
           />
         ))}
       </div>
 
-      {/* MODAL DE DETALLE (Se renderiza solo si hay producto seleccionado) */}
+      {/* MODAL DE DETALLE DEL PRODUCTO */}
       {selectedProduct && (
         <ProductDetailModal 
           producto={selectedProduct}
-          onClose={() => setSelectedProduct(null)} // Cierra el modal
-          onAddToCart={agregarDesdeDetalle} // Pasa la función lógica
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={agregarDesdeDetalle}
         />
       )}
 
+      {/* 4. MODAL DE ÉXITO (Se muestra si showSuccess es true) */}
+      {showSuccess && (
+        <OrderSuccessModal onClose={() => setShowSuccess(false)} />
+      )}
+
       {/* BOTÓN FLOTANTE DE CARRITO */}
+      {/* Nota: Al limpiar el carrito en enviarPedido, el botón se actualizará a estado vacío automáticamente */}
       <CartButton 
         items={carrito} 
         onRemoveItem={removerDelCarrito}
