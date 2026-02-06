@@ -3,8 +3,10 @@ import { useState, useTransition, useEffect, useRef } from 'react';
 import { sendOrder } from './action';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io, Socket } from "socket.io-client";
+import { CartButton } from '@/components/cart/cartButton';
+import { ProductCard } from '@/components/products/ProductCard'; // Importar Card
+import { ProductDetailModal } from '@/components/products/ProductDetailModal'; // Importar Modal
 
-// 1. URL de tu servidor en Railway (usa una variable de entorno en Vercel)
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
 export default function MenuCategoriasComponent({ productos, idComanda }: { productos: any[], idComanda: number }) {
@@ -14,72 +16,52 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
   const [isPending, startTransition] = useTransition();
   const [carrito, setCarrito] = useState<any[]>([]);
   
-  // 2. Referencia para mantener el socket activo sin reconectar en cada render
+  // Estado para controlar qué producto se está viendo en detalle
+  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+
   const socketRef = useRef<Socket | null>(null);
 
-  // EFECTO: Conexión única al montar el componente
   useEffect(() => {
     socketRef.current = io(SOCKET_URL);
-
-    socketRef.current.on("connect", () => {
-      console.log("✅ Cliente conectado al Socket de Foodlify");
-    });
-
-    return () => {
-      socketRef.current?.disconnect();
-    };
+    return () => { socketRef.current?.disconnect(); };
   }, []);
 
-  const [notasTemp, setNotasTemp] = useState<{ [key: number]: string }>({});
-  const [aditamentosSeleccionados, setAditamentosSel] = useState<{ [key: number]: number[] }>({});
-
-  const toggleAditamento = (idProd: number, idAdi: number) => {
-    setAditamentosSel(prev => {
-      const actuales = prev[idProd] || [];
-      const nuevos = actuales.includes(idAdi) 
-        ? actuales.filter(id => id !== idAdi) 
-        : [...actuales, idAdi];
-      return { ...prev, [idProd]: nuevos };
-    });
-  };
-
-  const agregarAlCarrito = (prod: any) => {
-    const notaActual = notasTemp[prod.id_producto] || "";
-    const aditamentosActuales = aditamentosSeleccionados[prod.id_producto] || [];
-
+  // Función 1: Agregar rápido (desde la tarjeta pequeña)
+  const agregarRapido = (prod: any, e: React.MouseEvent) => {
+    e.stopPropagation(); 
     setCarrito((prev) => [
       ...prev, 
       { 
         prod: prod.id_producto, 
         nombre: prod.nombre, 
+        price: prod.precio, 
+        imagen: prod.imagen,
         cantidad: 1, 
-        nota: notaActual,
-        aditamentos: aditamentosActuales 
+        nota: "",
+        aditamentos: [] 
       }
     ]);
-    
-    setNotasTemp(prev => ({ ...prev, [prod.id_producto]: "" }));
-    setAditamentosSel(prev => ({ ...prev, [prod.id_producto]: [] }));
   };
 
-  const verProducto = (id_producto: number) => {
-    const comanda = params.get('comanda') || "";
-    const currentToken = params.get('token') || "";
-    // Usamos template strings para evitar errores de URLSearchParams
-    router.push(`/menu/${id_producto}?comanda=${comanda}&token=${currentToken}`);
-  }
+  // Función 2: Agregar desde el Modal de Detalle (Recibe el objeto ya armado)
+  const agregarDesdeDetalle = (itemArmado: any) => {
+    setCarrito((prev) => [...prev, itemArmado]);
+    // Opcional: Cerrar modal automáticamente si prefieres
+    // setSelectedProduct(null); 
+  };
+
+  const removerDelCarrito = (index: number) => {
+      setCarrito(prev => prev.filter((_, i) => i !== index));
+  };
 
   const enviarPedido = () => {
     startTransition(async () => {
       const result = await sendOrder(idComanda, carrito, token);
-      
       if (result.success && result.ordenCreada) {
-        // 3. Emitimos el evento usando la referencia del socket
         socketRef.current?.emit("new_order", {
           items: result.ordenCreada, 
           fecha: new Date().toISOString()
         });
-
         alert("¡Pedido enviado a cocina!");
         setCarrito([]); 
       }
@@ -87,66 +69,35 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 pb-32">
-      {productos.map((prod) => (
-        <div key={prod.id_producto} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-          <div className="flex justify-between items-start mb-4">
-            <div onClick={() => verProducto(prod.id_producto)} className="cursor-pointer">
-              <h3 className="font-bold text-slate-800 text-lg">{prod.nombre}</h3>
-              <p className="text-emerald-600 font-black">${prod.precio.toFixed(2)}</p>
-            </div>
-            <button 
-              onClick={() => agregarAlCarrito(prod)}
-              className="bg-(--mint-green) text-white rounded-full font-bold active:scale-95 transition-all shadow-lg w-7 h-7 text-center "
-            >
-              +
-            </button>
-          </div>
+    <>
+      {/* GRID DE PRODUCTOS */}
+      <div className="grid grid-cols-2 gap-4 pb-32">
+        {productos.map((prod) => (
+          <ProductCard 
+            key={prod.id_producto}
+            producto={prod}
+            onSelect={() => setSelectedProduct(prod)} // Abre el modal
+            onQuickAdd={(e) => agregarRapido(prod, e)}
+          />
+        ))}
+      </div>
 
-          {/* {prod.opcionesAditamentos?.length > 0 && (
-            <div className="mb-4">
-              <p className="text-[10px] font-bold text-slate-400 uppercase mb-2">Personaliza:</p>
-              <div className="flex flex-wrap gap-2">
-                {prod.opcionesAditamentos.map((adi: any) => {
-                  const estaSel = aditamentosSeleccionados[prod.id_producto]?.includes(adi.id);
-                  return (
-                    <button
-                      key={adi.id}
-                      onClick={() => toggleAditamento(prod.id_producto, adi.id)}
-                      className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
-                        estaSel ? 'bg-orange-600 border-orange-600 text-white' : 'bg-slate-50 text-slate-600'
-                      }`}
-                    >
-                      + {adi.nombre}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )} */}
-          
-          {/* <input 
-            type="text" 
-            placeholder="¿Instrucciones especiales?" 
-            value={notasTemp[prod.id_producto] || ""}
-            onChange={(e) => setNotasTemp({...notasTemp, [prod.id_producto]: e.target.value})}
-            className="w-full bg-slate-50 border-none p-3 rounded-xl text-sm"
-          /> */}
-        </div>
-      ))}
-      
-      {carrito.length > 0 && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-30">
-            <button 
-              onClick={enviarPedido}
-              disabled={isPending}
-              className="w-full bg-(--militar-green) text-white p-5 rounded-2xl font-bold shadow-2xl flex justify-between items-center disabled:opacity-50"
-            >
-              <span>{isPending ? 'Enviando...' : `Pedir ${carrito.length} items`}</span>
-              <span className="bg-(--notWhite) px-3 py-1 rounded-lg text-sm text-black">🚀 ENVIAR</span>
-            </button>
-        </div>
+      {/* MODAL DE DETALLE (Se renderiza solo si hay producto seleccionado) */}
+      {selectedProduct && (
+        <ProductDetailModal 
+          producto={selectedProduct}
+          onClose={() => setSelectedProduct(null)} // Cierra el modal
+          onAddToCart={agregarDesdeDetalle} // Pasa la función lógica
+        />
       )}
-    </div>
+
+      {/* BOTÓN FLOTANTE DE CARRITO */}
+      <CartButton 
+        items={carrito} 
+        onRemoveItem={removerDelCarrito}
+        onSubmit={enviarPedido} 
+        isPending={isPending} 
+      />
+    </>
   );
 }

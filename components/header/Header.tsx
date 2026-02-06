@@ -1,45 +1,34 @@
-// components/navBar/navBar.tsx
+// components/header.tsx
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { NavBar } from "../navBar/NavBar";
 
 export const Header = () => {
   const params = useSearchParams();
   const idComanda = params.get("comanda");
-  const [nav, setNav] = useState(false);
-
-  // Función para manejar el cambio
-  const handleNav = () => setNav(!nav);
-  
 
   return (
-    <header className="flex bg-(--notWhite) p-4 sticky top-0 z-10 justify-center items-center">
-      {/* BOTÓN CON TOGGLE CORRECTO */}
-      {/* <button onClick={handleNav} className="z-20">
-        <img
-          src={!nav ? "/menu.svg" : "/close.svg"}
-          className="h-10 w-10 left-10 fixed top-4 bg-(--mint-green)"
-        />
-      </button> */}
-      <div className="h-10 w-10 left-10 fixed top-4 ">
-        <p>Btn lupa</p>
-      </div>
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-black text-(--dark-green) font-(family-name:--tanker)">Foodlify</h1>
-        {/* <p className="text-xs text-(--color-lightGray)">
-          Ordenando para la Comanda #{idComanda}
-        </p> */}
+    // Quitamos 'flex' y ponemos 'block' o 'flex-col' para que se apilen verticalmente (Logo arriba, Menu abajo)
+    // Mantenemos 'sticky top-0' aquí para que TODO el encabezado (logo + menú) se quede fijo al bajar
+    <header className="sticky top-0 z-30 bg-(--notWhite)">
+      
+      {/* PARTE 1: BARRA SUPERIOR (LOGO Y BOTONES) */}
+      <div className="flex p-4 justify-center items-center relative">
+        {/* Botón Lupa (Izquierda) */}
+        {/* <div className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
+            <p className="text-xs">🔍</p>
+        </div> */}
+
+        {/* Logo Central */}
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="text-3xl font-black text-(--dark-mint-green) font-(family-name:--tanker) tracking-wide">
+            Foodlify
+          </h1>
+          <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-2">
+             Mesa {idComanda}
+          </p>
+        </div>
       </div>
 
-      {/* 2. EL MENÚ LATERAL (Overlay) */}
-      <div
-        className={`fixed top-0 left-0 w-full h-screen bg-black/80 z-10 duration-300 ${nav ? "block" : "hidden"}`}
-        onClick={handleNav}
-      >
-        {/* Sintaxis correcta para pasar la prop */}
-        <NavBar isOpen={nav} closeNav={() => setNav(false)} />
-      </div>
     </header>
   );
 };
