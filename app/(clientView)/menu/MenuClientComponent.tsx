@@ -84,7 +84,7 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
             </div>
             <button 
               onClick={(e) => {e.stopPropagation();agregarAlCarrito(prod);}}
-              className="bg-orange-600 text-white px-6 py-3 rounded-2xl font-bold active:scale-95 transition-all shadow-lg shadow-orange-100"
+              className="bg-black text-white px-6 py-3 rounded-2xl font-bold active:scale-95 transition-all shadow-lg shadow-orange-100"
             >
               Agregar
             </button>
@@ -103,7 +103,7 @@ export default function MenuClientComponent({ productos, idComanda }: { producto
                       onClick={(e) => {e.stopPropagation();toggleAditamento(prod.id_producto, adi.id)}}
                       className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
                         estaSeleccionado 
-                        ? 'bg-orange-600 border-orange-600 text-white shadow-md' 
+                        ? 'bg-green border-orange-600 text-white shadow-md' 
                         : 'bg-slate-50 border-slate-100 text-slate-600'
                       }`}
                     >

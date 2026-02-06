@@ -20,7 +20,7 @@ export default function MenuLayout({
     <div>
       
       <Header/>
-      <main className='bg-orange-grad'>
+      <main className='bg-(--militar-green)'>
         
         {children}
       </main>

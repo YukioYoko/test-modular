@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 
 export default function RecomendacionMenu() {
@@ -11,13 +12,13 @@ export default function RecomendacionMenu() {
       </div>
 
       <div
-        className=' p-4 bg-(--militar-green) rounded-2xl shadow-md flex justify-center items-center gap-24 mb-6'>
-        <img src="#" alt="Foto de comida" className='bg-none'></img>
+        className=' p-4 bg-(--mint-green) rounded-2xl shadow-md flex justify-center items-center gap-24 mb-6'>
+        <img src="../../ramen-placeholder.png" alt="Foto de comida" className='bg-none'></img>
         <div
           className='text-white font-family-(family-name:--satoshi) flex flex-col'
         >
-          <p className='' >Descuento 20%</p>
-          <p className='text-gray-400'>Ver mas..</p>
+          <p className='text-(--militar-green)' >Descuento 20%</p>
+          <p className='font-light text-(--darker-green)'>Ver mas..</p>
         </div>
       </div>
     </div>
