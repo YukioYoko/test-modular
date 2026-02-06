@@ -36,15 +36,6 @@ export const Header = () => {
           </p>
         </div>
       </div>
-
-      {/* 2. EL MENÚ LATERAL (Overlay) */}
-      <div
-        className={`fixed top-0 left-0 w-full h-screen bg-black/80 z-10 duration-300 ${nav ? "block" : "hidden"}`}
-        onClick={handleNav}
-      >
-        {/* Sintaxis correcta para pasar la prop */}
-        <NavBar isOpen={nav} closeNav={() => setNav(false)} />
-      </div>
       
       {!idComanda && (
         <div className="fixed right-0 justify-end align-middle mr-4">
