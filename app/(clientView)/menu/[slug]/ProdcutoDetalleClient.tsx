@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { AprioriModal } from '@/components/products/AprioriModal'; // <-- Nuevo Componente
+
+import { AprioriModal } from '@/components/products/SugerenciaApriori';
 
 export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
   const [nota, setNota] = useState("");

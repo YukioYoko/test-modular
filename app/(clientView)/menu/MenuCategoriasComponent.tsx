@@ -8,7 +8,7 @@ import { CartButton } from '@/components/cart/cartButton';
 import { ProductCard } from '@/components/products/ProductCard'; 
 import { ProductDetailModal } from '@/components/products/ProductDetailModal';
 import { OrderSuccessModal } from '@/components/ui/OrderSuccessModal';
-import { AprioriModal } from '@/components/products/AprioriModal'; // <-- Nuevo Componente
+import { AprioriModal } from '@/components/products/SugerenciaApriori'; // <-- Nuevo Componente
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
