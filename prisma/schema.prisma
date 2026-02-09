@@ -43,6 +43,8 @@ model Producto {
   nombre      String
   precio      Decimal               @default(0.0) @db.Decimal(10, 2)
   categoria   String
+  id_subcategoria   Int
+  subcategoriaRel SubCategoria      @relation(fields: [id_subcategoria], references: [id_subcategoria])
   descripcion String?
   tiempo_prep Int                   @default(0)
   pasos       String?
@@ -51,9 +53,11 @@ model Producto {
   detalles    DetalleComanda[]
   aditamentos ProductoAditamentos[]
   imagen      ProductoImagen[]
+  historial       HistorialAnalitico[]
 
   @@map("productos")
 }
+
 
 model Aditamento {
   id_aditamento Int                   @id @default(autoincrement())
@@ -130,3 +134,32 @@ model ProductoImagen {
 
   @@map("producto_imagen")
 }
+
+// --- NUEVOS MODELOS PARA INTELIGENCIA ARTIFICIAL ---
+
+model HistorialAnalitico {
+  id_historial   Int      @id @default(autoincrement())
+  id_producto    Int
+  id_subcategoria   Int
+  categoria   String
+  hora           Int      // 0-23
+  dia_semana     Int      // 0-6 (0 es Domingo)
+  es_festivo     Boolean  @default(false)
+  clima_id       Int      // 0:Despejado, 1:Nubes, 2:Lluvia, 3:Otros
+  fecha_registro DateTime @default(now())
+
+  // Relación opcional con producto por si quieres hacer JOINs después
+  producto       Producto @relation(fields: [id_producto], references: [id_producto])
+
+  @@map("historial_analitico")
+}
+
+
+model SubCategoria {
+  id_subcategoria Int       @id @default(autoincrement())
+  nombre          String
+  productos       Producto[]
+
+  @@map("subcategorias")
+}
+
