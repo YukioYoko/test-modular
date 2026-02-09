@@ -1,4 +1,4 @@
-// components/products/AprioriModal.tsx
+// components/products/SugerenciaApriori.tsx
 'use client';
 import { ProductCard } from './ProductCard';
 
@@ -21,7 +21,12 @@ export function AprioriModal({ productoBaseNombre, sugerencias, onAdd, onClose }
             <div key={prod.id_producto} className="border border-slate-100 rounded-2xl p-1">
                <ProductCard 
                   producto={prod} 
-                  onQuickAdd={(e: any) => { onAdd(prod, e); onClose(); }} 
+                  // 1. PASAMOS ONSELECT COMO FUNCIÓN VACÍA PARA SATISFACER TYPESCRIPT
+                  onSelect={() => {}} 
+                  onQuickAdd={(e: any) => { 
+                    onAdd(prod, e); 
+                    onClose(); 
+                  }} 
                />
             </div>
           ))}
