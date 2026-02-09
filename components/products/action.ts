@@ -37,7 +37,7 @@ export async function getSugerenciasApriori(productoId: number) {
 
       if (idsSugeridos.length > 0) {
         sugerenciasFinales = await prisma.producto.findMany({
-          where: { id_producto: { in: idsSugeridos }, estado: true }
+          where: { id_producto: { in: idsSugeridos }, activo: true }
         });
       }
     }
