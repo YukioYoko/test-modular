@@ -1,12 +1,14 @@
 'use client';
 import { useState, useTransition, useEffect, useRef } from 'react';
 import { sendOrder } from './action';
+import { getSugerenciasApriori } from './apriori'; // <-- Importar la nueva acción
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io, Socket } from "socket.io-client";
 import { CartButton } from '@/components/cart/cartButton';
 import { ProductCard } from '@/components/products/ProductCard'; 
 import { ProductDetailModal } from '@/components/products/ProductDetailModal';
-import { OrderSuccessModal } from '@/components/ui/OrderSuccessModal'; // <--- 1. IMPORTAR
+import { OrderSuccessModal } from '@/components/ui/OrderSuccessModal';
+import { AprioriModal } from '@/components/products/AprioriModal'; // <-- Nuevo Componente
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
@@ -15,12 +17,14 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
   const params = useSearchParams();
   const token = params.get('token');
   const [isPending, startTransition] = useTransition();
+  
+  // ESTADOS
   const [carrito, setCarrito] = useState<any[]>([]);
-  
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
-  
-  // 2. NUEVO ESTADO PARA EL MODAL DE ÉXITO
   const [showSuccess, setShowSuccess] = useState(false);
+  
+  // Estado para las sugerencias de Minería de Datos (Apriori)
+  const [sugerenciasData, setSugerenciasData] = useState<{nombre: string, productos: any[]} | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -29,24 +33,40 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
     return () => { socketRef.current?.disconnect(); };
   }, []);
 
-  const agregarRapido = (prod: any, e: React.MouseEvent) => {
-    e.stopPropagation(); 
-    setCarrito((prev) => [
-      ...prev, 
-      { 
-        prod: prod.id_producto, 
-        nombre: prod.nombre, 
-        price: prod.precio, 
-        imagen: prod.imagen,
-        cantidad: 1, 
-        nota: "",
-        aditamentos: [] 
-      }
-    ]);
+  // AGREGAR RÁPIDO + LÓGICA APRIORI
+  const agregarRapido = async (prod: any, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation(); 
+    
+    // 1. Agregar al carrito inmediatamente
+    const nuevoItem = { 
+      prod: prod.id_producto, 
+      nombre: prod.nombre, 
+      price: prod.precio, 
+      imagen: prod.imagen,
+      cantidad: 1, 
+      nota: "",
+      aditamentos: [] 
+    };
+    
+    setCarrito((prev) => [...prev, nuevoItem]);
+
+    // 2. Ejecutar Minería de Datos: ¿Qué suelen llevar con esto?
+    // Solo buscamos sugerencias si NO estamos añadiendo una sugerencia (para evitar bucles)
+    if (!sugerenciasData) {
+        const recomendados = await getSugerenciasApriori(prod.id_producto);
+        if (recomendados && recomendados.length > 0) {
+          setSugerenciasData({
+            nombre: prod.nombre,
+            productos: recomendados
+          });
+        }
+    }
   };
 
   const agregarDesdeDetalle = (itemArmado: any) => {
     setCarrito((prev) => [...prev, itemArmado]);
+    setSelectedProduct(null);
+    // Opcional: También podrías disparar Apriori aquí
   };
 
   const removerDelCarrito = (index: number) => {
@@ -58,15 +78,13 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
       const result = await sendOrder(idComanda, carrito, token);
       
       if (result.success && result.ordenCreada) {
-        // Emitir socket
         socketRef.current?.emit("new_order", {
           items: result.ordenCreada, 
           fecha: new Date().toISOString()
         });
 
-        // 3. CAMBIO: En lugar de alert, mostramos el modal y limpiamos
-        setCarrito([]); // Limpiamos el carrito inmediatamente
-        setShowSuccess(true); // Mostramos la animación
+        setCarrito([]); 
+        setShowSuccess(true); 
       }
     });
   };
@@ -94,13 +112,22 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
         />
       )}
 
-      {/* 4. MODAL DE ÉXITO (Se muestra si showSuccess es true) */}
+      {/* MODAL APRIORI (MINERÍA DE DATOS) */}
+      {sugerenciasData && (
+        <AprioriModal 
+            productoBaseNombre={sugerenciasData.nombre}
+            sugerencias={sugerenciasData.productos}
+            onAdd={(prod: any) => agregarRapido(prod)} // Permite encadenar ventas
+            onClose={() => setSugerenciasData(null)}
+        />
+      )}
+
+      {/* MODAL DE ÉXITO */}
       {showSuccess && (
         <OrderSuccessModal onClose={() => setShowSuccess(false)} />
       )}
 
       {/* BOTÓN FLOTANTE DE CARRITO */}
-      {/* Nota: Al limpiar el carrito en enviarPedido, el botón se actualizará a estado vacío automáticamente */}
       <CartButton 
         items={carrito} 
         onRemoveItem={removerDelCarrito}

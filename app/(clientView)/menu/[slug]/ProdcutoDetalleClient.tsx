@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { SugerenciasApriori } from '@/components';
 
 export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
   const [nota, setNota] = useState("");
@@ -72,6 +73,11 @@ export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
             onChange={(e) => setNota(e.target.value)}
           />
 
+<SugerenciasApriori 
+    productoId={producto.id_producto} 
+    onQuickAdd={onAddToCart} // Reutiliza tu función de agregar
+  />
+  
           <button 
             onClick={handleAgregarAlCarrito}
             className={`w-full py-4 rounded-2xl font-black shadow-lg transition-all active:scale-95 ${
