@@ -48,7 +48,7 @@ export async function getSugerenciasApriori(productoId: number) {
       sugerenciasFinales = await prisma.producto.findMany({
         where: { 
           id_producto: { not: productoId },
-          estado: true 
+          activo: true 
         },
         take: 2
       });
