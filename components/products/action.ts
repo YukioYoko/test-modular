@@ -1,7 +1,7 @@
 // app/menu/aprioriAction.ts
 'use server'
 import { prisma } from '@/lib/prisma';
-
+/*
 export async function getSugerenciasApriori(productoId: number) {
   try {
     // Validamos que el ID sea correcto
@@ -47,5 +47,24 @@ export async function getSugerenciasApriori(productoId: number) {
   } catch (error) {
     console.error("Error en Apriori:", error);
     return []; // Siempre devolver array para que el .map() del front no falle
+  }
+}
+  */
+ export async function getSugerenciasApriori(productoId: number) {
+  try {
+    // COMENTA TODO TU ALGORITMO TEMPORALMENTE Y PON ESTO:
+    const fallback = await prisma.producto.findMany({
+      where: { id_producto: { not: productoId }, estado: true },
+      take: 2
+    });
+    
+    console.log("Sugerencias encontradas:", fallback.length); // Mira esto en tu terminal de VS Code
+    
+    return fallback.map(p => ({
+      ...p,
+      precio: Number(p.precio)
+    }));
+  } catch (e) {
+    return [];
   }
 }

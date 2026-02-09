@@ -1,7 +1,7 @@
 // components/products/SugerenciaApriori.tsx
 'use client';
 import { ProductCard } from './ProductCard';
- /*
+
 export function AprioriModal({ productoBaseNombre, sugerencias, onAdd, onClose }: any) {
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
@@ -41,23 +41,4 @@ export function AprioriModal({ productoBaseNombre, sugerencias, onAdd, onClose }
       </div>
     </div>
   );
-}
-  */
- export async function getSugerenciasApriori(productoId: number) {
-  try {
-    // COMENTA TODO TU ALGORITMO TEMPORALMENTE Y PON ESTO:
-    const fallback = await prisma.producto.findMany({
-      where: { id_producto: { not: productoId }, estado: true },
-      take: 2
-    });
-    
-    console.log("Sugerencias encontradas:", fallback.length); // Mira esto en tu terminal de VS Code
-    
-    return fallback.map(p => ({
-      ...p,
-      precio: Number(p.precio)
-    }));
-  } catch (e) {
-    return [];
-  }
 }
