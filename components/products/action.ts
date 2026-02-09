@@ -53,7 +53,11 @@ export async function getSugerenciasApriori(productoId: number) {
         take: 4
       });
     }
-
+    // Dentro de tu action.ts, justo antes del return:
+console.log(`--- Análisis Apriori para Producto ${productoId} ---`);
+sugerenciasFinales.forEach(s => {
+    console.log(`Producto Sugerido: ${s.id_producto} | Confianza: ${(s.confianza * 100).toFixed(0)}%`);
+});
     // 4. LIMPIEZA DE DATOS (Decimal a Number)
     // Importante para que Next.js no de error al pasar datos del Server al Client
     return sugerenciasFinales.map(p => ({
