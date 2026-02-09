@@ -30,7 +30,7 @@ export async function getSugerenciasApriori(productoId: number) {
         },
         _count: { id_producto: true },
         orderBy: { _count: { id_producto: 'desc' } }, // El más frecuente primero
-        take: 2 // Sugerimos los 2 mejores compañeros
+        take: 3 // Sugerimos los 2 mejores compañeros
       });
 
       const idsSugeridos = productosAsociados.map((p: any) => p.id_producto);
@@ -50,7 +50,7 @@ export async function getSugerenciasApriori(productoId: number) {
           id_producto: { not: productoId },
           activo: true 
         },
-        take: 2
+        take: 3
       });
     }
 
