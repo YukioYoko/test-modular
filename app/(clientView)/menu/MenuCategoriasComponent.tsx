@@ -1,7 +1,6 @@
 'use client';
 import { useState, useTransition, useEffect, useRef } from 'react';
 import { sendOrder } from './action';
-import { getSugerenciasApriori } from './apriori'; // <-- Importar la nueva acción
 import { useSearchParams, useRouter } from 'next/navigation';
 import { io, Socket } from "socket.io-client";
 import { CartButton } from '@/components/cart/cartButton';
