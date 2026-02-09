@@ -4,45 +4,48 @@ import { prisma } from '@/lib/prisma';
 
 export async function getSugerenciasApriori(productoId: number) {
   try {
-    // 1. Buscamos las últimas 100 órdenes que contienen este producto
-    const ordenesConProducto = await prisma.detalleOrden.findMany({
+    // Validamos que el ID sea correcto
+    if (!productoId || isNaN(productoId)) return [];
+
+    // Cambia 'detalleOrden' por el nombre exacto que tengas en tu prisma explorer
+    const ordenesConProducto = await (prisma as any).detalleOrden.findMany({
       where: { id_producto: productoId },
       select: { id_orden: true },
       take: 100,
     });
 
-    const idsOrdenes = ordenesConProducto.map(o => o.id_orden);
+    // SI NO HAY ÓRDENES, devolvemos array vacío de inmediato para evitar el NULL
+    if (!ordenesConProducto || ordenesConProducto.length === 0) {
+      return [];
+    }
 
-    if (idsOrdenes.length === 0) return [];
+    const idsOrdenes = ordenesConProducto.map((o: any) => o.id_orden);
 
-    // 2. Buscamos qué otros productos están en esas mismas órdenes (excluyendo el actual)
-    // Agrupamos por productoId para contar la frecuencia
-    const productosAsociados = await prisma.detalleOrden.groupBy({
+    const productosAsociados = await (prisma as any).detalleComanda.groupBy({
       by: ['id_producto'],
       where: {
         id_orden: { in: idsOrdenes },
         id_producto: { not: productoId }
       },
-      _count: {
-        id_producto: true
-      },
-      orderBy: {
-        _count: {
-          id_producto: 'desc'
-        }
-      },
-      take: 3 // Sugerimos los 3 más frecuentes
+      _count: { id_producto: true },
+      orderBy: { _count: { id_producto: 'desc' } },
+      take: 3
     });
 
-    // 3. Obtenemos los detalles de esos productos para el front
-    const idsSugeridos = productosAsociados.map(p => p.id_producto);
+    if (!productosAsociados || productosAsociados.length === 0) return [];
+
+    const idsSugeridos = productosAsociados.map((p: any) => p.id_producto);
+    
     const sugerencias = await prisma.producto.findMany({
       where: { id_producto: { in: idsSugeridos } }
     });
 
-    return sugerencias;
+    return sugerencias.map(p => ({
+      ...p,
+      precio: Number(p.precio)
+    }));
   } catch (error) {
     console.error("Error en Apriori:", error);
-    return [];
+    return []; // Siempre devolver array para que el .map() del front no falle
   }
 }
