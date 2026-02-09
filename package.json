@@ -24,6 +24,7 @@
     "framer-motion": "^12.26.2",
     "next": "16.1.1",
     "next-cloudinary": "^6.17.5",
+    "node-apriori": "^1.0.0",
     "pg": "^8.16.3",
     "qrcode.react": "^4.2.0",
     "react": "19.2.3",
