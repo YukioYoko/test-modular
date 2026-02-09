@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { SugerenciasApriori } from '@/components';
+import { AprioriModal } from '@/components/products/AprioriModal'; // <-- Nuevo Componente
 
 export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
   const [nota, setNota] = useState("");
@@ -73,7 +73,7 @@ export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
             onChange={(e) => setNota(e.target.value)}
           />
 
-<SugerenciasApriori 
+<AprioriModal 
     productoId={producto.id_producto} 
     onQuickAdd={onAddToCart} // Reutiliza tu función de agregar
   />
