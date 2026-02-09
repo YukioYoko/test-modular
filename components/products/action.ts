@@ -1,6 +1,5 @@
 'use server'
 import { prisma } from '@/lib/prisma';
-import { Producto } from '@prisma/client';
 
 export async function getSugerenciasApriori(productoId: number) {
   try {
@@ -57,7 +56,7 @@ export async function getSugerenciasApriori(productoId: number) {
       .map(s => s.id_producto);
 
     // --- PASO 4: Obtener datos de los productos finales ---
-    let sugerenciasFinales: Producto[] = [];
+    let sugerenciasFinales: any[] = [];
     
     if (mejoresIds.length > 0) {
       sugerenciasFinales = await prisma.producto.findMany({
