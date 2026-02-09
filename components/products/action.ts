@@ -2,7 +2,7 @@
 'use server'
 import { prisma } from '@/lib/prisma';
 
-export async function getSugerenciasFrecuentes(productoId: number) {
+export async function getSugerenciasApriori(productoId: number) {
   try {
     // 1. Buscamos las últimas 100 órdenes que contienen este producto
     const ordenesConProducto = await prisma.detalleOrden.findMany({
