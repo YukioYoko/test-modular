@@ -54,7 +54,7 @@ export async function getSugerenciasApriori(productoId: number) {
   try {
     // COMENTA TODO TU ALGORITMO TEMPORALMENTE Y PON ESTO:
     const fallback = await prisma.producto.findMany({
-      where: { id_producto: { not: productoId }, estado: true },
+      where: { id_producto: { not: productoId }, activo: true },
       take: 2
     });
     
