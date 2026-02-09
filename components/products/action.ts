@@ -1,74 +1,98 @@
-// components/products/action.ts
 'use server'
 import { prisma } from '@/lib/prisma';
+import { Producto } from '@prisma/client';
 
 export async function getSugerenciasApriori(productoId: number) {
   try {
-    // 1. Validación básica
     if (!productoId || isNaN(productoId)) return [];
 
-    // 2. ALGORITMO APRIORI (Búsqueda de asociaciones)
-    // Buscamos las últimas 100 comandas donde apareció este producto
-    // Nota: Asegúrate que el nombre sea 'detalleComanda' o 'detalleOrden' según tu DB
-    const comandasConProducto = await (prisma as any).detalleComanda.findMany({
-      where: { id_producto: productoId },
-      select: { id_comanda: true },
-      take: 100,
+    // --- PASO 1: Calcular Soporte del Producto Base (A) ---
+    // Contamos en cuántas comandas totales aparece el producto seleccionado
+    const totalComandasConA = await (prisma as any).detalleComanda.count({
+      where: { id_producto: productoId }
     });
 
-    const idsComandas = comandasConProducto.map((o: any) => o.id_comanda);
+    // Si nadie lo ha comprado nunca, vamos directo al fallback
+    if (totalComandasConA === 0) return await getFallback(productoId);
 
-    let sugerenciasFinales: any[] = [];
+    // --- PASO 2: Encontrar Co-ocurrencias (A + B) ---
+    // Obtenemos los IDs de las comandas donde está el Producto A
+    const comandasConA = await (prisma as any).detalleComanda.findMany({
+      where: { id_producto: productoId },
+      select: { id_comanda: true },
+      take: 200, // Limite para rendimiento
+    });
+    const idsComandas = comandasConA.map((c: any) => c.id_comanda);
 
-    if (idsComandas.length > 0) {
-      // Buscamos qué otros productos estaban en esas mismas comandas
-      const productosAsociados = await (prisma as any).detalleComanda.groupBy({
-        by: ['id_producto'],
-        where: {
-          id_comanda: { in: idsComandas },
-          id_producto: { not: productoId } // No sugerir el mismo producto
-        },
-        _count: { id_producto: true },
-        orderBy: { _count: { id_producto: 'desc' } }, // El más frecuente primero
-        take: 4 // Sugerimos los 2 mejores compañeros
-      });
+    // --- PASO 3: Aplicar Métrica de Confianza (Algoritmo Apriori) ---
+    // Buscamos productos que aparecen en esas mismas comandas
+    const coOcurrencias = await (prisma as any).detalleComanda.groupBy({
+      by: ['id_producto'],
+      where: {
+        id_comanda: { in: idsComandas },
+        id_producto: { not: productoId }
+      },
+      _count: { id_producto: true },
+      orderBy: { _count: { id_producto: 'desc' } },
+      take: 10 // Candidatos
+    });
 
-      const idsSugeridos = productosAsociados.map((p: any) => p.id_producto);
+    /**
+     * REGLA DE ASOCIACIÓN: A => B
+     * Confianza = (Comandas con A y B) / (Total comandas con A)
+     */
+    const sugerenciasConMetricas = coOcurrencias.map((item: any) => {
+      const frecuenciaJuntos = item._count.id_producto;
+      const confianza = (frecuenciaJuntos / totalComandasConA).toFixed(2);
+      
+      return {
+        id_producto: item.id_producto,
+        confianza: parseFloat(confianza)
+      };
+    });
 
-      if (idsSugeridos.length > 0) {
-        sugerenciasFinales = await prisma.producto.findMany({
-          where: { id_producto: { in: idsSugeridos }, activo: true }
-        });
-      }
-    }
+    // Filtramos los que tengan una confianza mínima (ej. 10%)
+    const mejoresIds = sugerenciasConMetricas
+      .filter(s => s.confianza >= 0.10)
+      .map(s => s.id_producto);
 
-    // 3. FALLBACK (Respaldo por falta de historial)
-    // Si el algoritmo no encontró nada (tienda nueva), sugerimos productos al azar
-    if (sugerenciasFinales.length === 0) {
+    // --- PASO 4: Obtener datos de los productos finales ---
+    let sugerenciasFinales: Producto[] = [];
+    
+    if (mejoresIds.length > 0) {
       sugerenciasFinales = await prisma.producto.findMany({
-        where: { 
-          id_producto: { not: productoId },
-          activo: true 
-        },
+        where: { id_producto: { in: mejoresIds }, activo: true },
         take: 4
       });
     }
+
     // Dentro de tu action.ts, justo antes del return:
 console.log(`--- Análisis Apriori para Producto ${productoId} ---`);
-sugerenciasFinales.forEach(s => {
+sugerenciasConMetricas.forEach(s => {
     console.log(`Producto Sugerido: ${s.id_producto} | Confianza: ${(s.confianza * 100).toFixed(0)}%`);
 });
-    // 4. LIMPIEZA DE DATOS (Decimal a Number)
-    // Importante para que Next.js no de error al pasar datos del Server al Client
+
+    // Si el algoritmo no dio resultados suficientes, fallback
+    if (sugerenciasFinales.length === 0) {
+      return await getFallback(productoId);
+    }
+
     return sugerenciasFinales.map(p => ({
       ...p,
-      precio: Number(p.precio),
-      // Si usas otros campos Decimal, conviértelos aquí
+      precio: Number(p.precio)
     }));
 
   } catch (error) {
-    console.error("Error crítico en Minería Apriori:", error);
-    // En caso de error de DB, devolvemos array vacío para no romper el Front-end
+    console.error("Error en Algoritmo Apriori:", error);
     return [];
   }
+}
+
+// Función de respaldo para cuando no hay datos históricos
+async function getFallback(productoId: number) {
+  const randoms = await prisma.producto.findMany({
+    where: { id_producto: { not: productoId }, activo: true },
+    take: 4
+  });
+  return randoms.map(p => ({ ...p, precio: Number(p.precio) }));
 }
