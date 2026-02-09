@@ -11,7 +11,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     // Permite tu dominio de Vercel y local para pruebas
-    origin: ["https://testfoodlify.vercel.app", "http://localhost:3000"],
+    origin: ["https://testfoodlify.vercel.app", "http://localhost:3000","https://test-modular-git-test-yukio-yukio-yokogawas-projects.vercel.app",],
     methods: ["GET", "POST"]
   }
 });
