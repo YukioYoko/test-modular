@@ -107,15 +107,15 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
       }, 150);
     }}
   />
-)}
+)}{/* 3. MODAL APRIORI (Independiente y al final) */}
       {sugerenciasData && (
         <AprioriModal 
-            productoBaseNombre={sugerenciasData.nombre}
-            sugerencias={sugerenciasData.productos}
-            onAdd={(p: any) => {
-                agregarAlCarritoBase({ prod: p.id_producto, nombre: p.nombre, price: p.precio, cantidad: 1, aditamentos: [], nota: "" });
-            }}
-            onClose={() => setSugerenciasData(null)}
+          productoBaseNombre={sugerenciasData.nombre}
+          sugerencias={sugerenciasData.productos}
+          onAdd={(p: any) => {
+            setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, cantidad: 1, aditamentos: [], nota: "" }]);
+          }}
+          onClose={() => setSugerenciasData(null)}
         />
       )}
 
