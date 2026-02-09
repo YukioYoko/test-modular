@@ -82,21 +82,32 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
         ))}
       </div>
 
-      {selectedProduct && (
-        <ProductDetailModal 
-          producto={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onAddToCart={(item) => {
-            agregarAlCarritoBase(item);
-            setSelectedProduct(null);
-            // También disparamos sugerencias al cerrar el detalle
-            getSugerenciasApriori(item.prod).then(res => {
-                if(res.length > 0) setSugerenciasData({ nombre: item.nombre, productos: res });
-            });
-          }}
-        />
-      )}
+      {/* MODAL DE DETALLE DEL PRODUCTO */}
+{selectedProduct && (
+  <ProductDetailModal 
+    producto={selectedProduct}
+    onClose={() => setSelectedProduct(null)}
+    onAddToCart={async (itemArmado) => {
+      // 1. Agregamos al carrito
+      setCarrito((prev) => [...prev, itemArmado]);
+      
+      // 2. Cerramos el modal de detalle primero
+      setSelectedProduct(null);
 
+      // 3. Ejecutamos Apriori DESPUÉS de cerrar el anterior
+      // Un pequeño delay de 100ms ayuda a que la animación de cierre no choque
+      setTimeout(async () => {
+        const recomendados = await getSugerenciasApriori(itemArmado.prod);
+        if (recomendados && recomendados.length > 0) {
+          setSugerenciasData({
+            nombre: itemArmado.nombre,
+            productos: recomendados
+          });
+        }
+      }, 150);
+    }}
+  />
+)}
       {sugerenciasData && (
         <AprioriModal 
             productoBaseNombre={sugerenciasData.nombre}
