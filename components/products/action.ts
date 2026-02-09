@@ -8,7 +8,7 @@ export async function getSugerenciasApriori(productoId: number) {
     if (!productoId || isNaN(productoId)) return [];
 
     // Cambia 'detalleOrden' por el nombre exacto que tengas en tu prisma explorer
-    const ordenesConProducto = await (prisma as any).detalleOrden.findMany({
+    const ordenesConProducto = await (prisma as any).detalleComanda.findMany({
       where: { id_producto: productoId },
       select: { id_orden: true },
       take: 100,
