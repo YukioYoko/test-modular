@@ -76,7 +76,7 @@ export default function ProductoDetalleClient({ producto, urlRetorno }: any) {
 
 <AprioriModal 
     productoId={producto.id_producto} 
-    onQuickAdd={onAddToCart} // Reutiliza tu función de agregar
+    onQuickAdd={handleAgregarAlCarrito} // Reutiliza tu función de agregar
   />
   
           <button 
