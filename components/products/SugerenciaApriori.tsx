@@ -4,9 +4,9 @@ import { ProductCard } from './ProductCard';
 export function AprioriModal({ productoBaseNombre, sugerencias, onAdd, onClose }: any) {
   return (
     // He subido el z-index a 200 por si acaso y oscurecido un poco el fondo
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md max-h-lg">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md max-h-screen">
       {/* max-w-lg (512px) es mejor para un grid de 2 columnas que max-w-sm */}
-      <div className="bg-white rounded-[32px] p-6 w-full max-w-lg shadow-2xl animate-in zoom-in duration-300 overflow-hidden">
+      <div className="bg-white rounded-[32px] p-6 w-full max-w-lg shadow-2xl animate-in zoom-in duration-300 overflow-hidden max-h-screen">
         
         <div className="text-center mb-6">
           <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
