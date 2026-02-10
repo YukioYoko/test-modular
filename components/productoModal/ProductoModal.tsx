@@ -28,10 +28,8 @@ export default function ProductoModal({
   aditamentosSeleccionados, setAditamentosSeleccionados, urlsExistentes, setUrlsExistentes
 }: ProductoModalProps) {
   
-  // --- ESTADOS LOCALES PARA MANEJO DE IMÁGENES ---
   const [nuevasImagenes, setNuevasImagenes] = useState<File[]>([]);
   const [previewsNuevas, setPreviewsNuevas] = useState<string[]>([]);
-  
   const [catSel, setCatSel] = useState<string | number>("");
   const [subSel, setSubSel] = useState<string | number>("");
 
@@ -39,7 +37,6 @@ export default function ProductoModal({
     if (modalAbierto) {
       setCatSel(prodEdit?.id_categoria || "");
       setTimeout(() => setSubSel(prodEdit?.id_subcategoria || ""), 50);
-      // Limpiar estados de nuevas imágenes al abrir
       setNuevasImagenes([]);
       setPreviewsNuevas([]);
     }
@@ -49,12 +46,10 @@ export default function ProductoModal({
     subcategoriasList.filter(s => s.id_categoria === Number(catSel)), 
   [catSel, subcategoriasList]);
 
-  // --- LÓGICA DE IMÁGENES ---
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
       setNuevasImagenes(prev => [...prev, ...filesArray]);
-      
       const newPreviews = filesArray.map(file => URL.createObjectURL(file));
       setPreviewsNuevas(prev => [...prev, ...newPreviews]);
     }
@@ -82,7 +77,6 @@ export default function ProductoModal({
         </div>
 
         <form onSubmit={handleSave} className="flex-1 flex flex-col overflow-hidden">
-          {/* Inputs ocultos para enviar archivos al Server Action */}
           {nuevasImagenes.map((file, i) => (
             <input key={i} type="file" name="imagenesArchivos" className="hidden" readOnly 
                    ref={(el) => {
@@ -98,28 +92,23 @@ export default function ProductoModal({
 
           <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-10 overflow-y-auto pr-4 custom-scrollbar">
             
-            {/* COLUMNA 1: MULTIMEDIA MULTIPLE */}
+            {/* COLUMNA 1: MULTIMEDIA Y TEXTOS LARGOS */}
             <div className="space-y-6">
               <div>
                 <FormLabel>Galería de Imágenes</FormLabel>
                 <div className="grid grid-cols-2 gap-3">
-                  {/* Previews Existentes (Cloudinary) */}
                   {urlsExistentes.map((url) => (
                     <div key={url} className="relative aspect-square rounded-2xl overflow-hidden border">
                       <img src={url} className="w-full h-full object-cover" />
                       <button type="button" onClick={() => eliminarImagenExistente(url)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center shadow-md">✕</button>
                     </div>
                   ))}
-                  
-                  {/* Previews Nuevas (Local) */}
                   {previewsNuevas.map((url, i) => (
                     <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border border-[#b8cbc0]">
                       <img src={url} className="w-full h-full object-cover opacity-70" />
                       <button type="button" onClick={() => eliminarNuevaImagen(i)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center shadow-md">✕</button>
                     </div>
                   ))}
-
-                  {/* Botón para agregar más */}
                   <label className="aspect-square rounded-2xl bg-[#f1f5f2] border-2 border-dashed border-[#b8cbc0] flex flex-col items-center justify-center cursor-pointer hover:bg-[#e6ebe7] transition-all">
                     <span className="text-2xl opacity-40">+</span>
                     <span className="text-[8px] font-black uppercase opacity-40">Añadir</span>
@@ -127,9 +116,27 @@ export default function ProductoModal({
                   </label>
                 </div>
               </div>
+
+              {/* DESCRIPCIÓN */}
               <div>
                 <FormLabel>Descripción Corta</FormLabel>
-                <textarea name="descripcion" defaultValue={prodEdit?.descripcion} className="w-full bg-[#f1f5f2] p-5 rounded-3xl h-32 resize-none text-sm font-bold outline-none" placeholder="Detalles..." />
+                <textarea 
+                  name="descripcion" 
+                  defaultValue={prodEdit?.descripcion} 
+                  className="w-full bg-[#f1f5f2] p-5 rounded-3xl h-24 resize-none text-sm font-bold outline-none border-2 border-transparent focus:border-[#b8cbc0] transition-all" 
+                  placeholder="Detalles del platillo..." 
+                />
+              </div>
+
+              {/* --- NUEVO CAMPO: PASOS DE PREPARACIÓN --- */}
+              <div>
+                <FormLabel>Pasos / Receta (Interno)</FormLabel>
+                <textarea 
+                  name="pasos" 
+                  defaultValue={prodEdit?.pasos} 
+                  className="w-full bg-[#f1f5f2] p-5 rounded-3xl h-48 resize-none text-sm font-bold outline-none border-2 border-transparent focus:border-[#b8cbc0] transition-all" 
+                  placeholder="1. Cocinar carne...&#10;2. Emplatar..." 
+                />
               </div>
             </div>
 
@@ -169,7 +176,7 @@ export default function ProductoModal({
             </div>
 
             {/* COLUMNA 3: ADITAMENTOS */}
-            <div className="flex flex-col h-full overflow-hidden bg-[#f1f5f2]/50 rounded-[2.5rem] p-6 border border-[#b8cbc0]/30">
+            <div className="flex flex-col h-full overflow-hidden bg-[#f1f5f2]/50 rounded-[3rem] p-6 border border-[#b8cbc0]/30">
               <FormLabel>Aditamentos Extras</FormLabel>
               <div className="overflow-y-auto space-y-2 flex-1 pr-2 custom-scrollbar mt-2">
                 {aditamentosList.map(adi => {
