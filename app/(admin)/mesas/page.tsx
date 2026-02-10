@@ -2,6 +2,16 @@
 import { useState, useTransition, useEffect } from 'react';
 import { getMesasAdmin, upsertMesa, eliminarMesa } from './action';
 
+// --- ICONOS PERSONALIZADOS ---
+const IconEdit = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+);
+
+const IconDelete = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+);
+
+
 export default function MesasAdminPage() {
   const [mesas, setMesas] = useState<any[]>([]);
   const [busqueda, setBusqueda] = useState('');
@@ -97,8 +107,8 @@ export default function MesasAdminPage() {
                   {/* Impedir edición si está ocupada */}
                   {m.estado !== 'Ocupada' ? (
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => { setMesaEdit(m); setModalAbierto(true); }} className="bg-(--light-green) p-3 rounded-xl text-(--militar-green) hover:bg-(--dark-mint-green)">✏️</button>
-                      <button onClick={() => { if(confirm('¿Eliminar mesa?')) startTransition(async () => { await eliminarMesa(m.id_mesa); refreshData(); })} } className="bg-red-50 p-3 rounded-xl text-red-500 hover:bg-red-500 hover:text-white">🗑️</button>
+                      <button onClick={() => { setMesaEdit(m); setModalAbierto(true); }} className="bg-(--light-green) p-3 rounded-xl text-(--militar-green) hover:bg-(--dark-mint-green)"><IconEdit/></button>
+                      <button onClick={() => { if(confirm('¿Eliminar mesa?')) startTransition(async () => { await eliminarMesa(m.id_mesa); refreshData(); })} } className="bg-red-50 p-3 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"><IconDelete/></button>
                     </div>
                   ) : (
                     <span className="text-[10px] font-bold text-slate-300 italic">En uso</span>

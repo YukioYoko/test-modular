@@ -63,6 +63,21 @@ export type ComandaAditamentos = $Result.DefaultSelection<Prisma.$ComandaAditame
  * 
  */
 export type ProductoImagen = $Result.DefaultSelection<Prisma.$ProductoImagenPayload>
+/**
+ * Model HistorialAnalitico
+ * 
+ */
+export type HistorialAnalitico = $Result.DefaultSelection<Prisma.$HistorialAnaliticoPayload>
+/**
+ * Model Categoria
+ * 
+ */
+export type Categoria = $Result.DefaultSelection<Prisma.$CategoriaPayload>
+/**
+ * Model SubCategoria
+ * 
+ */
+export type SubCategoria = $Result.DefaultSelection<Prisma.$SubCategoriaPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -280,6 +295,36 @@ export class PrismaClient<
     * ```
     */
   get productoImagen(): Prisma.ProductoImagenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.historialAnalitico`: Exposes CRUD operations for the **HistorialAnalitico** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HistorialAnaliticos
+    * const historialAnaliticos = await prisma.historialAnalitico.findMany()
+    * ```
+    */
+  get historialAnalitico(): Prisma.HistorialAnaliticoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.categoria`: Exposes CRUD operations for the **Categoria** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Categorias
+    * const categorias = await prisma.categoria.findMany()
+    * ```
+    */
+  get categoria(): Prisma.CategoriaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.subCategoria`: Exposes CRUD operations for the **SubCategoria** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubCategorias
+    * const subCategorias = await prisma.subCategoria.findMany()
+    * ```
+    */
+  get subCategoria(): Prisma.SubCategoriaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -723,7 +768,10 @@ export namespace Prisma {
     Comandas: 'Comandas',
     DetalleComanda: 'DetalleComanda',
     ComandaAditamentos: 'ComandaAditamentos',
-    ProductoImagen: 'ProductoImagen'
+    ProductoImagen: 'ProductoImagen',
+    HistorialAnalitico: 'HistorialAnalitico',
+    Categoria: 'Categoria',
+    SubCategoria: 'SubCategoria'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -739,7 +787,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "mesero" | "mesa" | "producto" | "aditamento" | "productoAditamentos" | "comandas" | "detalleComanda" | "comandaAditamentos" | "productoImagen"
+      modelProps: "usuario" | "mesero" | "mesa" | "producto" | "aditamento" | "productoAditamentos" | "comandas" | "detalleComanda" | "comandaAditamentos" | "productoImagen" | "historialAnalitico" | "categoria" | "subCategoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1483,6 +1531,228 @@ export namespace Prisma {
           }
         }
       }
+      HistorialAnalitico: {
+        payload: Prisma.$HistorialAnaliticoPayload<ExtArgs>
+        fields: Prisma.HistorialAnaliticoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HistorialAnaliticoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HistorialAnaliticoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>
+          }
+          findFirst: {
+            args: Prisma.HistorialAnaliticoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HistorialAnaliticoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>
+          }
+          findMany: {
+            args: Prisma.HistorialAnaliticoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>[]
+          }
+          create: {
+            args: Prisma.HistorialAnaliticoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>
+          }
+          createMany: {
+            args: Prisma.HistorialAnaliticoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HistorialAnaliticoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>[]
+          }
+          delete: {
+            args: Prisma.HistorialAnaliticoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>
+          }
+          update: {
+            args: Prisma.HistorialAnaliticoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>
+          }
+          deleteMany: {
+            args: Prisma.HistorialAnaliticoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HistorialAnaliticoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HistorialAnaliticoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>[]
+          }
+          upsert: {
+            args: Prisma.HistorialAnaliticoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistorialAnaliticoPayload>
+          }
+          aggregate: {
+            args: Prisma.HistorialAnaliticoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHistorialAnalitico>
+          }
+          groupBy: {
+            args: Prisma.HistorialAnaliticoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HistorialAnaliticoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HistorialAnaliticoCountArgs<ExtArgs>
+            result: $Utils.Optional<HistorialAnaliticoCountAggregateOutputType> | number
+          }
+        }
+      }
+      Categoria: {
+        payload: Prisma.$CategoriaPayload<ExtArgs>
+        fields: Prisma.CategoriaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CategoriaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CategoriaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>
+          }
+          findFirst: {
+            args: Prisma.CategoriaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CategoriaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>
+          }
+          findMany: {
+            args: Prisma.CategoriaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>[]
+          }
+          create: {
+            args: Prisma.CategoriaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>
+          }
+          createMany: {
+            args: Prisma.CategoriaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CategoriaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>[]
+          }
+          delete: {
+            args: Prisma.CategoriaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>
+          }
+          update: {
+            args: Prisma.CategoriaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>
+          }
+          deleteMany: {
+            args: Prisma.CategoriaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CategoriaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CategoriaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>[]
+          }
+          upsert: {
+            args: Prisma.CategoriaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriaPayload>
+          }
+          aggregate: {
+            args: Prisma.CategoriaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCategoria>
+          }
+          groupBy: {
+            args: Prisma.CategoriaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CategoriaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CategoriaCountArgs<ExtArgs>
+            result: $Utils.Optional<CategoriaCountAggregateOutputType> | number
+          }
+        }
+      }
+      SubCategoria: {
+        payload: Prisma.$SubCategoriaPayload<ExtArgs>
+        fields: Prisma.SubCategoriaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubCategoriaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubCategoriaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>
+          }
+          findFirst: {
+            args: Prisma.SubCategoriaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubCategoriaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>
+          }
+          findMany: {
+            args: Prisma.SubCategoriaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>[]
+          }
+          create: {
+            args: Prisma.SubCategoriaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>
+          }
+          createMany: {
+            args: Prisma.SubCategoriaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubCategoriaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>[]
+          }
+          delete: {
+            args: Prisma.SubCategoriaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>
+          }
+          update: {
+            args: Prisma.SubCategoriaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubCategoriaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubCategoriaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubCategoriaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubCategoriaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubCategoriaPayload>
+          }
+          aggregate: {
+            args: Prisma.SubCategoriaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubCategoria>
+          }
+          groupBy: {
+            args: Prisma.SubCategoriaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubCategoriaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubCategoriaCountArgs<ExtArgs>
+            result: $Utils.Optional<SubCategoriaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1601,6 +1871,9 @@ export namespace Prisma {
     detalleComanda?: DetalleComandaOmit
     comandaAditamentos?: ComandaAditamentosOmit
     productoImagen?: ProductoImagenOmit
+    historialAnalitico?: HistorialAnaliticoOmit
+    categoria?: CategoriaOmit
+    subCategoria?: SubCategoriaOmit
   }
 
   /* Types for Logging */
@@ -1744,12 +2017,14 @@ export namespace Prisma {
 
   export type ProductoCountOutputType = {
     detalles: number
+    historial: number
     aditamentos: number
     imagen: number
   }
 
   export type ProductoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     detalles?: boolean | ProductoCountOutputTypeCountDetallesArgs
+    historial?: boolean | ProductoCountOutputTypeCountHistorialArgs
     aditamentos?: boolean | ProductoCountOutputTypeCountAditamentosArgs
     imagen?: boolean | ProductoCountOutputTypeCountImagenArgs
   }
@@ -1770,6 +2045,13 @@ export namespace Prisma {
    */
   export type ProductoCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DetalleComandaWhereInput
+  }
+
+  /**
+   * ProductoCountOutputType without action
+   */
+  export type ProductoCountOutputTypeCountHistorialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistorialAnaliticoWhereInput
   }
 
   /**
@@ -1886,6 +2168,95 @@ export namespace Prisma {
    */
   export type DetalleComandaCountOutputTypeCountAditamentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ComandaAditamentosWhereInput
+  }
+
+
+  /**
+   * Count Type CategoriaCountOutputType
+   */
+
+  export type CategoriaCountOutputType = {
+    historial: number
+    productos: number
+    subcategorias: number
+  }
+
+  export type CategoriaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    historial?: boolean | CategoriaCountOutputTypeCountHistorialArgs
+    productos?: boolean | CategoriaCountOutputTypeCountProductosArgs
+    subcategorias?: boolean | CategoriaCountOutputTypeCountSubcategoriasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CategoriaCountOutputType without action
+   */
+  export type CategoriaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategoriaCountOutputType
+     */
+    select?: CategoriaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CategoriaCountOutputType without action
+   */
+  export type CategoriaCountOutputTypeCountHistorialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistorialAnaliticoWhereInput
+  }
+
+  /**
+   * CategoriaCountOutputType without action
+   */
+  export type CategoriaCountOutputTypeCountProductosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductoWhereInput
+  }
+
+  /**
+   * CategoriaCountOutputType without action
+   */
+  export type CategoriaCountOutputTypeCountSubcategoriasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubCategoriaWhereInput
+  }
+
+
+  /**
+   * Count Type SubCategoriaCountOutputType
+   */
+
+  export type SubCategoriaCountOutputType = {
+    historial_analitico: number
+    productos: number
+  }
+
+  export type SubCategoriaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    historial_analitico?: boolean | SubCategoriaCountOutputTypeCountHistorial_analiticoArgs
+    productos?: boolean | SubCategoriaCountOutputTypeCountProductosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SubCategoriaCountOutputType without action
+   */
+  export type SubCategoriaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoriaCountOutputType
+     */
+    select?: SubCategoriaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SubCategoriaCountOutputType without action
+   */
+  export type SubCategoriaCountOutputTypeCountHistorial_analiticoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistorialAnaliticoWhereInput
+  }
+
+  /**
+   * SubCategoriaCountOutputType without action
+   */
+  export type SubCategoriaCountOutputTypeCountProductosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductoWhereInput
   }
 
 
@@ -5144,12 +5515,16 @@ export namespace Prisma {
   export type ProductoAvgAggregateOutputType = {
     id_producto: number | null
     precio: Decimal | null
+    id_categoria: number | null
+    id_subcategoria: number | null
     tiempo_prep: number | null
   }
 
   export type ProductoSumAggregateOutputType = {
     id_producto: number | null
     precio: Decimal | null
+    id_categoria: number | null
+    id_subcategoria: number | null
     tiempo_prep: number | null
   }
 
@@ -5157,36 +5532,39 @@ export namespace Prisma {
     id_producto: number | null
     nombre: string | null
     precio: Decimal | null
-    categoria: string | null
+    id_categoria: number | null
+    id_subcategoria: number | null
     descripcion: string | null
     tiempo_prep: number | null
     pasos: string | null
-    eliminado: boolean | null
     activo: boolean | null
+    eliminado: boolean | null
   }
 
   export type ProductoMaxAggregateOutputType = {
     id_producto: number | null
     nombre: string | null
     precio: Decimal | null
-    categoria: string | null
+    id_categoria: number | null
+    id_subcategoria: number | null
     descripcion: string | null
     tiempo_prep: number | null
     pasos: string | null
-    eliminado: boolean | null
     activo: boolean | null
+    eliminado: boolean | null
   }
 
   export type ProductoCountAggregateOutputType = {
     id_producto: number
     nombre: number
     precio: number
-    categoria: number
+    id_categoria: number
+    id_subcategoria: number
     descripcion: number
     tiempo_prep: number
     pasos: number
-    eliminado: number
     activo: number
+    eliminado: number
     _all: number
   }
 
@@ -5194,12 +5572,16 @@ export namespace Prisma {
   export type ProductoAvgAggregateInputType = {
     id_producto?: true
     precio?: true
+    id_categoria?: true
+    id_subcategoria?: true
     tiempo_prep?: true
   }
 
   export type ProductoSumAggregateInputType = {
     id_producto?: true
     precio?: true
+    id_categoria?: true
+    id_subcategoria?: true
     tiempo_prep?: true
   }
 
@@ -5207,36 +5589,39 @@ export namespace Prisma {
     id_producto?: true
     nombre?: true
     precio?: true
-    categoria?: true
+    id_categoria?: true
+    id_subcategoria?: true
     descripcion?: true
     tiempo_prep?: true
     pasos?: true
-    eliminado?: true
     activo?: true
+    eliminado?: true
   }
 
   export type ProductoMaxAggregateInputType = {
     id_producto?: true
     nombre?: true
     precio?: true
-    categoria?: true
+    id_categoria?: true
+    id_subcategoria?: true
     descripcion?: true
     tiempo_prep?: true
     pasos?: true
-    eliminado?: true
     activo?: true
+    eliminado?: true
   }
 
   export type ProductoCountAggregateInputType = {
     id_producto?: true
     nombre?: true
     precio?: true
-    categoria?: true
+    id_categoria?: true
+    id_subcategoria?: true
     descripcion?: true
     tiempo_prep?: true
     pasos?: true
-    eliminado?: true
     activo?: true
+    eliminado?: true
     _all?: true
   }
 
@@ -5330,12 +5715,13 @@ export namespace Prisma {
     id_producto: number
     nombre: string
     precio: Decimal
-    categoria: string
+    id_categoria: number
+    id_subcategoria: number
     descripcion: string | null
     tiempo_prep: number
     pasos: string | null
-    eliminado: boolean
     activo: boolean
+    eliminado: boolean
     _count: ProductoCountAggregateOutputType | null
     _avg: ProductoAvgAggregateOutputType | null
     _sum: ProductoSumAggregateOutputType | null
@@ -5361,15 +5747,19 @@ export namespace Prisma {
     id_producto?: boolean
     nombre?: boolean
     precio?: boolean
-    categoria?: boolean
+    id_categoria?: boolean
+    id_subcategoria?: boolean
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: boolean | Producto$detallesArgs<ExtArgs>
+    historial?: boolean | Producto$historialArgs<ExtArgs>
     aditamentos?: boolean | Producto$aditamentosArgs<ExtArgs>
     imagen?: boolean | Producto$imagenArgs<ExtArgs>
+    categoriaRel?: boolean | CategoriaDefaultArgs<ExtArgs>
+    subcategoria?: boolean | SubCategoriaDefaultArgs<ExtArgs>
     _count?: boolean | ProductoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["producto"]>
 
@@ -5377,65 +5767,85 @@ export namespace Prisma {
     id_producto?: boolean
     nombre?: boolean
     precio?: boolean
-    categoria?: boolean
+    id_categoria?: boolean
+    id_subcategoria?: boolean
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
+    categoriaRel?: boolean | CategoriaDefaultArgs<ExtArgs>
+    subcategoria?: boolean | SubCategoriaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["producto"]>
 
   export type ProductoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id_producto?: boolean
     nombre?: boolean
     precio?: boolean
-    categoria?: boolean
+    id_categoria?: boolean
+    id_subcategoria?: boolean
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
+    categoriaRel?: boolean | CategoriaDefaultArgs<ExtArgs>
+    subcategoria?: boolean | SubCategoriaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["producto"]>
 
   export type ProductoSelectScalar = {
     id_producto?: boolean
     nombre?: boolean
     precio?: boolean
-    categoria?: boolean
+    id_categoria?: boolean
+    id_subcategoria?: boolean
     descripcion?: boolean
     tiempo_prep?: boolean
     pasos?: boolean
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
   }
 
-  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_producto" | "nombre" | "precio" | "categoria" | "descripcion" | "tiempo_prep" | "pasos" | "eliminado" | "activo", ExtArgs["result"]["producto"]>
+  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_producto" | "nombre" | "precio" | "id_categoria" | "id_subcategoria" | "descripcion" | "tiempo_prep" | "pasos" | "activo" | "eliminado", ExtArgs["result"]["producto"]>
   export type ProductoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     detalles?: boolean | Producto$detallesArgs<ExtArgs>
+    historial?: boolean | Producto$historialArgs<ExtArgs>
     aditamentos?: boolean | Producto$aditamentosArgs<ExtArgs>
     imagen?: boolean | Producto$imagenArgs<ExtArgs>
+    categoriaRel?: boolean | CategoriaDefaultArgs<ExtArgs>
+    subcategoria?: boolean | SubCategoriaDefaultArgs<ExtArgs>
     _count?: boolean | ProductoCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ProductoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ProductoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProductoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoriaRel?: boolean | CategoriaDefaultArgs<ExtArgs>
+    subcategoria?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }
+  export type ProductoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoriaRel?: boolean | CategoriaDefaultArgs<ExtArgs>
+    subcategoria?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }
 
   export type $ProductoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Producto"
     objects: {
       detalles: Prisma.$DetalleComandaPayload<ExtArgs>[]
+      historial: Prisma.$HistorialAnaliticoPayload<ExtArgs>[]
       aditamentos: Prisma.$ProductoAditamentosPayload<ExtArgs>[]
       imagen: Prisma.$ProductoImagenPayload<ExtArgs>[]
+      categoriaRel: Prisma.$CategoriaPayload<ExtArgs>
+      subcategoria: Prisma.$SubCategoriaPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id_producto: number
       nombre: string
       precio: Prisma.Decimal
-      categoria: string
+      id_categoria: number
+      id_subcategoria: number
       descripcion: string | null
       tiempo_prep: number
       pasos: string | null
-      eliminado: boolean
       activo: boolean
+      eliminado: boolean
     }, ExtArgs["result"]["producto"]>
     composites: {}
   }
@@ -5831,8 +6241,11 @@ export namespace Prisma {
   export interface Prisma__ProductoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     detalles<T extends Producto$detallesArgs<ExtArgs> = {}>(args?: Subset<T, Producto$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DetalleComandaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    historial<T extends Producto$historialArgs<ExtArgs> = {}>(args?: Subset<T, Producto$historialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     aditamentos<T extends Producto$aditamentosArgs<ExtArgs> = {}>(args?: Subset<T, Producto$aditamentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductoAditamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     imagen<T extends Producto$imagenArgs<ExtArgs> = {}>(args?: Subset<T, Producto$imagenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductoImagenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    categoriaRel<T extends CategoriaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoriaDefaultArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    subcategoria<T extends SubCategoriaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubCategoriaDefaultArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5865,12 +6278,13 @@ export namespace Prisma {
     readonly id_producto: FieldRef<"Producto", 'Int'>
     readonly nombre: FieldRef<"Producto", 'String'>
     readonly precio: FieldRef<"Producto", 'Decimal'>
-    readonly categoria: FieldRef<"Producto", 'String'>
+    readonly id_categoria: FieldRef<"Producto", 'Int'>
+    readonly id_subcategoria: FieldRef<"Producto", 'Int'>
     readonly descripcion: FieldRef<"Producto", 'String'>
     readonly tiempo_prep: FieldRef<"Producto", 'Int'>
     readonly pasos: FieldRef<"Producto", 'String'>
-    readonly eliminado: FieldRef<"Producto", 'Boolean'>
     readonly activo: FieldRef<"Producto", 'Boolean'>
+    readonly eliminado: FieldRef<"Producto", 'Boolean'>
   }
     
 
@@ -6120,6 +6534,10 @@ export namespace Prisma {
      */
     data: ProductoCreateManyInput | ProductoCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductoIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6190,6 +6608,10 @@ export namespace Prisma {
      * Limit how many Productos to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductoIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6280,6 +6702,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DetalleComandaScalarFieldEnum | DetalleComandaScalarFieldEnum[]
+  }
+
+  /**
+   * Producto.historial
+   */
+  export type Producto$historialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    where?: HistorialAnaliticoWhereInput
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HistorialAnaliticoScalarFieldEnum | HistorialAnaliticoScalarFieldEnum[]
   }
 
   /**
@@ -13082,6 +13528,3439 @@ export namespace Prisma {
 
 
   /**
+   * Model HistorialAnalitico
+   */
+
+  export type AggregateHistorialAnalitico = {
+    _count: HistorialAnaliticoCountAggregateOutputType | null
+    _avg: HistorialAnaliticoAvgAggregateOutputType | null
+    _sum: HistorialAnaliticoSumAggregateOutputType | null
+    _min: HistorialAnaliticoMinAggregateOutputType | null
+    _max: HistorialAnaliticoMaxAggregateOutputType | null
+  }
+
+  export type HistorialAnaliticoAvgAggregateOutputType = {
+    id_historial: number | null
+    id_producto: number | null
+    id_subcategoria: number | null
+    id_categoria: number | null
+    hora: number | null
+    dia_semana: number | null
+    clima_id: number | null
+  }
+
+  export type HistorialAnaliticoSumAggregateOutputType = {
+    id_historial: number | null
+    id_producto: number | null
+    id_subcategoria: number | null
+    id_categoria: number | null
+    hora: number | null
+    dia_semana: number | null
+    clima_id: number | null
+  }
+
+  export type HistorialAnaliticoMinAggregateOutputType = {
+    id_historial: number | null
+    id_producto: number | null
+    id_subcategoria: number | null
+    id_categoria: number | null
+    hora: number | null
+    dia_semana: number | null
+    es_festivo: boolean | null
+    clima_id: number | null
+    fecha_registro: Date | null
+  }
+
+  export type HistorialAnaliticoMaxAggregateOutputType = {
+    id_historial: number | null
+    id_producto: number | null
+    id_subcategoria: number | null
+    id_categoria: number | null
+    hora: number | null
+    dia_semana: number | null
+    es_festivo: boolean | null
+    clima_id: number | null
+    fecha_registro: Date | null
+  }
+
+  export type HistorialAnaliticoCountAggregateOutputType = {
+    id_historial: number
+    id_producto: number
+    id_subcategoria: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo: number
+    clima_id: number
+    fecha_registro: number
+    _all: number
+  }
+
+
+  export type HistorialAnaliticoAvgAggregateInputType = {
+    id_historial?: true
+    id_producto?: true
+    id_subcategoria?: true
+    id_categoria?: true
+    hora?: true
+    dia_semana?: true
+    clima_id?: true
+  }
+
+  export type HistorialAnaliticoSumAggregateInputType = {
+    id_historial?: true
+    id_producto?: true
+    id_subcategoria?: true
+    id_categoria?: true
+    hora?: true
+    dia_semana?: true
+    clima_id?: true
+  }
+
+  export type HistorialAnaliticoMinAggregateInputType = {
+    id_historial?: true
+    id_producto?: true
+    id_subcategoria?: true
+    id_categoria?: true
+    hora?: true
+    dia_semana?: true
+    es_festivo?: true
+    clima_id?: true
+    fecha_registro?: true
+  }
+
+  export type HistorialAnaliticoMaxAggregateInputType = {
+    id_historial?: true
+    id_producto?: true
+    id_subcategoria?: true
+    id_categoria?: true
+    hora?: true
+    dia_semana?: true
+    es_festivo?: true
+    clima_id?: true
+    fecha_registro?: true
+  }
+
+  export type HistorialAnaliticoCountAggregateInputType = {
+    id_historial?: true
+    id_producto?: true
+    id_subcategoria?: true
+    id_categoria?: true
+    hora?: true
+    dia_semana?: true
+    es_festivo?: true
+    clima_id?: true
+    fecha_registro?: true
+    _all?: true
+  }
+
+  export type HistorialAnaliticoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HistorialAnalitico to aggregate.
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HistorialAnaliticos to fetch.
+     */
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HistorialAnaliticos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HistorialAnaliticos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HistorialAnaliticos
+    **/
+    _count?: true | HistorialAnaliticoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HistorialAnaliticoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HistorialAnaliticoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HistorialAnaliticoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HistorialAnaliticoMaxAggregateInputType
+  }
+
+  export type GetHistorialAnaliticoAggregateType<T extends HistorialAnaliticoAggregateArgs> = {
+        [P in keyof T & keyof AggregateHistorialAnalitico]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHistorialAnalitico[P]>
+      : GetScalarType<T[P], AggregateHistorialAnalitico[P]>
+  }
+
+
+
+
+  export type HistorialAnaliticoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistorialAnaliticoWhereInput
+    orderBy?: HistorialAnaliticoOrderByWithAggregationInput | HistorialAnaliticoOrderByWithAggregationInput[]
+    by: HistorialAnaliticoScalarFieldEnum[] | HistorialAnaliticoScalarFieldEnum
+    having?: HistorialAnaliticoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HistorialAnaliticoCountAggregateInputType | true
+    _avg?: HistorialAnaliticoAvgAggregateInputType
+    _sum?: HistorialAnaliticoSumAggregateInputType
+    _min?: HistorialAnaliticoMinAggregateInputType
+    _max?: HistorialAnaliticoMaxAggregateInputType
+  }
+
+  export type HistorialAnaliticoGroupByOutputType = {
+    id_historial: number
+    id_producto: number
+    id_subcategoria: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo: boolean
+    clima_id: number
+    fecha_registro: Date | null
+    _count: HistorialAnaliticoCountAggregateOutputType | null
+    _avg: HistorialAnaliticoAvgAggregateOutputType | null
+    _sum: HistorialAnaliticoSumAggregateOutputType | null
+    _min: HistorialAnaliticoMinAggregateOutputType | null
+    _max: HistorialAnaliticoMaxAggregateOutputType | null
+  }
+
+  type GetHistorialAnaliticoGroupByPayload<T extends HistorialAnaliticoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HistorialAnaliticoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HistorialAnaliticoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HistorialAnaliticoGroupByOutputType[P]>
+            : GetScalarType<T[P], HistorialAnaliticoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HistorialAnaliticoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_historial?: boolean
+    id_producto?: boolean
+    id_subcategoria?: boolean
+    id_categoria?: boolean
+    hora?: boolean
+    dia_semana?: boolean
+    es_festivo?: boolean
+    clima_id?: boolean
+    fecha_registro?: boolean
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    producto?: boolean | ProductoDefaultArgs<ExtArgs>
+    subcategorias?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["historialAnalitico"]>
+
+  export type HistorialAnaliticoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_historial?: boolean
+    id_producto?: boolean
+    id_subcategoria?: boolean
+    id_categoria?: boolean
+    hora?: boolean
+    dia_semana?: boolean
+    es_festivo?: boolean
+    clima_id?: boolean
+    fecha_registro?: boolean
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    producto?: boolean | ProductoDefaultArgs<ExtArgs>
+    subcategorias?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["historialAnalitico"]>
+
+  export type HistorialAnaliticoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_historial?: boolean
+    id_producto?: boolean
+    id_subcategoria?: boolean
+    id_categoria?: boolean
+    hora?: boolean
+    dia_semana?: boolean
+    es_festivo?: boolean
+    clima_id?: boolean
+    fecha_registro?: boolean
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    producto?: boolean | ProductoDefaultArgs<ExtArgs>
+    subcategorias?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["historialAnalitico"]>
+
+  export type HistorialAnaliticoSelectScalar = {
+    id_historial?: boolean
+    id_producto?: boolean
+    id_subcategoria?: boolean
+    id_categoria?: boolean
+    hora?: boolean
+    dia_semana?: boolean
+    es_festivo?: boolean
+    clima_id?: boolean
+    fecha_registro?: boolean
+  }
+
+  export type HistorialAnaliticoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_historial" | "id_producto" | "id_subcategoria" | "id_categoria" | "hora" | "dia_semana" | "es_festivo" | "clima_id" | "fecha_registro", ExtArgs["result"]["historialAnalitico"]>
+  export type HistorialAnaliticoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    producto?: boolean | ProductoDefaultArgs<ExtArgs>
+    subcategorias?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }
+  export type HistorialAnaliticoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    producto?: boolean | ProductoDefaultArgs<ExtArgs>
+    subcategorias?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }
+  export type HistorialAnaliticoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    producto?: boolean | ProductoDefaultArgs<ExtArgs>
+    subcategorias?: boolean | SubCategoriaDefaultArgs<ExtArgs>
+  }
+
+  export type $HistorialAnaliticoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HistorialAnalitico"
+    objects: {
+      categoria: Prisma.$CategoriaPayload<ExtArgs>
+      producto: Prisma.$ProductoPayload<ExtArgs>
+      subcategorias: Prisma.$SubCategoriaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_historial: number
+      id_producto: number
+      id_subcategoria: number
+      id_categoria: number
+      hora: number
+      dia_semana: number
+      es_festivo: boolean
+      clima_id: number
+      fecha_registro: Date | null
+    }, ExtArgs["result"]["historialAnalitico"]>
+    composites: {}
+  }
+
+  type HistorialAnaliticoGetPayload<S extends boolean | null | undefined | HistorialAnaliticoDefaultArgs> = $Result.GetResult<Prisma.$HistorialAnaliticoPayload, S>
+
+  type HistorialAnaliticoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HistorialAnaliticoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HistorialAnaliticoCountAggregateInputType | true
+    }
+
+  export interface HistorialAnaliticoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HistorialAnalitico'], meta: { name: 'HistorialAnalitico' } }
+    /**
+     * Find zero or one HistorialAnalitico that matches the filter.
+     * @param {HistorialAnaliticoFindUniqueArgs} args - Arguments to find a HistorialAnalitico
+     * @example
+     * // Get one HistorialAnalitico
+     * const historialAnalitico = await prisma.historialAnalitico.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HistorialAnaliticoFindUniqueArgs>(args: SelectSubset<T, HistorialAnaliticoFindUniqueArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HistorialAnalitico that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HistorialAnaliticoFindUniqueOrThrowArgs} args - Arguments to find a HistorialAnalitico
+     * @example
+     * // Get one HistorialAnalitico
+     * const historialAnalitico = await prisma.historialAnalitico.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HistorialAnaliticoFindUniqueOrThrowArgs>(args: SelectSubset<T, HistorialAnaliticoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HistorialAnalitico that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoFindFirstArgs} args - Arguments to find a HistorialAnalitico
+     * @example
+     * // Get one HistorialAnalitico
+     * const historialAnalitico = await prisma.historialAnalitico.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HistorialAnaliticoFindFirstArgs>(args?: SelectSubset<T, HistorialAnaliticoFindFirstArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HistorialAnalitico that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoFindFirstOrThrowArgs} args - Arguments to find a HistorialAnalitico
+     * @example
+     * // Get one HistorialAnalitico
+     * const historialAnalitico = await prisma.historialAnalitico.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HistorialAnaliticoFindFirstOrThrowArgs>(args?: SelectSubset<T, HistorialAnaliticoFindFirstOrThrowArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HistorialAnaliticos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HistorialAnaliticos
+     * const historialAnaliticos = await prisma.historialAnalitico.findMany()
+     * 
+     * // Get first 10 HistorialAnaliticos
+     * const historialAnaliticos = await prisma.historialAnalitico.findMany({ take: 10 })
+     * 
+     * // Only select the `id_historial`
+     * const historialAnaliticoWithId_historialOnly = await prisma.historialAnalitico.findMany({ select: { id_historial: true } })
+     * 
+     */
+    findMany<T extends HistorialAnaliticoFindManyArgs>(args?: SelectSubset<T, HistorialAnaliticoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HistorialAnalitico.
+     * @param {HistorialAnaliticoCreateArgs} args - Arguments to create a HistorialAnalitico.
+     * @example
+     * // Create one HistorialAnalitico
+     * const HistorialAnalitico = await prisma.historialAnalitico.create({
+     *   data: {
+     *     // ... data to create a HistorialAnalitico
+     *   }
+     * })
+     * 
+     */
+    create<T extends HistorialAnaliticoCreateArgs>(args: SelectSubset<T, HistorialAnaliticoCreateArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HistorialAnaliticos.
+     * @param {HistorialAnaliticoCreateManyArgs} args - Arguments to create many HistorialAnaliticos.
+     * @example
+     * // Create many HistorialAnaliticos
+     * const historialAnalitico = await prisma.historialAnalitico.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HistorialAnaliticoCreateManyArgs>(args?: SelectSubset<T, HistorialAnaliticoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HistorialAnaliticos and returns the data saved in the database.
+     * @param {HistorialAnaliticoCreateManyAndReturnArgs} args - Arguments to create many HistorialAnaliticos.
+     * @example
+     * // Create many HistorialAnaliticos
+     * const historialAnalitico = await prisma.historialAnalitico.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HistorialAnaliticos and only return the `id_historial`
+     * const historialAnaliticoWithId_historialOnly = await prisma.historialAnalitico.createManyAndReturn({
+     *   select: { id_historial: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HistorialAnaliticoCreateManyAndReturnArgs>(args?: SelectSubset<T, HistorialAnaliticoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HistorialAnalitico.
+     * @param {HistorialAnaliticoDeleteArgs} args - Arguments to delete one HistorialAnalitico.
+     * @example
+     * // Delete one HistorialAnalitico
+     * const HistorialAnalitico = await prisma.historialAnalitico.delete({
+     *   where: {
+     *     // ... filter to delete one HistorialAnalitico
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HistorialAnaliticoDeleteArgs>(args: SelectSubset<T, HistorialAnaliticoDeleteArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HistorialAnalitico.
+     * @param {HistorialAnaliticoUpdateArgs} args - Arguments to update one HistorialAnalitico.
+     * @example
+     * // Update one HistorialAnalitico
+     * const historialAnalitico = await prisma.historialAnalitico.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HistorialAnaliticoUpdateArgs>(args: SelectSubset<T, HistorialAnaliticoUpdateArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HistorialAnaliticos.
+     * @param {HistorialAnaliticoDeleteManyArgs} args - Arguments to filter HistorialAnaliticos to delete.
+     * @example
+     * // Delete a few HistorialAnaliticos
+     * const { count } = await prisma.historialAnalitico.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HistorialAnaliticoDeleteManyArgs>(args?: SelectSubset<T, HistorialAnaliticoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HistorialAnaliticos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HistorialAnaliticos
+     * const historialAnalitico = await prisma.historialAnalitico.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HistorialAnaliticoUpdateManyArgs>(args: SelectSubset<T, HistorialAnaliticoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HistorialAnaliticos and returns the data updated in the database.
+     * @param {HistorialAnaliticoUpdateManyAndReturnArgs} args - Arguments to update many HistorialAnaliticos.
+     * @example
+     * // Update many HistorialAnaliticos
+     * const historialAnalitico = await prisma.historialAnalitico.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HistorialAnaliticos and only return the `id_historial`
+     * const historialAnaliticoWithId_historialOnly = await prisma.historialAnalitico.updateManyAndReturn({
+     *   select: { id_historial: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HistorialAnaliticoUpdateManyAndReturnArgs>(args: SelectSubset<T, HistorialAnaliticoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HistorialAnalitico.
+     * @param {HistorialAnaliticoUpsertArgs} args - Arguments to update or create a HistorialAnalitico.
+     * @example
+     * // Update or create a HistorialAnalitico
+     * const historialAnalitico = await prisma.historialAnalitico.upsert({
+     *   create: {
+     *     // ... data to create a HistorialAnalitico
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HistorialAnalitico we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HistorialAnaliticoUpsertArgs>(args: SelectSubset<T, HistorialAnaliticoUpsertArgs<ExtArgs>>): Prisma__HistorialAnaliticoClient<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HistorialAnaliticos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoCountArgs} args - Arguments to filter HistorialAnaliticos to count.
+     * @example
+     * // Count the number of HistorialAnaliticos
+     * const count = await prisma.historialAnalitico.count({
+     *   where: {
+     *     // ... the filter for the HistorialAnaliticos we want to count
+     *   }
+     * })
+    **/
+    count<T extends HistorialAnaliticoCountArgs>(
+      args?: Subset<T, HistorialAnaliticoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HistorialAnaliticoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HistorialAnalitico.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HistorialAnaliticoAggregateArgs>(args: Subset<T, HistorialAnaliticoAggregateArgs>): Prisma.PrismaPromise<GetHistorialAnaliticoAggregateType<T>>
+
+    /**
+     * Group by HistorialAnalitico.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistorialAnaliticoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HistorialAnaliticoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HistorialAnaliticoGroupByArgs['orderBy'] }
+        : { orderBy?: HistorialAnaliticoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HistorialAnaliticoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHistorialAnaliticoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HistorialAnalitico model
+   */
+  readonly fields: HistorialAnaliticoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HistorialAnalitico.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HistorialAnaliticoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    categoria<T extends CategoriaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoriaDefaultArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    producto<T extends ProductoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductoDefaultArgs<ExtArgs>>): Prisma__ProductoClient<$Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    subcategorias<T extends SubCategoriaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubCategoriaDefaultArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HistorialAnalitico model
+   */
+  interface HistorialAnaliticoFieldRefs {
+    readonly id_historial: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly id_producto: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly id_subcategoria: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly id_categoria: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly hora: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly dia_semana: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly es_festivo: FieldRef<"HistorialAnalitico", 'Boolean'>
+    readonly clima_id: FieldRef<"HistorialAnalitico", 'Int'>
+    readonly fecha_registro: FieldRef<"HistorialAnalitico", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HistorialAnalitico findUnique
+   */
+  export type HistorialAnaliticoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * Filter, which HistorialAnalitico to fetch.
+     */
+    where: HistorialAnaliticoWhereUniqueInput
+  }
+
+  /**
+   * HistorialAnalitico findUniqueOrThrow
+   */
+  export type HistorialAnaliticoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * Filter, which HistorialAnalitico to fetch.
+     */
+    where: HistorialAnaliticoWhereUniqueInput
+  }
+
+  /**
+   * HistorialAnalitico findFirst
+   */
+  export type HistorialAnaliticoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * Filter, which HistorialAnalitico to fetch.
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HistorialAnaliticos to fetch.
+     */
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HistorialAnaliticos.
+     */
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HistorialAnaliticos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HistorialAnaliticos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HistorialAnaliticos.
+     */
+    distinct?: HistorialAnaliticoScalarFieldEnum | HistorialAnaliticoScalarFieldEnum[]
+  }
+
+  /**
+   * HistorialAnalitico findFirstOrThrow
+   */
+  export type HistorialAnaliticoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * Filter, which HistorialAnalitico to fetch.
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HistorialAnaliticos to fetch.
+     */
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HistorialAnaliticos.
+     */
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HistorialAnaliticos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HistorialAnaliticos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HistorialAnaliticos.
+     */
+    distinct?: HistorialAnaliticoScalarFieldEnum | HistorialAnaliticoScalarFieldEnum[]
+  }
+
+  /**
+   * HistorialAnalitico findMany
+   */
+  export type HistorialAnaliticoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * Filter, which HistorialAnaliticos to fetch.
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HistorialAnaliticos to fetch.
+     */
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HistorialAnaliticos.
+     */
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HistorialAnaliticos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HistorialAnaliticos.
+     */
+    skip?: number
+    distinct?: HistorialAnaliticoScalarFieldEnum | HistorialAnaliticoScalarFieldEnum[]
+  }
+
+  /**
+   * HistorialAnalitico create
+   */
+  export type HistorialAnaliticoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HistorialAnalitico.
+     */
+    data: XOR<HistorialAnaliticoCreateInput, HistorialAnaliticoUncheckedCreateInput>
+  }
+
+  /**
+   * HistorialAnalitico createMany
+   */
+  export type HistorialAnaliticoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HistorialAnaliticos.
+     */
+    data: HistorialAnaliticoCreateManyInput | HistorialAnaliticoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HistorialAnalitico createManyAndReturn
+   */
+  export type HistorialAnaliticoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * The data used to create many HistorialAnaliticos.
+     */
+    data: HistorialAnaliticoCreateManyInput | HistorialAnaliticoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HistorialAnalitico update
+   */
+  export type HistorialAnaliticoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HistorialAnalitico.
+     */
+    data: XOR<HistorialAnaliticoUpdateInput, HistorialAnaliticoUncheckedUpdateInput>
+    /**
+     * Choose, which HistorialAnalitico to update.
+     */
+    where: HistorialAnaliticoWhereUniqueInput
+  }
+
+  /**
+   * HistorialAnalitico updateMany
+   */
+  export type HistorialAnaliticoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HistorialAnaliticos.
+     */
+    data: XOR<HistorialAnaliticoUpdateManyMutationInput, HistorialAnaliticoUncheckedUpdateManyInput>
+    /**
+     * Filter which HistorialAnaliticos to update
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * Limit how many HistorialAnaliticos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HistorialAnalitico updateManyAndReturn
+   */
+  export type HistorialAnaliticoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * The data used to update HistorialAnaliticos.
+     */
+    data: XOR<HistorialAnaliticoUpdateManyMutationInput, HistorialAnaliticoUncheckedUpdateManyInput>
+    /**
+     * Filter which HistorialAnaliticos to update
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * Limit how many HistorialAnaliticos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HistorialAnalitico upsert
+   */
+  export type HistorialAnaliticoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HistorialAnalitico to update in case it exists.
+     */
+    where: HistorialAnaliticoWhereUniqueInput
+    /**
+     * In case the HistorialAnalitico found by the `where` argument doesn't exist, create a new HistorialAnalitico with this data.
+     */
+    create: XOR<HistorialAnaliticoCreateInput, HistorialAnaliticoUncheckedCreateInput>
+    /**
+     * In case the HistorialAnalitico was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HistorialAnaliticoUpdateInput, HistorialAnaliticoUncheckedUpdateInput>
+  }
+
+  /**
+   * HistorialAnalitico delete
+   */
+  export type HistorialAnaliticoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    /**
+     * Filter which HistorialAnalitico to delete.
+     */
+    where: HistorialAnaliticoWhereUniqueInput
+  }
+
+  /**
+   * HistorialAnalitico deleteMany
+   */
+  export type HistorialAnaliticoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HistorialAnaliticos to delete
+     */
+    where?: HistorialAnaliticoWhereInput
+    /**
+     * Limit how many HistorialAnaliticos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HistorialAnalitico without action
+   */
+  export type HistorialAnaliticoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Categoria
+   */
+
+  export type AggregateCategoria = {
+    _count: CategoriaCountAggregateOutputType | null
+    _avg: CategoriaAvgAggregateOutputType | null
+    _sum: CategoriaSumAggregateOutputType | null
+    _min: CategoriaMinAggregateOutputType | null
+    _max: CategoriaMaxAggregateOutputType | null
+  }
+
+  export type CategoriaAvgAggregateOutputType = {
+    id_categoria: number | null
+  }
+
+  export type CategoriaSumAggregateOutputType = {
+    id_categoria: number | null
+  }
+
+  export type CategoriaMinAggregateOutputType = {
+    id_categoria: number | null
+    nombre: string | null
+  }
+
+  export type CategoriaMaxAggregateOutputType = {
+    id_categoria: number | null
+    nombre: string | null
+  }
+
+  export type CategoriaCountAggregateOutputType = {
+    id_categoria: number
+    nombre: number
+    _all: number
+  }
+
+
+  export type CategoriaAvgAggregateInputType = {
+    id_categoria?: true
+  }
+
+  export type CategoriaSumAggregateInputType = {
+    id_categoria?: true
+  }
+
+  export type CategoriaMinAggregateInputType = {
+    id_categoria?: true
+    nombre?: true
+  }
+
+  export type CategoriaMaxAggregateInputType = {
+    id_categoria?: true
+    nombre?: true
+  }
+
+  export type CategoriaCountAggregateInputType = {
+    id_categoria?: true
+    nombre?: true
+    _all?: true
+  }
+
+  export type CategoriaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Categoria to aggregate.
+     */
+    where?: CategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categorias to fetch.
+     */
+    orderBy?: CategoriaOrderByWithRelationInput | CategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Categorias
+    **/
+    _count?: true | CategoriaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CategoriaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CategoriaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CategoriaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CategoriaMaxAggregateInputType
+  }
+
+  export type GetCategoriaAggregateType<T extends CategoriaAggregateArgs> = {
+        [P in keyof T & keyof AggregateCategoria]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCategoria[P]>
+      : GetScalarType<T[P], AggregateCategoria[P]>
+  }
+
+
+
+
+  export type CategoriaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoriaWhereInput
+    orderBy?: CategoriaOrderByWithAggregationInput | CategoriaOrderByWithAggregationInput[]
+    by: CategoriaScalarFieldEnum[] | CategoriaScalarFieldEnum
+    having?: CategoriaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CategoriaCountAggregateInputType | true
+    _avg?: CategoriaAvgAggregateInputType
+    _sum?: CategoriaSumAggregateInputType
+    _min?: CategoriaMinAggregateInputType
+    _max?: CategoriaMaxAggregateInputType
+  }
+
+  export type CategoriaGroupByOutputType = {
+    id_categoria: number
+    nombre: string
+    _count: CategoriaCountAggregateOutputType | null
+    _avg: CategoriaAvgAggregateOutputType | null
+    _sum: CategoriaSumAggregateOutputType | null
+    _min: CategoriaMinAggregateOutputType | null
+    _max: CategoriaMaxAggregateOutputType | null
+  }
+
+  type GetCategoriaGroupByPayload<T extends CategoriaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CategoriaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CategoriaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CategoriaGroupByOutputType[P]>
+            : GetScalarType<T[P], CategoriaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CategoriaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_categoria?: boolean
+    nombre?: boolean
+    historial?: boolean | Categoria$historialArgs<ExtArgs>
+    productos?: boolean | Categoria$productosArgs<ExtArgs>
+    subcategorias?: boolean | Categoria$subcategoriasArgs<ExtArgs>
+    _count?: boolean | CategoriaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["categoria"]>
+
+  export type CategoriaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_categoria?: boolean
+    nombre?: boolean
+  }, ExtArgs["result"]["categoria"]>
+
+  export type CategoriaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_categoria?: boolean
+    nombre?: boolean
+  }, ExtArgs["result"]["categoria"]>
+
+  export type CategoriaSelectScalar = {
+    id_categoria?: boolean
+    nombre?: boolean
+  }
+
+  export type CategoriaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_categoria" | "nombre", ExtArgs["result"]["categoria"]>
+  export type CategoriaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    historial?: boolean | Categoria$historialArgs<ExtArgs>
+    productos?: boolean | Categoria$productosArgs<ExtArgs>
+    subcategorias?: boolean | Categoria$subcategoriasArgs<ExtArgs>
+    _count?: boolean | CategoriaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CategoriaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CategoriaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $CategoriaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Categoria"
+    objects: {
+      historial: Prisma.$HistorialAnaliticoPayload<ExtArgs>[]
+      productos: Prisma.$ProductoPayload<ExtArgs>[]
+      subcategorias: Prisma.$SubCategoriaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_categoria: number
+      nombre: string
+    }, ExtArgs["result"]["categoria"]>
+    composites: {}
+  }
+
+  type CategoriaGetPayload<S extends boolean | null | undefined | CategoriaDefaultArgs> = $Result.GetResult<Prisma.$CategoriaPayload, S>
+
+  type CategoriaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CategoriaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CategoriaCountAggregateInputType | true
+    }
+
+  export interface CategoriaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Categoria'], meta: { name: 'Categoria' } }
+    /**
+     * Find zero or one Categoria that matches the filter.
+     * @param {CategoriaFindUniqueArgs} args - Arguments to find a Categoria
+     * @example
+     * // Get one Categoria
+     * const categoria = await prisma.categoria.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CategoriaFindUniqueArgs>(args: SelectSubset<T, CategoriaFindUniqueArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Categoria that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CategoriaFindUniqueOrThrowArgs} args - Arguments to find a Categoria
+     * @example
+     * // Get one Categoria
+     * const categoria = await prisma.categoria.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CategoriaFindUniqueOrThrowArgs>(args: SelectSubset<T, CategoriaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Categoria that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaFindFirstArgs} args - Arguments to find a Categoria
+     * @example
+     * // Get one Categoria
+     * const categoria = await prisma.categoria.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CategoriaFindFirstArgs>(args?: SelectSubset<T, CategoriaFindFirstArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Categoria that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaFindFirstOrThrowArgs} args - Arguments to find a Categoria
+     * @example
+     * // Get one Categoria
+     * const categoria = await prisma.categoria.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CategoriaFindFirstOrThrowArgs>(args?: SelectSubset<T, CategoriaFindFirstOrThrowArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Categorias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Categorias
+     * const categorias = await prisma.categoria.findMany()
+     * 
+     * // Get first 10 Categorias
+     * const categorias = await prisma.categoria.findMany({ take: 10 })
+     * 
+     * // Only select the `id_categoria`
+     * const categoriaWithId_categoriaOnly = await prisma.categoria.findMany({ select: { id_categoria: true } })
+     * 
+     */
+    findMany<T extends CategoriaFindManyArgs>(args?: SelectSubset<T, CategoriaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Categoria.
+     * @param {CategoriaCreateArgs} args - Arguments to create a Categoria.
+     * @example
+     * // Create one Categoria
+     * const Categoria = await prisma.categoria.create({
+     *   data: {
+     *     // ... data to create a Categoria
+     *   }
+     * })
+     * 
+     */
+    create<T extends CategoriaCreateArgs>(args: SelectSubset<T, CategoriaCreateArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Categorias.
+     * @param {CategoriaCreateManyArgs} args - Arguments to create many Categorias.
+     * @example
+     * // Create many Categorias
+     * const categoria = await prisma.categoria.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CategoriaCreateManyArgs>(args?: SelectSubset<T, CategoriaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Categorias and returns the data saved in the database.
+     * @param {CategoriaCreateManyAndReturnArgs} args - Arguments to create many Categorias.
+     * @example
+     * // Create many Categorias
+     * const categoria = await prisma.categoria.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Categorias and only return the `id_categoria`
+     * const categoriaWithId_categoriaOnly = await prisma.categoria.createManyAndReturn({
+     *   select: { id_categoria: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CategoriaCreateManyAndReturnArgs>(args?: SelectSubset<T, CategoriaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Categoria.
+     * @param {CategoriaDeleteArgs} args - Arguments to delete one Categoria.
+     * @example
+     * // Delete one Categoria
+     * const Categoria = await prisma.categoria.delete({
+     *   where: {
+     *     // ... filter to delete one Categoria
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CategoriaDeleteArgs>(args: SelectSubset<T, CategoriaDeleteArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Categoria.
+     * @param {CategoriaUpdateArgs} args - Arguments to update one Categoria.
+     * @example
+     * // Update one Categoria
+     * const categoria = await prisma.categoria.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CategoriaUpdateArgs>(args: SelectSubset<T, CategoriaUpdateArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Categorias.
+     * @param {CategoriaDeleteManyArgs} args - Arguments to filter Categorias to delete.
+     * @example
+     * // Delete a few Categorias
+     * const { count } = await prisma.categoria.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CategoriaDeleteManyArgs>(args?: SelectSubset<T, CategoriaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Categorias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Categorias
+     * const categoria = await prisma.categoria.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CategoriaUpdateManyArgs>(args: SelectSubset<T, CategoriaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Categorias and returns the data updated in the database.
+     * @param {CategoriaUpdateManyAndReturnArgs} args - Arguments to update many Categorias.
+     * @example
+     * // Update many Categorias
+     * const categoria = await prisma.categoria.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Categorias and only return the `id_categoria`
+     * const categoriaWithId_categoriaOnly = await prisma.categoria.updateManyAndReturn({
+     *   select: { id_categoria: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CategoriaUpdateManyAndReturnArgs>(args: SelectSubset<T, CategoriaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Categoria.
+     * @param {CategoriaUpsertArgs} args - Arguments to update or create a Categoria.
+     * @example
+     * // Update or create a Categoria
+     * const categoria = await prisma.categoria.upsert({
+     *   create: {
+     *     // ... data to create a Categoria
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Categoria we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CategoriaUpsertArgs>(args: SelectSubset<T, CategoriaUpsertArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Categorias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaCountArgs} args - Arguments to filter Categorias to count.
+     * @example
+     * // Count the number of Categorias
+     * const count = await prisma.categoria.count({
+     *   where: {
+     *     // ... the filter for the Categorias we want to count
+     *   }
+     * })
+    **/
+    count<T extends CategoriaCountArgs>(
+      args?: Subset<T, CategoriaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CategoriaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Categoria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CategoriaAggregateArgs>(args: Subset<T, CategoriaAggregateArgs>): Prisma.PrismaPromise<GetCategoriaAggregateType<T>>
+
+    /**
+     * Group by Categoria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CategoriaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CategoriaGroupByArgs['orderBy'] }
+        : { orderBy?: CategoriaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CategoriaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCategoriaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Categoria model
+   */
+  readonly fields: CategoriaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Categoria.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CategoriaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    historial<T extends Categoria$historialArgs<ExtArgs> = {}>(args?: Subset<T, Categoria$historialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productos<T extends Categoria$productosArgs<ExtArgs> = {}>(args?: Subset<T, Categoria$productosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    subcategorias<T extends Categoria$subcategoriasArgs<ExtArgs> = {}>(args?: Subset<T, Categoria$subcategoriasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Categoria model
+   */
+  interface CategoriaFieldRefs {
+    readonly id_categoria: FieldRef<"Categoria", 'Int'>
+    readonly nombre: FieldRef<"Categoria", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Categoria findUnique
+   */
+  export type CategoriaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which Categoria to fetch.
+     */
+    where: CategoriaWhereUniqueInput
+  }
+
+  /**
+   * Categoria findUniqueOrThrow
+   */
+  export type CategoriaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which Categoria to fetch.
+     */
+    where: CategoriaWhereUniqueInput
+  }
+
+  /**
+   * Categoria findFirst
+   */
+  export type CategoriaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which Categoria to fetch.
+     */
+    where?: CategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categorias to fetch.
+     */
+    orderBy?: CategoriaOrderByWithRelationInput | CategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Categorias.
+     */
+    cursor?: CategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Categorias.
+     */
+    distinct?: CategoriaScalarFieldEnum | CategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * Categoria findFirstOrThrow
+   */
+  export type CategoriaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which Categoria to fetch.
+     */
+    where?: CategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categorias to fetch.
+     */
+    orderBy?: CategoriaOrderByWithRelationInput | CategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Categorias.
+     */
+    cursor?: CategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Categorias.
+     */
+    distinct?: CategoriaScalarFieldEnum | CategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * Categoria findMany
+   */
+  export type CategoriaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which Categorias to fetch.
+     */
+    where?: CategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categorias to fetch.
+     */
+    orderBy?: CategoriaOrderByWithRelationInput | CategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Categorias.
+     */
+    cursor?: CategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categorias.
+     */
+    skip?: number
+    distinct?: CategoriaScalarFieldEnum | CategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * Categoria create
+   */
+  export type CategoriaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Categoria.
+     */
+    data: XOR<CategoriaCreateInput, CategoriaUncheckedCreateInput>
+  }
+
+  /**
+   * Categoria createMany
+   */
+  export type CategoriaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Categorias.
+     */
+    data: CategoriaCreateManyInput | CategoriaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Categoria createManyAndReturn
+   */
+  export type CategoriaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * The data used to create many Categorias.
+     */
+    data: CategoriaCreateManyInput | CategoriaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Categoria update
+   */
+  export type CategoriaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Categoria.
+     */
+    data: XOR<CategoriaUpdateInput, CategoriaUncheckedUpdateInput>
+    /**
+     * Choose, which Categoria to update.
+     */
+    where: CategoriaWhereUniqueInput
+  }
+
+  /**
+   * Categoria updateMany
+   */
+  export type CategoriaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Categorias.
+     */
+    data: XOR<CategoriaUpdateManyMutationInput, CategoriaUncheckedUpdateManyInput>
+    /**
+     * Filter which Categorias to update
+     */
+    where?: CategoriaWhereInput
+    /**
+     * Limit how many Categorias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Categoria updateManyAndReturn
+   */
+  export type CategoriaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * The data used to update Categorias.
+     */
+    data: XOR<CategoriaUpdateManyMutationInput, CategoriaUncheckedUpdateManyInput>
+    /**
+     * Filter which Categorias to update
+     */
+    where?: CategoriaWhereInput
+    /**
+     * Limit how many Categorias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Categoria upsert
+   */
+  export type CategoriaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Categoria to update in case it exists.
+     */
+    where: CategoriaWhereUniqueInput
+    /**
+     * In case the Categoria found by the `where` argument doesn't exist, create a new Categoria with this data.
+     */
+    create: XOR<CategoriaCreateInput, CategoriaUncheckedCreateInput>
+    /**
+     * In case the Categoria was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CategoriaUpdateInput, CategoriaUncheckedUpdateInput>
+  }
+
+  /**
+   * Categoria delete
+   */
+  export type CategoriaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+    /**
+     * Filter which Categoria to delete.
+     */
+    where: CategoriaWhereUniqueInput
+  }
+
+  /**
+   * Categoria deleteMany
+   */
+  export type CategoriaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Categorias to delete
+     */
+    where?: CategoriaWhereInput
+    /**
+     * Limit how many Categorias to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Categoria.historial
+   */
+  export type Categoria$historialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    where?: HistorialAnaliticoWhereInput
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HistorialAnaliticoScalarFieldEnum | HistorialAnaliticoScalarFieldEnum[]
+  }
+
+  /**
+   * Categoria.productos
+   */
+  export type Categoria$productosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Producto
+     */
+    select?: ProductoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Producto
+     */
+    omit?: ProductoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductoInclude<ExtArgs> | null
+    where?: ProductoWhereInput
+    orderBy?: ProductoOrderByWithRelationInput | ProductoOrderByWithRelationInput[]
+    cursor?: ProductoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductoScalarFieldEnum | ProductoScalarFieldEnum[]
+  }
+
+  /**
+   * Categoria.subcategorias
+   */
+  export type Categoria$subcategoriasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    where?: SubCategoriaWhereInput
+    orderBy?: SubCategoriaOrderByWithRelationInput | SubCategoriaOrderByWithRelationInput[]
+    cursor?: SubCategoriaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubCategoriaScalarFieldEnum | SubCategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * Categoria without action
+   */
+  export type CategoriaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categoria
+     */
+    select?: CategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categoria
+     */
+    omit?: CategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SubCategoria
+   */
+
+  export type AggregateSubCategoria = {
+    _count: SubCategoriaCountAggregateOutputType | null
+    _avg: SubCategoriaAvgAggregateOutputType | null
+    _sum: SubCategoriaSumAggregateOutputType | null
+    _min: SubCategoriaMinAggregateOutputType | null
+    _max: SubCategoriaMaxAggregateOutputType | null
+  }
+
+  export type SubCategoriaAvgAggregateOutputType = {
+    id_subcategoria: number | null
+    id_categoria: number | null
+  }
+
+  export type SubCategoriaSumAggregateOutputType = {
+    id_subcategoria: number | null
+    id_categoria: number | null
+  }
+
+  export type SubCategoriaMinAggregateOutputType = {
+    id_subcategoria: number | null
+    nombre: string | null
+    id_categoria: number | null
+  }
+
+  export type SubCategoriaMaxAggregateOutputType = {
+    id_subcategoria: number | null
+    nombre: string | null
+    id_categoria: number | null
+  }
+
+  export type SubCategoriaCountAggregateOutputType = {
+    id_subcategoria: number
+    nombre: number
+    id_categoria: number
+    _all: number
+  }
+
+
+  export type SubCategoriaAvgAggregateInputType = {
+    id_subcategoria?: true
+    id_categoria?: true
+  }
+
+  export type SubCategoriaSumAggregateInputType = {
+    id_subcategoria?: true
+    id_categoria?: true
+  }
+
+  export type SubCategoriaMinAggregateInputType = {
+    id_subcategoria?: true
+    nombre?: true
+    id_categoria?: true
+  }
+
+  export type SubCategoriaMaxAggregateInputType = {
+    id_subcategoria?: true
+    nombre?: true
+    id_categoria?: true
+  }
+
+  export type SubCategoriaCountAggregateInputType = {
+    id_subcategoria?: true
+    nombre?: true
+    id_categoria?: true
+    _all?: true
+  }
+
+  export type SubCategoriaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubCategoria to aggregate.
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubCategorias to fetch.
+     */
+    orderBy?: SubCategoriaOrderByWithRelationInput | SubCategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubCategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubCategorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubCategorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SubCategorias
+    **/
+    _count?: true | SubCategoriaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubCategoriaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubCategoriaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubCategoriaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubCategoriaMaxAggregateInputType
+  }
+
+  export type GetSubCategoriaAggregateType<T extends SubCategoriaAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubCategoria]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubCategoria[P]>
+      : GetScalarType<T[P], AggregateSubCategoria[P]>
+  }
+
+
+
+
+  export type SubCategoriaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubCategoriaWhereInput
+    orderBy?: SubCategoriaOrderByWithAggregationInput | SubCategoriaOrderByWithAggregationInput[]
+    by: SubCategoriaScalarFieldEnum[] | SubCategoriaScalarFieldEnum
+    having?: SubCategoriaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubCategoriaCountAggregateInputType | true
+    _avg?: SubCategoriaAvgAggregateInputType
+    _sum?: SubCategoriaSumAggregateInputType
+    _min?: SubCategoriaMinAggregateInputType
+    _max?: SubCategoriaMaxAggregateInputType
+  }
+
+  export type SubCategoriaGroupByOutputType = {
+    id_subcategoria: number
+    nombre: string
+    id_categoria: number
+    _count: SubCategoriaCountAggregateOutputType | null
+    _avg: SubCategoriaAvgAggregateOutputType | null
+    _sum: SubCategoriaSumAggregateOutputType | null
+    _min: SubCategoriaMinAggregateOutputType | null
+    _max: SubCategoriaMaxAggregateOutputType | null
+  }
+
+  type GetSubCategoriaGroupByPayload<T extends SubCategoriaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubCategoriaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubCategoriaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubCategoriaGroupByOutputType[P]>
+            : GetScalarType<T[P], SubCategoriaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubCategoriaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_subcategoria?: boolean
+    nombre?: boolean
+    id_categoria?: boolean
+    historial_analitico?: boolean | SubCategoria$historial_analiticoArgs<ExtArgs>
+    productos?: boolean | SubCategoria$productosArgs<ExtArgs>
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    _count?: boolean | SubCategoriaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subCategoria"]>
+
+  export type SubCategoriaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_subcategoria?: boolean
+    nombre?: boolean
+    id_categoria?: boolean
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subCategoria"]>
+
+  export type SubCategoriaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_subcategoria?: boolean
+    nombre?: boolean
+    id_categoria?: boolean
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subCategoria"]>
+
+  export type SubCategoriaSelectScalar = {
+    id_subcategoria?: boolean
+    nombre?: boolean
+    id_categoria?: boolean
+  }
+
+  export type SubCategoriaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_subcategoria" | "nombre" | "id_categoria", ExtArgs["result"]["subCategoria"]>
+  export type SubCategoriaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    historial_analitico?: boolean | SubCategoria$historial_analiticoArgs<ExtArgs>
+    productos?: boolean | SubCategoria$productosArgs<ExtArgs>
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+    _count?: boolean | SubCategoriaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SubCategoriaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+  }
+  export type SubCategoriaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
+  }
+
+  export type $SubCategoriaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SubCategoria"
+    objects: {
+      historial_analitico: Prisma.$HistorialAnaliticoPayload<ExtArgs>[]
+      productos: Prisma.$ProductoPayload<ExtArgs>[]
+      categoria: Prisma.$CategoriaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_subcategoria: number
+      nombre: string
+      id_categoria: number
+    }, ExtArgs["result"]["subCategoria"]>
+    composites: {}
+  }
+
+  type SubCategoriaGetPayload<S extends boolean | null | undefined | SubCategoriaDefaultArgs> = $Result.GetResult<Prisma.$SubCategoriaPayload, S>
+
+  type SubCategoriaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubCategoriaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubCategoriaCountAggregateInputType | true
+    }
+
+  export interface SubCategoriaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SubCategoria'], meta: { name: 'SubCategoria' } }
+    /**
+     * Find zero or one SubCategoria that matches the filter.
+     * @param {SubCategoriaFindUniqueArgs} args - Arguments to find a SubCategoria
+     * @example
+     * // Get one SubCategoria
+     * const subCategoria = await prisma.subCategoria.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubCategoriaFindUniqueArgs>(args: SelectSubset<T, SubCategoriaFindUniqueArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SubCategoria that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubCategoriaFindUniqueOrThrowArgs} args - Arguments to find a SubCategoria
+     * @example
+     * // Get one SubCategoria
+     * const subCategoria = await prisma.subCategoria.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubCategoriaFindUniqueOrThrowArgs>(args: SelectSubset<T, SubCategoriaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubCategoria that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaFindFirstArgs} args - Arguments to find a SubCategoria
+     * @example
+     * // Get one SubCategoria
+     * const subCategoria = await prisma.subCategoria.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubCategoriaFindFirstArgs>(args?: SelectSubset<T, SubCategoriaFindFirstArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubCategoria that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaFindFirstOrThrowArgs} args - Arguments to find a SubCategoria
+     * @example
+     * // Get one SubCategoria
+     * const subCategoria = await prisma.subCategoria.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubCategoriaFindFirstOrThrowArgs>(args?: SelectSubset<T, SubCategoriaFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SubCategorias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SubCategorias
+     * const subCategorias = await prisma.subCategoria.findMany()
+     * 
+     * // Get first 10 SubCategorias
+     * const subCategorias = await prisma.subCategoria.findMany({ take: 10 })
+     * 
+     * // Only select the `id_subcategoria`
+     * const subCategoriaWithId_subcategoriaOnly = await prisma.subCategoria.findMany({ select: { id_subcategoria: true } })
+     * 
+     */
+    findMany<T extends SubCategoriaFindManyArgs>(args?: SelectSubset<T, SubCategoriaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SubCategoria.
+     * @param {SubCategoriaCreateArgs} args - Arguments to create a SubCategoria.
+     * @example
+     * // Create one SubCategoria
+     * const SubCategoria = await prisma.subCategoria.create({
+     *   data: {
+     *     // ... data to create a SubCategoria
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubCategoriaCreateArgs>(args: SelectSubset<T, SubCategoriaCreateArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SubCategorias.
+     * @param {SubCategoriaCreateManyArgs} args - Arguments to create many SubCategorias.
+     * @example
+     * // Create many SubCategorias
+     * const subCategoria = await prisma.subCategoria.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubCategoriaCreateManyArgs>(args?: SelectSubset<T, SubCategoriaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SubCategorias and returns the data saved in the database.
+     * @param {SubCategoriaCreateManyAndReturnArgs} args - Arguments to create many SubCategorias.
+     * @example
+     * // Create many SubCategorias
+     * const subCategoria = await prisma.subCategoria.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SubCategorias and only return the `id_subcategoria`
+     * const subCategoriaWithId_subcategoriaOnly = await prisma.subCategoria.createManyAndReturn({
+     *   select: { id_subcategoria: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubCategoriaCreateManyAndReturnArgs>(args?: SelectSubset<T, SubCategoriaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SubCategoria.
+     * @param {SubCategoriaDeleteArgs} args - Arguments to delete one SubCategoria.
+     * @example
+     * // Delete one SubCategoria
+     * const SubCategoria = await prisma.subCategoria.delete({
+     *   where: {
+     *     // ... filter to delete one SubCategoria
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubCategoriaDeleteArgs>(args: SelectSubset<T, SubCategoriaDeleteArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SubCategoria.
+     * @param {SubCategoriaUpdateArgs} args - Arguments to update one SubCategoria.
+     * @example
+     * // Update one SubCategoria
+     * const subCategoria = await prisma.subCategoria.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubCategoriaUpdateArgs>(args: SelectSubset<T, SubCategoriaUpdateArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SubCategorias.
+     * @param {SubCategoriaDeleteManyArgs} args - Arguments to filter SubCategorias to delete.
+     * @example
+     * // Delete a few SubCategorias
+     * const { count } = await prisma.subCategoria.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubCategoriaDeleteManyArgs>(args?: SelectSubset<T, SubCategoriaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubCategorias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SubCategorias
+     * const subCategoria = await prisma.subCategoria.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubCategoriaUpdateManyArgs>(args: SelectSubset<T, SubCategoriaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubCategorias and returns the data updated in the database.
+     * @param {SubCategoriaUpdateManyAndReturnArgs} args - Arguments to update many SubCategorias.
+     * @example
+     * // Update many SubCategorias
+     * const subCategoria = await prisma.subCategoria.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SubCategorias and only return the `id_subcategoria`
+     * const subCategoriaWithId_subcategoriaOnly = await prisma.subCategoria.updateManyAndReturn({
+     *   select: { id_subcategoria: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubCategoriaUpdateManyAndReturnArgs>(args: SelectSubset<T, SubCategoriaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SubCategoria.
+     * @param {SubCategoriaUpsertArgs} args - Arguments to update or create a SubCategoria.
+     * @example
+     * // Update or create a SubCategoria
+     * const subCategoria = await prisma.subCategoria.upsert({
+     *   create: {
+     *     // ... data to create a SubCategoria
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SubCategoria we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubCategoriaUpsertArgs>(args: SelectSubset<T, SubCategoriaUpsertArgs<ExtArgs>>): Prisma__SubCategoriaClient<$Result.GetResult<Prisma.$SubCategoriaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SubCategorias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaCountArgs} args - Arguments to filter SubCategorias to count.
+     * @example
+     * // Count the number of SubCategorias
+     * const count = await prisma.subCategoria.count({
+     *   where: {
+     *     // ... the filter for the SubCategorias we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubCategoriaCountArgs>(
+      args?: Subset<T, SubCategoriaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubCategoriaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SubCategoria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubCategoriaAggregateArgs>(args: Subset<T, SubCategoriaAggregateArgs>): Prisma.PrismaPromise<GetSubCategoriaAggregateType<T>>
+
+    /**
+     * Group by SubCategoria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCategoriaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubCategoriaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubCategoriaGroupByArgs['orderBy'] }
+        : { orderBy?: SubCategoriaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubCategoriaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubCategoriaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SubCategoria model
+   */
+  readonly fields: SubCategoriaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SubCategoria.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubCategoriaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    historial_analitico<T extends SubCategoria$historial_analiticoArgs<ExtArgs> = {}>(args?: Subset<T, SubCategoria$historial_analiticoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistorialAnaliticoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productos<T extends SubCategoria$productosArgs<ExtArgs> = {}>(args?: Subset<T, SubCategoria$productosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    categoria<T extends CategoriaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoriaDefaultArgs<ExtArgs>>): Prisma__CategoriaClient<$Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SubCategoria model
+   */
+  interface SubCategoriaFieldRefs {
+    readonly id_subcategoria: FieldRef<"SubCategoria", 'Int'>
+    readonly nombre: FieldRef<"SubCategoria", 'String'>
+    readonly id_categoria: FieldRef<"SubCategoria", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SubCategoria findUnique
+   */
+  export type SubCategoriaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which SubCategoria to fetch.
+     */
+    where: SubCategoriaWhereUniqueInput
+  }
+
+  /**
+   * SubCategoria findUniqueOrThrow
+   */
+  export type SubCategoriaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which SubCategoria to fetch.
+     */
+    where: SubCategoriaWhereUniqueInput
+  }
+
+  /**
+   * SubCategoria findFirst
+   */
+  export type SubCategoriaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which SubCategoria to fetch.
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubCategorias to fetch.
+     */
+    orderBy?: SubCategoriaOrderByWithRelationInput | SubCategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubCategorias.
+     */
+    cursor?: SubCategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubCategorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubCategorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubCategorias.
+     */
+    distinct?: SubCategoriaScalarFieldEnum | SubCategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * SubCategoria findFirstOrThrow
+   */
+  export type SubCategoriaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which SubCategoria to fetch.
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubCategorias to fetch.
+     */
+    orderBy?: SubCategoriaOrderByWithRelationInput | SubCategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubCategorias.
+     */
+    cursor?: SubCategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubCategorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubCategorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubCategorias.
+     */
+    distinct?: SubCategoriaScalarFieldEnum | SubCategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * SubCategoria findMany
+   */
+  export type SubCategoriaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * Filter, which SubCategorias to fetch.
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubCategorias to fetch.
+     */
+    orderBy?: SubCategoriaOrderByWithRelationInput | SubCategoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SubCategorias.
+     */
+    cursor?: SubCategoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubCategorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubCategorias.
+     */
+    skip?: number
+    distinct?: SubCategoriaScalarFieldEnum | SubCategoriaScalarFieldEnum[]
+  }
+
+  /**
+   * SubCategoria create
+   */
+  export type SubCategoriaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SubCategoria.
+     */
+    data: XOR<SubCategoriaCreateInput, SubCategoriaUncheckedCreateInput>
+  }
+
+  /**
+   * SubCategoria createMany
+   */
+  export type SubCategoriaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SubCategorias.
+     */
+    data: SubCategoriaCreateManyInput | SubCategoriaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SubCategoria createManyAndReturn
+   */
+  export type SubCategoriaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * The data used to create many SubCategorias.
+     */
+    data: SubCategoriaCreateManyInput | SubCategoriaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SubCategoria update
+   */
+  export type SubCategoriaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SubCategoria.
+     */
+    data: XOR<SubCategoriaUpdateInput, SubCategoriaUncheckedUpdateInput>
+    /**
+     * Choose, which SubCategoria to update.
+     */
+    where: SubCategoriaWhereUniqueInput
+  }
+
+  /**
+   * SubCategoria updateMany
+   */
+  export type SubCategoriaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SubCategorias.
+     */
+    data: XOR<SubCategoriaUpdateManyMutationInput, SubCategoriaUncheckedUpdateManyInput>
+    /**
+     * Filter which SubCategorias to update
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * Limit how many SubCategorias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SubCategoria updateManyAndReturn
+   */
+  export type SubCategoriaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * The data used to update SubCategorias.
+     */
+    data: XOR<SubCategoriaUpdateManyMutationInput, SubCategoriaUncheckedUpdateManyInput>
+    /**
+     * Filter which SubCategorias to update
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * Limit how many SubCategorias to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SubCategoria upsert
+   */
+  export type SubCategoriaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SubCategoria to update in case it exists.
+     */
+    where: SubCategoriaWhereUniqueInput
+    /**
+     * In case the SubCategoria found by the `where` argument doesn't exist, create a new SubCategoria with this data.
+     */
+    create: XOR<SubCategoriaCreateInput, SubCategoriaUncheckedCreateInput>
+    /**
+     * In case the SubCategoria was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubCategoriaUpdateInput, SubCategoriaUncheckedUpdateInput>
+  }
+
+  /**
+   * SubCategoria delete
+   */
+  export type SubCategoriaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+    /**
+     * Filter which SubCategoria to delete.
+     */
+    where: SubCategoriaWhereUniqueInput
+  }
+
+  /**
+   * SubCategoria deleteMany
+   */
+  export type SubCategoriaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubCategorias to delete
+     */
+    where?: SubCategoriaWhereInput
+    /**
+     * Limit how many SubCategorias to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SubCategoria.historial_analitico
+   */
+  export type SubCategoria$historial_analiticoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistorialAnalitico
+     */
+    select?: HistorialAnaliticoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistorialAnalitico
+     */
+    omit?: HistorialAnaliticoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistorialAnaliticoInclude<ExtArgs> | null
+    where?: HistorialAnaliticoWhereInput
+    orderBy?: HistorialAnaliticoOrderByWithRelationInput | HistorialAnaliticoOrderByWithRelationInput[]
+    cursor?: HistorialAnaliticoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HistorialAnaliticoScalarFieldEnum | HistorialAnaliticoScalarFieldEnum[]
+  }
+
+  /**
+   * SubCategoria.productos
+   */
+  export type SubCategoria$productosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Producto
+     */
+    select?: ProductoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Producto
+     */
+    omit?: ProductoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductoInclude<ExtArgs> | null
+    where?: ProductoWhereInput
+    orderBy?: ProductoOrderByWithRelationInput | ProductoOrderByWithRelationInput[]
+    cursor?: ProductoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductoScalarFieldEnum | ProductoScalarFieldEnum[]
+  }
+
+  /**
+   * SubCategoria without action
+   */
+  export type SubCategoriaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubCategoria
+     */
+    select?: SubCategoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubCategoria
+     */
+    omit?: SubCategoriaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubCategoriaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -13131,12 +17010,13 @@ export namespace Prisma {
     id_producto: 'id_producto',
     nombre: 'nombre',
     precio: 'precio',
-    categoria: 'categoria',
+    id_categoria: 'id_categoria',
+    id_subcategoria: 'id_subcategoria',
     descripcion: 'descripcion',
     tiempo_prep: 'tiempo_prep',
     pasos: 'pasos',
-    eliminado: 'eliminado',
-    activo: 'activo'
+    activo: 'activo',
+    eliminado: 'eliminado'
   };
 
   export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
@@ -13206,6 +17086,38 @@ export namespace Prisma {
   };
 
   export type ProductoImagenScalarFieldEnum = (typeof ProductoImagenScalarFieldEnum)[keyof typeof ProductoImagenScalarFieldEnum]
+
+
+  export const HistorialAnaliticoScalarFieldEnum: {
+    id_historial: 'id_historial',
+    id_producto: 'id_producto',
+    id_subcategoria: 'id_subcategoria',
+    id_categoria: 'id_categoria',
+    hora: 'hora',
+    dia_semana: 'dia_semana',
+    es_festivo: 'es_festivo',
+    clima_id: 'clima_id',
+    fecha_registro: 'fecha_registro'
+  };
+
+  export type HistorialAnaliticoScalarFieldEnum = (typeof HistorialAnaliticoScalarFieldEnum)[keyof typeof HistorialAnaliticoScalarFieldEnum]
+
+
+  export const CategoriaScalarFieldEnum: {
+    id_categoria: 'id_categoria',
+    nombre: 'nombre'
+  };
+
+  export type CategoriaScalarFieldEnum = (typeof CategoriaScalarFieldEnum)[keyof typeof CategoriaScalarFieldEnum]
+
+
+  export const SubCategoriaScalarFieldEnum: {
+    id_subcategoria: 'id_subcategoria',
+    nombre: 'nombre',
+    id_categoria: 'id_categoria'
+  };
+
+  export type SubCategoriaScalarFieldEnum = (typeof SubCategoriaScalarFieldEnum)[keyof typeof SubCategoriaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13487,30 +17399,38 @@ export namespace Prisma {
     id_producto?: IntFilter<"Producto"> | number
     nombre?: StringFilter<"Producto"> | string
     precio?: DecimalFilter<"Producto"> | Decimal | DecimalJsLike | number | string
-    categoria?: StringFilter<"Producto"> | string
+    id_categoria?: IntFilter<"Producto"> | number
+    id_subcategoria?: IntFilter<"Producto"> | number
     descripcion?: StringNullableFilter<"Producto"> | string | null
     tiempo_prep?: IntFilter<"Producto"> | number
     pasos?: StringNullableFilter<"Producto"> | string | null
-    eliminado?: BoolFilter<"Producto"> | boolean
     activo?: BoolFilter<"Producto"> | boolean
+    eliminado?: BoolFilter<"Producto"> | boolean
     detalles?: DetalleComandaListRelationFilter
+    historial?: HistorialAnaliticoListRelationFilter
     aditamentos?: ProductoAditamentosListRelationFilter
     imagen?: ProductoImagenListRelationFilter
+    categoriaRel?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
+    subcategoria?: XOR<SubCategoriaScalarRelationFilter, SubCategoriaWhereInput>
   }
 
   export type ProductoOrderByWithRelationInput = {
     id_producto?: SortOrder
     nombre?: SortOrder
     precio?: SortOrder
-    categoria?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     descripcion?: SortOrderInput | SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrderInput | SortOrder
-    eliminado?: SortOrder
     activo?: SortOrder
+    eliminado?: SortOrder
     detalles?: DetalleComandaOrderByRelationAggregateInput
+    historial?: HistorialAnaliticoOrderByRelationAggregateInput
     aditamentos?: ProductoAditamentosOrderByRelationAggregateInput
     imagen?: ProductoImagenOrderByRelationAggregateInput
+    categoriaRel?: CategoriaOrderByWithRelationInput
+    subcategoria?: SubCategoriaOrderByWithRelationInput
   }
 
   export type ProductoWhereUniqueInput = Prisma.AtLeast<{
@@ -13520,27 +17440,32 @@ export namespace Prisma {
     NOT?: ProductoWhereInput | ProductoWhereInput[]
     nombre?: StringFilter<"Producto"> | string
     precio?: DecimalFilter<"Producto"> | Decimal | DecimalJsLike | number | string
-    categoria?: StringFilter<"Producto"> | string
+    id_categoria?: IntFilter<"Producto"> | number
+    id_subcategoria?: IntFilter<"Producto"> | number
     descripcion?: StringNullableFilter<"Producto"> | string | null
     tiempo_prep?: IntFilter<"Producto"> | number
     pasos?: StringNullableFilter<"Producto"> | string | null
-    eliminado?: BoolFilter<"Producto"> | boolean
     activo?: BoolFilter<"Producto"> | boolean
+    eliminado?: BoolFilter<"Producto"> | boolean
     detalles?: DetalleComandaListRelationFilter
+    historial?: HistorialAnaliticoListRelationFilter
     aditamentos?: ProductoAditamentosListRelationFilter
     imagen?: ProductoImagenListRelationFilter
+    categoriaRel?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
+    subcategoria?: XOR<SubCategoriaScalarRelationFilter, SubCategoriaWhereInput>
   }, "id_producto">
 
   export type ProductoOrderByWithAggregationInput = {
     id_producto?: SortOrder
     nombre?: SortOrder
     precio?: SortOrder
-    categoria?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     descripcion?: SortOrderInput | SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrderInput | SortOrder
-    eliminado?: SortOrder
     activo?: SortOrder
+    eliminado?: SortOrder
     _count?: ProductoCountOrderByAggregateInput
     _avg?: ProductoAvgOrderByAggregateInput
     _max?: ProductoMaxOrderByAggregateInput
@@ -13555,12 +17480,13 @@ export namespace Prisma {
     id_producto?: IntWithAggregatesFilter<"Producto"> | number
     nombre?: StringWithAggregatesFilter<"Producto"> | string
     precio?: DecimalWithAggregatesFilter<"Producto"> | Decimal | DecimalJsLike | number | string
-    categoria?: StringWithAggregatesFilter<"Producto"> | string
+    id_categoria?: IntWithAggregatesFilter<"Producto"> | number
+    id_subcategoria?: IntWithAggregatesFilter<"Producto"> | number
     descripcion?: StringNullableWithAggregatesFilter<"Producto"> | string | null
     tiempo_prep?: IntWithAggregatesFilter<"Producto"> | number
     pasos?: StringNullableWithAggregatesFilter<"Producto"> | string | null
-    eliminado?: BoolWithAggregatesFilter<"Producto"> | boolean
     activo?: BoolWithAggregatesFilter<"Producto"> | boolean
+    eliminado?: BoolWithAggregatesFilter<"Producto"> | boolean
   }
 
   export type AditamentoWhereInput = {
@@ -13928,6 +17854,190 @@ export namespace Prisma {
     id_producto?: IntWithAggregatesFilter<"ProductoImagen"> | number
   }
 
+  export type HistorialAnaliticoWhereInput = {
+    AND?: HistorialAnaliticoWhereInput | HistorialAnaliticoWhereInput[]
+    OR?: HistorialAnaliticoWhereInput[]
+    NOT?: HistorialAnaliticoWhereInput | HistorialAnaliticoWhereInput[]
+    id_historial?: IntFilter<"HistorialAnalitico"> | number
+    id_producto?: IntFilter<"HistorialAnalitico"> | number
+    id_subcategoria?: IntFilter<"HistorialAnalitico"> | number
+    id_categoria?: IntFilter<"HistorialAnalitico"> | number
+    hora?: IntFilter<"HistorialAnalitico"> | number
+    dia_semana?: IntFilter<"HistorialAnalitico"> | number
+    es_festivo?: BoolFilter<"HistorialAnalitico"> | boolean
+    clima_id?: IntFilter<"HistorialAnalitico"> | number
+    fecha_registro?: DateTimeNullableFilter<"HistorialAnalitico"> | Date | string | null
+    categoria?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
+    producto?: XOR<ProductoScalarRelationFilter, ProductoWhereInput>
+    subcategorias?: XOR<SubCategoriaScalarRelationFilter, SubCategoriaWhereInput>
+  }
+
+  export type HistorialAnaliticoOrderByWithRelationInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    es_festivo?: SortOrder
+    clima_id?: SortOrder
+    fecha_registro?: SortOrderInput | SortOrder
+    categoria?: CategoriaOrderByWithRelationInput
+    producto?: ProductoOrderByWithRelationInput
+    subcategorias?: SubCategoriaOrderByWithRelationInput
+  }
+
+  export type HistorialAnaliticoWhereUniqueInput = Prisma.AtLeast<{
+    id_historial?: number
+    AND?: HistorialAnaliticoWhereInput | HistorialAnaliticoWhereInput[]
+    OR?: HistorialAnaliticoWhereInput[]
+    NOT?: HistorialAnaliticoWhereInput | HistorialAnaliticoWhereInput[]
+    id_producto?: IntFilter<"HistorialAnalitico"> | number
+    id_subcategoria?: IntFilter<"HistorialAnalitico"> | number
+    id_categoria?: IntFilter<"HistorialAnalitico"> | number
+    hora?: IntFilter<"HistorialAnalitico"> | number
+    dia_semana?: IntFilter<"HistorialAnalitico"> | number
+    es_festivo?: BoolFilter<"HistorialAnalitico"> | boolean
+    clima_id?: IntFilter<"HistorialAnalitico"> | number
+    fecha_registro?: DateTimeNullableFilter<"HistorialAnalitico"> | Date | string | null
+    categoria?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
+    producto?: XOR<ProductoScalarRelationFilter, ProductoWhereInput>
+    subcategorias?: XOR<SubCategoriaScalarRelationFilter, SubCategoriaWhereInput>
+  }, "id_historial">
+
+  export type HistorialAnaliticoOrderByWithAggregationInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    es_festivo?: SortOrder
+    clima_id?: SortOrder
+    fecha_registro?: SortOrderInput | SortOrder
+    _count?: HistorialAnaliticoCountOrderByAggregateInput
+    _avg?: HistorialAnaliticoAvgOrderByAggregateInput
+    _max?: HistorialAnaliticoMaxOrderByAggregateInput
+    _min?: HistorialAnaliticoMinOrderByAggregateInput
+    _sum?: HistorialAnaliticoSumOrderByAggregateInput
+  }
+
+  export type HistorialAnaliticoScalarWhereWithAggregatesInput = {
+    AND?: HistorialAnaliticoScalarWhereWithAggregatesInput | HistorialAnaliticoScalarWhereWithAggregatesInput[]
+    OR?: HistorialAnaliticoScalarWhereWithAggregatesInput[]
+    NOT?: HistorialAnaliticoScalarWhereWithAggregatesInput | HistorialAnaliticoScalarWhereWithAggregatesInput[]
+    id_historial?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    id_producto?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    id_subcategoria?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    id_categoria?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    hora?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    dia_semana?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    es_festivo?: BoolWithAggregatesFilter<"HistorialAnalitico"> | boolean
+    clima_id?: IntWithAggregatesFilter<"HistorialAnalitico"> | number
+    fecha_registro?: DateTimeNullableWithAggregatesFilter<"HistorialAnalitico"> | Date | string | null
+  }
+
+  export type CategoriaWhereInput = {
+    AND?: CategoriaWhereInput | CategoriaWhereInput[]
+    OR?: CategoriaWhereInput[]
+    NOT?: CategoriaWhereInput | CategoriaWhereInput[]
+    id_categoria?: IntFilter<"Categoria"> | number
+    nombre?: StringFilter<"Categoria"> | string
+    historial?: HistorialAnaliticoListRelationFilter
+    productos?: ProductoListRelationFilter
+    subcategorias?: SubCategoriaListRelationFilter
+  }
+
+  export type CategoriaOrderByWithRelationInput = {
+    id_categoria?: SortOrder
+    nombre?: SortOrder
+    historial?: HistorialAnaliticoOrderByRelationAggregateInput
+    productos?: ProductoOrderByRelationAggregateInput
+    subcategorias?: SubCategoriaOrderByRelationAggregateInput
+  }
+
+  export type CategoriaWhereUniqueInput = Prisma.AtLeast<{
+    id_categoria?: number
+    nombre?: string
+    AND?: CategoriaWhereInput | CategoriaWhereInput[]
+    OR?: CategoriaWhereInput[]
+    NOT?: CategoriaWhereInput | CategoriaWhereInput[]
+    historial?: HistorialAnaliticoListRelationFilter
+    productos?: ProductoListRelationFilter
+    subcategorias?: SubCategoriaListRelationFilter
+  }, "id_categoria" | "nombre">
+
+  export type CategoriaOrderByWithAggregationInput = {
+    id_categoria?: SortOrder
+    nombre?: SortOrder
+    _count?: CategoriaCountOrderByAggregateInput
+    _avg?: CategoriaAvgOrderByAggregateInput
+    _max?: CategoriaMaxOrderByAggregateInput
+    _min?: CategoriaMinOrderByAggregateInput
+    _sum?: CategoriaSumOrderByAggregateInput
+  }
+
+  export type CategoriaScalarWhereWithAggregatesInput = {
+    AND?: CategoriaScalarWhereWithAggregatesInput | CategoriaScalarWhereWithAggregatesInput[]
+    OR?: CategoriaScalarWhereWithAggregatesInput[]
+    NOT?: CategoriaScalarWhereWithAggregatesInput | CategoriaScalarWhereWithAggregatesInput[]
+    id_categoria?: IntWithAggregatesFilter<"Categoria"> | number
+    nombre?: StringWithAggregatesFilter<"Categoria"> | string
+  }
+
+  export type SubCategoriaWhereInput = {
+    AND?: SubCategoriaWhereInput | SubCategoriaWhereInput[]
+    OR?: SubCategoriaWhereInput[]
+    NOT?: SubCategoriaWhereInput | SubCategoriaWhereInput[]
+    id_subcategoria?: IntFilter<"SubCategoria"> | number
+    nombre?: StringFilter<"SubCategoria"> | string
+    id_categoria?: IntFilter<"SubCategoria"> | number
+    historial_analitico?: HistorialAnaliticoListRelationFilter
+    productos?: ProductoListRelationFilter
+    categoria?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
+  }
+
+  export type SubCategoriaOrderByWithRelationInput = {
+    id_subcategoria?: SortOrder
+    nombre?: SortOrder
+    id_categoria?: SortOrder
+    historial_analitico?: HistorialAnaliticoOrderByRelationAggregateInput
+    productos?: ProductoOrderByRelationAggregateInput
+    categoria?: CategoriaOrderByWithRelationInput
+  }
+
+  export type SubCategoriaWhereUniqueInput = Prisma.AtLeast<{
+    id_subcategoria?: number
+    AND?: SubCategoriaWhereInput | SubCategoriaWhereInput[]
+    OR?: SubCategoriaWhereInput[]
+    NOT?: SubCategoriaWhereInput | SubCategoriaWhereInput[]
+    nombre?: StringFilter<"SubCategoria"> | string
+    id_categoria?: IntFilter<"SubCategoria"> | number
+    historial_analitico?: HistorialAnaliticoListRelationFilter
+    productos?: ProductoListRelationFilter
+    categoria?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
+  }, "id_subcategoria">
+
+  export type SubCategoriaOrderByWithAggregationInput = {
+    id_subcategoria?: SortOrder
+    nombre?: SortOrder
+    id_categoria?: SortOrder
+    _count?: SubCategoriaCountOrderByAggregateInput
+    _avg?: SubCategoriaAvgOrderByAggregateInput
+    _max?: SubCategoriaMaxOrderByAggregateInput
+    _min?: SubCategoriaMinOrderByAggregateInput
+    _sum?: SubCategoriaSumOrderByAggregateInput
+  }
+
+  export type SubCategoriaScalarWhereWithAggregatesInput = {
+    AND?: SubCategoriaScalarWhereWithAggregatesInput | SubCategoriaScalarWhereWithAggregatesInput[]
+    OR?: SubCategoriaScalarWhereWithAggregatesInput[]
+    NOT?: SubCategoriaScalarWhereWithAggregatesInput | SubCategoriaScalarWhereWithAggregatesInput[]
+    id_subcategoria?: IntWithAggregatesFilter<"SubCategoria"> | number
+    nombre?: StringWithAggregatesFilter<"SubCategoria"> | string
+    id_categoria?: IntWithAggregatesFilter<"SubCategoria"> | number
+  }
+
   export type UsuarioCreateInput = {
     usuario: string
     email: string
@@ -14091,28 +18201,32 @@ export namespace Prisma {
   export type ProductoCreateInput = {
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
+    categoriaRel: CategoriaCreateNestedOneWithoutProductosInput
+    subcategoria: SubCategoriaCreateNestedOneWithoutProductosInput
   }
 
   export type ProductoUncheckedCreateInput = {
     id_producto?: number
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
+    id_categoria: number
+    id_subcategoria: number
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
   }
@@ -14120,28 +18234,32 @@ export namespace Prisma {
   export type ProductoUpdateInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
+    categoriaRel?: CategoriaUpdateOneRequiredWithoutProductosNestedInput
+    subcategoria?: SubCategoriaUpdateOneRequiredWithoutProductosNestedInput
   }
 
   export type ProductoUncheckedUpdateInput = {
     id_producto?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
   }
@@ -14150,35 +18268,36 @@ export namespace Prisma {
     id_producto?: number
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
+    id_categoria: number
+    id_subcategoria: number
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
   }
 
   export type ProductoUpdateManyMutationInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ProductoUncheckedUpdateManyInput = {
     id_producto?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AditamentoCreateInput = {
@@ -14513,6 +18632,174 @@ export namespace Prisma {
     id_producto?: IntFieldUpdateOperationsInput | number
   }
 
+  export type HistorialAnaliticoCreateInput = {
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+    categoria: CategoriaCreateNestedOneWithoutHistorialInput
+    producto: ProductoCreateNestedOneWithoutHistorialInput
+    subcategorias: SubCategoriaCreateNestedOneWithoutHistorial_analiticoInput
+  }
+
+  export type HistorialAnaliticoUncheckedCreateInput = {
+    id_historial?: number
+    id_producto: number
+    id_subcategoria: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type HistorialAnaliticoUpdateInput = {
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    categoria?: CategoriaUpdateOneRequiredWithoutHistorialNestedInput
+    producto?: ProductoUpdateOneRequiredWithoutHistorialNestedInput
+    subcategorias?: SubCategoriaUpdateOneRequiredWithoutHistorial_analiticoNestedInput
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_producto?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type HistorialAnaliticoCreateManyInput = {
+    id_historial?: number
+    id_producto: number
+    id_subcategoria: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type HistorialAnaliticoUpdateManyMutationInput = {
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_producto?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CategoriaCreateInput = {
+    nombre: string
+    historial?: HistorialAnaliticoCreateNestedManyWithoutCategoriaInput
+    productos?: ProductoCreateNestedManyWithoutCategoriaRelInput
+    subcategorias?: SubCategoriaCreateNestedManyWithoutCategoriaInput
+  }
+
+  export type CategoriaUncheckedCreateInput = {
+    id_categoria?: number
+    nombre: string
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutCategoriaInput
+    productos?: ProductoUncheckedCreateNestedManyWithoutCategoriaRelInput
+    subcategorias?: SubCategoriaUncheckedCreateNestedManyWithoutCategoriaInput
+  }
+
+  export type CategoriaUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial?: HistorialAnaliticoUpdateManyWithoutCategoriaNestedInput
+    productos?: ProductoUpdateManyWithoutCategoriaRelNestedInput
+    subcategorias?: SubCategoriaUpdateManyWithoutCategoriaNestedInput
+  }
+
+  export type CategoriaUncheckedUpdateInput = {
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutCategoriaNestedInput
+    productos?: ProductoUncheckedUpdateManyWithoutCategoriaRelNestedInput
+    subcategorias?: SubCategoriaUncheckedUpdateManyWithoutCategoriaNestedInput
+  }
+
+  export type CategoriaCreateManyInput = {
+    id_categoria?: number
+    nombre: string
+  }
+
+  export type CategoriaUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CategoriaUncheckedUpdateManyInput = {
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubCategoriaCreateInput = {
+    nombre: string
+    historial_analitico?: HistorialAnaliticoCreateNestedManyWithoutSubcategoriasInput
+    productos?: ProductoCreateNestedManyWithoutSubcategoriaInput
+    categoria: CategoriaCreateNestedOneWithoutSubcategoriasInput
+  }
+
+  export type SubCategoriaUncheckedCreateInput = {
+    id_subcategoria?: number
+    nombre: string
+    id_categoria: number
+    historial_analitico?: HistorialAnaliticoUncheckedCreateNestedManyWithoutSubcategoriasInput
+    productos?: ProductoUncheckedCreateNestedManyWithoutSubcategoriaInput
+  }
+
+  export type SubCategoriaUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial_analitico?: HistorialAnaliticoUpdateManyWithoutSubcategoriasNestedInput
+    productos?: ProductoUpdateManyWithoutSubcategoriaNestedInput
+    categoria?: CategoriaUpdateOneRequiredWithoutSubcategoriasNestedInput
+  }
+
+  export type SubCategoriaUncheckedUpdateInput = {
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    historial_analitico?: HistorialAnaliticoUncheckedUpdateManyWithoutSubcategoriasNestedInput
+    productos?: ProductoUncheckedUpdateManyWithoutSubcategoriaNestedInput
+  }
+
+  export type SubCategoriaCreateManyInput = {
+    id_subcategoria?: number
+    nombre: string
+    id_categoria: number
+  }
+
+  export type SubCategoriaUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubCategoriaUncheckedUpdateManyInput = {
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -14776,6 +19063,12 @@ export namespace Prisma {
     none?: DetalleComandaWhereInput
   }
 
+  export type HistorialAnaliticoListRelationFilter = {
+    every?: HistorialAnaliticoWhereInput
+    some?: HistorialAnaliticoWhereInput
+    none?: HistorialAnaliticoWhereInput
+  }
+
   export type ProductoAditamentosListRelationFilter = {
     every?: ProductoAditamentosWhereInput
     some?: ProductoAditamentosWhereInput
@@ -14788,7 +19081,21 @@ export namespace Prisma {
     none?: ProductoImagenWhereInput
   }
 
+  export type CategoriaScalarRelationFilter = {
+    is?: CategoriaWhereInput
+    isNot?: CategoriaWhereInput
+  }
+
+  export type SubCategoriaScalarRelationFilter = {
+    is?: SubCategoriaWhereInput
+    isNot?: SubCategoriaWhereInput
+  }
+
   export type DetalleComandaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HistorialAnaliticoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14804,17 +19111,20 @@ export namespace Prisma {
     id_producto?: SortOrder
     nombre?: SortOrder
     precio?: SortOrder
-    categoria?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     descripcion?: SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrder
-    eliminado?: SortOrder
     activo?: SortOrder
+    eliminado?: SortOrder
   }
 
   export type ProductoAvgOrderByAggregateInput = {
     id_producto?: SortOrder
     precio?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     tiempo_prep?: SortOrder
   }
 
@@ -14822,29 +19132,33 @@ export namespace Prisma {
     id_producto?: SortOrder
     nombre?: SortOrder
     precio?: SortOrder
-    categoria?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     descripcion?: SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrder
-    eliminado?: SortOrder
     activo?: SortOrder
+    eliminado?: SortOrder
   }
 
   export type ProductoMinOrderByAggregateInput = {
     id_producto?: SortOrder
     nombre?: SortOrder
     precio?: SortOrder
-    categoria?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     descripcion?: SortOrder
     tiempo_prep?: SortOrder
     pasos?: SortOrder
-    eliminado?: SortOrder
     activo?: SortOrder
+    eliminado?: SortOrder
   }
 
   export type ProductoSumOrderByAggregateInput = {
     id_producto?: SortOrder
     precio?: SortOrder
+    id_categoria?: SortOrder
+    id_subcategoria?: SortOrder
     tiempo_prep?: SortOrder
   }
 
@@ -15183,6 +19497,133 @@ export namespace Prisma {
     id_producto?: SortOrder
   }
 
+  export type HistorialAnaliticoCountOrderByAggregateInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    es_festivo?: SortOrder
+    clima_id?: SortOrder
+    fecha_registro?: SortOrder
+  }
+
+  export type HistorialAnaliticoAvgOrderByAggregateInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    clima_id?: SortOrder
+  }
+
+  export type HistorialAnaliticoMaxOrderByAggregateInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    es_festivo?: SortOrder
+    clima_id?: SortOrder
+    fecha_registro?: SortOrder
+  }
+
+  export type HistorialAnaliticoMinOrderByAggregateInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    es_festivo?: SortOrder
+    clima_id?: SortOrder
+    fecha_registro?: SortOrder
+  }
+
+  export type HistorialAnaliticoSumOrderByAggregateInput = {
+    id_historial?: SortOrder
+    id_producto?: SortOrder
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+    hora?: SortOrder
+    dia_semana?: SortOrder
+    clima_id?: SortOrder
+  }
+
+  export type ProductoListRelationFilter = {
+    every?: ProductoWhereInput
+    some?: ProductoWhereInput
+    none?: ProductoWhereInput
+  }
+
+  export type SubCategoriaListRelationFilter = {
+    every?: SubCategoriaWhereInput
+    some?: SubCategoriaWhereInput
+    none?: SubCategoriaWhereInput
+  }
+
+  export type ProductoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SubCategoriaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CategoriaCountOrderByAggregateInput = {
+    id_categoria?: SortOrder
+    nombre?: SortOrder
+  }
+
+  export type CategoriaAvgOrderByAggregateInput = {
+    id_categoria?: SortOrder
+  }
+
+  export type CategoriaMaxOrderByAggregateInput = {
+    id_categoria?: SortOrder
+    nombre?: SortOrder
+  }
+
+  export type CategoriaMinOrderByAggregateInput = {
+    id_categoria?: SortOrder
+    nombre?: SortOrder
+  }
+
+  export type CategoriaSumOrderByAggregateInput = {
+    id_categoria?: SortOrder
+  }
+
+  export type SubCategoriaCountOrderByAggregateInput = {
+    id_subcategoria?: SortOrder
+    nombre?: SortOrder
+    id_categoria?: SortOrder
+  }
+
+  export type SubCategoriaAvgOrderByAggregateInput = {
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+  }
+
+  export type SubCategoriaMaxOrderByAggregateInput = {
+    id_subcategoria?: SortOrder
+    nombre?: SortOrder
+    id_categoria?: SortOrder
+  }
+
+  export type SubCategoriaMinOrderByAggregateInput = {
+    id_subcategoria?: SortOrder
+    nombre?: SortOrder
+    id_categoria?: SortOrder
+  }
+
+  export type SubCategoriaSumOrderByAggregateInput = {
+    id_subcategoria?: SortOrder
+    id_categoria?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -15298,6 +19739,13 @@ export namespace Prisma {
     connect?: DetalleComandaWhereUniqueInput | DetalleComandaWhereUniqueInput[]
   }
 
+  export type HistorialAnaliticoCreateNestedManyWithoutProductoInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutProductoInput, HistorialAnaliticoUncheckedCreateWithoutProductoInput> | HistorialAnaliticoCreateWithoutProductoInput[] | HistorialAnaliticoUncheckedCreateWithoutProductoInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutProductoInput | HistorialAnaliticoCreateOrConnectWithoutProductoInput[]
+    createMany?: HistorialAnaliticoCreateManyProductoInputEnvelope
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+  }
+
   export type ProductoAditamentosCreateNestedManyWithoutProductoInput = {
     create?: XOR<ProductoAditamentosCreateWithoutProductoInput, ProductoAditamentosUncheckedCreateWithoutProductoInput> | ProductoAditamentosCreateWithoutProductoInput[] | ProductoAditamentosUncheckedCreateWithoutProductoInput[]
     connectOrCreate?: ProductoAditamentosCreateOrConnectWithoutProductoInput | ProductoAditamentosCreateOrConnectWithoutProductoInput[]
@@ -15312,11 +19760,30 @@ export namespace Prisma {
     connect?: ProductoImagenWhereUniqueInput | ProductoImagenWhereUniqueInput[]
   }
 
+  export type CategoriaCreateNestedOneWithoutProductosInput = {
+    create?: XOR<CategoriaCreateWithoutProductosInput, CategoriaUncheckedCreateWithoutProductosInput>
+    connectOrCreate?: CategoriaCreateOrConnectWithoutProductosInput
+    connect?: CategoriaWhereUniqueInput
+  }
+
+  export type SubCategoriaCreateNestedOneWithoutProductosInput = {
+    create?: XOR<SubCategoriaCreateWithoutProductosInput, SubCategoriaUncheckedCreateWithoutProductosInput>
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutProductosInput
+    connect?: SubCategoriaWhereUniqueInput
+  }
+
   export type DetalleComandaUncheckedCreateNestedManyWithoutProductoInput = {
     create?: XOR<DetalleComandaCreateWithoutProductoInput, DetalleComandaUncheckedCreateWithoutProductoInput> | DetalleComandaCreateWithoutProductoInput[] | DetalleComandaUncheckedCreateWithoutProductoInput[]
     connectOrCreate?: DetalleComandaCreateOrConnectWithoutProductoInput | DetalleComandaCreateOrConnectWithoutProductoInput[]
     createMany?: DetalleComandaCreateManyProductoInputEnvelope
     connect?: DetalleComandaWhereUniqueInput | DetalleComandaWhereUniqueInput[]
+  }
+
+  export type HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutProductoInput, HistorialAnaliticoUncheckedCreateWithoutProductoInput> | HistorialAnaliticoCreateWithoutProductoInput[] | HistorialAnaliticoUncheckedCreateWithoutProductoInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutProductoInput | HistorialAnaliticoCreateOrConnectWithoutProductoInput[]
+    createMany?: HistorialAnaliticoCreateManyProductoInputEnvelope
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
   }
 
   export type ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput = {
@@ -15363,6 +19830,20 @@ export namespace Prisma {
     deleteMany?: DetalleComandaScalarWhereInput | DetalleComandaScalarWhereInput[]
   }
 
+  export type HistorialAnaliticoUpdateManyWithoutProductoNestedInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutProductoInput, HistorialAnaliticoUncheckedCreateWithoutProductoInput> | HistorialAnaliticoCreateWithoutProductoInput[] | HistorialAnaliticoUncheckedCreateWithoutProductoInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutProductoInput | HistorialAnaliticoCreateOrConnectWithoutProductoInput[]
+    upsert?: HistorialAnaliticoUpsertWithWhereUniqueWithoutProductoInput | HistorialAnaliticoUpsertWithWhereUniqueWithoutProductoInput[]
+    createMany?: HistorialAnaliticoCreateManyProductoInputEnvelope
+    set?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    disconnect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    delete?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    update?: HistorialAnaliticoUpdateWithWhereUniqueWithoutProductoInput | HistorialAnaliticoUpdateWithWhereUniqueWithoutProductoInput[]
+    updateMany?: HistorialAnaliticoUpdateManyWithWhereWithoutProductoInput | HistorialAnaliticoUpdateManyWithWhereWithoutProductoInput[]
+    deleteMany?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+  }
+
   export type ProductoAditamentosUpdateManyWithoutProductoNestedInput = {
     create?: XOR<ProductoAditamentosCreateWithoutProductoInput, ProductoAditamentosUncheckedCreateWithoutProductoInput> | ProductoAditamentosCreateWithoutProductoInput[] | ProductoAditamentosUncheckedCreateWithoutProductoInput[]
     connectOrCreate?: ProductoAditamentosCreateOrConnectWithoutProductoInput | ProductoAditamentosCreateOrConnectWithoutProductoInput[]
@@ -15391,6 +19872,22 @@ export namespace Prisma {
     deleteMany?: ProductoImagenScalarWhereInput | ProductoImagenScalarWhereInput[]
   }
 
+  export type CategoriaUpdateOneRequiredWithoutProductosNestedInput = {
+    create?: XOR<CategoriaCreateWithoutProductosInput, CategoriaUncheckedCreateWithoutProductosInput>
+    connectOrCreate?: CategoriaCreateOrConnectWithoutProductosInput
+    upsert?: CategoriaUpsertWithoutProductosInput
+    connect?: CategoriaWhereUniqueInput
+    update?: XOR<XOR<CategoriaUpdateToOneWithWhereWithoutProductosInput, CategoriaUpdateWithoutProductosInput>, CategoriaUncheckedUpdateWithoutProductosInput>
+  }
+
+  export type SubCategoriaUpdateOneRequiredWithoutProductosNestedInput = {
+    create?: XOR<SubCategoriaCreateWithoutProductosInput, SubCategoriaUncheckedCreateWithoutProductosInput>
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutProductosInput
+    upsert?: SubCategoriaUpsertWithoutProductosInput
+    connect?: SubCategoriaWhereUniqueInput
+    update?: XOR<XOR<SubCategoriaUpdateToOneWithWhereWithoutProductosInput, SubCategoriaUpdateWithoutProductosInput>, SubCategoriaUncheckedUpdateWithoutProductosInput>
+  }
+
   export type DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput = {
     create?: XOR<DetalleComandaCreateWithoutProductoInput, DetalleComandaUncheckedCreateWithoutProductoInput> | DetalleComandaCreateWithoutProductoInput[] | DetalleComandaUncheckedCreateWithoutProductoInput[]
     connectOrCreate?: DetalleComandaCreateOrConnectWithoutProductoInput | DetalleComandaCreateOrConnectWithoutProductoInput[]
@@ -15403,6 +19900,20 @@ export namespace Prisma {
     update?: DetalleComandaUpdateWithWhereUniqueWithoutProductoInput | DetalleComandaUpdateWithWhereUniqueWithoutProductoInput[]
     updateMany?: DetalleComandaUpdateManyWithWhereWithoutProductoInput | DetalleComandaUpdateManyWithWhereWithoutProductoInput[]
     deleteMany?: DetalleComandaScalarWhereInput | DetalleComandaScalarWhereInput[]
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutProductoInput, HistorialAnaliticoUncheckedCreateWithoutProductoInput> | HistorialAnaliticoCreateWithoutProductoInput[] | HistorialAnaliticoUncheckedCreateWithoutProductoInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutProductoInput | HistorialAnaliticoCreateOrConnectWithoutProductoInput[]
+    upsert?: HistorialAnaliticoUpsertWithWhereUniqueWithoutProductoInput | HistorialAnaliticoUpsertWithWhereUniqueWithoutProductoInput[]
+    createMany?: HistorialAnaliticoCreateManyProductoInputEnvelope
+    set?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    disconnect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    delete?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    update?: HistorialAnaliticoUpdateWithWhereUniqueWithoutProductoInput | HistorialAnaliticoUpdateWithWhereUniqueWithoutProductoInput[]
+    updateMany?: HistorialAnaliticoUpdateManyWithWhereWithoutProductoInput | HistorialAnaliticoUpdateManyWithWhereWithoutProductoInput[]
+    deleteMany?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
   }
 
   export type ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput = {
@@ -15733,6 +20244,272 @@ export namespace Prisma {
     upsert?: ProductoUpsertWithoutImagenInput
     connect?: ProductoWhereUniqueInput
     update?: XOR<XOR<ProductoUpdateToOneWithWhereWithoutImagenInput, ProductoUpdateWithoutImagenInput>, ProductoUncheckedUpdateWithoutImagenInput>
+  }
+
+  export type CategoriaCreateNestedOneWithoutHistorialInput = {
+    create?: XOR<CategoriaCreateWithoutHistorialInput, CategoriaUncheckedCreateWithoutHistorialInput>
+    connectOrCreate?: CategoriaCreateOrConnectWithoutHistorialInput
+    connect?: CategoriaWhereUniqueInput
+  }
+
+  export type ProductoCreateNestedOneWithoutHistorialInput = {
+    create?: XOR<ProductoCreateWithoutHistorialInput, ProductoUncheckedCreateWithoutHistorialInput>
+    connectOrCreate?: ProductoCreateOrConnectWithoutHistorialInput
+    connect?: ProductoWhereUniqueInput
+  }
+
+  export type SubCategoriaCreateNestedOneWithoutHistorial_analiticoInput = {
+    create?: XOR<SubCategoriaCreateWithoutHistorial_analiticoInput, SubCategoriaUncheckedCreateWithoutHistorial_analiticoInput>
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutHistorial_analiticoInput
+    connect?: SubCategoriaWhereUniqueInput
+  }
+
+  export type CategoriaUpdateOneRequiredWithoutHistorialNestedInput = {
+    create?: XOR<CategoriaCreateWithoutHistorialInput, CategoriaUncheckedCreateWithoutHistorialInput>
+    connectOrCreate?: CategoriaCreateOrConnectWithoutHistorialInput
+    upsert?: CategoriaUpsertWithoutHistorialInput
+    connect?: CategoriaWhereUniqueInput
+    update?: XOR<XOR<CategoriaUpdateToOneWithWhereWithoutHistorialInput, CategoriaUpdateWithoutHistorialInput>, CategoriaUncheckedUpdateWithoutHistorialInput>
+  }
+
+  export type ProductoUpdateOneRequiredWithoutHistorialNestedInput = {
+    create?: XOR<ProductoCreateWithoutHistorialInput, ProductoUncheckedCreateWithoutHistorialInput>
+    connectOrCreate?: ProductoCreateOrConnectWithoutHistorialInput
+    upsert?: ProductoUpsertWithoutHistorialInput
+    connect?: ProductoWhereUniqueInput
+    update?: XOR<XOR<ProductoUpdateToOneWithWhereWithoutHistorialInput, ProductoUpdateWithoutHistorialInput>, ProductoUncheckedUpdateWithoutHistorialInput>
+  }
+
+  export type SubCategoriaUpdateOneRequiredWithoutHistorial_analiticoNestedInput = {
+    create?: XOR<SubCategoriaCreateWithoutHistorial_analiticoInput, SubCategoriaUncheckedCreateWithoutHistorial_analiticoInput>
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutHistorial_analiticoInput
+    upsert?: SubCategoriaUpsertWithoutHistorial_analiticoInput
+    connect?: SubCategoriaWhereUniqueInput
+    update?: XOR<XOR<SubCategoriaUpdateToOneWithWhereWithoutHistorial_analiticoInput, SubCategoriaUpdateWithoutHistorial_analiticoInput>, SubCategoriaUncheckedUpdateWithoutHistorial_analiticoInput>
+  }
+
+  export type HistorialAnaliticoCreateNestedManyWithoutCategoriaInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutCategoriaInput, HistorialAnaliticoUncheckedCreateWithoutCategoriaInput> | HistorialAnaliticoCreateWithoutCategoriaInput[] | HistorialAnaliticoUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutCategoriaInput | HistorialAnaliticoCreateOrConnectWithoutCategoriaInput[]
+    createMany?: HistorialAnaliticoCreateManyCategoriaInputEnvelope
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+  }
+
+  export type ProductoCreateNestedManyWithoutCategoriaRelInput = {
+    create?: XOR<ProductoCreateWithoutCategoriaRelInput, ProductoUncheckedCreateWithoutCategoriaRelInput> | ProductoCreateWithoutCategoriaRelInput[] | ProductoUncheckedCreateWithoutCategoriaRelInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutCategoriaRelInput | ProductoCreateOrConnectWithoutCategoriaRelInput[]
+    createMany?: ProductoCreateManyCategoriaRelInputEnvelope
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+  }
+
+  export type SubCategoriaCreateNestedManyWithoutCategoriaInput = {
+    create?: XOR<SubCategoriaCreateWithoutCategoriaInput, SubCategoriaUncheckedCreateWithoutCategoriaInput> | SubCategoriaCreateWithoutCategoriaInput[] | SubCategoriaUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutCategoriaInput | SubCategoriaCreateOrConnectWithoutCategoriaInput[]
+    createMany?: SubCategoriaCreateManyCategoriaInputEnvelope
+    connect?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+  }
+
+  export type HistorialAnaliticoUncheckedCreateNestedManyWithoutCategoriaInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutCategoriaInput, HistorialAnaliticoUncheckedCreateWithoutCategoriaInput> | HistorialAnaliticoCreateWithoutCategoriaInput[] | HistorialAnaliticoUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutCategoriaInput | HistorialAnaliticoCreateOrConnectWithoutCategoriaInput[]
+    createMany?: HistorialAnaliticoCreateManyCategoriaInputEnvelope
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+  }
+
+  export type ProductoUncheckedCreateNestedManyWithoutCategoriaRelInput = {
+    create?: XOR<ProductoCreateWithoutCategoriaRelInput, ProductoUncheckedCreateWithoutCategoriaRelInput> | ProductoCreateWithoutCategoriaRelInput[] | ProductoUncheckedCreateWithoutCategoriaRelInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutCategoriaRelInput | ProductoCreateOrConnectWithoutCategoriaRelInput[]
+    createMany?: ProductoCreateManyCategoriaRelInputEnvelope
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+  }
+
+  export type SubCategoriaUncheckedCreateNestedManyWithoutCategoriaInput = {
+    create?: XOR<SubCategoriaCreateWithoutCategoriaInput, SubCategoriaUncheckedCreateWithoutCategoriaInput> | SubCategoriaCreateWithoutCategoriaInput[] | SubCategoriaUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutCategoriaInput | SubCategoriaCreateOrConnectWithoutCategoriaInput[]
+    createMany?: SubCategoriaCreateManyCategoriaInputEnvelope
+    connect?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+  }
+
+  export type HistorialAnaliticoUpdateManyWithoutCategoriaNestedInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutCategoriaInput, HistorialAnaliticoUncheckedCreateWithoutCategoriaInput> | HistorialAnaliticoCreateWithoutCategoriaInput[] | HistorialAnaliticoUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutCategoriaInput | HistorialAnaliticoCreateOrConnectWithoutCategoriaInput[]
+    upsert?: HistorialAnaliticoUpsertWithWhereUniqueWithoutCategoriaInput | HistorialAnaliticoUpsertWithWhereUniqueWithoutCategoriaInput[]
+    createMany?: HistorialAnaliticoCreateManyCategoriaInputEnvelope
+    set?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    disconnect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    delete?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    update?: HistorialAnaliticoUpdateWithWhereUniqueWithoutCategoriaInput | HistorialAnaliticoUpdateWithWhereUniqueWithoutCategoriaInput[]
+    updateMany?: HistorialAnaliticoUpdateManyWithWhereWithoutCategoriaInput | HistorialAnaliticoUpdateManyWithWhereWithoutCategoriaInput[]
+    deleteMany?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+  }
+
+  export type ProductoUpdateManyWithoutCategoriaRelNestedInput = {
+    create?: XOR<ProductoCreateWithoutCategoriaRelInput, ProductoUncheckedCreateWithoutCategoriaRelInput> | ProductoCreateWithoutCategoriaRelInput[] | ProductoUncheckedCreateWithoutCategoriaRelInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutCategoriaRelInput | ProductoCreateOrConnectWithoutCategoriaRelInput[]
+    upsert?: ProductoUpsertWithWhereUniqueWithoutCategoriaRelInput | ProductoUpsertWithWhereUniqueWithoutCategoriaRelInput[]
+    createMany?: ProductoCreateManyCategoriaRelInputEnvelope
+    set?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    disconnect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    delete?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    update?: ProductoUpdateWithWhereUniqueWithoutCategoriaRelInput | ProductoUpdateWithWhereUniqueWithoutCategoriaRelInput[]
+    updateMany?: ProductoUpdateManyWithWhereWithoutCategoriaRelInput | ProductoUpdateManyWithWhereWithoutCategoriaRelInput[]
+    deleteMany?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
+  }
+
+  export type SubCategoriaUpdateManyWithoutCategoriaNestedInput = {
+    create?: XOR<SubCategoriaCreateWithoutCategoriaInput, SubCategoriaUncheckedCreateWithoutCategoriaInput> | SubCategoriaCreateWithoutCategoriaInput[] | SubCategoriaUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutCategoriaInput | SubCategoriaCreateOrConnectWithoutCategoriaInput[]
+    upsert?: SubCategoriaUpsertWithWhereUniqueWithoutCategoriaInput | SubCategoriaUpsertWithWhereUniqueWithoutCategoriaInput[]
+    createMany?: SubCategoriaCreateManyCategoriaInputEnvelope
+    set?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    disconnect?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    delete?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    connect?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    update?: SubCategoriaUpdateWithWhereUniqueWithoutCategoriaInput | SubCategoriaUpdateWithWhereUniqueWithoutCategoriaInput[]
+    updateMany?: SubCategoriaUpdateManyWithWhereWithoutCategoriaInput | SubCategoriaUpdateManyWithWhereWithoutCategoriaInput[]
+    deleteMany?: SubCategoriaScalarWhereInput | SubCategoriaScalarWhereInput[]
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyWithoutCategoriaNestedInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutCategoriaInput, HistorialAnaliticoUncheckedCreateWithoutCategoriaInput> | HistorialAnaliticoCreateWithoutCategoriaInput[] | HistorialAnaliticoUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutCategoriaInput | HistorialAnaliticoCreateOrConnectWithoutCategoriaInput[]
+    upsert?: HistorialAnaliticoUpsertWithWhereUniqueWithoutCategoriaInput | HistorialAnaliticoUpsertWithWhereUniqueWithoutCategoriaInput[]
+    createMany?: HistorialAnaliticoCreateManyCategoriaInputEnvelope
+    set?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    disconnect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    delete?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    update?: HistorialAnaliticoUpdateWithWhereUniqueWithoutCategoriaInput | HistorialAnaliticoUpdateWithWhereUniqueWithoutCategoriaInput[]
+    updateMany?: HistorialAnaliticoUpdateManyWithWhereWithoutCategoriaInput | HistorialAnaliticoUpdateManyWithWhereWithoutCategoriaInput[]
+    deleteMany?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+  }
+
+  export type ProductoUncheckedUpdateManyWithoutCategoriaRelNestedInput = {
+    create?: XOR<ProductoCreateWithoutCategoriaRelInput, ProductoUncheckedCreateWithoutCategoriaRelInput> | ProductoCreateWithoutCategoriaRelInput[] | ProductoUncheckedCreateWithoutCategoriaRelInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutCategoriaRelInput | ProductoCreateOrConnectWithoutCategoriaRelInput[]
+    upsert?: ProductoUpsertWithWhereUniqueWithoutCategoriaRelInput | ProductoUpsertWithWhereUniqueWithoutCategoriaRelInput[]
+    createMany?: ProductoCreateManyCategoriaRelInputEnvelope
+    set?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    disconnect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    delete?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    update?: ProductoUpdateWithWhereUniqueWithoutCategoriaRelInput | ProductoUpdateWithWhereUniqueWithoutCategoriaRelInput[]
+    updateMany?: ProductoUpdateManyWithWhereWithoutCategoriaRelInput | ProductoUpdateManyWithWhereWithoutCategoriaRelInput[]
+    deleteMany?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
+  }
+
+  export type SubCategoriaUncheckedUpdateManyWithoutCategoriaNestedInput = {
+    create?: XOR<SubCategoriaCreateWithoutCategoriaInput, SubCategoriaUncheckedCreateWithoutCategoriaInput> | SubCategoriaCreateWithoutCategoriaInput[] | SubCategoriaUncheckedCreateWithoutCategoriaInput[]
+    connectOrCreate?: SubCategoriaCreateOrConnectWithoutCategoriaInput | SubCategoriaCreateOrConnectWithoutCategoriaInput[]
+    upsert?: SubCategoriaUpsertWithWhereUniqueWithoutCategoriaInput | SubCategoriaUpsertWithWhereUniqueWithoutCategoriaInput[]
+    createMany?: SubCategoriaCreateManyCategoriaInputEnvelope
+    set?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    disconnect?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    delete?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    connect?: SubCategoriaWhereUniqueInput | SubCategoriaWhereUniqueInput[]
+    update?: SubCategoriaUpdateWithWhereUniqueWithoutCategoriaInput | SubCategoriaUpdateWithWhereUniqueWithoutCategoriaInput[]
+    updateMany?: SubCategoriaUpdateManyWithWhereWithoutCategoriaInput | SubCategoriaUpdateManyWithWhereWithoutCategoriaInput[]
+    deleteMany?: SubCategoriaScalarWhereInput | SubCategoriaScalarWhereInput[]
+  }
+
+  export type HistorialAnaliticoCreateNestedManyWithoutSubcategoriasInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput> | HistorialAnaliticoCreateWithoutSubcategoriasInput[] | HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput | HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput[]
+    createMany?: HistorialAnaliticoCreateManySubcategoriasInputEnvelope
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+  }
+
+  export type ProductoCreateNestedManyWithoutSubcategoriaInput = {
+    create?: XOR<ProductoCreateWithoutSubcategoriaInput, ProductoUncheckedCreateWithoutSubcategoriaInput> | ProductoCreateWithoutSubcategoriaInput[] | ProductoUncheckedCreateWithoutSubcategoriaInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutSubcategoriaInput | ProductoCreateOrConnectWithoutSubcategoriaInput[]
+    createMany?: ProductoCreateManySubcategoriaInputEnvelope
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+  }
+
+  export type CategoriaCreateNestedOneWithoutSubcategoriasInput = {
+    create?: XOR<CategoriaCreateWithoutSubcategoriasInput, CategoriaUncheckedCreateWithoutSubcategoriasInput>
+    connectOrCreate?: CategoriaCreateOrConnectWithoutSubcategoriasInput
+    connect?: CategoriaWhereUniqueInput
+  }
+
+  export type HistorialAnaliticoUncheckedCreateNestedManyWithoutSubcategoriasInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput> | HistorialAnaliticoCreateWithoutSubcategoriasInput[] | HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput | HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput[]
+    createMany?: HistorialAnaliticoCreateManySubcategoriasInputEnvelope
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+  }
+
+  export type ProductoUncheckedCreateNestedManyWithoutSubcategoriaInput = {
+    create?: XOR<ProductoCreateWithoutSubcategoriaInput, ProductoUncheckedCreateWithoutSubcategoriaInput> | ProductoCreateWithoutSubcategoriaInput[] | ProductoUncheckedCreateWithoutSubcategoriaInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutSubcategoriaInput | ProductoCreateOrConnectWithoutSubcategoriaInput[]
+    createMany?: ProductoCreateManySubcategoriaInputEnvelope
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+  }
+
+  export type HistorialAnaliticoUpdateManyWithoutSubcategoriasNestedInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput> | HistorialAnaliticoCreateWithoutSubcategoriasInput[] | HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput | HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput[]
+    upsert?: HistorialAnaliticoUpsertWithWhereUniqueWithoutSubcategoriasInput | HistorialAnaliticoUpsertWithWhereUniqueWithoutSubcategoriasInput[]
+    createMany?: HistorialAnaliticoCreateManySubcategoriasInputEnvelope
+    set?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    disconnect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    delete?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    update?: HistorialAnaliticoUpdateWithWhereUniqueWithoutSubcategoriasInput | HistorialAnaliticoUpdateWithWhereUniqueWithoutSubcategoriasInput[]
+    updateMany?: HistorialAnaliticoUpdateManyWithWhereWithoutSubcategoriasInput | HistorialAnaliticoUpdateManyWithWhereWithoutSubcategoriasInput[]
+    deleteMany?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+  }
+
+  export type ProductoUpdateManyWithoutSubcategoriaNestedInput = {
+    create?: XOR<ProductoCreateWithoutSubcategoriaInput, ProductoUncheckedCreateWithoutSubcategoriaInput> | ProductoCreateWithoutSubcategoriaInput[] | ProductoUncheckedCreateWithoutSubcategoriaInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutSubcategoriaInput | ProductoCreateOrConnectWithoutSubcategoriaInput[]
+    upsert?: ProductoUpsertWithWhereUniqueWithoutSubcategoriaInput | ProductoUpsertWithWhereUniqueWithoutSubcategoriaInput[]
+    createMany?: ProductoCreateManySubcategoriaInputEnvelope
+    set?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    disconnect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    delete?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    update?: ProductoUpdateWithWhereUniqueWithoutSubcategoriaInput | ProductoUpdateWithWhereUniqueWithoutSubcategoriaInput[]
+    updateMany?: ProductoUpdateManyWithWhereWithoutSubcategoriaInput | ProductoUpdateManyWithWhereWithoutSubcategoriaInput[]
+    deleteMany?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
+  }
+
+  export type CategoriaUpdateOneRequiredWithoutSubcategoriasNestedInput = {
+    create?: XOR<CategoriaCreateWithoutSubcategoriasInput, CategoriaUncheckedCreateWithoutSubcategoriasInput>
+    connectOrCreate?: CategoriaCreateOrConnectWithoutSubcategoriasInput
+    upsert?: CategoriaUpsertWithoutSubcategoriasInput
+    connect?: CategoriaWhereUniqueInput
+    update?: XOR<XOR<CategoriaUpdateToOneWithWhereWithoutSubcategoriasInput, CategoriaUpdateWithoutSubcategoriasInput>, CategoriaUncheckedUpdateWithoutSubcategoriasInput>
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyWithoutSubcategoriasNestedInput = {
+    create?: XOR<HistorialAnaliticoCreateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput> | HistorialAnaliticoCreateWithoutSubcategoriasInput[] | HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput[]
+    connectOrCreate?: HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput | HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput[]
+    upsert?: HistorialAnaliticoUpsertWithWhereUniqueWithoutSubcategoriasInput | HistorialAnaliticoUpsertWithWhereUniqueWithoutSubcategoriasInput[]
+    createMany?: HistorialAnaliticoCreateManySubcategoriasInputEnvelope
+    set?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    disconnect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    delete?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    connect?: HistorialAnaliticoWhereUniqueInput | HistorialAnaliticoWhereUniqueInput[]
+    update?: HistorialAnaliticoUpdateWithWhereUniqueWithoutSubcategoriasInput | HistorialAnaliticoUpdateWithWhereUniqueWithoutSubcategoriasInput[]
+    updateMany?: HistorialAnaliticoUpdateManyWithWhereWithoutSubcategoriasInput | HistorialAnaliticoUpdateManyWithWhereWithoutSubcategoriasInput[]
+    deleteMany?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+  }
+
+  export type ProductoUncheckedUpdateManyWithoutSubcategoriaNestedInput = {
+    create?: XOR<ProductoCreateWithoutSubcategoriaInput, ProductoUncheckedCreateWithoutSubcategoriaInput> | ProductoCreateWithoutSubcategoriaInput[] | ProductoUncheckedCreateWithoutSubcategoriaInput[]
+    connectOrCreate?: ProductoCreateOrConnectWithoutSubcategoriaInput | ProductoCreateOrConnectWithoutSubcategoriaInput[]
+    upsert?: ProductoUpsertWithWhereUniqueWithoutSubcategoriaInput | ProductoUpsertWithWhereUniqueWithoutSubcategoriaInput[]
+    createMany?: ProductoCreateManySubcategoriaInputEnvelope
+    set?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    disconnect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    delete?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    connect?: ProductoWhereUniqueInput | ProductoWhereUniqueInput[]
+    update?: ProductoUpdateWithWhereUniqueWithoutSubcategoriaInput | ProductoUpdateWithWhereUniqueWithoutSubcategoriaInput[]
+    updateMany?: ProductoUpdateManyWithWhereWithoutSubcategoriaInput | ProductoUpdateManyWithWhereWithoutSubcategoriaInput[]
+    deleteMany?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -16114,6 +20891,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type HistorialAnaliticoCreateWithoutProductoInput = {
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+    categoria: CategoriaCreateNestedOneWithoutHistorialInput
+    subcategorias: SubCategoriaCreateNestedOneWithoutHistorial_analiticoInput
+  }
+
+  export type HistorialAnaliticoUncheckedCreateWithoutProductoInput = {
+    id_historial?: number
+    id_subcategoria: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type HistorialAnaliticoCreateOrConnectWithoutProductoInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    create: XOR<HistorialAnaliticoCreateWithoutProductoInput, HistorialAnaliticoUncheckedCreateWithoutProductoInput>
+  }
+
+  export type HistorialAnaliticoCreateManyProductoInputEnvelope = {
+    data: HistorialAnaliticoCreateManyProductoInput | HistorialAnaliticoCreateManyProductoInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProductoAditamentosCreateWithoutProductoInput = {
     aditamento: AditamentoCreateNestedOneWithoutProductosInput
   }
@@ -16151,6 +20959,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CategoriaCreateWithoutProductosInput = {
+    nombre: string
+    historial?: HistorialAnaliticoCreateNestedManyWithoutCategoriaInput
+    subcategorias?: SubCategoriaCreateNestedManyWithoutCategoriaInput
+  }
+
+  export type CategoriaUncheckedCreateWithoutProductosInput = {
+    id_categoria?: number
+    nombre: string
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutCategoriaInput
+    subcategorias?: SubCategoriaUncheckedCreateNestedManyWithoutCategoriaInput
+  }
+
+  export type CategoriaCreateOrConnectWithoutProductosInput = {
+    where: CategoriaWhereUniqueInput
+    create: XOR<CategoriaCreateWithoutProductosInput, CategoriaUncheckedCreateWithoutProductosInput>
+  }
+
+  export type SubCategoriaCreateWithoutProductosInput = {
+    nombre: string
+    historial_analitico?: HistorialAnaliticoCreateNestedManyWithoutSubcategoriasInput
+    categoria: CategoriaCreateNestedOneWithoutSubcategoriasInput
+  }
+
+  export type SubCategoriaUncheckedCreateWithoutProductosInput = {
+    id_subcategoria?: number
+    nombre: string
+    id_categoria: number
+    historial_analitico?: HistorialAnaliticoUncheckedCreateNestedManyWithoutSubcategoriasInput
+  }
+
+  export type SubCategoriaCreateOrConnectWithoutProductosInput = {
+    where: SubCategoriaWhereUniqueInput
+    create: XOR<SubCategoriaCreateWithoutProductosInput, SubCategoriaUncheckedCreateWithoutProductosInput>
+  }
+
   export type DetalleComandaUpsertWithWhereUniqueWithoutProductoInput = {
     where: DetalleComandaWhereUniqueInput
     update: XOR<DetalleComandaUpdateWithoutProductoInput, DetalleComandaUncheckedUpdateWithoutProductoInput>
@@ -16177,6 +21021,37 @@ export namespace Prisma {
     cantidad?: IntFilter<"DetalleComanda"> | number
     notas_especiales?: StringNullableFilter<"DetalleComanda"> | string | null
     status?: StringFilter<"DetalleComanda"> | string
+  }
+
+  export type HistorialAnaliticoUpsertWithWhereUniqueWithoutProductoInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    update: XOR<HistorialAnaliticoUpdateWithoutProductoInput, HistorialAnaliticoUncheckedUpdateWithoutProductoInput>
+    create: XOR<HistorialAnaliticoCreateWithoutProductoInput, HistorialAnaliticoUncheckedCreateWithoutProductoInput>
+  }
+
+  export type HistorialAnaliticoUpdateWithWhereUniqueWithoutProductoInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    data: XOR<HistorialAnaliticoUpdateWithoutProductoInput, HistorialAnaliticoUncheckedUpdateWithoutProductoInput>
+  }
+
+  export type HistorialAnaliticoUpdateManyWithWhereWithoutProductoInput = {
+    where: HistorialAnaliticoScalarWhereInput
+    data: XOR<HistorialAnaliticoUpdateManyMutationInput, HistorialAnaliticoUncheckedUpdateManyWithoutProductoInput>
+  }
+
+  export type HistorialAnaliticoScalarWhereInput = {
+    AND?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+    OR?: HistorialAnaliticoScalarWhereInput[]
+    NOT?: HistorialAnaliticoScalarWhereInput | HistorialAnaliticoScalarWhereInput[]
+    id_historial?: IntFilter<"HistorialAnalitico"> | number
+    id_producto?: IntFilter<"HistorialAnalitico"> | number
+    id_subcategoria?: IntFilter<"HistorialAnalitico"> | number
+    id_categoria?: IntFilter<"HistorialAnalitico"> | number
+    hora?: IntFilter<"HistorialAnalitico"> | number
+    dia_semana?: IntFilter<"HistorialAnalitico"> | number
+    es_festivo?: BoolFilter<"HistorialAnalitico"> | boolean
+    clima_id?: IntFilter<"HistorialAnalitico"> | number
+    fecha_registro?: DateTimeNullableFilter<"HistorialAnalitico"> | Date | string | null
   }
 
   export type ProductoAditamentosUpsertWithWhereUniqueWithoutProductoInput = {
@@ -16226,6 +21101,54 @@ export namespace Prisma {
     id_imagen?: IntFilter<"ProductoImagen"> | number
     url?: StringFilter<"ProductoImagen"> | string
     id_producto?: IntFilter<"ProductoImagen"> | number
+  }
+
+  export type CategoriaUpsertWithoutProductosInput = {
+    update: XOR<CategoriaUpdateWithoutProductosInput, CategoriaUncheckedUpdateWithoutProductosInput>
+    create: XOR<CategoriaCreateWithoutProductosInput, CategoriaUncheckedCreateWithoutProductosInput>
+    where?: CategoriaWhereInput
+  }
+
+  export type CategoriaUpdateToOneWithWhereWithoutProductosInput = {
+    where?: CategoriaWhereInput
+    data: XOR<CategoriaUpdateWithoutProductosInput, CategoriaUncheckedUpdateWithoutProductosInput>
+  }
+
+  export type CategoriaUpdateWithoutProductosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial?: HistorialAnaliticoUpdateManyWithoutCategoriaNestedInput
+    subcategorias?: SubCategoriaUpdateManyWithoutCategoriaNestedInput
+  }
+
+  export type CategoriaUncheckedUpdateWithoutProductosInput = {
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutCategoriaNestedInput
+    subcategorias?: SubCategoriaUncheckedUpdateManyWithoutCategoriaNestedInput
+  }
+
+  export type SubCategoriaUpsertWithoutProductosInput = {
+    update: XOR<SubCategoriaUpdateWithoutProductosInput, SubCategoriaUncheckedUpdateWithoutProductosInput>
+    create: XOR<SubCategoriaCreateWithoutProductosInput, SubCategoriaUncheckedCreateWithoutProductosInput>
+    where?: SubCategoriaWhereInput
+  }
+
+  export type SubCategoriaUpdateToOneWithWhereWithoutProductosInput = {
+    where?: SubCategoriaWhereInput
+    data: XOR<SubCategoriaUpdateWithoutProductosInput, SubCategoriaUncheckedUpdateWithoutProductosInput>
+  }
+
+  export type SubCategoriaUpdateWithoutProductosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial_analitico?: HistorialAnaliticoUpdateManyWithoutSubcategoriasNestedInput
+    categoria?: CategoriaUpdateOneRequiredWithoutSubcategoriasNestedInput
+  }
+
+  export type SubCategoriaUncheckedUpdateWithoutProductosInput = {
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    historial_analitico?: HistorialAnaliticoUncheckedUpdateManyWithoutSubcategoriasNestedInput
   }
 
   export type ComandaAditamentosCreateWithoutAditamentoInput = {
@@ -16328,27 +21251,31 @@ export namespace Prisma {
   export type ProductoCreateWithoutAditamentosInput = {
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
+    categoriaRel: CategoriaCreateNestedOneWithoutProductosInput
+    subcategoria: SubCategoriaCreateNestedOneWithoutProductosInput
   }
 
   export type ProductoUncheckedCreateWithoutAditamentosInput = {
     id_producto?: number
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
+    id_categoria: number
+    id_subcategoria: number
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
   }
 
@@ -16395,27 +21322,31 @@ export namespace Prisma {
   export type ProductoUpdateWithoutAditamentosInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
+    categoriaRel?: CategoriaUpdateOneRequiredWithoutProductosNestedInput
+    subcategoria?: SubCategoriaUpdateOneRequiredWithoutProductosNestedInput
   }
 
   export type ProductoUncheckedUpdateWithoutAditamentosInput = {
     id_producto?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
   }
 
@@ -16605,26 +21536,30 @@ export namespace Prisma {
   export type ProductoCreateWithoutDetallesInput = {
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
+    historial?: HistorialAnaliticoCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
+    categoriaRel: CategoriaCreateNestedOneWithoutProductosInput
+    subcategoria: SubCategoriaCreateNestedOneWithoutProductosInput
   }
 
   export type ProductoUncheckedCreateWithoutDetallesInput = {
     id_producto?: number
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
+    id_categoria: number
+    id_subcategoria: number
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
     imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
   }
@@ -16706,26 +21641,30 @@ export namespace Prisma {
   export type ProductoUpdateWithoutDetallesInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    historial?: HistorialAnaliticoUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
+    categoriaRel?: CategoriaUpdateOneRequiredWithoutProductosNestedInput
+    subcategoria?: SubCategoriaUpdateOneRequiredWithoutProductosNestedInput
   }
 
   export type ProductoUncheckedUpdateWithoutDetallesInput = {
     id_producto?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
     imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
   }
@@ -16825,27 +21764,31 @@ export namespace Prisma {
   export type ProductoCreateWithoutImagenInput = {
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
+    categoriaRel: CategoriaCreateNestedOneWithoutProductosInput
+    subcategoria: SubCategoriaCreateNestedOneWithoutProductosInput
   }
 
   export type ProductoUncheckedCreateWithoutImagenInput = {
     id_producto?: number
     nombre: string
     precio?: Decimal | DecimalJsLike | number | string
-    categoria: string
+    id_categoria: number
+    id_subcategoria: number
     descripcion?: string | null
     tiempo_prep?: number
     pasos?: string | null
-    eliminado?: boolean
     activo?: boolean
+    eliminado?: boolean
     detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput
     aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
   }
 
@@ -16868,28 +21811,508 @@ export namespace Prisma {
   export type ProductoUpdateWithoutImagenInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
+    categoriaRel?: CategoriaUpdateOneRequiredWithoutProductosNestedInput
+    subcategoria?: SubCategoriaUpdateOneRequiredWithoutProductosNestedInput
   }
 
   export type ProductoUncheckedUpdateWithoutImagenInput = {
     id_producto?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    categoria?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     tiempo_prep?: IntFieldUpdateOperationsInput | number
     pasos?: NullableStringFieldUpdateOperationsInput | string | null
-    eliminado?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput
+    aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
+  }
+
+  export type CategoriaCreateWithoutHistorialInput = {
+    nombre: string
+    productos?: ProductoCreateNestedManyWithoutCategoriaRelInput
+    subcategorias?: SubCategoriaCreateNestedManyWithoutCategoriaInput
+  }
+
+  export type CategoriaUncheckedCreateWithoutHistorialInput = {
+    id_categoria?: number
+    nombre: string
+    productos?: ProductoUncheckedCreateNestedManyWithoutCategoriaRelInput
+    subcategorias?: SubCategoriaUncheckedCreateNestedManyWithoutCategoriaInput
+  }
+
+  export type CategoriaCreateOrConnectWithoutHistorialInput = {
+    where: CategoriaWhereUniqueInput
+    create: XOR<CategoriaCreateWithoutHistorialInput, CategoriaUncheckedCreateWithoutHistorialInput>
+  }
+
+  export type ProductoCreateWithoutHistorialInput = {
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+    detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
+    aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
+    imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
+    categoriaRel: CategoriaCreateNestedOneWithoutProductosInput
+    subcategoria: SubCategoriaCreateNestedOneWithoutProductosInput
+  }
+
+  export type ProductoUncheckedCreateWithoutHistorialInput = {
+    id_producto?: number
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    id_categoria: number
+    id_subcategoria: number
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+    detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+    aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
+    imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
+  }
+
+  export type ProductoCreateOrConnectWithoutHistorialInput = {
+    where: ProductoWhereUniqueInput
+    create: XOR<ProductoCreateWithoutHistorialInput, ProductoUncheckedCreateWithoutHistorialInput>
+  }
+
+  export type SubCategoriaCreateWithoutHistorial_analiticoInput = {
+    nombre: string
+    productos?: ProductoCreateNestedManyWithoutSubcategoriaInput
+    categoria: CategoriaCreateNestedOneWithoutSubcategoriasInput
+  }
+
+  export type SubCategoriaUncheckedCreateWithoutHistorial_analiticoInput = {
+    id_subcategoria?: number
+    nombre: string
+    id_categoria: number
+    productos?: ProductoUncheckedCreateNestedManyWithoutSubcategoriaInput
+  }
+
+  export type SubCategoriaCreateOrConnectWithoutHistorial_analiticoInput = {
+    where: SubCategoriaWhereUniqueInput
+    create: XOR<SubCategoriaCreateWithoutHistorial_analiticoInput, SubCategoriaUncheckedCreateWithoutHistorial_analiticoInput>
+  }
+
+  export type CategoriaUpsertWithoutHistorialInput = {
+    update: XOR<CategoriaUpdateWithoutHistorialInput, CategoriaUncheckedUpdateWithoutHistorialInput>
+    create: XOR<CategoriaCreateWithoutHistorialInput, CategoriaUncheckedCreateWithoutHistorialInput>
+    where?: CategoriaWhereInput
+  }
+
+  export type CategoriaUpdateToOneWithWhereWithoutHistorialInput = {
+    where?: CategoriaWhereInput
+    data: XOR<CategoriaUpdateWithoutHistorialInput, CategoriaUncheckedUpdateWithoutHistorialInput>
+  }
+
+  export type CategoriaUpdateWithoutHistorialInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    productos?: ProductoUpdateManyWithoutCategoriaRelNestedInput
+    subcategorias?: SubCategoriaUpdateManyWithoutCategoriaNestedInput
+  }
+
+  export type CategoriaUncheckedUpdateWithoutHistorialInput = {
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    productos?: ProductoUncheckedUpdateManyWithoutCategoriaRelNestedInput
+    subcategorias?: SubCategoriaUncheckedUpdateManyWithoutCategoriaNestedInput
+  }
+
+  export type ProductoUpsertWithoutHistorialInput = {
+    update: XOR<ProductoUpdateWithoutHistorialInput, ProductoUncheckedUpdateWithoutHistorialInput>
+    create: XOR<ProductoCreateWithoutHistorialInput, ProductoUncheckedCreateWithoutHistorialInput>
+    where?: ProductoWhereInput
+  }
+
+  export type ProductoUpdateToOneWithWhereWithoutHistorialInput = {
+    where?: ProductoWhereInput
+    data: XOR<ProductoUpdateWithoutHistorialInput, ProductoUncheckedUpdateWithoutHistorialInput>
+  }
+
+  export type ProductoUpdateWithoutHistorialInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
+    aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
+    imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
+    categoriaRel?: CategoriaUpdateOneRequiredWithoutProductosNestedInput
+    subcategoria?: SubCategoriaUpdateOneRequiredWithoutProductosNestedInput
+  }
+
+  export type ProductoUncheckedUpdateWithoutHistorialInput = {
+    id_producto?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
     detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
     aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
+    imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
+  }
+
+  export type SubCategoriaUpsertWithoutHistorial_analiticoInput = {
+    update: XOR<SubCategoriaUpdateWithoutHistorial_analiticoInput, SubCategoriaUncheckedUpdateWithoutHistorial_analiticoInput>
+    create: XOR<SubCategoriaCreateWithoutHistorial_analiticoInput, SubCategoriaUncheckedCreateWithoutHistorial_analiticoInput>
+    where?: SubCategoriaWhereInput
+  }
+
+  export type SubCategoriaUpdateToOneWithWhereWithoutHistorial_analiticoInput = {
+    where?: SubCategoriaWhereInput
+    data: XOR<SubCategoriaUpdateWithoutHistorial_analiticoInput, SubCategoriaUncheckedUpdateWithoutHistorial_analiticoInput>
+  }
+
+  export type SubCategoriaUpdateWithoutHistorial_analiticoInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    productos?: ProductoUpdateManyWithoutSubcategoriaNestedInput
+    categoria?: CategoriaUpdateOneRequiredWithoutSubcategoriasNestedInput
+  }
+
+  export type SubCategoriaUncheckedUpdateWithoutHistorial_analiticoInput = {
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    productos?: ProductoUncheckedUpdateManyWithoutSubcategoriaNestedInput
+  }
+
+  export type HistorialAnaliticoCreateWithoutCategoriaInput = {
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+    producto: ProductoCreateNestedOneWithoutHistorialInput
+    subcategorias: SubCategoriaCreateNestedOneWithoutHistorial_analiticoInput
+  }
+
+  export type HistorialAnaliticoUncheckedCreateWithoutCategoriaInput = {
+    id_historial?: number
+    id_producto: number
+    id_subcategoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type HistorialAnaliticoCreateOrConnectWithoutCategoriaInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    create: XOR<HistorialAnaliticoCreateWithoutCategoriaInput, HistorialAnaliticoUncheckedCreateWithoutCategoriaInput>
+  }
+
+  export type HistorialAnaliticoCreateManyCategoriaInputEnvelope = {
+    data: HistorialAnaliticoCreateManyCategoriaInput | HistorialAnaliticoCreateManyCategoriaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductoCreateWithoutCategoriaRelInput = {
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+    detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoCreateNestedManyWithoutProductoInput
+    aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
+    imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
+    subcategoria: SubCategoriaCreateNestedOneWithoutProductosInput
+  }
+
+  export type ProductoUncheckedCreateWithoutCategoriaRelInput = {
+    id_producto?: number
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    id_subcategoria: number
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+    detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput
+    aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
+    imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
+  }
+
+  export type ProductoCreateOrConnectWithoutCategoriaRelInput = {
+    where: ProductoWhereUniqueInput
+    create: XOR<ProductoCreateWithoutCategoriaRelInput, ProductoUncheckedCreateWithoutCategoriaRelInput>
+  }
+
+  export type ProductoCreateManyCategoriaRelInputEnvelope = {
+    data: ProductoCreateManyCategoriaRelInput | ProductoCreateManyCategoriaRelInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SubCategoriaCreateWithoutCategoriaInput = {
+    nombre: string
+    historial_analitico?: HistorialAnaliticoCreateNestedManyWithoutSubcategoriasInput
+    productos?: ProductoCreateNestedManyWithoutSubcategoriaInput
+  }
+
+  export type SubCategoriaUncheckedCreateWithoutCategoriaInput = {
+    id_subcategoria?: number
+    nombre: string
+    historial_analitico?: HistorialAnaliticoUncheckedCreateNestedManyWithoutSubcategoriasInput
+    productos?: ProductoUncheckedCreateNestedManyWithoutSubcategoriaInput
+  }
+
+  export type SubCategoriaCreateOrConnectWithoutCategoriaInput = {
+    where: SubCategoriaWhereUniqueInput
+    create: XOR<SubCategoriaCreateWithoutCategoriaInput, SubCategoriaUncheckedCreateWithoutCategoriaInput>
+  }
+
+  export type SubCategoriaCreateManyCategoriaInputEnvelope = {
+    data: SubCategoriaCreateManyCategoriaInput | SubCategoriaCreateManyCategoriaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type HistorialAnaliticoUpsertWithWhereUniqueWithoutCategoriaInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    update: XOR<HistorialAnaliticoUpdateWithoutCategoriaInput, HistorialAnaliticoUncheckedUpdateWithoutCategoriaInput>
+    create: XOR<HistorialAnaliticoCreateWithoutCategoriaInput, HistorialAnaliticoUncheckedCreateWithoutCategoriaInput>
+  }
+
+  export type HistorialAnaliticoUpdateWithWhereUniqueWithoutCategoriaInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    data: XOR<HistorialAnaliticoUpdateWithoutCategoriaInput, HistorialAnaliticoUncheckedUpdateWithoutCategoriaInput>
+  }
+
+  export type HistorialAnaliticoUpdateManyWithWhereWithoutCategoriaInput = {
+    where: HistorialAnaliticoScalarWhereInput
+    data: XOR<HistorialAnaliticoUpdateManyMutationInput, HistorialAnaliticoUncheckedUpdateManyWithoutCategoriaInput>
+  }
+
+  export type ProductoUpsertWithWhereUniqueWithoutCategoriaRelInput = {
+    where: ProductoWhereUniqueInput
+    update: XOR<ProductoUpdateWithoutCategoriaRelInput, ProductoUncheckedUpdateWithoutCategoriaRelInput>
+    create: XOR<ProductoCreateWithoutCategoriaRelInput, ProductoUncheckedCreateWithoutCategoriaRelInput>
+  }
+
+  export type ProductoUpdateWithWhereUniqueWithoutCategoriaRelInput = {
+    where: ProductoWhereUniqueInput
+    data: XOR<ProductoUpdateWithoutCategoriaRelInput, ProductoUncheckedUpdateWithoutCategoriaRelInput>
+  }
+
+  export type ProductoUpdateManyWithWhereWithoutCategoriaRelInput = {
+    where: ProductoScalarWhereInput
+    data: XOR<ProductoUpdateManyMutationInput, ProductoUncheckedUpdateManyWithoutCategoriaRelInput>
+  }
+
+  export type ProductoScalarWhereInput = {
+    AND?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
+    OR?: ProductoScalarWhereInput[]
+    NOT?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
+    id_producto?: IntFilter<"Producto"> | number
+    nombre?: StringFilter<"Producto"> | string
+    precio?: DecimalFilter<"Producto"> | Decimal | DecimalJsLike | number | string
+    id_categoria?: IntFilter<"Producto"> | number
+    id_subcategoria?: IntFilter<"Producto"> | number
+    descripcion?: StringNullableFilter<"Producto"> | string | null
+    tiempo_prep?: IntFilter<"Producto"> | number
+    pasos?: StringNullableFilter<"Producto"> | string | null
+    activo?: BoolFilter<"Producto"> | boolean
+    eliminado?: BoolFilter<"Producto"> | boolean
+  }
+
+  export type SubCategoriaUpsertWithWhereUniqueWithoutCategoriaInput = {
+    where: SubCategoriaWhereUniqueInput
+    update: XOR<SubCategoriaUpdateWithoutCategoriaInput, SubCategoriaUncheckedUpdateWithoutCategoriaInput>
+    create: XOR<SubCategoriaCreateWithoutCategoriaInput, SubCategoriaUncheckedCreateWithoutCategoriaInput>
+  }
+
+  export type SubCategoriaUpdateWithWhereUniqueWithoutCategoriaInput = {
+    where: SubCategoriaWhereUniqueInput
+    data: XOR<SubCategoriaUpdateWithoutCategoriaInput, SubCategoriaUncheckedUpdateWithoutCategoriaInput>
+  }
+
+  export type SubCategoriaUpdateManyWithWhereWithoutCategoriaInput = {
+    where: SubCategoriaScalarWhereInput
+    data: XOR<SubCategoriaUpdateManyMutationInput, SubCategoriaUncheckedUpdateManyWithoutCategoriaInput>
+  }
+
+  export type SubCategoriaScalarWhereInput = {
+    AND?: SubCategoriaScalarWhereInput | SubCategoriaScalarWhereInput[]
+    OR?: SubCategoriaScalarWhereInput[]
+    NOT?: SubCategoriaScalarWhereInput | SubCategoriaScalarWhereInput[]
+    id_subcategoria?: IntFilter<"SubCategoria"> | number
+    nombre?: StringFilter<"SubCategoria"> | string
+    id_categoria?: IntFilter<"SubCategoria"> | number
+  }
+
+  export type HistorialAnaliticoCreateWithoutSubcategoriasInput = {
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+    categoria: CategoriaCreateNestedOneWithoutHistorialInput
+    producto: ProductoCreateNestedOneWithoutHistorialInput
+  }
+
+  export type HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput = {
+    id_historial?: number
+    id_producto: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type HistorialAnaliticoCreateOrConnectWithoutSubcategoriasInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    create: XOR<HistorialAnaliticoCreateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput>
+  }
+
+  export type HistorialAnaliticoCreateManySubcategoriasInputEnvelope = {
+    data: HistorialAnaliticoCreateManySubcategoriasInput | HistorialAnaliticoCreateManySubcategoriasInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductoCreateWithoutSubcategoriaInput = {
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+    detalles?: DetalleComandaCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoCreateNestedManyWithoutProductoInput
+    aditamentos?: ProductoAditamentosCreateNestedManyWithoutProductoInput
+    imagen?: ProductoImagenCreateNestedManyWithoutProductoInput
+    categoriaRel: CategoriaCreateNestedOneWithoutProductosInput
+  }
+
+  export type ProductoUncheckedCreateWithoutSubcategoriaInput = {
+    id_producto?: number
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    id_categoria: number
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+    detalles?: DetalleComandaUncheckedCreateNestedManyWithoutProductoInput
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutProductoInput
+    aditamentos?: ProductoAditamentosUncheckedCreateNestedManyWithoutProductoInput
+    imagen?: ProductoImagenUncheckedCreateNestedManyWithoutProductoInput
+  }
+
+  export type ProductoCreateOrConnectWithoutSubcategoriaInput = {
+    where: ProductoWhereUniqueInput
+    create: XOR<ProductoCreateWithoutSubcategoriaInput, ProductoUncheckedCreateWithoutSubcategoriaInput>
+  }
+
+  export type ProductoCreateManySubcategoriaInputEnvelope = {
+    data: ProductoCreateManySubcategoriaInput | ProductoCreateManySubcategoriaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CategoriaCreateWithoutSubcategoriasInput = {
+    nombre: string
+    historial?: HistorialAnaliticoCreateNestedManyWithoutCategoriaInput
+    productos?: ProductoCreateNestedManyWithoutCategoriaRelInput
+  }
+
+  export type CategoriaUncheckedCreateWithoutSubcategoriasInput = {
+    id_categoria?: number
+    nombre: string
+    historial?: HistorialAnaliticoUncheckedCreateNestedManyWithoutCategoriaInput
+    productos?: ProductoUncheckedCreateNestedManyWithoutCategoriaRelInput
+  }
+
+  export type CategoriaCreateOrConnectWithoutSubcategoriasInput = {
+    where: CategoriaWhereUniqueInput
+    create: XOR<CategoriaCreateWithoutSubcategoriasInput, CategoriaUncheckedCreateWithoutSubcategoriasInput>
+  }
+
+  export type HistorialAnaliticoUpsertWithWhereUniqueWithoutSubcategoriasInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    update: XOR<HistorialAnaliticoUpdateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedUpdateWithoutSubcategoriasInput>
+    create: XOR<HistorialAnaliticoCreateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedCreateWithoutSubcategoriasInput>
+  }
+
+  export type HistorialAnaliticoUpdateWithWhereUniqueWithoutSubcategoriasInput = {
+    where: HistorialAnaliticoWhereUniqueInput
+    data: XOR<HistorialAnaliticoUpdateWithoutSubcategoriasInput, HistorialAnaliticoUncheckedUpdateWithoutSubcategoriasInput>
+  }
+
+  export type HistorialAnaliticoUpdateManyWithWhereWithoutSubcategoriasInput = {
+    where: HistorialAnaliticoScalarWhereInput
+    data: XOR<HistorialAnaliticoUpdateManyMutationInput, HistorialAnaliticoUncheckedUpdateManyWithoutSubcategoriasInput>
+  }
+
+  export type ProductoUpsertWithWhereUniqueWithoutSubcategoriaInput = {
+    where: ProductoWhereUniqueInput
+    update: XOR<ProductoUpdateWithoutSubcategoriaInput, ProductoUncheckedUpdateWithoutSubcategoriaInput>
+    create: XOR<ProductoCreateWithoutSubcategoriaInput, ProductoUncheckedCreateWithoutSubcategoriaInput>
+  }
+
+  export type ProductoUpdateWithWhereUniqueWithoutSubcategoriaInput = {
+    where: ProductoWhereUniqueInput
+    data: XOR<ProductoUpdateWithoutSubcategoriaInput, ProductoUncheckedUpdateWithoutSubcategoriaInput>
+  }
+
+  export type ProductoUpdateManyWithWhereWithoutSubcategoriaInput = {
+    where: ProductoScalarWhereInput
+    data: XOR<ProductoUpdateManyMutationInput, ProductoUncheckedUpdateManyWithoutSubcategoriaInput>
+  }
+
+  export type CategoriaUpsertWithoutSubcategoriasInput = {
+    update: XOR<CategoriaUpdateWithoutSubcategoriasInput, CategoriaUncheckedUpdateWithoutSubcategoriasInput>
+    create: XOR<CategoriaCreateWithoutSubcategoriasInput, CategoriaUncheckedCreateWithoutSubcategoriasInput>
+    where?: CategoriaWhereInput
+  }
+
+  export type CategoriaUpdateToOneWithWhereWithoutSubcategoriasInput = {
+    where?: CategoriaWhereInput
+    data: XOR<CategoriaUpdateWithoutSubcategoriasInput, CategoriaUncheckedUpdateWithoutSubcategoriasInput>
+  }
+
+  export type CategoriaUpdateWithoutSubcategoriasInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial?: HistorialAnaliticoUpdateManyWithoutCategoriaNestedInput
+    productos?: ProductoUpdateManyWithoutCategoriaRelNestedInput
+  }
+
+  export type CategoriaUncheckedUpdateWithoutSubcategoriasInput = {
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutCategoriaNestedInput
+    productos?: ProductoUncheckedUpdateManyWithoutCategoriaRelNestedInput
   }
 
   export type ComandasCreateManyMeseroInput = {
@@ -17022,6 +22445,17 @@ export namespace Prisma {
     status?: string
   }
 
+  export type HistorialAnaliticoCreateManyProductoInput = {
+    id_historial?: number
+    id_subcategoria: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
   export type ProductoAditamentosCreateManyProductoInput = {
     id_aditamento: number
   }
@@ -17054,6 +22488,38 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HistorialAnaliticoUpdateWithoutProductoInput = {
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    categoria?: CategoriaUpdateOneRequiredWithoutHistorialNestedInput
+    subcategorias?: SubCategoriaUpdateOneRequiredWithoutHistorial_analiticoNestedInput
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateWithoutProductoInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyWithoutProductoInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ProductoAditamentosUpdateWithoutProductoInput = {
@@ -17169,6 +22635,225 @@ export namespace Prisma {
   export type ComandaAditamentosUncheckedUpdateManyWithoutDetalleInput = {
     id_aditamento?: IntFieldUpdateOperationsInput | number
     confirmacion?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type HistorialAnaliticoCreateManyCategoriaInput = {
+    id_historial?: number
+    id_producto: number
+    id_subcategoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type ProductoCreateManyCategoriaRelInput = {
+    id_producto?: number
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    id_subcategoria: number
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+  }
+
+  export type SubCategoriaCreateManyCategoriaInput = {
+    id_subcategoria?: number
+    nombre: string
+  }
+
+  export type HistorialAnaliticoUpdateWithoutCategoriaInput = {
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    producto?: ProductoUpdateOneRequiredWithoutHistorialNestedInput
+    subcategorias?: SubCategoriaUpdateOneRequiredWithoutHistorial_analiticoNestedInput
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateWithoutCategoriaInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_producto?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyWithoutCategoriaInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_producto?: IntFieldUpdateOperationsInput | number
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type ProductoUpdateWithoutCategoriaRelInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUpdateManyWithoutProductoNestedInput
+    aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
+    imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
+    subcategoria?: SubCategoriaUpdateOneRequiredWithoutProductosNestedInput
+  }
+
+  export type ProductoUncheckedUpdateWithoutCategoriaRelInput = {
+    id_producto?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput
+    aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
+    imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
+  }
+
+  export type ProductoUncheckedUpdateManyWithoutCategoriaRelInput = {
+    id_producto?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SubCategoriaUpdateWithoutCategoriaInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial_analitico?: HistorialAnaliticoUpdateManyWithoutSubcategoriasNestedInput
+    productos?: ProductoUpdateManyWithoutSubcategoriaNestedInput
+  }
+
+  export type SubCategoriaUncheckedUpdateWithoutCategoriaInput = {
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    historial_analitico?: HistorialAnaliticoUncheckedUpdateManyWithoutSubcategoriasNestedInput
+    productos?: ProductoUncheckedUpdateManyWithoutSubcategoriaNestedInput
+  }
+
+  export type SubCategoriaUncheckedUpdateManyWithoutCategoriaInput = {
+    id_subcategoria?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HistorialAnaliticoCreateManySubcategoriasInput = {
+    id_historial?: number
+    id_producto: number
+    id_categoria: number
+    hora: number
+    dia_semana: number
+    es_festivo?: boolean
+    clima_id: number
+    fecha_registro?: Date | string | null
+  }
+
+  export type ProductoCreateManySubcategoriaInput = {
+    id_producto?: number
+    nombre: string
+    precio?: Decimal | DecimalJsLike | number | string
+    id_categoria: number
+    descripcion?: string | null
+    tiempo_prep?: number
+    pasos?: string | null
+    activo?: boolean
+    eliminado?: boolean
+  }
+
+  export type HistorialAnaliticoUpdateWithoutSubcategoriasInput = {
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    categoria?: CategoriaUpdateOneRequiredWithoutHistorialNestedInput
+    producto?: ProductoUpdateOneRequiredWithoutHistorialNestedInput
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateWithoutSubcategoriasInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_producto?: IntFieldUpdateOperationsInput | number
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type HistorialAnaliticoUncheckedUpdateManyWithoutSubcategoriasInput = {
+    id_historial?: IntFieldUpdateOperationsInput | number
+    id_producto?: IntFieldUpdateOperationsInput | number
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    hora?: IntFieldUpdateOperationsInput | number
+    dia_semana?: IntFieldUpdateOperationsInput | number
+    es_festivo?: BoolFieldUpdateOperationsInput | boolean
+    clima_id?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type ProductoUpdateWithoutSubcategoriaInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    detalles?: DetalleComandaUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUpdateManyWithoutProductoNestedInput
+    aditamentos?: ProductoAditamentosUpdateManyWithoutProductoNestedInput
+    imagen?: ProductoImagenUpdateManyWithoutProductoNestedInput
+    categoriaRel?: CategoriaUpdateOneRequiredWithoutProductosNestedInput
+  }
+
+  export type ProductoUncheckedUpdateWithoutSubcategoriaInput = {
+    id_producto?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
+    detalles?: DetalleComandaUncheckedUpdateManyWithoutProductoNestedInput
+    historial?: HistorialAnaliticoUncheckedUpdateManyWithoutProductoNestedInput
+    aditamentos?: ProductoAditamentosUncheckedUpdateManyWithoutProductoNestedInput
+    imagen?: ProductoImagenUncheckedUpdateManyWithoutProductoNestedInput
+  }
+
+  export type ProductoUncheckedUpdateManyWithoutSubcategoriaInput = {
+    id_producto?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    precio?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_categoria?: IntFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tiempo_prep?: IntFieldUpdateOperationsInput | number
+    pasos?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eliminado?: BoolFieldUpdateOperationsInput | boolean
   }
 
 
