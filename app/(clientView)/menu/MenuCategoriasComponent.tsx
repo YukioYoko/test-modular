@@ -40,7 +40,7 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
       prod: prod.id_producto, 
       nombre: prod.nombre, 
       price: prod.precio, 
-      imagen: prod.imagen,
+      imagen: prod.imagenUrl, // Corregido: Usar la URL procesada en el server
       cantidad: 1, 
       nota: "",
       aditamentos: [] 
@@ -48,7 +48,6 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
     
     agregarAlCarritoBase(nuevoItem);
 
-    // Disparar Apriori
     const recomendados = await getSugerenciasApriori(prod.id_producto);
     if (recomendados && recomendados.length > 0) {
       setSugerenciasData({
@@ -82,32 +81,26 @@ export default function MenuCategoriasComponent({ productos, idComanda }: { prod
         ))}
       </div>
 
-      {/* MODAL DE DETALLE DEL PRODUCTO */}
-{selectedProduct && (
-  <ProductDetailModal 
-    producto={selectedProduct}
-    onClose={() => setSelectedProduct(null)}
-    onAddToCart={async (itemArmado) => {
-      // 1. Agregamos al carrito
-      setCarrito((prev) => [...prev, itemArmado]);
-      
-      // 2. Cerramos el modal de detalle primero
-      setSelectedProduct(null);
+      {selectedProduct && (
+        <ProductDetailModal 
+          producto={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={async (itemArmado) => {
+            setCarrito((prev) => [...prev, itemArmado]);
+            setSelectedProduct(null);
+            setTimeout(async () => {
+              const recomendados = await getSugerenciasApriori(itemArmado.prod);
+              if (recomendados && recomendados.length > 0) {
+                setSugerenciasData({
+                  nombre: itemArmado.nombre,
+                  productos: recomendados
+                });
+              }
+            }, 150);
+          }}
+        />
+      )}
 
-      // 3. Ejecutamos Apriori DESPUÉS de cerrar el anterior
-      // Un pequeño delay de 100ms ayuda a que la animación de cierre no choque
-      setTimeout(async () => {
-        const recomendados = await getSugerenciasApriori(itemArmado.prod);
-        if (recomendados && recomendados.length > 0) {
-          setSugerenciasData({
-            nombre: itemArmado.nombre,
-            productos: recomendados
-          });
-        }
-      }, 150);
-    }}
-  />
-)}{/* 3. MODAL APRIORI (Independiente y al final) */}
       {sugerenciasData && (
         <AprioriModal 
           productoBaseNombre={sugerenciasData.nombre}

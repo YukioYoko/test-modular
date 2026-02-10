@@ -1,66 +1,94 @@
 'use server'
 import { prisma } from '@/lib/prisma';
 
-// Función auxiliar para obtener clima y festivos (puedes moverla a un utils.ts)
 async function getContextoAmbiental() {
   try {
-    const API_KEY = process.env.OPENWEATHER_API_KEY;
-    const ciudad = "Guadalajara"; // O extraer de la configuración del restaurante
+    const API_KEY = process.env.WEATHER_API_KEY; 
+    const ciudad = "Guadalajara";
+    const resClima = await fetch(
+      `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${ciudad}&aqi=no`,
+      { next: { revalidate: 900 } }
+    );
+    const data = await resClima.json();
+    const climaTexto = data.current.condition.text.toLowerCase();
     
-    // 1. Obtener Clima
-    const resClima = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${API_KEY}`);
-    const dataClima = await resClima.json();
-    const climaMain = dataClima.weather?.[0]?.main || "Clear";
-    const mapping: Record<string, number> = { "Clear": 0, "Clouds": 1, "Rain": 2, "Drizzle": 2, "Thunderstorm": 2 };
-    const climaId = mapping[climaMain] ?? 3;
+    let climaId = 0; 
+    if (climaTexto.includes("cloud") || climaTexto.includes("overcast")) climaId = 1;
+    else if (climaTexto.includes("rain") || climaTexto.includes("thunder") || climaTexto.includes("drizzle")) climaId = 2;
 
-    // 2. Obtener si es festivo (Lógica simple para México o usa una librería)
-    // Para simplificar en este ejemplo, usaremos una validación manual de fechas clave 
-    // o puedes llamar a una API de festivos.
     const hoy = new Date();
-    const festivosFijos = ["01-01", "05-01", "09-16", "11-20", "12-25"]; // Ejemplo: Año nuevo, Navidad...
-    const esFestivo = festivosFijos.includes(`${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`);
+    const festivosFijos = ["01-01", "05-01", "09-16", "11-20", "12-25"];
+    const esFestivo = festivosFijos.includes(
+      `${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
+    );
 
     return { climaId, esFestivo };
   } catch (error) {
-    return { climaId: 0, esFestivo: false }; // Fallback en caso de error de API
+    return { climaId: 0, esFestivo: false };
+  }
+}
+
+/**
+ * Obtiene todas las categorías activas de la base de datos.
+ * Se usa tanto en el panel de administración como en el menú del cliente.
+ */
+export async function getCategorias() {
+  try {
+    const categorias = await prisma.categoria.findMany({
+      where: {
+        // Si tienes un campo para borrado lógico, fíltralo aquí
+        // eliminado: false 
+      },
+      orderBy: {
+        nombre: 'asc' // Orden alfabético para que el menú se vea organizado
+      },
+      select: {
+        id_categoria: true,
+        nombre: true,
+        // Puedes incluir la relación de productos si necesitas contar cuántos hay
+        // _count: { select: { productos: true } }
+      }
+    });
+
+    return categorias;
+  } catch (error) {
+    console.error("Error al obtener categorías:", error);
+    // Devolvemos un array vacío para evitar que la página colapse
+    return [];
   }
 }
 
 export async function sendOrder(idComanda: number, carrito: any[], token: string | null) {
   try {
-    // 1. Validar Sesión
     const comanda = await prisma.comandas.findFirst({
       where: { id_comanda: idComanda, token: token, estado: 'Abierta' }
     });
 
     if (!comanda) return { error: "Sesión expirada o comanda cerrada" };
 
-    // 2. Obtener Contexto para la IA (Clima y Hora)
     const { climaId, esFestivo } = await getContextoAmbiental();
     const ahora = new Date();
-    const horaActual = ahora.getHours();
-    const diaSemana = ahora.getDay();
 
-    // 3. Iniciar Transacción
     const itemsCreados = await prisma.$transaction(async (tx) => {
       const resultados = [];
 
       for (const item of carrito) {
-        // A. Crear el detalle principal
         const nuevoDetalle = await tx.detalleComanda.create({
           data: {
             id_comanda: idComanda,
             id_producto: item.prod,
             cantidad: item.cantidad,
-            notas_especiales: item.nota,
+            notas_especiales: item.nota || "",
             status: "En espera"
           },
-          include: { producto: true } // Traemos el producto para saber su subcategoría
+          include: { 
+            producto: {
+              include: { categoriaRel: true } // Obtenemos el nombre de la categoría
+            } 
+          }
         });
 
-        // B. Insertar Aditamentos
-        if (item.aditamentos && item.aditamentos.length > 0) {
+        if (item.aditamentos?.length > 0) {
           await tx.comandaAditamentos.createMany({
             data: item.aditamentos.map((idAdi: number) => ({
               id_detalle: nuevoDetalle.id_detalle,
@@ -70,23 +98,21 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
           });
         }
 
-        // C. GUARDAR EN HISTORIAL ANALÍTICO (Para el Random Forest)
-        // Guardamos una entrada por cada unidad del producto pedida
+        // Historial Analítico corregido con categoriaRel
         for (let i = 0; i < item.cantidad; i++) {
           await tx.historialAnalitico.create({
             data: {
               id_producto: item.prod,
               id_subcategoria: nuevoDetalle.producto.id_subcategoria,
-              categoria_nom: nuevoDetalle.producto.categoria,
-              hora: horaActual,
-              dia_semana: diaSemana,
+              id_categoria: nuevoDetalle.producto.id_categoria,
+              hora: ahora.getHours(),
+              dia_semana: ahora.getDay(),
               es_festivo: esFestivo,
               clima_id: climaId
             }
           });
         }
 
-        // D. Re-consultar para la UI
         const detalleCompleto = await tx.detalleComanda.findUnique({
           where: { id_detalle: nuevoDetalle.id_detalle },
           include: {
@@ -96,16 +122,15 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
           }
         });
 
-        resultados.push(detalleCompleto);
+        if (detalleCompleto) resultados.push(detalleCompleto);
       }
-
       return resultados;
     });
 
-    return { success: true, ordenCreada: itemsCreados };
+    return { success: true, ordenCreada: JSON.parse(JSON.stringify(itemsCreados)) };
 
   } catch (e) {
-    console.error(e);
-    return { error: "Error al guardar el pedido e historial" };
+    console.error("Error en sendOrder:", e);
+    return { error: "No se pudo procesar la orden." };
   }
 }

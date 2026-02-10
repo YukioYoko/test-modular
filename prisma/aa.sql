@@ -183,7 +183,7 @@ INSERT INTO productos (id_producto, nombre, precio, categoria, id_subcategoria, 
 (17, 'Chianti Classico', 110.00, 'Bebida', 5, 'Copa de vino tinto', 5, 'Servir a temperatura...', true),
 (18, 'Pinot Grigio', 110.00, 'Bebida', 5, 'Copa de vino blanco', 5, 'Servir frío...', true),
 (19, 'Café Espresso', 70.00, 'Bebida', 5, 'Café espresso intenso', 5, 'Extraer 30ml...', true),
-(20, 'Naranjada', 50.00, 'Bebida', 5, 'Naranjada mineral con rodaja de naranja', 5, 'Mezclar jugo...');
+(20, 'Naranjada', 50.00, 'Bebida', 5, 'Naranjada mineral con rodaja de naranja', 5, 'Mezclar jugo...', true);
 
 -- 7. Producto_Aditamentos
 INSERT INTO producto_aditamentos (id_producto, id_aditamento) VALUES 

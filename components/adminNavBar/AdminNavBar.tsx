@@ -16,6 +16,7 @@ export const AdminNavBar = ({ isOpen, closeNav }: NavBarProps) => {
     { name: "Personal", href: "/personal" },
      { name: "Ventas", href: "/ventas" },
     { name: "Platillos", href: "/products" },
+    { name: "Categorias", href: "/categorias" },
     { name: "Aditamentos", href: "/aditamentos" },
      { name: "Mesas", href: "/mesas" },
   ];
