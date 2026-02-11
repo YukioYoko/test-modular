@@ -147,12 +147,13 @@ exports.Prisma.ProductoScalarFieldEnum = {
   id_producto: 'id_producto',
   nombre: 'nombre',
   precio: 'precio',
-  categoria: 'categoria',
+  id_categoria: 'id_categoria',
+  id_subcategoria: 'id_subcategoria',
   descripcion: 'descripcion',
   tiempo_prep: 'tiempo_prep',
   pasos: 'pasos',
-  eliminado: 'eliminado',
-  activo: 'activo'
+  activo: 'activo',
+  eliminado: 'eliminado'
 };
 
 exports.Prisma.AditamentoScalarFieldEnum = {
@@ -203,6 +204,29 @@ exports.Prisma.ProductoImagenScalarFieldEnum = {
   id_producto: 'id_producto'
 };
 
+exports.Prisma.HistorialAnaliticoScalarFieldEnum = {
+  id_historial: 'id_historial',
+  id_producto: 'id_producto',
+  id_subcategoria: 'id_subcategoria',
+  id_categoria: 'id_categoria',
+  hora: 'hora',
+  dia_semana: 'dia_semana',
+  es_festivo: 'es_festivo',
+  clima_id: 'clima_id',
+  fecha_registro: 'fecha_registro'
+};
+
+exports.Prisma.CategoriaScalarFieldEnum = {
+  id_categoria: 'id_categoria',
+  nombre: 'nombre'
+};
+
+exports.Prisma.SubCategoriaScalarFieldEnum = {
+  id_subcategoria: 'id_subcategoria',
+  nombre: 'nombre',
+  id_categoria: 'id_categoria'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -229,7 +253,10 @@ exports.Prisma.ModelName = {
   Comandas: 'Comandas',
   DetalleComanda: 'DetalleComanda',
   ComandaAditamentos: 'ComandaAditamentos',
-  ProductoImagen: 'ProductoImagen'
+  ProductoImagen: 'ProductoImagen',
+  HistorialAnalitico: 'HistorialAnalitico',
+  Categoria: 'Categoria',
+  SubCategoria: 'SubCategoria'
 };
 
 /**

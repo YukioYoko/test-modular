@@ -1,54 +1,61 @@
 "use client";
 import Link from "next/link";
-import { useSearchParams, usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
-export const Categories = () => {
+// Definimos la interfaz para los datos que vienen de la BD
+interface Categoria {
+  id_categoria: number;
+  nombre: string;
+}
+
+export const Categories = ({ categorias }: { categorias: Categoria[] }) => {
   const params = useSearchParams();
-  const pathname = usePathname();
   
-  // Obtenemos los datos necesarios de la URL
+  // Extraemos datos de la sesión para persistirlos en los enlaces
   const idComanda = params.get("comanda");
   const token = params.get("token");
+  
+  // Obtenemos la categoría seleccionada de la URL (si no hay, por defecto es 0/Todo)
+  const categoriaSeleccionada = params.get("cat") || "0";
 
-  const navLinks = [
-    { name: "Todo", href: "/menu" }, // Cambié "Menú" por "Todo" que es más común en filtros
-    { name: "Entradas", href: "/" },
-    { name: "Platillos", href: "/" },
-    { name: "Postres", href: "/" },
-    { name: "Bebidas", href: "/" },
-    { name: "Caliente", href: "/" },
-    { name: "Frias", href: "/" },
-  ];
-
-  // Si no hay sesión válida, no mostramos nada
   if (!idComanda || !token) return null;
 
+  // Agregamos la opción "Todo" al inicio del array
+  const todasLasCategorias = [
+    { id_categoria: 0, nombre: "Todo" },
+    ...categorias
+  ];
+
   return (
-    <div className=" top-0 z-10 bg-app py-4 pl-4 border-b border-slate-100/50 backdrop-blur-sm">
+    <div className="top-0 z-10 bg-transparent py-4 pl-4 border-b border-slate-100/50 backdrop-blur-sm">
       <nav className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x">
-        {navLinks.map((link) => {
-          const fullHref = `${link.href}?comanda=${idComanda}&token=${token}`;
-          const isActive = pathname === link.href;
+        {todasLasCategorias.map((cat) => {
+          // Construimos la URL manteniendo la sesión y añadiendo el filtro de categoría
+          const catParam = cat.id_categoria !== 0 ? `&cat=${cat.id_categoria}` : "";
+          const fullHref = `/menu?comanda=${idComanda}&token=${token}${catParam}`;
+          
+          // Comparamos el ID para el estilo activo
+          const isActive = categoriaSeleccionada === cat.id_categoria.toString();
 
           return (
             <Link
-              key={link.name}
+              key={cat.id_categoria}
               href={fullHref}
               className={`
-                flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-sm font-bold transition-all border
+                shrink-0 snap-start px-6 py-2.5 rounded-full text-sm font-black transition-all border uppercase tracking-widest
                 ${
                   isActive
-                    ? "bg-(--mint-green) text-(--militar-green) border-none shadow-md shadow-(--mint-green)/30"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-(--mint-green)"
+                    ? "bg-(--mint-green) text-(--militar-green) border-none shadow-lg shadow-(--mint-green)/40 scale-105"
+                    : "bg-white text-slate-500 border-slate-200 hover:border-(--mint-green) hover:text-(--militar-green)"
                 }
               `}
             >
-              {link.name}
+              {cat.nombre}
             </Link>
           );
         })}
-        {/* Espacio extra al final para que el último item no quede pegado al borde */}
-        <div className="w-4 flex-shrink-0" />
+        {/* Padding final para scroll suave */}
+        <div className="w-6 shrink-0" />
       </nav>
     </div>
   );
