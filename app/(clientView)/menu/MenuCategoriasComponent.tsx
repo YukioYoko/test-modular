@@ -40,10 +40,13 @@ export default function MenuCategoriasComponent({
       socketRef.current?.disconnect();
     };
   }, []);
+
   const actualizarCantidad = (index: number, action: "add" | "remove") => {
     setCarrito((prev) => {
       const nuevoCarrito = [...prev];
-      const item = nuevoCarrito[index];
+      
+      // Creamos una COPIA del objeto para no mutar la referencia original
+      const item = { ...nuevoCarrito[index] };
 
       if (action === "add") {
         item.cantidad += 1;
@@ -51,33 +54,31 @@ export default function MenuCategoriasComponent({
         item.cantidad -= 1;
       }
 
+      // Reemplazamos el item en el nuevo array con la copia modificada
+      nuevoCarrito[index] = item;
+
       return nuevoCarrito;
     });
   };
 
+  
   const agregarAlCarritoBase = (item: any) => {
     setCarrito((prevCarrito) => {
-      // 1. Buscamos si ya existe el producto con los mismos detalles
       const index = prevCarrito.findIndex(
         (it) =>
           it.prod === item.prod &&
           it.nota === item.nota &&
-          // Comparamos los aditamentos convirtiéndolos a string (asumiendo que son IDs numéricos)
-          JSON.stringify(it.aditamentos.sort()) ===
-            JSON.stringify(item.aditamentos.sort()),
+          JSON.stringify([...it.aditamentos].sort()) === JSON.stringify([...item.aditamentos].sort())
       );
 
       if (index !== -1) {
-        // 2. Si existe, creamos un nuevo array y una copia del objeto modificado
-        const nuevoCarrito = [...prevCarrito];
-        nuevoCarrito[index] = {
-          ...nuevoCarrito[index],
-          cantidad: nuevoCarrito[index].cantidad + 1,
-        };
-        return nuevoCarrito;
+        return prevCarrito.map((it, i) => 
+          i === index 
+            ? { ...it, cantidad: it.cantidad + 1 } 
+            : it
+        );
       }
 
-      // 3. Si no existe, simplemente añadimos el nuevo item
       return [...prevCarrito, item];
     });
   };
@@ -155,25 +156,20 @@ export default function MenuCategoriasComponent({
       )}
 
       {sugerenciasData && (
-        <AprioriModal
-          productoBaseNombre={sugerenciasData.nombre}
-          sugerencias={sugerenciasData.productos}
-          onAdd={(p: any) => {
-            setCarrito((prev) => [
-              ...prev,
-              {
-                prod: p.id_producto,
-                nombre: p.nombre,
-                price: p.precio,
-                cantidad: 1,
-                aditamentos: [],
-                nota: "",
-              },
-            ]);
-          }}
-          onClose={() => setSugerenciasData(null)}
-        />
-      )}
+  <AprioriModal 
+    productoBaseNombre={sugerenciasData.nombre}
+    sugerencias={sugerenciasData.productos}
+    onAdd={(p: any) => {
+      setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, cantidad: 1, aditamentos: [], nota: "" }]);
+    }}
+    // ESTA ES LA CLAVE:
+    onSelectProduct={(prod: any) => {
+      setSugerenciasData(null); // Cerramos el modal de Apriori
+      setSelectedProduct(prod);  // Abrimos el modal de detalle del producto sugerido
+    }}
+    onClose={() => setSugerenciasData(null)}
+  />
+)}
 
       {showSuccess && (
         <OrderSuccessModal onClose={() => setShowSuccess(false)} />
