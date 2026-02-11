@@ -20,19 +20,24 @@ function ElapsedTime({ fecha_hora }: { fecha_hora: string | null }) {
     return () => clearInterval(interval);
   }, [fecha_hora]);
 
-  if (mins === null) return <span suppressHydrationWarning>Ahora</span>;
+  if (mins === null) return <span suppressHydrationWarning className="text-slate-400">Ahora</span>;
 
-  const color =
-    mins >= 15 ? 'text-red-600 font-black' :
-    mins >= 8  ? 'text-amber-600 font-bold' :
-                 'text-slate-400 font-medium';
+  const isUrgent = mins >= 15;
+  const isWarning = mins >= 8 && mins < 15;
+
+  const bgColor = isUrgent ? 'bg-red-100' : isWarning ? 'bg-amber-100' : 'bg-slate-100';
+  const textColor = isUrgent ? 'text-red-700' : isWarning ? 'text-amber-700' : 'text-slate-600';
+  const borderColor = isUrgent ? 'border-red-300' : isWarning ? 'border-amber-300' : 'border-slate-200';
 
   const label = mins < 1 ? '< 1 min' : `${mins} min`;
 
   return (
-    <span suppressHydrationWarning className={color}>
-      ⏱ {label}
-    </span>
+    <div suppressHydrationWarning className={`${bgColor} ${borderColor} border rounded-lg px-3 py-2 text-center`}>
+      <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-0.5">En espera</p>
+      <p className={`text-lg font-black ${textColor} leading-none`}>
+        {label}
+      </p>
+    </div>
   );
 }
 
@@ -41,25 +46,34 @@ function PedidoCard({
   pedido,
   isPending,
   isNew,
+  ordenLlegada,
   onCambiarEstatus,
 }: {
   pedido: any;
   isPending: boolean;
   isNew: boolean;
+  ordenLlegada: number;
   onCambiarEstatus: (id: number, estatus: string) => void;
 }) {
   const enEspera = pedido.status === 'En espera';
 
   return (
     <div
-      className={`bg-white rounded-2xl shadow-lg overflow-hidden border-t-4 transition-all duration-300 flex flex-col ${
+      className={`bg-white rounded-2xl shadow-lg overflow-hidden border-t-4 transition-all duration-300 flex flex-col relative ${
         isNew ? 'ring-2 ring-yellow-400 shadow-yellow-200 scale-[1.02]' : ''
       } ${enEspera ? 'border-amber-400' : 'border-blue-500'}`}
     >
-      <div className="p-4 flex-1">
+      {/* Badge de orden de llegada */}
+      <div className={`absolute -top-0 -left-0 w-10 h-10 flex items-center justify-center rounded-br-xl font-black text-white text-sm ${
+        ordenLlegada === 1 ? 'bg-red-500' : ordenLlegada <= 3 ? 'bg-amber-500' : 'bg-slate-600'
+      }`}>
+        #{ordenLlegada}
+      </div>
+
+      <div className="p-4 flex-1 pt-6">
         {/* Header: Mesa + Tiempo */}
         <div className="flex justify-between items-start mb-3">
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 ml-6">
             <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-black self-start">
               MESA {pedido.comanda?.id_mesa ?? '?'}
             </span>
@@ -69,9 +83,7 @@ function PedidoCard({
               </span>
             )}
           </div>
-          <div className="text-xs text-right">
-            <ElapsedTime fecha_hora={pedido.comanda?.fecha_hora ?? null} />
-          </div>
+          <ElapsedTime fecha_hora={pedido.comanda?.fecha_hora ?? null} />
         </div>
 
         {/* Producto */}
@@ -219,8 +231,15 @@ export default function CocinaClient({
     });
   }, []);
 
-  const enEspera = pedidos.filter((p) => p.status === 'En espera');
-  const enPreparacion = pedidos.filter((p) => p.status === 'En preparacion');
+  // Ordenar por fecha de llegada (más antiguos primero)
+  const ordenarPorFecha = (a: { comanda?: { fecha_hora?: string } }, b: { comanda?: { fecha_hora?: string } }) => {
+    const fechaA = new Date(a.comanda?.fecha_hora ?? 0).getTime();
+    const fechaB = new Date(b.comanda?.fecha_hora ?? 0).getTime();
+    return fechaA - fechaB;
+  };
+
+  const enEspera = pedidos.filter((p) => p.status === 'En espera').sort(ordenarPorFecha);
+  const enPreparacion = pedidos.filter((p) => p.status === 'En preparacion').sort(ordenarPorFecha);
 
   return (
     <div>
@@ -248,6 +267,7 @@ export default function CocinaClient({
                 pedido={pedido}
                 isPending={pendingIds.has(pedido.id_detalle)}
                 isNew={newIds.has(pedido.id_detalle)}
+                ordenLlegada={index + 1}
                 onCambiarEstatus={cambiarEstatus}
               />
             ))}
@@ -269,6 +289,7 @@ export default function CocinaClient({
                 pedido={pedido}
                 isPending={pendingIds.has(pedido.id_detalle)}
                 isNew={newIds.has(pedido.id_detalle)}
+                ordenLlegada={index + 1}
                 onCambiarEstatus={cambiarEstatus}
               />
             ))}
