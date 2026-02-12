@@ -32,6 +32,7 @@ export default function MenuCategoriasComponent({
 
   const socketRef = useRef<Socket | null>(null);
 
+  // Solo inicializamos el socket si el usuario puede realizar pedidos
   useEffect(() => {
     if (!esSoloLectura) {
       socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
@@ -95,39 +96,43 @@ export default function MenuCategoriasComponent({
 
   return (
     <>
+      {/* Grid de productos: Ajustamos el padding inferior dependiendo de si hay carrito o no */}
       <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${esSoloLectura ? 'pb-10' : 'pb-32'}`}>
         {productos.map((prod) => (
           <ProductCard
             key={prod.id_producto}
             producto={prod}
-            // Bloqueamos selección si es solo lectura
-            onSelect={() => !esSoloLectura && setSelectedProduct(prod)}
+            // Permitimos abrir el modal siempre (modo lectura o escritura)
+            onSelect={() => setSelectedProduct(prod)}
+            // Bloqueamos el botón rápido si es solo lectura
             onQuickAdd={(e) => !esSoloLectura && agregarRapido(prod, e)}
             mostrarBotonAdd={!esSoloLectura} 
           />
         ))}
       </div>
 
-      
-          {selectedProduct && (
-      <ProductDetailModal
-        producto={selectedProduct}
-        esSoloLectura={esSoloLectura} // PASAMOS LA PROP
-        onClose={() => setSelectedProduct(null)}
-        onAddToCart={async (itemArmado) => {
-          // ESTA FUNCIÓN SOLO SE DISPARARÁ SI EL BOTÓN ESTÁ HABILITADO EN EL MODAL
-          agregarAlCarritoBase(itemArmado);
-          setSelectedProduct(null);
-          setTimeout(async () => {
-            const recomendados = await getSugerenciasApriori(itemArmado.prod);
-            if (recomendados?.length > 0) {
-              setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
-            }
-          }, 150);
-        }}
-      />
-    )}
-{!esSoloLectura && (
+      {/* MODAL DE DETALLE: Visible para todos, pero con lógica interna de bloqueo */}
+      {selectedProduct && (
+        <ProductDetailModal
+          producto={selectedProduct}
+          esSoloLectura={esSoloLectura}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={async (itemArmado) => {
+            // Esta función solo se ejecuta si el usuario NO está en modo lectura
+            agregarAlCarritoBase(itemArmado);
+            setSelectedProduct(null);
+            setTimeout(async () => {
+              const recomendados = await getSugerenciasApriori(itemArmado.prod);
+              if (recomendados?.length > 0) {
+                setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
+              }
+            }, 150);
+          }}
+        />
+      )}
+
+      {/* COMPONENTES TRANSACCIONALES: Solo se renderizan si el usuario puede pedir */}
+      {!esSoloLectura && (
         <>
           {sugerenciasData && (
             <AprioriModal 
