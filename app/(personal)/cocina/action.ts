@@ -12,7 +12,7 @@ export async function getPedidosCocina() {
     include: {
       producto: true,
       aditamentos: { include: { aditamento: true } },
-      comanda: { select: { id_mesa: true, fecha_hora: true } }
+      comanda: { select: { id_mesa: true, fecha_hora: true, mesero: { select: { nombre: true } } } }
     },
     orderBy: { comanda: { fecha_hora: 'asc' } }
   });

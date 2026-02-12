@@ -285,6 +285,14 @@
       "password": "1234",
       "rol": "hostess",
       "fecha_creacion": "2026-01-14T23:40:36.950Z"
+    },
+    {
+      "id": 2,
+      "usuario": "adm",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "rol": "admin",
+      "fecha_creacion": "2026-02-10T00:00:00.000Z"
     }
   ],
   "receta": [
