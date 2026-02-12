@@ -82,7 +82,8 @@ export async function getSugerenciasApriori(productoId: number) {
     // Convertimos precios de Decimal a Number para el cliente (Next.js)
     return sugerenciasFinales.map(p => ({
       ...p,
-      precio: Number(p.precio)
+      precio: Number(p.precio),
+      imagenUrl: p.imagen && p.imagen.length > 0 ? p.imagen[0].url : '/placeholder.png'
     }));
 
   } catch (error) {
@@ -106,6 +107,7 @@ async function getFallback(productoId: number) {
   
   return randoms.map(p => ({ 
     ...p, 
-    precio: Number(p.precio) 
+    precio: Number(p.precio),
+    imagenUrl: p.imagen && p.imagen.length > 0 ? p.imagen[0].url : '/placeholder.png'
   }));
 }
