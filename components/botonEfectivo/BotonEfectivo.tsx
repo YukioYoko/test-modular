@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { registrarPagoEfectivo } from '../app/(clientView)/cuenta/action';
+import { registrarPagoEfectivo } from '@/app/(clientView)/cuenta/action';
 
 export default function BotonEfectivo({ idComanda, desglose }: { idComanda: number, desglose: any }) {
   const [loading, setLoading] = useState(false);
