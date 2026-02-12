@@ -9,28 +9,41 @@ import { getCategorias } from './action';
 export default async function MenuPage({ 
   searchParams 
 }: { 
-  searchParams: Promise<{ comanda: string, token?: string, cat?: string }> 
+  searchParams: Promise<{ comanda?: string, token?: string, cat?: string }> 
 }) {
   
   const params = await searchParams;
-  const idComanda = parseInt(params.comanda);
   const token = params.token;
   const categoriaId = params.cat ? parseInt(params.cat) : null;
+  
+  // Variables de control de estado
+  let idComanda: number | null = params.comanda ? parseInt(params.comanda) : null;
+  let esSoloLectura = true; // Por defecto nadie puede pedir si no hay comanda válida
 
-  // 1. Validación de seguridad y estado
-  const comandaBD = await prisma.comandas.findFirst({
-    where: { id_comanda: idComanda }
-  });
+  // 1. LÓGICA DE VALIDACIÓN OPCIONAL
+  if (idComanda && !isNaN(idComanda) && token) {
+    const comandaBD = await prisma.comandas.findFirst({
+      where: { id_comanda: idComanda }
+    });
 
-  if (!comandaBD || comandaBD.token !== token) redirect('/login');
+    // Si existe la comanda y el token es correcto, verificamos si puede pedir
+    if (comandaBD && comandaBD.token === token) {
+      // Si la comanda está abierta, habilitamos la escritura (esSoloLectura = false)
+      esSoloLectura = comandaBD.estado === 'Cerrada';
+    } else {
+      // Si los datos son inválidos (token mal), reseteamos a modo catálogo
+      idComanda = null;
+      esSoloLectura = true;
+    }
+  } else {
+    // Si no hay parámetros en la URL, entramos en modo catálogo puro
+    idComanda = null;
+    esSoloLectura = true;
+  }
 
-  // Identificamos si la comanda ya fue pagada
-  const esSoloLectura = comandaBD.estado === 'Cerrada';
-
-  // 2. Obtención de Categorías
+  // 2. Obtención de datos comunes (Categorías y Productos siempre visibles)
   const categoriasBD = await getCategorias();
 
-  // 3. Obtención de productos
   const productosRaw = await prisma.producto.findMany({
     where: { 
       eliminado: false,
@@ -58,27 +71,36 @@ export default async function MenuPage({
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] pb-20">
-      {/* Banner de aviso para el cliente */}
-      {esSoloLectura && (
-        <div className="bg-(--militar-green) text-white text-center py-2 text-[10px] font-black uppercase tracking-widest sticky top-0 z-50 shadow-md">
+      {/* Banner informativo dinámico */}
+      {idComanda && esSoloLectura && (
+        <div className="bg-(--militar-green) text-white text-center py-2 text-[10px] font-black uppercase tracking-widest sticky top-0 z-50">
           Cuenta cerrada • Solo visualización
         </div>
       )}
+      
+      {!idComanda && (
+        <div className="bg-amber-500 text-white text-center py-2 text-[10px] font-black uppercase tracking-widest sticky top-0 z-50">
+          Modo Catálogo • Escanea el código de tu mesa para pedir
+        </div>
+      )}
 
-      <main className={`p-4 space-y-6 ${esSoloLectura ? 'pointer-events-none select-none' : ''}`}>
+      <main className={`p-4 space-y-6 ${esSoloLectura ? 'select-none' : ''}`}>
           <Categories categorias={categoriasBD} />
+          
+          {/* Las recomendaciones pueden ser visibles para todos para fomentar el antojo */}
           <RecomendacionMenu/>
         
           <div className="mt-2">
             <h2 className="text-xl font-black text-slate-800 mb-4 px-2 uppercase tracking-tighter italic">
               {categoriaId && categoriaId !== 0 
                 ? categoriasBD.find((c: any) => c.id_categoria === categoriaId)?.nombre 
-                : 'Menú completo'}
+                : 'Nuestro Menú'}
             </h2>
 
+            {/* Pasamos el idComanda (que puede ser null) y el estado de lectura */}
             <MenuCategoriasComponent 
               productos={productos} 
-              idComanda={idComanda} 
+              idComanda={idComanda ?? 0} 
               esSoloLectura={esSoloLectura} 
             />
           </div>
