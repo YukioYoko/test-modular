@@ -10,7 +10,8 @@ export function proxy(request: NextRequest) {
   // =========================================================
   
   // Agregamos /menu para que los clientes puedan ver los productos
-  const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu');
+ // En middleware.ts
+const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || pathname === '/gracias';
 
   if (esRutaPublica) {
     // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
@@ -61,7 +62,7 @@ export function proxy(request: NextRequest) {
     }
 
     // D. RUTAS DE ADMINISTRACIÓN
-    const rutasPrivadasAdmin = ['/home', '/ventas', '/productos', '/usuarios'];
+    const rutasPrivadasAdmin = ['/home', '/ventas', '/productos', '/usuarios', '/categorias', '/aditamentos', '/personal'];
     const intentaEntrarAAdmin = rutasPrivadasAdmin.some(ruta => pathname.startsWith(ruta));
 
     if (intentaEntrarAAdmin && rol !== 'admin') {
