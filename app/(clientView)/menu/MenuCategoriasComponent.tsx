@@ -160,7 +160,7 @@ export default function MenuCategoriasComponent({
     productoBaseNombre={sugerenciasData.nombre}
     sugerencias={sugerenciasData.productos}
     onAdd={(p: any) => {
-      setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, cantidad: 1, aditamentos: [], nota: "" }]);
+      setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, imagen: p.imagenUrl, cantidad: 1, aditamentos: [], nota: ""}]);
     }}
     // ESTA ES LA CLAVE:
     onSelectProduct={(prod: any) => {
