@@ -68,7 +68,7 @@ export async function getSugerenciasApriori(productoId: number) {
           activo: true // Asegúrate que en tu DB se llame 'activo' o 'estado'
         },
         include: {
-          productoImagen: true
+          imagen: true
         },
         take: 4
       });
@@ -99,7 +99,7 @@ async function getFallback(productoId: number) {
       activo: true 
     },
     include: {
-      productoImagen: true
+      imagen: true
     },
     take: 4
   });
