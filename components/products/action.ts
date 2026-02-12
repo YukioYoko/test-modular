@@ -67,6 +67,9 @@ export async function getSugerenciasApriori(productoId: number) {
           id_producto: { in: mejoresIds }, 
           activo: true // Asegúrate que en tu DB se llame 'activo' o 'estado'
         },
+        include: {
+          productoImagen: true
+        },
         take: 4
       });
     }
@@ -94,6 +97,9 @@ async function getFallback(productoId: number) {
     where: { 
       id_producto: { not: productoId }, 
       activo: true 
+    },
+    include: {
+      productoImagen: true
     },
     take: 4
   });
