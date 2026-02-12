@@ -84,7 +84,7 @@ export default async function MenuPage({
         </div>
       )}
 
-      <main className={`p-4 space-y-6 ${esSoloLectura ? 'select-none' : ''}`}>
+      <main className={`p-4 space-y-6 `}>
           <Categories categorias={categoriasBD} />
           
           {/* Las recomendaciones pueden ser visibles para todos para fomentar el antojo */}

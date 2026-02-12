@@ -108,25 +108,27 @@ export default function MenuCategoriasComponent({
         ))}
       </div>
 
-      {!esSoloLectura && (
-        <>
+      
           {selectedProduct && (
-            <ProductDetailModal
-              producto={selectedProduct}
-              onClose={() => setSelectedProduct(null)}
-              onAddToCart={async (itemArmado) => {
-                agregarAlCarritoBase(itemArmado);
-                setSelectedProduct(null);
-                setTimeout(async () => {
-                  const recomendados = await getSugerenciasApriori(itemArmado.prod);
-                  if (recomendados?.length > 0) {
-                    setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
-                  }
-                }, 150);
-              }}
-            />
-          )}
-
+      <ProductDetailModal
+        producto={selectedProduct}
+        esSoloLectura={esSoloLectura} // PASAMOS LA PROP
+        onClose={() => setSelectedProduct(null)}
+        onAddToCart={async (itemArmado) => {
+          // ESTA FUNCIÓN SOLO SE DISPARARÁ SI EL BOTÓN ESTÁ HABILITADO EN EL MODAL
+          agregarAlCarritoBase(itemArmado);
+          setSelectedProduct(null);
+          setTimeout(async () => {
+            const recomendados = await getSugerenciasApriori(itemArmado.prod);
+            if (recomendados?.length > 0) {
+              setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
+            }
+          }, 150);
+        }}
+      />
+    )}
+{!esSoloLectura && (
+        <>
           {sugerenciasData && (
             <AprioriModal 
               productoBaseNombre={sugerenciasData.nombre}
