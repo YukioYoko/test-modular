@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import PaypalBut from '@/components/paypal/PaypalBut';
+import { registrarPagoEfectivo } from './action';
 
 export default async function CuentaPage({ searchParams }: { searchParams: Promise<{ comanda: string, token?: string }> }) {
   const params = await searchParams;
@@ -125,6 +126,11 @@ export default async function CuentaPage({ searchParams }: { searchParams: Promi
           <p className="text-[9px] font-black text-center text-slate-400 uppercase tracking-[0.2em] mb-4">
             Procesamiento de Pago Seguro
           </p>
+          {/* NUEVO COMPONENTE */}
+  <BotonEfectivo 
+    idComanda={idComanda} 
+    desglose={datosParaPago} 
+  />
           <PaypalBut 
             amount={datosParaPago.total.toFixed(2)} 
             idComanda={idComanda} 
