@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import PaypalBut from '@/components/paypal/PaypalBut';
-import { registrarPagoEfectivo } from './action';
+import BotonEfectivo from '@/components/botonEfectivo/BotonEfectivo';
 
 export default async function CuentaPage({ searchParams }: { searchParams: Promise<{ comanda: string, token?: string }> }) {
   const params = await searchParams;
