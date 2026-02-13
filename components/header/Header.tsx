@@ -20,7 +20,7 @@ export const Header = () => {
           </h1>
 
           
-          {idComanda && (<p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-2">
+          {idComanda || idComanda === "null" && (<p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-2">
              Mesa {idComanda}
           </p>)
           }
