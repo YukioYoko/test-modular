@@ -20,19 +20,29 @@ export const Header = () => {
           </h1>
 
           
-          {idComanda || idComanda === "null" && (<p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-2">
-             Mesa {idComanda}
-          </p>)
-          }
+          {/* Validación Corregida: 
+              Solo mostramos el número de mesa si existe y no es el string "null"
+          */}
+          {idComanda && idComanda !== "null" ? (
+            <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-1">
+               Mesa {idComanda}
+            </p>
+          ) : (
+            isMenu && (
+              <p className="text-[9px] text-(--militar-green) font-bold uppercase tracking-tighter opacity-60 mt-1">
+                Modo Catálogo
+              </p>
+            )
+          )}
         </div>
-      </div>
+      
       
       {!isMenu && (
         <div className="fixed right-0 top-0 justify-end align-middle mr-4">
           <LogoutButton />
         </div>
       )}
-      
+      </div>
 
     </header>
   );
