@@ -4,11 +4,11 @@ import { redirect } from 'next/navigation';
 import crypto from 'crypto';
 
 export async function iniciarSesionPrueba() {
-  const ID_MESA_PRUEBA = 99; 
+  const ID_MESA_PRUEBA = 6; 
   const ID_MESERO_ASIGNADO = 1; 
 
   try {
-    const token = crypto.randomBytes(16).toString('hex');
+    const token = crypto.randomUUID();
 
     const nuevaComanda = await (prisma as any).comandas.create({
       data: {
