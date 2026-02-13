@@ -10,8 +10,7 @@ import { OrderSuccessModal } from "@/components/ui/OrderSuccessModal";
 import { AprioriModal } from "@/components/products/SugerenciaApriori";
 import { getSugerenciasApriori } from "@/components/products/action";
 
-const SOCKET_URL =
-  process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
 export default function MenuCategoriasComponent({
   productos,
@@ -52,27 +51,6 @@ export default function MenuCategoriasComponent({
     });
   };
 
-  const actualizarCantidad = (index: number, action: "add" | "remove") => {
-    setCarrito((prev) => {
-      const nuevoCarrito = [...prev];
-      
-      // Creamos una COPIA del objeto para no mutar la referencia original
-      const item = { ...nuevoCarrito[index] };
-
-      if (action === "add") {
-        item.cantidad += 1;
-      } else if (action === "remove" && item.cantidad > 1) {
-        item.cantidad -= 1;
-      }
-
-      // Reemplazamos el item en el nuevo array con la copia modificada
-      nuevoCarrito[index] = item;
-
-      return nuevoCarrito;
-    });
-  };
-
-  
   const agregarAlCarritoBase = (item: any) => {
     setCarrito((prevCarrito) => {
       const index = prevCarrito.findIndex(it => 
