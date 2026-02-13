@@ -30,6 +30,7 @@ export default async function MenuPage({
     if (comandaBD && comandaBD.token === token) {
       // Si la comanda está abierta, habilitamos la escritura (esSoloLectura = false)
       esSoloLectura = comandaBD.estado === 'Cerrada';
+      if( esSoloLectura ) idComanda = null;
     } else {
       // Si los datos son inválidos (token mal), reseteamos a modo catálogo
       idComanda = null;
