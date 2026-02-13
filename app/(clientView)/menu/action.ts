@@ -80,7 +80,7 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
             cantidad: item.cantidad,
             notas_especiales: item.nota || "",
             status: "En espera",
-            hora: new Date()
+            date: new Date()
           },
           include: { 
             producto: {
