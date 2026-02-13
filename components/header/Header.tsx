@@ -18,9 +18,12 @@ export const Header = () => {
           <h1 className="text-3xl font-black text-(--dark-mint-green) font-(family-name:--tanker) tracking-wide">
             Foodlify
           </h1>
-          <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-2">
+
+          
+          {idComanda && (<p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-2">
              Mesa {idComanda}
-          </p>
+          </p>)
+          }
         </div>
       </div>
       
