@@ -5,7 +5,8 @@ import crypto from 'crypto';
 
 export async function iniciarSesionPrueba() {
   // 1. Definimos una mesa de prueba (asegúrate de que exista en tu tabla Mesa)
-  const ID_MESA_PRUEBA = 1; 
+  const ID_MESA_PRUEBA = 99; 
+  const ID_MESERO = 1; 
 
   try {
     // 2. Generamos un token único aleatorio
@@ -17,6 +18,7 @@ export async function iniciarSesionPrueba() {
         id_mesa: ID_MESA_PRUEBA,
         token: token,
         estado: 'Abierta',
+        id_mesero: ID_MESERO,
         fecha_hora: new Date(),
         pagado: false,
         total: 0,
