@@ -155,7 +155,7 @@ export const ProductDetailModal = ({ producto, onClose, onAddToCart, esSoloLectu
              ) : (
                 <div className="p-8 border-2 border-dashed border-slate-100 rounded-[2.5rem] text-center">
                   <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">
-                    Modo Lectura Activo
+                    Modo Lectura
                   </p>
                 </div>
              )}

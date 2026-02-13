@@ -71,12 +71,6 @@ export default async function MenuPage({
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] pb-20">
-      {/* Banner informativo dinámico */}
-      {idComanda && esSoloLectura && (
-        <div className="bg-(--militar-green) text-white text-center py-2 text-[10px] font-black uppercase tracking-widest sticky top-0 z-50">
-          Cuenta cerrada • Solo visualización
-        </div>
-      )}
       
       {!idComanda && (
         <div className="bg-amber-500 text-white text-center py-2 text-[10px] font-black uppercase tracking-widest sticky top-0 z-50">
