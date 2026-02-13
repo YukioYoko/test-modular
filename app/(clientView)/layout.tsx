@@ -18,8 +18,9 @@ export default function MenuLayout({
 
     
     <div>
-      
-      <Header/>
+<Suspense fallback={null}>
+  <Header />
+</Suspense>
       <main className='bg-(--militar-green)'>
         
         {children}
