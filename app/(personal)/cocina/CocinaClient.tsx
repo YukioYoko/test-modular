@@ -1,24 +1,25 @@
 'use client';
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { actualizarEstatusPedido } from './action';
+import { actualizarEstatusPedido } from './action'; // Asegúrate de tener este server action
 import { io, Socket } from 'socket.io-client';
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
-// --- Componente: Tiempo transcurrido con color de urgencia ---
-function ElapsedTime({ fecha_hora }: { fecha_hora: string | null }) {
+// --- Componente: Tiempo transcurrido desde el PEDIDO ---
+function ElapsedTime({ fecha_pedido }: { fecha_pedido: string | null }) {
   const [mins, setMins] = useState<number | null>(null);
 
   useEffect(() => {
     const calcular = () => {
-      if (!fecha_hora) { setMins(null); return; }
-      const diff = Date.now() - new Date(fecha_hora).getTime();
+      if (!fecha_pedido) { setMins(null); return; }
+      // Calculamos la diferencia basándonos en la hora del pedido individual
+      const diff = Date.now() - new Date(fecha_pedido).getTime();
       setMins(Math.floor(diff / 60000));
     };
     calcular();
     const interval = setInterval(calcular, 30000);
     return () => clearInterval(interval);
-  }, [fecha_hora]);
+  }, [fecha_pedido]);
 
   if (mins === null) return <span suppressHydrationWarning className="text-slate-400">Ahora</span>;
 
@@ -32,8 +33,8 @@ function ElapsedTime({ fecha_hora }: { fecha_hora: string | null }) {
   const label = mins < 1 ? '< 1 min' : `${mins} min`;
 
   return (
-    <div suppressHydrationWarning className={`${bgColor} ${borderColor} border rounded-lg px-3 py-2 text-center`}>
-      <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-0.5">En espera</p>
+    <div suppressHydrationWarning className={`${bgColor} ${borderColor} border rounded-lg px-3 py-2 text-center transition-colors duration-500`}>
+      <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-0.5 font-bold">En Cocina</p>
       <p className={`text-lg font-black ${textColor} leading-none`}>
         {label}
       </p>
@@ -41,7 +42,7 @@ function ElapsedTime({ fecha_hora }: { fecha_hora: string | null }) {
   );
 }
 
-// --- Componente: Tarjeta de pedido ---
+// --- Componente: Tarjeta de pedido individual ---
 function PedidoCard({
   pedido,
   isPending,
@@ -63,7 +64,6 @@ function PedidoCard({
         isNew ? 'ring-2 ring-yellow-400 shadow-yellow-200 scale-[1.02]' : ''
       } ${enEspera ? 'border-amber-400' : 'border-blue-500'}`}
     >
-      {/* Badge de orden de llegada */}
       <div className={`absolute -top-0 -left-0 w-10 h-10 flex items-center justify-center rounded-br-xl font-black text-white text-sm ${
         ordenLlegada === 1 ? 'bg-red-500' : ordenLlegada <= 3 ? 'bg-amber-500' : 'bg-slate-600'
       }`}>
@@ -71,238 +71,177 @@ function PedidoCard({
       </div>
 
       <div className="p-4 flex-1 pt-6">
-        {/* Header: Mesa + Tiempo */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex flex-col gap-1 ml-6">
-            <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-black self-start">
-              MESA {pedido.comanda?.id_mesa ?? '?'}
+            <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-black self-start uppercase italic tracking-tighter">
+              Mesa {pedido.comanda?.id_mesa ?? '?'}
             </span>
-            {pedido.comanda?.mesero?.nombre && (
-              <span className="text-xs text-slate-400 pl-1">
-                {pedido.comanda.mesero.nombre}
-              </span>
-            )}
           </div>
-          <ElapsedTime fecha_hora={pedido.comanda?.fecha_hora ?? null} />
+          {/* USAMOS pedido.date para el contador individual */}
+          <ElapsedTime fecha_pedido={pedido.hora ?? null} />
         </div>
 
-        {/* Producto */}
         <div className="mb-1">
           {pedido.cantidad > 1 && (
             <span className="inline-block bg-slate-100 text-slate-600 text-sm font-black px-2 py-0.5 rounded mr-2">
               x{pedido.cantidad}
             </span>
           )}
-          <span className="text-xl font-black text-slate-800 leading-tight">
+          <span className="text-xl font-black text-slate-800 leading-tight uppercase">
             {pedido.producto.nombre}
           </span>
         </div>
-
-        <span className="text-[11px] text-slate-400 uppercase tracking-wide">
-          {pedido.producto.categoria}
-        </span>
 
         {/* Aditamentos */}
         {pedido.aditamentos?.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-3">
             {pedido.aditamentos.map((a: any, i: number) => (
-              <span
-                key={i}
-                className="bg-orange-100 text-orange-700 text-[11px] font-bold px-2 py-0.5 rounded-md uppercase"
-              >
-                + {a.aditamento?.nombre ?? 'Extra'}
+              <span key={i} className="bg-orange-100 text-orange-700 text-[10px] font-black px-2 py-1 rounded-md uppercase italic">
+                + {a.aditamento?.nombre}
               </span>
             ))}
           </div>
         )}
 
-        {/* Notas especiales */}
+        {/* Notas con alerta visual */}
         {pedido.notas_especiales && (
           <div className="bg-red-50 border-l-4 border-red-500 p-2 mt-3 rounded-r-lg">
-            <p className="text-xs text-red-700 font-bold uppercase leading-snug">
+            <p className="text-xs text-red-700 font-black uppercase leading-snug">
               ⚠️ {pedido.notas_especiales}
             </p>
           </div>
         )}
-
-        {/* Tiempo de preparación estimado */}
-        {pedido.producto.tiempo_prep > 0 && (
-          <p className="text-[11px] text-slate-400 mt-3">
-            Prep. estimada: {pedido.producto.tiempo_prep} min
-          </p>
-        )}
       </div>
 
-      {/* Botón de acción */}
       <div className="p-3 bg-slate-50">
-        {enEspera ? (
-          <button
-            onClick={() => onCambiarEstatus(pedido.id_detalle, 'En preparacion')}
-            disabled={isPending}
-            className="w-full bg-blue-600 text-white py-3 rounded-xl font-black text-sm tracking-wide hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-50"
-          >
-            {isPending ? '...' : 'EMPEZAR'}
-          </button>
-        ) : (
-          <button
-            onClick={() => onCambiarEstatus(pedido.id_detalle, 'Servido')}
-            disabled={isPending}
-            className="w-full bg-emerald-500 text-white py-3 rounded-xl font-black text-sm tracking-wide hover:bg-emerald-600 active:scale-95 transition-all disabled:opacity-50"
-          >
-            {isPending ? '...' : 'LISTO ✓'}
-          </button>
-        )}
+        <button
+          onClick={() => onCambiarEstatus(pedido.id_detalle, enEspera ? 'En preparacion' : 'Servido')}
+          disabled={isPending}
+          className={`w-full py-4 rounded-xl font-black text-sm tracking-widest uppercase transition-all active:scale-95 disabled:opacity-50 text-white ${
+            enEspera ? 'bg-blue-600 hover:bg-blue-700' : 'bg-emerald-500 hover:bg-emerald-600'
+          }`}
+        >
+          {isPending ? 'Procesando...' : enEspera ? 'Empezar Cocina' : 'Platillo Listo ✓'}
+        </button>
       </div>
     </div>
   );
 }
 
-// --- Componente principal ---
-export default function CocinaClient({
-  pedidosIniciales,
-}: {
-  pedidosIniciales: any[];
-}) {
+// --- Componente Principal ---
+export default function CocinaClient({ pedidosIniciales }: { pedidosIniciales: any[] }) {
   const [pedidos, setPedidos] = useState<any[]>(pedidosIniciales);
   const [pendingIds, setPendingIds] = useState<Set<number>>(new Set());
   const [newIds, setNewIds] = useState<Set<number>>(new Set());
   const socketRef = useRef<Socket | null>(null);
 
-  // Conexión socket — solo una vez al montar
   useEffect(() => {
     socketRef.current = io(SOCKET_URL);
 
     socketRef.current.on('nuevo_pedido_cocina', (data: any) => {
-      const nuevosPedidos: any[] = data.items ?? [];
-
+      const nuevosItems: any[] = data.items ?? [];
       setPedidos((prev) => {
-        const idsExistentes = new Set(prev.map((p) => p.id_detalle));
-        const unicos = nuevosPedidos.filter((p) => !idsExistentes.has(p.id_detalle));
-
+        const idsExistentes = new Set(prev.map(p => p.id_detalle));
+        const unicos = nuevosItems.filter(p => !idsExistentes.has(p.id_detalle));
+        
         if (unicos.length > 0) {
-          // Resaltar tarjetas nuevas por 5 segundos
-          setNewIds((ids) => {
+          setNewIds(ids => {
             const next = new Set(ids);
-            unicos.forEach((p) => next.add(p.id_detalle));
+            unicos.forEach(p => next.add(p.id_detalle));
             return next;
           });
           setTimeout(() => {
-            setNewIds((ids) => {
+            setNewIds(ids => {
               const next = new Set(ids);
-              unicos.forEach((p) => next.delete(p.id_detalle));
+              unicos.forEach(p => next.delete(p.id_detalle));
               return next;
             });
           }, 5000);
         }
-
         return [...prev, ...unicos];
       });
     });
 
-    return () => {
-      socketRef.current?.disconnect();
-    };
+    return () => { socketRef.current?.disconnect(); };
   }, []);
 
-  // Sincronizar cuando el servidor recarga (navegación, refresh)
-  useEffect(() => {
-    setPedidos(pedidosIniciales);
-  }, [pedidosIniciales]);
+  useEffect(() => { setPedidos(pedidosIniciales); }, [pedidosIniciales]);
 
   const cambiarEstatus = useCallback(async (id: number, estatus: string) => {
-    // 1. Update optimista inmediato
-    setPedidos((prev) => {
-      if (estatus === 'Servido') return prev.filter((p) => p.id_detalle !== id);
-      return prev.map((p) => (p.id_detalle === id ? { ...p, status: estatus } : p));
+    setPedidos(prev => {
+      if (estatus === 'Servido') return prev.filter(p => p.id_detalle !== id);
+      return prev.map(p => p.id_detalle === id ? { ...p, status: estatus } : p);
     });
-
-    setPendingIds((prev) => new Set(prev).add(id));
-
-    // 2. Emitir por socket para notificar a otras pantallas
+    setPendingIds(prev => new Set(prev).add(id));
     socketRef.current?.emit('change_status', { id_detalle: id, estatus });
-
-    // 3. Persistir en BD
     await actualizarEstatusPedido(id, estatus);
-
-    setPendingIds((prev) => {
+    setPendingIds(prev => {
       const next = new Set(prev);
       next.delete(id);
       return next;
     });
   }, []);
 
-  // Ordenar por fecha de llegada (más antiguos primero)
-  const ordenarPorFecha = (a: { comanda?: { fecha_hora?: string } }, b: { comanda?: { fecha_hora?: string } }) => {
-    const fechaA = new Date(a.comanda?.fecha_hora ?? 0).getTime();
-    const fechaB = new Date(b.comanda?.fecha_hora ?? 0).getTime();
-    return fechaA - fechaB;
+  // ORDENAMIENTO POR FECHA DEL PEDIDO (date)
+  const ordenarPorFechaPedido = (a: any, b: any) => {
+    return new Date(a.hora ?? 0).getTime() - new Date(b.hora ?? 0).getTime();
   };
 
-  const enEspera = pedidos.filter((p) => p.status === 'En espera').sort(ordenarPorFecha);
-  const enPreparacion = pedidos.filter((p) => p.status === 'En preparacion').sort(ordenarPorFecha);
+  const enEspera = pedidos.filter(p => p.status === 'En espera').sort(ordenarPorFechaPedido);
+  const enPreparacion = pedidos.filter(p => p.status === 'En preparacion').sort(ordenarPorFechaPedido);
 
   return (
-    <div>
-      {/* Contadores en tiempo real */}
-      <div className="flex gap-3 mb-8">
-        <span className="bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-sm font-bold">
-          {enEspera.length} en espera
-        </span>
-        <span className="bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-bold">
-          {enPreparacion.length} cocinando
-        </span>
+    <div className="p-4 lg:p-8 bg-slate-50 min-h-screen">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-black text-slate-900 italic tracking-tighter uppercase">Monitor de Cocina</h1>
+        <div className="flex gap-4">
+          <div className="bg-amber-100 px-6 py-2 rounded-2xl border border-amber-200">
+            <p className="text-[10px] font-black text-amber-600 uppercase">Pendientes</p>
+            <p className="text-2xl font-black text-amber-800">{enEspera.length}</p>
+          </div>
+          <div className="bg-blue-100 px-6 py-2 rounded-2xl border border-blue-200">
+            <p className="text-[10px] font-black text-blue-600 uppercase">En Fuego</p>
+            <p className="text-2xl font-black text-blue-800">{enPreparacion.length}</p>
+          </div>
+        </div>
       </div>
 
-      {/* Sección: En Espera */}
-      {enEspera.length > 0 && (
-        <section className="mb-10">
-          <h2 className="flex items-center gap-2 text-xs font-black text-amber-600 uppercase tracking-widest mb-4">
-            <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse inline-block" />
-            En Espera ({enEspera.length})
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {enEspera.map((pedido, index) => (
-              <PedidoCard
-                key={pedido.id_detalle ?? index}
-                pedido={pedido}
-                isPending={pendingIds.has(pedido.id_detalle)}
-                isNew={newIds.has(pedido.id_detalle)}
-                ordenLlegada={index + 1}
-                onCambiarEstatus={cambiarEstatus}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      <div className="space-y-12">
+        {enEspera.length > 0 && (
+          <section>
+            <h2 className="flex items-center gap-3 text-xs font-black text-amber-600 uppercase tracking-[0.3em] mb-6">
+              <span className="w-3 h-3 bg-amber-500 rounded-full animate-ping" />
+              Cola de espera ({enEspera.length})
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {enEspera.map((pedido, index) => (
+                <PedidoCard key={pedido.id_detalle} pedido={pedido} isPending={pendingIds.has(pedido.id_detalle)} isNew={newIds.has(pedido.id_detalle)} ordenLlegada={index + 1} onCambiarEstatus={cambiarEstatus} />
+              ))}
+            </div>
+          </section>
+        )}
 
-      {/* Sección: Cocinando */}
-      {enPreparacion.length > 0 && (
-        <section>
-          <h2 className="flex items-center gap-2 text-xs font-black text-blue-600 uppercase tracking-widest mb-4">
-            <span className="w-2 h-2 bg-blue-500 rounded-full inline-block" />
-            Cocinando ({enPreparacion.length})
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {enPreparacion.map((pedido, index) => (
-              <PedidoCard
-                key={pedido.id_detalle ?? index}
-                pedido={pedido}
-                isPending={pendingIds.has(pedido.id_detalle)}
-                isNew={newIds.has(pedido.id_detalle)}
-                ordenLlegada={index + 1}
-                onCambiarEstatus={cambiarEstatus}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+        {enPreparacion.length > 0 && (
+          <section>
+            <h2 className="flex items-center gap-3 text-xs font-black text-blue-600 uppercase tracking-[0.3em] mb-6">
+              <span className="w-3 h-3 bg-blue-500 rounded-full" />
+              Cocinando ahora ({enPreparacion.length})
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {enPreparacion.map((pedido, index) => (
+                <PedidoCard key={pedido.id_detalle} pedido={pedido} isPending={pendingIds.has(pedido.id_detalle)} isNew={newIds.has(pedido.id_detalle)} ordenLlegada={index + 1} onCambiarEstatus={cambiarEstatus} />
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
 
-      {/* Estado vacío */}
       {pedidos.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-32 text-slate-400">
-          <span className="text-7xl mb-4">✓</span>
-          <p className="text-2xl font-black">Todo listo</p>
-          <p className="text-sm mt-1">No hay pedidos pendientes</p>
+        <div className="flex flex-col items-center justify-center py-40 text-slate-300">
+          <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <p className="text-2xl font-black uppercase tracking-widest italic">Cocina Despejada</p>
         </div>
       )}
     </div>
