@@ -79,7 +79,8 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
             id_producto: item.prod,
             cantidad: item.cantidad,
             notas_especiales: item.nota || "",
-            status: "En espera"
+            status: "En espera",
+            date: new Date()
           },
           include: { 
             producto: {
