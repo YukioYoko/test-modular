@@ -1,6 +1,15 @@
 import { iniciarSesionPrueba } from './action';
 
 export default function MenuPruebaPage() {
+  
+  // Función envolvente para cumplir con el tipo (formData: FormData) => void
+  const handleAction = async (formData: FormData) => {
+    const result = await iniciarSesionPrueba();
+    if (result?.error) {
+      alert(result.error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-(--notWhite) flex items-center justify-center p-6">
       <div className="max-w-sm w-full bg-white rounded-[3rem] p-10 shadow-2xl text-center border border-slate-100">
@@ -14,10 +23,11 @@ export default function MenuPruebaPage() {
         
         <p className="text-slate-500 text-sm font-medium mb-8 leading-relaxed">
           Estás por ingresar a una sesión de prueba masiva. <br/>
-          <strong>Mesa asignada: 1</strong>
+          <strong>Mesa asignada: 99</strong>
         </p>
 
-        <form action={iniciarSesionPrueba}>
+        {/* Usamos la función envolvente aquí */}
+        <form action={handleAction}>
           <button 
             type="submit"
             className="w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.05] active:scale-95 transition-all"
