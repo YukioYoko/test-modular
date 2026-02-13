@@ -67,6 +67,9 @@ export async function getSugerenciasApriori(productoId: number) {
           id_producto: { in: mejoresIds }, 
           activo: true // Asegúrate que en tu DB se llame 'activo' o 'estado'
         },
+        include: {
+          imagen: true
+        },
         take: 4
       });
     }
@@ -79,7 +82,8 @@ export async function getSugerenciasApriori(productoId: number) {
     // Convertimos precios de Decimal a Number para el cliente (Next.js)
     return sugerenciasFinales.map(p => ({
       ...p,
-      precio: Number(p.precio)
+      precio: Number(p.precio),
+      imagenUrl: p.imagen && p.imagen.length > 0 ? p.imagen[0].url : '/placeholder.png'
     }));
 
   } catch (error) {
@@ -95,11 +99,15 @@ async function getFallback(productoId: number) {
       id_producto: { not: productoId }, 
       activo: true 
     },
+    include: {
+      imagen: true
+    },
     take: 4
   });
   
   return randoms.map(p => ({ 
     ...p, 
-    precio: Number(p.precio) 
+    precio: Number(p.precio),
+    imagenUrl: p.imagen && p.imagen.length > 0 ? p.imagen[0].url : '/placeholder.png'
   }));
 }

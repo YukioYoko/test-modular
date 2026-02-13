@@ -16,9 +16,11 @@ const SOCKET_URL =
 export default function MenuCategoriasComponent({
   productos,
   idComanda,
+  esSoloLectura = false
 }: {
   productos: any[];
   idComanda: number;
+  esSoloLectura?: boolean;
 }) {
   const params = useSearchParams();
   const token = params.get("token");
@@ -27,19 +29,28 @@ export default function MenuCategoriasComponent({
   const [carrito, setCarrito] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [sugerenciasData, setSugerenciasData] = useState<{
-    nombre: string;
-    productos: any[];
-  } | null>(null);
+  const [sugerenciasData, setSugerenciasData] = useState<{ nombre: string; productos: any[]; } | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
+  // Solo inicializamos el socket si el usuario puede realizar pedidos
   useEffect(() => {
-    socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
-    return () => {
-      socketRef.current?.disconnect();
-    };
-  }, []);
+    if (!esSoloLectura) {
+      socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
+      return () => { socketRef.current?.disconnect(); };
+    }
+  }, [esSoloLectura]);
+
+  const actualizarCantidad = (index: number, action: "add" | "remove") => {
+    setCarrito((prev) => {
+      const nuevoCarrito = [...prev];
+      const item = { ...nuevoCarrito[index] };
+      if (action === "add") item.cantidad += 1;
+      else if (action === "remove" && item.cantidad > 1) item.cantidad -= 1;
+      nuevoCarrito[index] = item;
+      return nuevoCarrito;
+    });
+  };
 
   const actualizarCantidad = (index: number, action: "add" | "remove") => {
     setCarrito((prev) => {
@@ -64,46 +75,33 @@ export default function MenuCategoriasComponent({
   
   const agregarAlCarritoBase = (item: any) => {
     setCarrito((prevCarrito) => {
-      const index = prevCarrito.findIndex(
-        (it) =>
-          it.prod === item.prod &&
-          it.nota === item.nota &&
-          JSON.stringify([...it.aditamentos].sort()) === JSON.stringify([...item.aditamentos].sort())
+      const index = prevCarrito.findIndex(it => 
+        it.prod === item.prod && 
+        it.nota === item.nota && 
+        JSON.stringify([...it.aditamentos].sort()) === JSON.stringify([...item.aditamentos].sort())
       );
-
       if (index !== -1) {
-        return prevCarrito.map((it, i) => 
-          i === index 
-            ? { ...it, cantidad: it.cantidad + 1 } 
-            : it
-        );
+        return prevCarrito.map((it, i) => i === index ? { ...it, cantidad: it.cantidad + 1 } : it);
       }
-
       return [...prevCarrito, item];
     });
   };
 
   const agregarRapido = async (prod: any, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-
     const nuevoItem = {
       prod: prod.id_producto,
       nombre: prod.nombre,
       price: prod.precio,
-      imagen: prod.imagenUrl, // Corregido: Usar la URL procesada en el server
+      imagen: prod.imagenUrl,
       cantidad: 1,
       nota: "",
       aditamentos: [],
     };
-
     agregarAlCarritoBase(nuevoItem);
-
     const recomendados = await getSugerenciasApriori(prod.id_producto);
-    if (recomendados && recomendados.length > 0) {
-      setSugerenciasData({
-        nombre: prod.nombre,
-        productos: recomendados,
-      });
+    if (recomendados?.length > 0) {
+      setSugerenciasData({ nombre: prod.nombre, productos: recomendados });
     }
   };
 
@@ -111,10 +109,7 @@ export default function MenuCategoriasComponent({
     startTransition(async () => {
       const result = await sendOrder(idComanda, carrito, token);
       if (result.success) {
-        socketRef.current?.emit("new_order", {
-          items: result.ordenCreada,
-          fecha: new Date(),
-        });
+        socketRef.current?.emit("new_order", { items: result.ordenCreada, fecha: new Date() });
         setCarrito([]);
         setShowSuccess(true);
       }
@@ -123,65 +118,70 @@ export default function MenuCategoriasComponent({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 pb-32">
+      {/* Grid de productos: Ajustamos el padding inferior dependiendo de si hay carrito o no */}
+      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${esSoloLectura ? 'pb-10' : 'pb-32'}`}>
         {productos.map((prod) => (
           <ProductCard
             key={prod.id_producto}
             producto={prod}
+            // Permitimos abrir el modal siempre (modo lectura o escritura)
             onSelect={() => setSelectedProduct(prod)}
-            onQuickAdd={(e) => agregarRapido(prod, e)}
+            // Bloqueamos el botón rápido si es solo lectura
+            onQuickAdd={(e) => !esSoloLectura && agregarRapido(prod, e)}
+            mostrarBotonAdd={!esSoloLectura} 
           />
         ))}
       </div>
 
+      {/* MODAL DE DETALLE: Visible para todos, pero con lógica interna de bloqueo */}
       {selectedProduct && (
         <ProductDetailModal
           producto={selectedProduct}
+          esSoloLectura={esSoloLectura}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={async (itemArmado) => {
-            // USA LA FUNCIÓN QUE CORREGIMOS ARRIBA
+            // Esta función solo se ejecuta si el usuario NO está en modo lectura
             agregarAlCarritoBase(itemArmado);
             setSelectedProduct(null);
             setTimeout(async () => {
               const recomendados = await getSugerenciasApriori(itemArmado.prod);
-              if (recomendados && recomendados.length > 0) {
-                setSugerenciasData({
-                  nombre: itemArmado.nombre,
-                  productos: recomendados,
-                });
+              if (recomendados?.length > 0) {
+                setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
               }
             }, 150);
           }}
         />
       )}
 
-      {sugerenciasData && (
-  <AprioriModal 
-    productoBaseNombre={sugerenciasData.nombre}
-    sugerencias={sugerenciasData.productos}
-    onAdd={(p: any) => {
-      setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, cantidad: 1, aditamentos: [], nota: "" }]);
-    }}
-    // ESTA ES LA CLAVE:
-    onSelectProduct={(prod: any) => {
-      setSugerenciasData(null); // Cerramos el modal de Apriori
-      setSelectedProduct(prod);  // Abrimos el modal de detalle del producto sugerido
-    }}
-    onClose={() => setSugerenciasData(null)}
-  />
-)}
+      {/* COMPONENTES TRANSACCIONALES: Solo se renderizan si el usuario puede pedir */}
+      {!esSoloLectura && (
+        <>
+          {sugerenciasData && (
+            <AprioriModal 
+              productoBaseNombre={sugerenciasData.nombre}
+              sugerencias={sugerenciasData.productos}
+              onAdd={(p: any) => {
+                setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, imagen: p.imagenUrl, cantidad: 1, aditamentos: [], nota: ""}]);
+              }}
+              onSelectProduct={(prod: any) => {
+                setSugerenciasData(null);
+                setSelectedProduct(prod);
+              }}
+              onClose={() => setSugerenciasData(null)}
+            />
+          )}
 
-      {showSuccess && (
-        <OrderSuccessModal onClose={() => setShowSuccess(false)} />
+          {showSuccess && <OrderSuccessModal onClose={() => setShowSuccess(false)} />}
+
+          <CartButton
+            items={carrito}
+            onRemoveItem={(i) => setCarrito((c) => c.filter((_, idx) => idx !== i))}
+            onUpdateQuantity={actualizarCantidad}
+            onSubmit={enviarPedido}
+            isPending={isPending}
+          />
+        </>
       )}
-
-      <CartButton
-        items={carrito}
-        onRemoveItem={(i) => setCarrito((c) => c.filter((_, idx) => idx !== i))}
-        onUpdateQuantity={actualizarCantidad} // <-- PASAR LA FUNCIÓN AQUÍ
-        onSubmit={enviarPedido}
-        isPending={isPending}
-      />
     </>
   );
 }

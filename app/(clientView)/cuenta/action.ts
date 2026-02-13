@@ -4,6 +4,52 @@ import { prisma } from "@/lib/prisma";
 import { PayPalOrderStatus } from "@/src/interfaces";
 import { revalidatePath } from "next/cache";
 
+// Agregar este nuevo Action en cuenta/action.ts
+export async function registrarPagoEfectivo(
+  idComanda: number,
+  desglose: { sub_total: number; ivaTotal: number; total: number }
+) {
+  try {
+    // 1. Obtener la mesa asociada a la comanda
+    const comandaActual = await prisma.comandas.findUnique({
+      where: { id_comanda: idComanda },
+      select: { id_mesa: true },
+    });
+
+    if (!comandaActual) throw new Error("Comanda no encontrada");
+
+    // 2. Transacción atómica: Cerrar comanda y liberar mesa
+    await prisma.$transaction([
+      prisma.comandas.update({
+        where: { id_comanda: idComanda },
+        data: {
+          estado: "Cerrada",
+          pagado: true,
+          fecha_pagado: new Date(),
+          transaccion_id: `CASH-${Date.now()}`, // ID único para efectivo
+          sub_total: desglose.sub_total,
+          impuestos: desglose.ivaTotal,
+          total: desglose.total,
+          metodo_pago: 'Efectivo',
+        },
+      }),
+      prisma.mesa.update({
+        where: { id_mesa: comandaActual.id_mesa },
+        data: { estado: "Libre" }, // Libera la mesa para la hostess
+      }),
+    ]);
+
+    // Revalidar rutas afectadas para actualizar la UI globalmente
+    revalidatePath("/cuenta");
+    revalidatePath("/hostess");
+    
+    return { success: true };
+  } catch (error) {
+    console.error("Error en Pago Efectivo:", error);
+    return { success: false, message: "No se pudo procesar el pago." };
+  }
+}
+
 export async function registrarPagoExitoso(
   idComanda: number,
   transaccionId: string,

@@ -151,7 +151,7 @@ export default function VentasPage() {
                       ${Number(v.total).toFixed(2)}
                     </div>
                     <div className="text-[9px] font-black text-gray-300 uppercase">
-                      {v.transaccion_id?.includes('Efectivo') ? '💵 Efectivo' : '💳 Tarjeta'}
+                      {v.metodo_pago?.includes('Efectivo') ? '💵 Efectivo' : '💳 Tarjeta'}
                     </div>
                   </td>
                 </tr>
