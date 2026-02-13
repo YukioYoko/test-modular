@@ -63,7 +63,6 @@ export default async function MenuPage({
     ...p,
     precio: Number(p.precio),
     imagenUrl: p.imagen[0]?.url || '/placeholder-food.png', 
-    categoria: p.categoriaRel.nombre,
     opcionesAditamentos: p.aditamentos.map(a => ({
       id: a.aditamento.id_aditamento,
       nombre: a.aditamento.nombre,

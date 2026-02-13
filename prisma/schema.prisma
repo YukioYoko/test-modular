@@ -107,7 +107,6 @@ model DetalleComanda {
   cantidad         Int                  @default(1)
   notas_especiales String?              @default("")
   status           String               @default("En espera")
-  date  DateTime?    @default(now())
   aditamentos      ComandaAditamentos[]
   comanda          Comandas             @relation(fields: [id_comanda], references: [id_comanda], onDelete: NoAction, onUpdate: NoAction)
   producto         Producto             @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction)
