@@ -12,7 +12,7 @@ export const Header = () => {
 
 
   return (
-    <header className="sticky top-0 z-30 bg-(--notWhite)">
+    <header className="sticky top-0 z-30 bg-(--notWhite) h-20">
       <div className="flex p-4 justify-center items-center relative">
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-3xl font-black text-(--dark-mint-green) font-(family-name:--tanker) tracking-wide">
