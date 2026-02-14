@@ -63,7 +63,7 @@ export const Header = () => {
           >
             <div className="flex items-center gap-2 bg-[var(--mint-green)] pl-4 pr-4 py-2 rounded-full shadow-sm border border-[var(--mint-green)] hover:bg-[var(--militar-green)] transition-all active:scale-95">
               {/* Icono de recibo */}
-              <svg 
+              {/* <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 width="18" 
                 height="18" 
@@ -77,11 +77,11 @@ export const Header = () => {
               >
                 <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/>
                 <path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/>
-              </svg>
+              </svg> */}
               
               {/* Texto Explícito */}
               <div className="flex flex-col items-start leading-none">
-                <span className="text-[10px] font-bold text-[var(--militar-green)] opacity-70 group-hover:text-white/80">VER</span>
+                {/* <span className="text-[10px] font-bold text-[var(--militar-green)] opacity-70 group-hover:text-white/80">VER</span> */}
                 <span className="text-xs font-black text-[var(--militar-green)] group-hover:text-white">CUENTA</span>
               </div>
             </div>
