@@ -18,8 +18,7 @@ export default function MenuLayout({
 
     
     <div>
-      
-      <Header/>
+  <Header />
       <main className='bg-(--militar-green)'>
         
         {children}

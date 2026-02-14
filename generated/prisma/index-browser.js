@@ -189,7 +189,8 @@ exports.Prisma.DetalleComandaScalarFieldEnum = {
   id_producto: 'id_producto',
   cantidad: 'cantidad',
   notas_especiales: 'notas_especiales',
-  status: 'status'
+  status: 'status',
+  hora: 'hora'
 };
 
 exports.Prisma.ComandaAditamentosScalarFieldEnum = {
