@@ -10241,6 +10241,7 @@ export namespace Prisma {
     id_comanda: number | null
     id_producto: number | null
     cantidad: number | null
+    hora: number | null
   }
 
   export type DetalleComandaSumAggregateOutputType = {
@@ -10248,6 +10249,7 @@ export namespace Prisma {
     id_comanda: number | null
     id_producto: number | null
     cantidad: number | null
+    hora: number | null
   }
 
   export type DetalleComandaMinAggregateOutputType = {
@@ -10257,6 +10259,7 @@ export namespace Prisma {
     cantidad: number | null
     notas_especiales: string | null
     status: string | null
+    hora: number | null
   }
 
   export type DetalleComandaMaxAggregateOutputType = {
@@ -10266,6 +10269,7 @@ export namespace Prisma {
     cantidad: number | null
     notas_especiales: string | null
     status: string | null
+    hora: number | null
   }
 
   export type DetalleComandaCountAggregateOutputType = {
@@ -10275,6 +10279,7 @@ export namespace Prisma {
     cantidad: number
     notas_especiales: number
     status: number
+    hora: number
     _all: number
   }
 
@@ -10284,6 +10289,7 @@ export namespace Prisma {
     id_comanda?: true
     id_producto?: true
     cantidad?: true
+    hora?: true
   }
 
   export type DetalleComandaSumAggregateInputType = {
@@ -10291,6 +10297,7 @@ export namespace Prisma {
     id_comanda?: true
     id_producto?: true
     cantidad?: true
+    hora?: true
   }
 
   export type DetalleComandaMinAggregateInputType = {
@@ -10300,6 +10307,7 @@ export namespace Prisma {
     cantidad?: true
     notas_especiales?: true
     status?: true
+    hora?: true
   }
 
   export type DetalleComandaMaxAggregateInputType = {
@@ -10309,6 +10317,7 @@ export namespace Prisma {
     cantidad?: true
     notas_especiales?: true
     status?: true
+    hora?: true
   }
 
   export type DetalleComandaCountAggregateInputType = {
@@ -10318,6 +10327,7 @@ export namespace Prisma {
     cantidad?: true
     notas_especiales?: true
     status?: true
+    hora?: true
     _all?: true
   }
 
@@ -10414,6 +10424,7 @@ export namespace Prisma {
     cantidad: number
     notas_especiales: string | null
     status: string
+    hora: number | null
     _count: DetalleComandaCountAggregateOutputType | null
     _avg: DetalleComandaAvgAggregateOutputType | null
     _sum: DetalleComandaSumAggregateOutputType | null
@@ -10442,6 +10453,7 @@ export namespace Prisma {
     cantidad?: boolean
     notas_especiales?: boolean
     status?: boolean
+    hora?: boolean
     aditamentos?: boolean | DetalleComanda$aditamentosArgs<ExtArgs>
     comanda?: boolean | ComandasDefaultArgs<ExtArgs>
     producto?: boolean | ProductoDefaultArgs<ExtArgs>
@@ -10455,6 +10467,7 @@ export namespace Prisma {
     cantidad?: boolean
     notas_especiales?: boolean
     status?: boolean
+    hora?: boolean
     comanda?: boolean | ComandasDefaultArgs<ExtArgs>
     producto?: boolean | ProductoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["detalleComanda"]>
@@ -10466,6 +10479,7 @@ export namespace Prisma {
     cantidad?: boolean
     notas_especiales?: boolean
     status?: boolean
+    hora?: boolean
     comanda?: boolean | ComandasDefaultArgs<ExtArgs>
     producto?: boolean | ProductoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["detalleComanda"]>
@@ -10477,9 +10491,10 @@ export namespace Prisma {
     cantidad?: boolean
     notas_especiales?: boolean
     status?: boolean
+    hora?: boolean
   }
 
-  export type DetalleComandaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_detalle" | "id_comanda" | "id_producto" | "cantidad" | "notas_especiales" | "status", ExtArgs["result"]["detalleComanda"]>
+  export type DetalleComandaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_detalle" | "id_comanda" | "id_producto" | "cantidad" | "notas_especiales" | "status" | "hora", ExtArgs["result"]["detalleComanda"]>
   export type DetalleComandaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     aditamentos?: boolean | DetalleComanda$aditamentosArgs<ExtArgs>
     comanda?: boolean | ComandasDefaultArgs<ExtArgs>
@@ -10509,6 +10524,7 @@ export namespace Prisma {
       cantidad: number
       notas_especiales: string | null
       status: string
+      hora: number | null
     }, ExtArgs["result"]["detalleComanda"]>
     composites: {}
   }
@@ -10941,6 +10957,7 @@ export namespace Prisma {
     readonly cantidad: FieldRef<"DetalleComanda", 'Int'>
     readonly notas_especiales: FieldRef<"DetalleComanda", 'String'>
     readonly status: FieldRef<"DetalleComanda", 'String'>
+    readonly hora: FieldRef<"DetalleComanda", 'Int'>
   }
     
 
@@ -17064,7 +17081,8 @@ export namespace Prisma {
     id_producto: 'id_producto',
     cantidad: 'cantidad',
     notas_especiales: 'notas_especiales',
-    status: 'status'
+    status: 'status',
+    hora: 'hora'
   };
 
   export type DetalleComandaScalarFieldEnum = (typeof DetalleComandaScalarFieldEnum)[keyof typeof DetalleComandaScalarFieldEnum]
@@ -17698,6 +17716,7 @@ export namespace Prisma {
     cantidad?: IntFilter<"DetalleComanda"> | number
     notas_especiales?: StringNullableFilter<"DetalleComanda"> | string | null
     status?: StringFilter<"DetalleComanda"> | string
+    hora?: IntNullableFilter<"DetalleComanda"> | number | null
     aditamentos?: ComandaAditamentosListRelationFilter
     comanda?: XOR<ComandasScalarRelationFilter, ComandasWhereInput>
     producto?: XOR<ProductoScalarRelationFilter, ProductoWhereInput>
@@ -17710,6 +17729,7 @@ export namespace Prisma {
     cantidad?: SortOrder
     notas_especiales?: SortOrderInput | SortOrder
     status?: SortOrder
+    hora?: SortOrderInput | SortOrder
     aditamentos?: ComandaAditamentosOrderByRelationAggregateInput
     comanda?: ComandasOrderByWithRelationInput
     producto?: ProductoOrderByWithRelationInput
@@ -17725,6 +17745,7 @@ export namespace Prisma {
     cantidad?: IntFilter<"DetalleComanda"> | number
     notas_especiales?: StringNullableFilter<"DetalleComanda"> | string | null
     status?: StringFilter<"DetalleComanda"> | string
+    hora?: IntNullableFilter<"DetalleComanda"> | number | null
     aditamentos?: ComandaAditamentosListRelationFilter
     comanda?: XOR<ComandasScalarRelationFilter, ComandasWhereInput>
     producto?: XOR<ProductoScalarRelationFilter, ProductoWhereInput>
@@ -17737,6 +17758,7 @@ export namespace Prisma {
     cantidad?: SortOrder
     notas_especiales?: SortOrderInput | SortOrder
     status?: SortOrder
+    hora?: SortOrderInput | SortOrder
     _count?: DetalleComandaCountOrderByAggregateInput
     _avg?: DetalleComandaAvgOrderByAggregateInput
     _max?: DetalleComandaMaxOrderByAggregateInput
@@ -17754,6 +17776,7 @@ export namespace Prisma {
     cantidad?: IntWithAggregatesFilter<"DetalleComanda"> | number
     notas_especiales?: StringNullableWithAggregatesFilter<"DetalleComanda"> | string | null
     status?: StringWithAggregatesFilter<"DetalleComanda"> | string
+    hora?: IntNullableWithAggregatesFilter<"DetalleComanda"> | number | null
   }
 
   export type ComandaAditamentosWhereInput = {
@@ -18496,6 +18519,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     aditamentos?: ComandaAditamentosCreateNestedManyWithoutDetalleInput
     comanda: ComandasCreateNestedOneWithoutDetallesInput
     producto: ProductoCreateNestedOneWithoutDetallesInput
@@ -18508,6 +18532,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     aditamentos?: ComandaAditamentosUncheckedCreateNestedManyWithoutDetalleInput
   }
 
@@ -18515,6 +18540,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     aditamentos?: ComandaAditamentosUpdateManyWithoutDetalleNestedInput
     comanda?: ComandasUpdateOneRequiredWithoutDetallesNestedInput
     producto?: ProductoUpdateOneRequiredWithoutDetallesNestedInput
@@ -18527,6 +18553,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     aditamentos?: ComandaAditamentosUncheckedUpdateManyWithoutDetalleNestedInput
   }
 
@@ -18537,12 +18564,14 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
   }
 
   export type DetalleComandaUpdateManyMutationInput = {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DetalleComandaUncheckedUpdateManyInput = {
@@ -18552,6 +18581,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ComandaAditamentosCreateInput = {
@@ -19397,6 +19427,7 @@ export namespace Prisma {
     cantidad?: SortOrder
     notas_especiales?: SortOrder
     status?: SortOrder
+    hora?: SortOrder
   }
 
   export type DetalleComandaAvgOrderByAggregateInput = {
@@ -19404,6 +19435,7 @@ export namespace Prisma {
     id_comanda?: SortOrder
     id_producto?: SortOrder
     cantidad?: SortOrder
+    hora?: SortOrder
   }
 
   export type DetalleComandaMaxOrderByAggregateInput = {
@@ -19413,6 +19445,7 @@ export namespace Prisma {
     cantidad?: SortOrder
     notas_especiales?: SortOrder
     status?: SortOrder
+    hora?: SortOrder
   }
 
   export type DetalleComandaMinOrderByAggregateInput = {
@@ -19422,6 +19455,7 @@ export namespace Prisma {
     cantidad?: SortOrder
     notas_especiales?: SortOrder
     status?: SortOrder
+    hora?: SortOrder
   }
 
   export type DetalleComandaSumOrderByAggregateInput = {
@@ -19429,6 +19463,7 @@ export namespace Prisma {
     id_comanda?: SortOrder
     id_producto?: SortOrder
     cantidad?: SortOrder
+    hora?: SortOrder
   }
 
   export type DetalleComandaScalarRelationFilter = {
@@ -20868,6 +20903,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     aditamentos?: ComandaAditamentosCreateNestedManyWithoutDetalleInput
     comanda: ComandasCreateNestedOneWithoutDetallesInput
   }
@@ -20878,6 +20914,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     aditamentos?: ComandaAditamentosUncheckedCreateNestedManyWithoutDetalleInput
   }
 
@@ -21021,6 +21058,7 @@ export namespace Prisma {
     cantidad?: IntFilter<"DetalleComanda"> | number
     notas_especiales?: StringNullableFilter<"DetalleComanda"> | string | null
     status?: StringFilter<"DetalleComanda"> | string
+    hora?: IntNullableFilter<"DetalleComanda"> | number | null
   }
 
   export type HistorialAnaliticoUpsertWithWhereUniqueWithoutProductoInput = {
@@ -21390,6 +21428,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     aditamentos?: ComandaAditamentosCreateNestedManyWithoutDetalleInput
     producto: ProductoCreateNestedOneWithoutDetallesInput
   }
@@ -21400,6 +21439,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     aditamentos?: ComandaAditamentosUncheckedCreateNestedManyWithoutDetalleInput
   }
 
@@ -21691,6 +21731,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
     comanda: ComandasCreateNestedOneWithoutDetallesInput
     producto: ProductoCreateNestedOneWithoutDetallesInput
   }
@@ -21702,6 +21743,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
   }
 
   export type DetalleComandaCreateOrConnectWithoutAditamentosInput = {
@@ -21748,6 +21790,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     comanda?: ComandasUpdateOneRequiredWithoutDetallesNestedInput
     producto?: ProductoUpdateOneRequiredWithoutDetallesNestedInput
   }
@@ -21759,6 +21802,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ProductoCreateWithoutImagenInput = {
@@ -22443,6 +22487,7 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
   }
 
   export type HistorialAnaliticoCreateManyProductoInput = {
@@ -22469,6 +22514,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     aditamentos?: ComandaAditamentosUpdateManyWithoutDetalleNestedInput
     comanda?: ComandasUpdateOneRequiredWithoutDetallesNestedInput
   }
@@ -22479,6 +22525,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     aditamentos?: ComandaAditamentosUncheckedUpdateManyWithoutDetalleNestedInput
   }
 
@@ -22488,6 +22535,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type HistorialAnaliticoUpdateWithoutProductoInput = {
@@ -22590,12 +22638,14 @@ export namespace Prisma {
     cantidad?: number
     notas_especiales?: string | null
     status?: string
+    hora?: number | null
   }
 
   export type DetalleComandaUpdateWithoutComandaInput = {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     aditamentos?: ComandaAditamentosUpdateManyWithoutDetalleNestedInput
     producto?: ProductoUpdateOneRequiredWithoutDetallesNestedInput
   }
@@ -22606,6 +22656,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
     aditamentos?: ComandaAditamentosUncheckedUpdateManyWithoutDetalleNestedInput
   }
 
@@ -22615,6 +22666,7 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     notas_especiales?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    hora?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ComandaAditamentosCreateManyDetalleInput = {
