@@ -83,7 +83,7 @@ export default async function MenuPage({
           <Categories categorias={categoriasBD} />
           
           {/* Las recomendaciones pueden ser visibles para todos para fomentar el antojo */}
-          <RecomendacionMenu/>
+          {/* <RecomendacionMenu/> */}
         
           <div className="mt-2">
             <h2 className="text-xl font-black text-slate-800 mb-4 px-2 uppercase tracking-tighter italic">
