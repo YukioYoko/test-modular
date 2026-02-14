@@ -11,7 +11,7 @@ export function proxy(request: NextRequest) {
   
   // Agregamos /menu para que los clientes puedan ver los productos
  // En middleware.ts
-const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || pathname === '/gracias';
+const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || pathname === '/gracias' || pathname === '/cuenta';
 
   if (esRutaPublica) {
     // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
