@@ -13,7 +13,7 @@ export default function RecomendacionMenu() {
 
       <div
         className=' p-4 bg-(--mint-green) rounded-2xl shadow-md flex justify-center items-center gap-24 mb-6'>
-        <img src="../../ramen-placeholder.png" alt="Foto de comida" className='bg-none'></img>
+        <img src="../../ramen-placeholder.png" alt="Foto de producto" className='bg-none'></img>
         <div
           className='text-white font-family-(family-name:--satoshi) flex flex-col'
         >
