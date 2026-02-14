@@ -157,6 +157,8 @@ export default function MenuCategoriasComponent({
             onUpdateQuantity={actualizarCantidad}
             onSubmit={enviarPedido}
             isPending={isPending}
+            idComanda={idComanda}
+            token={token}
           />
         </>
       )}
