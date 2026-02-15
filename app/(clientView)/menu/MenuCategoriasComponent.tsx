@@ -1,7 +1,7 @@
 "use client";
 import { useState, useTransition, useEffect, useRef } from "react";
 import { sendOrder } from "./action";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { io, Socket } from "socket.io-client";
 import { CartButton } from "@/components/cart/cartButton";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -21,10 +21,12 @@ export default function MenuCategoriasComponent({
   idComanda: number;
   esSoloLectura?: boolean;
 }) {
+  const router = useRouter();
   const params = useSearchParams();
   const token = params.get("token");
   const [isPending, startTransition] = useTransition();
 
+  // Estados
   const [carrito, setCarrito] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -32,20 +34,38 @@ export default function MenuCategoriasComponent({
 
   const socketRef = useRef<Socket | null>(null);
 
-  // Solo inicializamos el socket si el usuario puede realizar pedidos
+  // 1. Conexión al Socket (Solo si NO es solo lectura)
   useEffect(() => {
     if (!esSoloLectura) {
       socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
-      return () => { socketRef.current?.disconnect(); };
+      
+      socketRef.current.on("connect", () => {
+        console.log("✅ Conectado al socket");
+      });
+
+      return () => { 
+        socketRef.current?.disconnect(); 
+      };
     }
   }, [esSoloLectura]);
 
+  // 2. Lógica del Carrito
   const actualizarCantidad = (index: number, action: "add" | "remove") => {
     setCarrito((prev) => {
       const nuevoCarrito = [...prev];
       const item = { ...nuevoCarrito[index] };
-      if (action === "add") item.cantidad += 1;
-      else if (action === "remove" && item.cantidad > 1) item.cantidad -= 1;
+      
+      if (action === "add") {
+        item.cantidad += 1;
+      } else if (action === "remove") {
+        if (item.cantidad > 1) {
+          item.cantidad -= 1;
+        } else {
+          // Si es 1 y bajamos, podríamos querer borrarlo o dejarlo en 1. 
+          // Aquí lo dejamos en 1, el botón de borrar es aparte.
+          return prev; 
+        }
+      }
       nuevoCarrito[index] = item;
       return nuevoCarrito;
     });
@@ -53,95 +73,143 @@ export default function MenuCategoriasComponent({
 
   const agregarAlCarritoBase = (item: any) => {
     setCarrito((prevCarrito) => {
+      // Buscamos si ya existe un producto igual (mismo ID, misma nota y mismos aditamentos)
       const index = prevCarrito.findIndex(it => 
         it.prod === item.prod && 
         it.nota === item.nota && 
-        JSON.stringify([...it.aditamentos].sort()) === JSON.stringify([...item.aditamentos].sort())
+        // Comparamos arrays de aditamentos ordenados para asegurar igualdad
+        JSON.stringify([...(it.aditamentos || [])].sort()) === JSON.stringify([...(item.aditamentos || [])].sort())
       );
+
       if (index !== -1) {
-        return prevCarrito.map((it, i) => i === index ? { ...it, cantidad: it.cantidad + 1 } : it);
+        // Si existe, aumentamos cantidad
+        return prevCarrito.map((it, i) => i === index ? { ...it, cantidad: it.cantidad + item.cantidad } : it);
       }
+      // Si no existe, lo agregamos
       return [...prevCarrito, item];
     });
   };
 
-  const agregarRapido = async (prod: any, e?: React.MouseEvent) => {
+  // 3. Manejadores de Agregar (Rápido y Detalle)
+  const handleAgregarRapido = async (prod: any, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    
     const nuevoItem = {
       prod: prod.id_producto,
       nombre: prod.nombre,
       price: prod.precio,
-      imagen: prod.imagenUrl,
+      imagen: prod.imagenUrl || prod.imagen, // Soporte para ambas propiedades si varían
       cantidad: 1,
       nota: "",
       aditamentos: [],
     };
+
     agregarAlCarritoBase(nuevoItem);
-    const recomendados = await getSugerenciasApriori(prod.id_producto);
-    if (recomendados?.length > 0) {
-      setSugerenciasData({ nombre: prod.nombre, productos: recomendados });
+
+    // Buscar sugerencias Apriori
+    try {
+      const recomendados = await getSugerenciasApriori(prod.id_producto);
+      if (recomendados && recomendados.length > 0) {
+        setSugerenciasData({ nombre: prod.nombre, productos: recomendados });
+      }
+    } catch (error) {
+      console.error("Error obteniendo sugerencias:", error);
     }
   };
 
+  const handleAgregarDesdeDetalle = async (itemArmado: any) => {
+    agregarAlCarritoBase(itemArmado);
+    setSelectedProduct(null); // Cerramos el modal de detalle
+
+    // Pequeño delay para que la transición del modal sea suave antes de mostrar sugerencias
+    setTimeout(async () => {
+      try {
+        const recomendados = await getSugerenciasApriori(itemArmado.prod);
+        if (recomendados && recomendados.length > 0) {
+          setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
+        }
+      } catch (error) {
+        console.error("Error obteniendo sugerencias:", error);
+      }
+    }, 300);
+  };
+
+  // 4. Enviar Pedido
   const enviarPedido = () => {
     startTransition(async () => {
       const result = await sendOrder(idComanda, carrito, token);
-      if (result.success) {
-        socketRef.current?.emit("new_order", { items: result.ordenCreada, fecha: new Date() });
+      
+      if (result.success && result.ordenCreada) {
+        // Emitir al socket
+        socketRef.current?.emit("new_order", { 
+          items: result.ordenCreada, 
+          fecha: new Date().toISOString() 
+        });
+
         setCarrito([]);
         setShowSuccess(true);
+
+        // Redirección a la cuenta después de 2.5s
+        setTimeout(() => {
+           router.push(`/cuenta?comanda=${idComanda}&token=${token}`);
+        }, 2500);
       }
     });
   };
 
   return (
     <>
-      {/* Grid de productos: Ajustamos el padding inferior dependiendo de si hay carrito o no */}
-      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${esSoloLectura ? 'pb-10' : 'pb-32'}`}>
+      {/* GRID DE PRODUCTOS */}
+      {/* Ajustamos padding-bottom: Si es lectura (no hay carrito flotante), menos padding */}
+      <div className={`grid grid-cols-2 gap-4 ${esSoloLectura ? 'pb-10' : 'pb-32'}`}>
         {productos.map((prod) => (
           <ProductCard
             key={prod.id_producto}
             producto={prod}
-            // Permitimos abrir el modal siempre (modo lectura o escritura)
+            // Siempre permitimos ver el detalle
             onSelect={() => setSelectedProduct(prod)}
-            // Bloqueamos el botón rápido si es solo lectura
-            onQuickAdd={(e) => !esSoloLectura && agregarRapido(prod, e)}
+            // Solo permitimos agregar rápido si NO es solo lectura
+            onQuickAdd={(e) => !esSoloLectura && handleAgregarRapido(prod, e)}
+            // Prop para ocultar visualmente el botón + si es necesario en ProductCard
             mostrarBotonAdd={!esSoloLectura} 
           />
         ))}
       </div>
 
-      {/* MODAL DE DETALLE: Visible para todos, pero con lógica interna de bloqueo */}
+      {/* MODAL DE DETALLE DEL PRODUCTO */}
       {selectedProduct && (
         <ProductDetailModal
           producto={selectedProduct}
-          esSoloLectura={esSoloLectura}
+          // Pasamos el modo lectura al modal para que esconda el botón "Agregar"
+          esSoloLectura={esSoloLectura} 
           onClose={() => setSelectedProduct(null)}
-          onAddToCart={async (itemArmado) => {
-            // Esta función solo se ejecuta si el usuario NO está en modo lectura
-            agregarAlCarritoBase(itemArmado);
-            setSelectedProduct(null);
-            setTimeout(async () => {
-              const recomendados = await getSugerenciasApriori(itemArmado.prod);
-              if (recomendados?.length > 0) {
-                setSugerenciasData({ nombre: itemArmado.nombre, productos: recomendados });
-              }
-            }, 150);
-          }}
+          onAddToCart={handleAgregarDesdeDetalle}
         />
       )}
 
-      {/* COMPONENTES TRANSACCIONALES: Solo se renderizan si el usuario puede pedir */}
+      {/* COMPONENTES TRANSACCIONALES (Solo renderizar si NO es solo lectura) */}
       {!esSoloLectura && (
         <>
+          {/* Modal de Sugerencias (Upselling) */}
           {sugerenciasData && (
             <AprioriModal 
               productoBaseNombre={sugerenciasData.nombre}
               sugerencias={sugerenciasData.productos}
               onAdd={(p: any) => {
-                setCarrito(prev => [...prev, { prod: p.id_producto, nombre: p.nombre, price: p.precio, imagen: p.imagenUrl, cantidad: 1, aditamentos: [], nota: ""}]);
+                // Agregar sugerencia al carrito
+                const itemSugerido = { 
+                  prod: p.id_producto, 
+                  nombre: p.nombre, 
+                  price: p.precio, 
+                  imagen: p.imagenUrl || p.imagen, 
+                  cantidad: 1, 
+                  aditamentos: [], 
+                  nota: ""
+                };
+                agregarAlCarritoBase(itemSugerido);
               }}
               onSelectProduct={(prod: any) => {
+                // Si quieren ver detalle de la sugerencia
                 setSugerenciasData(null);
                 setSelectedProduct(prod);
               }}
@@ -149,8 +217,12 @@ export default function MenuCategoriasComponent({
             />
           )}
 
-          {showSuccess && <OrderSuccessModal onClose={() => setShowSuccess(false)} />}
+          {/* Modal de Éxito */}
+          {showSuccess && (
+             <OrderSuccessModal onClose={() => setShowSuccess(false)} />
+          )}
 
+          {/* Botón Flotante del Carrito */}
           <CartButton
             items={carrito}
             onRemoveItem={(i) => setCarrito((c) => c.filter((_, idx) => idx !== i))}
