@@ -1,6 +1,9 @@
 'use server'
 import { prisma } from '@/lib/prisma';
 
+/**
+ * Obtiene el clima y la hora local de la API para el contexto analítico.
+ */
 async function getContextoAmbiental() {
   try {
     const API_KEY = process.env.WEATHER_API_KEY; 
@@ -10,54 +13,55 @@ async function getContextoAmbiental() {
       { next: { revalidate: 900 } }
     );
     const data = await resClima.json();
+    
+    // 1. Convertir el string "YYYY-MM-DD HH:mm" a un objeto Date válido
+    // Reemplazamos el espacio por "T" para que el constructor de Date lo reconozca (ISO 8601)
+    const fechaLocalString = data.location.localtime.replace(" ", "T");
+    const fechaDb = new Date(fechaLocalString);
+
     const climaTexto = data.current.condition.text.toLowerCase();
     
     let climaId = 0; 
     if (climaTexto.includes("cloud") || climaTexto.includes("overcast")) climaId = 1;
     else if (climaTexto.includes("rain") || climaTexto.includes("thunder") || climaTexto.includes("drizzle")) climaId = 2;
 
-    const hoy = new Date();
+    // 2. Lógica de festivos usando la fecha de la API
     const festivosFijos = ["01-01", "05-01", "09-16", "11-20", "12-25"];
-    const esFestivo = festivosFijos.includes(
-      `${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
-    );
+    const mesDia = `${String(fechaDb.getMonth() + 1).padStart(2, '0')}-${String(fechaDb.getDate()).padStart(2, '0')}`;
+    const esFestivo = festivosFijos.includes(mesDia);
 
-    return { climaId, esFestivo };
+    return { climaId, esFestivo, fechaDb };
   } catch (error) {
-    return { climaId: 0, esFestivo: false };
+    console.error("Error al obtener clima:", error);
+    // Fallback: Si falla la API, usamos la hora del sistema
+    return { climaId: 0, esFestivo: false, fechaDb: new Date() };
   }
 }
 
 /**
  * Obtiene todas las categorías activas de la base de datos.
- * Se usa tanto en el panel de administración como en el menú del cliente.
  */
 export async function getCategorias() {
   try {
     const categorias = await prisma.categoria.findMany({
-      where: {
-        // Si tienes un campo para borrado lógico, fíltralo aquí
-        // eliminado: false 
-      },
       orderBy: {
-        nombre: 'asc' // Orden alfabético para que el menú se vea organizado
+        nombre: 'asc'
       },
       select: {
         id_categoria: true,
         nombre: true,
-        // Puedes incluir la relación de productos si necesitas contar cuántos hay
-        // _count: { select: { productos: true } }
       }
     });
-
     return categorias;
   } catch (error) {
     console.error("Error al obtener categorías:", error);
-    // Devolvemos un array vacío para evitar que la página colapse
     return [];
   }
 }
 
+/**
+ * Procesa el envío de una orden y guarda el registro analítico con la hora de la API.
+ */
 export async function sendOrder(idComanda: number, carrito: any[], token: string | null) {
   try {
     const comanda = await prisma.comandas.findFirst({
@@ -66,13 +70,14 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
 
     if (!comanda) return { error: "Sesión expirada o comanda cerrada" };
 
-    const { climaId, esFestivo } = await getContextoAmbiental();
-    const ahora = new Date();
+    // Obtenemos el contexto (clima y hora local de la ciudad)
+    const { climaId, esFestivo, fechaDb } = await getContextoAmbiental();
 
     const itemsCreados = await prisma.$transaction(async (tx) => {
       const resultados = [];
 
       for (const item of carrito) {
+        // 1. Crear el detalle de la comanda
         const nuevoDetalle = await tx.detalleComanda.create({
           data: {
             id_comanda: idComanda,
@@ -83,11 +88,12 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
           },
           include: { 
             producto: {
-              include: { categoriaRel: true } // Obtenemos el nombre de la categoría
+              include: { categoriaRel: true } 
             } 
           }
         });
 
+        // 2. Registrar aditamentos si existen
         if (item.aditamentos?.length > 0) {
           await tx.comandaAditamentos.createMany({
             data: item.aditamentos.map((idAdi: number) => ({
@@ -98,21 +104,24 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
           });
         }
 
-        // Historial Analítico corregido con categoriaRel
+        // 3. Crear registros en Historial Analítico (uno por cada unidad de producto)
         for (let i = 0; i < item.cantidad; i++) {
           await tx.historialAnalitico.create({
             data: {
               id_producto: item.prod,
               id_subcategoria: nuevoDetalle.producto.id_subcategoria,
               id_categoria: nuevoDetalle.producto.id_categoria,
-              hora: ahora.getHours(),
-              dia_semana: ahora.getDay(),
+              // Guardamos la fecha completa y extraemos partes de la misma 'fechaDb'
+              fecha_hora: fechaDb, 
+              hora: fechaDb.getHours(),
+              dia_semana: fechaDb.getDay(),
               es_festivo: esFestivo,
               clima_id: climaId
             }
           });
         }
 
+        // Recuperar el detalle completo para el frontend
         const detalleCompleto = await tx.detalleComanda.findUnique({
           where: { id_detalle: nuevoDetalle.id_detalle },
           include: {
@@ -127,7 +136,10 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
       return resultados;
     });
 
-    return { success: true, ordenCreada: JSON.parse(JSON.stringify(itemsCreados)) };
+    return { 
+      success: true, 
+      ordenCreada: JSON.parse(JSON.stringify(itemsCreados)) 
+    };
 
   } catch (e) {
     console.error("Error en sendOrder:", e);
