@@ -1,27 +1,42 @@
-'use client'; // Convertimos a Client Component para manejar el evento del formulario
+'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { iniciarSesionPrueba } from './action';
 
 function MenuPruebaContent() {
-  // Ahora handleAction es una función de cliente que llama al Server Action importado
+  // Estado para bloquear el botón y mostrar que está cargando
+  const [isPending, setIsPending] = useState(false);
+
   const handleAction = async () => {
+    // Si ya se está procesando, ignoramos cualquier clic extra
+    if (isPending) return;
+
+    setIsPending(true);
+
     try {
       const result = await iniciarSesionPrueba();
-      // Si el action devolvió un error (y no redirigió)
+      
+      // Si el action devuelve un error (y no redirigió)
       if (result?.error) {
         alert(result.error);
+        setIsPending(false); // Liberamos el botón para que puedan reintentar
       }
     } catch (err) {
-      // El redirect de Next.js a veces lanza un error capturable en el cliente
+      // El redirect de Next.js a veces lanza un error capturable, 
+      // pero si es un error real de red, liberamos el botón.
       console.error("Error en la sesión de prueba:", err);
+      setIsPending(false);
     }
   };
 
   return (
     <div className="max-w-sm w-full bg-white rounded-[3rem] p-10 shadow-2xl text-center border border-slate-100 animate-in fade-in zoom-in duration-500">
       <div className="w-20 h-20 bg-(--light-green) rounded-full flex items-center justify-center mx-auto mb-6">
-        <span className="text-4xl">🧪</span>
+        {isPending ? (
+          <div className="w-10 h-10 border-4 border-(--militar-green) border-t-transparent rounded-full animate-spin"></div>
+        ) : (
+          <span className="text-4xl">🧪</span>
+        )}
       </div>
       
       <h1 className="text-3xl font-black text-(--militar-green) italic uppercase tracking-tighter mb-4 leading-none">
@@ -33,18 +48,32 @@ function MenuPruebaContent() {
         <strong>Mesa asignada: 99</strong>
       </p>
 
-      {/* Al ser cliente, usamos action directamente con la función */}
       <form action={handleAction}>
         <button 
           type="submit"
-          className="w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.05] active:scale-95 transition-all"
+          disabled={isPending}
+          className={`w-full py-5 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg transition-all flex items-center justify-center gap-2
+            ${isPending 
+              ? 'bg-slate-400 cursor-not-allowed opacity-80' 
+              : 'bg-(--militar-green) text-white hover:scale-[1.05] active:scale-95'
+            }`}
         >
-          Generar Comanda y Entrar
+          {isPending ? (
+            <>
+              <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Generando...
+            </>
+          ) : (
+            'Generar Comanda y Entrar'
+          )}
         </button>
       </form>
 
       <p className="mt-6 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
-        Los pedidos realizados llegarán al monitor de cocina.
+        {isPending 
+          ? 'Enviando datos al monitor de cocina...' 
+          : 'Los pedidos realizados llegarán al monitor de cocina.'
+        }
       </p>
     </div>
   );
