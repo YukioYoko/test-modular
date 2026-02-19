@@ -112,7 +112,7 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
               id_subcategoria: nuevoDetalle.producto.id_subcategoria,
               id_categoria: nuevoDetalle.producto.id_categoria,
               // Guardamos la fecha completa y extraemos partes de la misma 'fechaDb'
-              fecha_hora: fechaDb, 
+              fecha_registro: fechaDb, 
               hora: fechaDb.getHours(),
               dia_semana: fechaDb.getDay(),
               es_festivo: esFestivo,
