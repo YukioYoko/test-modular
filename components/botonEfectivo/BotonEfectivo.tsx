@@ -8,7 +8,7 @@ export default function BotonEfectivo({ idComanda, desglose }: { idComanda: numb
   const router = useRouter();
 
   const handlePago = async () => {
-    if (!confirm("¿Confirmas que el pago se realizará en efectivo en caja?")) return;
+    {/*if (!confirm("¿Confirmas que el pago se realizará en efectivo en caja?")) return;*/}
     
     setLoading(true);
     const res = await registrarPagoEfectivo(idComanda, desglose);
