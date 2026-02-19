@@ -4,26 +4,25 @@ import { Suspense, useState } from 'react';
 import { iniciarSesionPrueba } from './action';
 
 function MenuPruebaContent() {
-  // Estado para bloquear el botón y mostrar que está cargando
   const [isPending, setIsPending] = useState(false);
 
-  const handleAction = async () => {
-    // Si ya se está procesando, ignoramos cualquier clic extra
-    if (isPending) return;
+  const handleSumbit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Detiene cualquier envío extra del navegador
+
+    if (isPending) return; // Doble validación de seguridad
 
     setIsPending(true);
 
     try {
       const result = await iniciarSesionPrueba();
       
-      // Si el action devuelve un error (y no redirigió)
+      // Si el action devolvió un error (y no redirigió)
       if (result?.error) {
         alert(result.error);
-        setIsPending(false); // Liberamos el botón para que puedan reintentar
+        setIsPending(false);
       }
     } catch (err) {
-      // El redirect de Next.js a veces lanza un error capturable, 
-      // pero si es un error real de red, liberamos el botón.
+      // Solo capturamos errores reales, Next.js Redirect no debería caer aquí habitualmente
       console.error("Error en la sesión de prueba:", err);
       setIsPending(false);
     }
@@ -45,35 +44,28 @@ function MenuPruebaContent() {
       
       <p className="text-slate-500 text-sm font-medium mb-8 leading-relaxed">
         Estás por ingresar a una sesión de prueba masiva. <br/>
-        <strong>Mesa asignada: 99</strong>
+        <strong>Mesa asignada: 6</strong>
       </p>
 
-      <form action={handleAction}>
+      <form onSubmit={handleSumbit}>
         <button 
           type="submit"
           disabled={isPending}
-          className={`w-full py-5 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg transition-all flex items-center justify-center gap-2
+          className={`w-full py-5 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg transition-all flex items-center justify-center gap-3
             ${isPending 
-              ? 'bg-slate-400 cursor-not-allowed opacity-80' 
+              ? 'bg-slate-400 cursor-not-allowed scale-95 opacity-70' 
               : 'bg-(--militar-green) text-white hover:scale-[1.05] active:scale-95'
             }`}
         >
-          {isPending ? (
-            <>
-              <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              Generando...
-            </>
-          ) : (
-            'Generar Comanda y Entrar'
-          )}
+          {isPending && <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
+          {isPending ? 'Generando...' : 'Generar Comanda y Entrar'}
         </button>
       </form>
 
-      <p className="mt-6 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
+      <p className="mt-6 text-[9px] font-bold text-slate-300 uppercase tracking-widest leading-tight">
         {isPending 
-          ? 'Enviando datos al monitor de cocina...' 
-          : 'Los pedidos realizados llegarán al monitor de cocina.'
-        }
+          ? 'Conectando con el monitor de cocina...' 
+          : 'Los pedidos realizados llegarán al monitor de cocina.'}
       </p>
     </div>
   );
