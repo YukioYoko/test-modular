@@ -161,7 +161,7 @@ export default function MenuCategoriasComponent({
     <>
       {/* GRID DE PRODUCTOS */}
       {/* Ajustamos padding-bottom: Si es lectura (no hay carrito flotante), menos padding */}
-      <div className={`grid grid-cols-2 gap-4 ${esSoloLectura ? 'pb-10' : 'pb-32'}`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${esSoloLectura ? 'pb-10' : 'pb-32'}`}>
         {productos.map((prod) => (
           <ProductCard
             key={prod.id_producto}
