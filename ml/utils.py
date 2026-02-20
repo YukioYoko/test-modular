@@ -1,5 +1,15 @@
+from datetime import datetime
+
+from fastapi import requests
+import holidays
+import pandas as pd
+from sqlalchemy import create_engine
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+import os
+
 def get_contexto_actual(ciudad="Guadalajara"):
-    API_KEY = os.getenv("WEATHER_API_KEY")
+    API_KEY = "18b8ae5f959c416da2940445241211"
     try:
         url = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={ciudad}"
         res = requests.get(url).json()
