@@ -1,35 +1,34 @@
 'use server'
 import { prisma } from '@/lib/prisma';
 
-// Definimos interfaces para que TypeScript no arroje error de "any" en el build
-interface MetricaSugerencia {
-  id_producto: number;
-  confianza: number;
-}
-
 export async function getSugerenciasApriori(productoId: number) {
   try {
-    // 1. Validación de entrada
     if (!productoId || isNaN(productoId)) return [];
 
-    // --- PASO 1: Calcular Soporte del Producto Base (A) ---
+    // 1. Obtener el producto actual para conocer su categoría
+    const productoBase = await prisma.producto.findFirst({
+      where: { id_producto: productoId },
+      select: { id_categoria: true }
+    });
+
+    if (!productoBase) return [];
+    const idCategoriaBase = productoBase.id_categoria;
+
+    // 2. Calcular soporte y encontrar comandas relacionadas
     const totalComandasConA = await (prisma as any).detalleComanda.count({
       where: { id_producto: productoId }
     });
 
-    // Si nadie lo ha comprado nunca, usamos el respaldo (fallback)
-    if (totalComandasConA === 0) return await getFallback(productoId);
+    if (totalComandasConA === 0) return await getFallbackExcluyendoCategoria(productoId, idCategoriaBase);
 
-    // --- PASO 2: Encontrar Co-ocurrencias (A + B) ---
     const comandasConA = await (prisma as any).detalleComanda.findMany({
       where: { id_producto: productoId },
       select: { id_comanda: true },
-      take: 200, 
+      take: 300, 
     });
-    
     const idsComandas = comandasConA.map((c: any) => c.id_comanda);
 
-    // --- PASO 3: Aplicar Algoritmo Apriori ---
+    // 3. Agrupar co-ocurrencias (A + B)
     const coOcurrencias = await (prisma as any).detalleComanda.groupBy({
       by: ['id_producto'],
       where: {
@@ -37,77 +36,69 @@ export async function getSugerenciasApriori(productoId: number) {
         id_producto: { not: productoId }
       },
       _count: { id_producto: true },
-      orderBy: { _count: { id_producto: 'desc' } },
-      take: 10
+      orderBy: { _count: { id_producto: 'desc' } }
     });
 
-    // Mapeo con tipos explícitos para evitar error de "implicitly any"
-    const sugerenciasConMetricas: MetricaSugerencia[] = coOcurrencias.map((item: any) => {
-      const frecuenciaJuntos = item._count.id_producto;
-      // Confianza = (A ∩ B) / A
-      const confianzaCalculada = (frecuenciaJuntos / totalComandasConA);
+    // 4. Obtener info de productos candidatos
+    const candidatosIds = coOcurrencias.map((item: any) => item.id_producto);
+    const productosCandidatos = await prisma.producto.findMany({
+      where: { id_producto: { in: candidatosIds }, activo: true },
+      include: { imagen: true }
+    });
+
+    // 5. Lógica de Selección: Uno por categoría, EXCLUYENDO la categoría base
+    const categoriasObjetivo = [1, 2, 3, 4, 5, 6].filter(cat => cat !== idCategoriaBase);
+    const mejorPorCategoria = new Map();
+
+    coOcurrencias.forEach((occ: any) => {
+      const infoProd = productosCandidatos.find(p => p.id_producto === occ.id_producto);
       
-      return {
-        id_producto: item.id_producto,
-        confianza: confianzaCalculada
-      };
+      // Verificamos que sea una categoría permitida y que no la hayamos agregado ya
+      if (infoProd && categoriasObjetivo.includes(infoProd.id_categoria)) {
+        if (!mejorPorCategoria.has(infoProd.id_categoria)) {
+          mejorPorCategoria.set(infoProd.id_categoria, {
+            ...infoProd,
+            precio: Number(infoProd.precio),
+            imagenUrl: infoProd.imagen?.[0]?.url || "/ramen-placeholder.png"
+          });
+        }
+      }
     });
 
-    // Filtramos por confianza mínima (10%) y obtenemos solo los IDs
-    const mejoresIds = sugerenciasConMetricas
-      .filter((s: MetricaSugerencia) => s.confianza >= 0.10)
-      .map((s: MetricaSugerencia) => s.id_producto);
+    const sugerenciasFinales = Array.from(mejorPorCategoria.values());
 
-    // --- PASO 4: Obtener datos finales de los productos ---
-    let sugerenciasFinales: any[] = [];
-    
-    if (mejoresIds.length > 0) {
-      sugerenciasFinales = await prisma.producto.findMany({
-        where: { 
-          id_producto: { in: mejoresIds }, 
-          activo: true // Asegúrate que en tu DB se llame 'activo' o 'estado'
-        },
-        include: {
-          imagen: true
-        },
-        take: 4
-      });
+    // Si no logramos llenar las 5 categorías restantes, usamos el fallback
+    if (sugerenciasFinales.length < categoriasObjetivo.length) {
+      return await getFallbackExcluyendoCategoria(productoId, idCategoriaBase);
     }
 
-    // Si el algoritmo no dio resultados suficientes, fallback
-    if (sugerenciasFinales.length === 0) {
-      return await getFallback(productoId);
-    }
-
-    // Convertimos precios de Decimal a Number para el cliente (Next.js)
-    return sugerenciasFinales.map(p => ({
-      ...p,
-      precio: Number(p.precio),
-      imagenUrl: p.imagen && p.imagen.length > 0 ? p.imagen[0].url : '/placeholder.png'
-    }));
+    return sugerenciasFinales;
 
   } catch (error) {
-    console.error("Error en Algoritmo Apriori:", error);
+    console.error("❌ Error en Apriori Cruzado:", error);
     return [];
   }
 }
 
-// Función de respaldo robusta
-async function getFallback(productoId: number) {
-  const randoms = await prisma.producto.findMany({
-    where: { 
-      id_producto: { not: productoId }, 
-      activo: true 
-    },
-    include: {
-      imagen: true
-    },
-    take: 4
-  });
+async function getFallbackExcluyendoCategoria(productoId: number, idCatExcluir: number) {
+  const categorias = [1, 2, 3, 4, 5, 6].filter(c => c !== idCatExcluir);
   
-  return randoms.map(p => ({ 
-    ...p, 
-    precio: Number(p.precio),
-    imagenUrl: p.imagen && p.imagen.length > 0 ? p.imagen[0].url : '/placeholder.png'
+  const productos = await Promise.all(
+    categorias.map(catId => 
+      prisma.producto.findFirst({
+        where: { 
+          id_categoria: catId, 
+          activo: true, 
+          id_producto: { not: productoId } 
+        },
+        include: { imagen: true }
+      })
+    )
+  );
+
+  return productos.filter(Boolean).map(p => ({
+    ...p,
+    precio: Number(p?.precio),
+    imagenUrl: p?.imagen?.[0]?.url || "/ramen-placeholder.png"
   }));
 }
