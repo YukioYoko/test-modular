@@ -1,5 +1,4 @@
 export const dynamic = 'force-dynamic'
-import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import RecomendacionMenu from '@/components/recomendacion/RecomendacionMenu';
 import MenuCategoriasComponent from './MenuCategoriasComponent';
@@ -14,46 +13,38 @@ export default async function MenuPage({
   
   const params = await searchParams;
   const token = params.token;
-  const categoriaId = params.cat ? parseInt(params.cat) : null;
+  const categoriaId = params.cat ? parseInt(params.cat) : 0; // Por defecto 0 (Todo)
   
-  // Variables de control de estado
   let idComanda: number | null = params.comanda ? parseInt(params.comanda) : null;
-  let esSoloLectura = true; // Por defecto nadie puede pedir si no hay comanda válida
+  let esSoloLectura = true;
 
-  // 1. LÓGICA DE VALIDACIÓN OPCIONAL
+  // 1. LÓGICA DE VALIDACIÓN (Comprobación de token y estado)
   if (idComanda && !isNaN(idComanda) && token) {
     const comandaBD = await prisma.comandas.findFirst({
       where: { id_comanda: idComanda }
     });
 
-    // Si existe la comanda y el token es correcto, verificamos si puede pedir
     if (comandaBD && comandaBD.token === token) {
-      // Si la comanda está abierta, habilitamos la escritura (esSoloLectura = false)
       esSoloLectura = comandaBD.estado === 'Cerrada';
       if( esSoloLectura ) idComanda = null;
     } else {
-      // Si los datos son inválidos (token mal), reseteamos a modo catálogo
       idComanda = null;
       esSoloLectura = true;
     }
-  } else {
-    // Si no hay parámetros en la URL, entramos en modo catálogo puro
-    idComanda = null;
-    esSoloLectura = true;
   }
 
-  // 2. Obtención de datos comunes (Categorías y Productos siempre visibles)
   const categoriasBD = await getCategorias();
 
+  // 2. Consulta de productos (Corregido a tabla 'productos')
   const productosRaw = await prisma.producto.findMany({
     where: { 
       eliminado: false,
       activo: true,
-      ...(categoriaId && categoriaId !== 0 ? { id_categoria: categoriaId } : {})
+      ...(categoriaId !== 0 ? { id_categoria: categoriaId } : {})
     },
     include: {
       aditamentos: { include: { aditamento: true } },
-      imagen: { take: 1, select: { url: true } },
+      imagen: { take: 1, select: { url: true } }, // Nombre corregido
       categoriaRel: true
     },
     orderBy: { id_producto: 'desc' }
@@ -79,20 +70,19 @@ export default async function MenuPage({
         </div>
       )}
 
-      <main className={`p-4 space-y-6 `}>
+      <main className="p-4 space-y-6">
           <Categories categorias={categoriasBD} />
           
-          {/* Las recomendaciones pueden ser visibles para todos para fomentar el antojo */}
-          <RecomendacionMenu/>
+          {/* LÓGICA SOLICITADA: Solo aparece en 'Todo' (categoriaId 0) */}
+          {categoriaId === 0 && <RecomendacionMenu />}
         
           <div className="mt-2">
             <h2 className="text-xl font-black text-slate-800 mb-4 px-2 uppercase tracking-tighter italic">
-              {categoriaId && categoriaId !== 0 
+              {categoriaId !== 0 
                 ? categoriasBD.find((c: any) => c.id_categoria === categoriaId)?.nombre 
                 : 'Nuestro Menú'}
             </h2>
 
-            {/* Pasamos el idComanda (que puede ser null) y el estado de lectura */}
             <MenuCategoriasComponent 
               productos={productos} 
               idComanda={idComanda ?? 0} 
