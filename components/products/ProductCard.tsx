@@ -5,24 +5,27 @@ interface ProductCardProps {
   producto: any;
   onSelect: () => void;
   onQuickAdd: (e: React.MouseEvent) => void;
+  mostrarBotonAdd?: boolean; // Nueva prop
 }
 
-export const ProductCard = ({ producto, onSelect, onQuickAdd }: ProductCardProps) => {
+export const ProductCard = ({ producto, onSelect, onQuickAdd, mostrarBotonAdd = true }: ProductCardProps) => {
   return (
     <div
       onClick={onSelect}
-      className="group bg-white rounded-[2.2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-50 relative cursor-pointer active:scale-95 transition-all duration-300 h-full flex flex-col overflow-hidden hover:shadow-xl hover:-translate-y-1"
+      className={`group bg-white rounded-[2.2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-50 relative h-full flex flex-col overflow-hidden transition-all duration-300 ${mostrarBotonAdd ? 'cursor-pointer active:scale-95 hover:shadow-xl hover:-translate-y-1' : 'cursor-default opacity-90'}`}
     >
-      {/* 1. Botón de Agregar (Flotante Top Right) */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onQuickAdd(e);
-        }}
-        className="absolute top-4 right-4 bg-(--mint-green) text-white rounded-2xl w-10 h-10 flex items-center justify-center shadow-lg hover:bg-(--militar-green) transition-colors z-10 active:scale-90"
-      >
-        <span className="font-black text-2xl leading-none">+</span>
-      </button>
+      {/* Solo mostramos el botón + si NO es solo lectura */}
+      {mostrarBotonAdd && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onQuickAdd(e);
+          }}
+          className="absolute top-4 right-4 bg-(--mint-green) text-white rounded-2xl w-10 h-10 flex items-center justify-center shadow-lg hover:bg-(--militar-green) z-10 active:scale-90"
+        >
+          <span className="font-black text-2xl">+</span>
+        </button>
+      )}
 
       {/* 2. Imagen del Producto */}
       <div className="w-full h-44 relative overflow-hidden">

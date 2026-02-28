@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+scikit-learn
+pandas
+joblib
+requests
+holidays
+psycopg2-binary
+sqlalchemy
