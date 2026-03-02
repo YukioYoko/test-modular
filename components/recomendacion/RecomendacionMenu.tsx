@@ -18,10 +18,14 @@ export default function RecomendacionMenu({ idComanda, esSoloLectura = false }: 
 
   // El Hook ahora se encarga de leer y escribir en cookies automáticamente
   const {
-    carrito, agregarAlCarritoBase, agregarRapido, 
-    actualizarCantidad, enviarPedido, isPending, 
-    showSuccess, setShowSuccess
-  } = useCarrito(idComanda, token, esSoloLectura);
+  carrito,
+  agregarAlCarritoBase,
+  agregarRapido,
+  actualizarCantidad,
+  eliminarProducto,
+  enviarPedido,
+  isPending
+} = useCarrito(idComanda, token, esSoloLectura);
 
   useEffect(() => {
     getRecomendacionIA().then(res => {
@@ -67,18 +71,15 @@ export default function RecomendacionMenu({ idComanda, esSoloLectura = false }: 
           </div>
         </section>
       )}
-      
+
       {!esSoloLectura && (
         <CartButton
-          items={carrito}
-          onUpdateQuantity={actualizarCantidad}
-          onRemoveItem={(i) => {
-             const nuevo = carrito.filter((_, idx) => idx !== i);
-             // Podrías exponer una función específica para remover si lo prefieres
-          }}
-          onSubmit={enviarPedido}
-          isPending={isPending}
-        />
+  items={carrito}
+  onUpdateQuantity={actualizarCantidad}
+  onRemoveItem={(i) => eliminarProducto(i)} // Ahora usa la función de cookies
+  onSubmit={enviarPedido}
+  isPending={isPending}
+/>
       )}
 
       {selectedProduct && (

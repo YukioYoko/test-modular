@@ -1,8 +1,8 @@
 "use client";
 import { useState, useTransition, useEffect, useRef } from "react";
-import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
-import { sendOrder } from "@/app/(clientView)/menu/action"; 
+import { io, Socket } from "socket.io-client";
+import { sendOrder } from "@/app/menu/action"; 
 import { getSugerenciasApriori } from "@/components/products/action";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
@@ -15,27 +15,21 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
   const [sugerenciasData, setSugerenciasData] = useState<{ nombre: string; productos: any[] } | null>(null);
   const socketRef = useRef<Socket | null>(null);
 
-  // 1. Cargar carrito desde Cookies al iniciar
+  // Cargar cookies al iniciar
   useEffect(() => {
-    const savedCart = Cookies.get(CART_COOKIE_NAME);
-    if (savedCart) {
-      try {
-        setCarrito(JSON.parse(savedCart));
-      } catch (e) {
-        console.error("Error al parsear carrito de cookies", e);
-      }
-    }
-
+    const saved = Cookies.get(CART_COOKIE_NAME);
+    if (saved) setCarrito(JSON.parse(saved));
+    
     if (!esSoloLectura) {
       socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
       return () => { socketRef.current?.disconnect(); };
     }
   }, [esSoloLectura]);
 
-  // 2. Función interna para persistir
-  const guardarEnCookies = (nuevoCarrito: any[]) => {
+  // Función núcleo para persistir cambios
+  const actualizarCarritoYCookies = (nuevoCarrito: any[]) => {
     setCarrito(nuevoCarrito);
-    Cookies.set(CART_COOKIE_NAME, JSON.stringify(nuevoCarrito), { expires: 7 }); // Dura 7 días
+    Cookies.set(CART_COOKIE_NAME, JSON.stringify(nuevoCarrito), { expires: 7 });
   };
 
   const agregarAlCarritoBase = (item: any) => {
@@ -45,13 +39,13 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
       it.nota === item.nota
     );
 
-    let nuevoCarrito;
+    let nuevo;
     if (index !== -1) {
-      nuevoCarrito = carrito.map((it, i) => i === index ? { ...it, cantidad: it.cantidad + 1 } : it);
+      nuevo = carrito.map((it, i) => i === index ? { ...it, cantidad: it.cantidad + 1 } : it);
     } else {
-      nuevoCarrito = [...carrito, item];
+      nuevo = [...carrito, item];
     }
-    guardarEnCookies(nuevoCarrito);
+    actualizarCarritoYCookies(nuevo);
   };
 
   const agregarRapido = async (prod: any, e?: React.MouseEvent) => {
@@ -68,16 +62,19 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
     agregarAlCarritoBase(nuevoItem);
 
     const recomendados = await getSugerenciasApriori(prod.id_producto);
-    if (recomendados?.length > 0) {
-      setSugerenciasData({ nombre: prod.nombre, productos: recomendados });
-    }
+    if (recomendados?.length > 0) setSugerenciasData({ nombre: prod.nombre, productos: recomendados });
   };
 
   const actualizarCantidad = (index: number, action: "add" | "remove") => {
     const nuevo = [...carrito];
     if (action === "add") nuevo[index].cantidad += 1;
     else if (action === "remove" && nuevo[index].cantidad > 1) nuevo[index].cantidad -= 1;
-    guardarEnCookies(nuevo);
+    actualizarCarritoYCookies(nuevo);
+  };
+
+  const eliminarProducto = (index: number) => {
+    const nuevo = carrito.filter((_, i) => i !== index);
+    actualizarCarritoYCookies(nuevo);
   };
 
   const enviarPedido = () => {
@@ -85,15 +82,24 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
       const result = await sendOrder(idComanda, carrito, token);
       if (result.success) {
         socketRef.current?.emit("new_order", { items: result.ordenCreada, fecha: new Date() });
-        guardarEnCookies([]); // Limpiar cookies tras pedido exitoso
+        actualizarCarritoYCookies([]); // Limpiar cookies al terminar
         setShowSuccess(true);
       }
     });
   };
 
   return {
-    carrito, setCarrito, agregarAlCarritoBase, agregarRapido,
-    actualizarCantidad, enviarPedido, isPending,
-    showSuccess, setShowSuccess, sugerenciasData, setSugerenciasData
+    carrito,
+    setCarrito,
+    agregarAlCarritoBase,
+    agregarRapido,
+    actualizarCantidad,
+    eliminarProducto, // Nueva función expuesta
+    enviarPedido,
+    isPending,
+    showSuccess,
+    setShowSuccess,
+    sugerenciasData,
+    setSugerenciasData
   };
 }
