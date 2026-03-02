@@ -92,7 +92,7 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
   };
 
   return {
-    carrito, agregarAlCarritoBase, agregarRapido,
+    carrito, setCarrito, agregarAlCarritoBase, agregarRapido,
     actualizarCantidad, enviarPedido, isPending,
     showSuccess, setShowSuccess, sugerenciasData, setSugerenciasData
   };
