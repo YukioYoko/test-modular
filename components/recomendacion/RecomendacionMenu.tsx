@@ -66,6 +66,26 @@ export default function RecomendacionMenu({
         ))}
       </section>
 
+         {data.menuVariado?.length > 0 && (
+        <section className="p-6 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm">
+          <h2 className="text-2xl font-black text-gray-800 mb-6 flex items-center gap-2">
+            <span className="text-orange-500">◈</span> Descubre algo nuevo
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {data.menuVariado.map((prod: any) => (
+              <ProductCard
+                key={prod.id_producto}
+                  producto={prod}
+                  onSelect={() => setSelectedProduct(prod)}
+                  onQuickAdd={(e) => !esSoloLectura && agregarRapido(prod, e)}
+                  mostrarBotonAdd={!esSoloLectura}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+
       {/* ─── Modales y Componentes de Carrito ─── */}
       {!esSoloLectura && (
         <>
