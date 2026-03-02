@@ -213,10 +213,10 @@ def recomendar_menu(
         return {"success": False, "error": "Modelo no disponible. Ejecuta train.py primero."}
 
     ahora = datetime.datetime.now()
-    hora = 14
-    clima = 0
-    dia = 5
-    festivo = 0
+    hora = test_hour if test_hour is not None else ahora.hour
+    dia = test_dia if test_dia is not None else ahora.weekday()
+    clima = test_clima if test_clima is not None else get_clima()
+    festivo = get_es_festivo()
 
     input_features = construir_features(hora, dia, festivo, clima)
     cluster_id = int(kmeans.predict(input_features)[0])
