@@ -74,7 +74,7 @@ export default async function MenuPage({
           <Categories categorias={categoriasBD} />
           
           {/* LÓGICA SOLICITADA: Solo aparece en 'Todo' (categoriaId 0) */}
-          {categoriaId === 0 && <RecomendacionMenu esSoloLectura={esSoloLectura} />}
+          {categoriaId === 0 && <RecomendacionMenu idComanda={idComanda ?? 0}  esSoloLectura={esSoloLectura} />}
         
           <div className="mt-2">
             <h2 className="text-xl font-black text-slate-800 mb-4 px-2 uppercase tracking-tighter italic">

@@ -10,8 +10,10 @@ import { useCarrito } from "@/hooks/useCarrito"; // Importamos tu nuevo Hook
 import { useSearchParams } from "next/navigation";
 
 export default function RecomendacionMenu({ 
+  idComanda, 
   esSoloLectura = false 
 }: { 
+  idComanda: number; 
   esSoloLectura?: boolean; 
 }) {
   const params = useSearchParams();
