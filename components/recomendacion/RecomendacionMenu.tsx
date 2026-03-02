@@ -24,7 +24,9 @@ export default function RecomendacionMenu({ idComanda, esSoloLectura = false }: 
   actualizarCantidad,
   eliminarProducto,
   enviarPedido,
-  isPending
+  isPending,
+  setShowSuccess,
+  showSuccess,
 } = useCarrito(idComanda, token, esSoloLectura);
 
   useEffect(() => {
