@@ -1,8 +1,9 @@
 "use client";
 import { useState, useTransition, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import { sendOrder } from "@/app/menu/action"; // Ajusta la ruta a tu server action
+ // Ajusta la ruta a tu server action
 import { getSugerenciasApriori } from "@/components/products/action";
+import { sendOrder } from "@/app/(clientView)/menu/action";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
