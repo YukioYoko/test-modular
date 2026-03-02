@@ -2,7 +2,7 @@
 import { useState, useTransition, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
-import { sendOrder } from "@/app/menu/action"; 
+import { sendOrder } from "@/app/(clientView)/menu/action"; 
 import { getSugerenciasApriori } from "@/components/products/action";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
