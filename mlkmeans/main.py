@@ -91,20 +91,32 @@ except Exception as e:
 # ─────────────────────────────────────────────
 # FUNCIONES AUXILIARES
 # ─────────────────────────────────────────────
-def get_clima() -> int:
+def get_datos_contextuales():
+    """
+    Obtiene el clima y la hora local exacta desde la API de WeatherAPI.
+    """
     try:
         url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q=Guadalajara"
         res = requests.get(url, timeout=5).json()
+        
+        # 1. Extraer Clima
         cond = res["current"]["condition"]["text"].lower()
         if "rain" in cond or "thunder" in cond or "drizzle" in cond:
-            return 2
+            clima_id = 2
         elif "cloud" in cond or "overcast" in cond:
-            return 1
+            clima_id = 1
         else:
-            return 0
-    except Exception:
-        return 0
-
+            clima_id = 0
+            
+        # 2. Extraer y procesar Hora Local (Formato: "2026-03-02 11:10")
+        local_time_str = res["location"]["localtime"]
+        dt_local = datetime.datetime.strptime(local_time_str, "%Y-%m-%d %H:%M")
+        
+        return clima_id, dt_local
+    except Exception as e:
+        print(f"⚠️ Error consultando API de Clima: {e}")
+        # Fallback a la hora del servidor si la API falla
+        return 0, datetime.datetime.now()
 
 def get_es_festivo() -> int:
     return 1 if datetime.date.today() in holidays.CountryHoliday("MX") else 0
@@ -201,7 +213,6 @@ def obtener_menu_variado(cluster_id: int) -> dict:
 # ─────────────────────────────────────────────
 # ENDPOINTS
 # ─────────────────────────────────────────────
-
 @app.get("/recomendar-menu")
 def recomendar_menu(
     test_hour: int = Query(None, description="Hora para testing (0-23)"),
@@ -210,13 +221,18 @@ def recomendar_menu(
     top_n: int = Query(TOP_N_POR_CATEGORIA, description="Productos por categoría"),
 ):
     if kmeans is None:
-        return {"success": False, "error": "Modelo no disponible. Ejecuta train.py primero."}
+        return {"success": False, "error": "Modelo no disponible."}
 
-    ahora = datetime.datetime.now()
-    hora = test_hour if test_hour is not None else ahora.hour
-    dia = test_dia if test_dia is not None else ahora.weekday()
-    clima = test_clima if test_clima is not None else get_clima()
-    festivo = get_es_festivo()
+    # Obtener datos reales desde la API del clima
+    clima_real, fecha_local = get_datos_contextuales()
+
+    # Prioridad: 1. Parámetros de test -> 2. Datos de la API local -> 3. Servidor
+    hora = test_hour if test_hour is not None else fecha_local.hour
+    dia = test_dia if test_dia is not None else fecha_local.weekday()
+    clima = test_clima if test_clima is not None else clima_real
+    
+    # Festivos (Usamos la fecha obtenida de la API para mayor precisión)
+    festivo = 1 if fecha_local.date() in holidays.CountryHoliday("MX") else 0
 
     input_features = construir_features(hora, dia, festivo, clima)
     cluster_id = int(kmeans.predict(input_features)[0])
@@ -232,6 +248,7 @@ def recomendar_menu(
             "clima_id": clima,
             "es_festivo": festivo,
             "cluster": cluster_id,
+            "fuente_tiempo": "WeatherAPI Localtime"
         },
         "recomendaciones": recomendaciones,
         "menu_variado": menu_variado,
