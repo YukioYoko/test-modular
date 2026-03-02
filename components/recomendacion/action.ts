@@ -45,7 +45,10 @@ export async function getRecomendacionIA() {
   const baseUrl = process.env.NEXT_PUBLIC_IA_API_URL || "http://127.0.0.1:8000";
 
   try {
-    const res = await fetch(`${baseUrl}/recomendar-menu`, { cache: 'no-store' });
+    const res = await fetch(`${baseUrl}/recomendar-menu`, { 
+  cache: 'no-store',
+  signal: AbortSignal.timeout(60000) // Aumenta el tiempo de espera a 60 segundos
+});
     const data = await res.json();
 
     if (!data.success) return null;
