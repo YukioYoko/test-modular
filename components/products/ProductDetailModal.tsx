@@ -167,7 +167,7 @@ export const ProductDetailModal = ({ producto, onClose, onAddToCart, esSoloLectu
               <button 
                   onClick={handleConfirmar}
                   disabled={isAnimating}
-                  className={`w-full py-5 rounded-[2rem] font-black text-white shadow-xl text-sm tracking-widest uppercase flex justify-center items-center gap-3 transition-all active:scale-95 ${
+                  className={`w-full py-5 rounded-4xl font-black text-white shadow-xl text-sm tracking-widest uppercase flex justify-center items-center gap-3 transition-all active:scale-95 ${
                       isAnimating ? 'bg-green-500' : 'bg-(--militar-green)'
                   }`}
               >
@@ -180,7 +180,7 @@ export const ProductDetailModal = ({ producto, onClose, onAddToCart, esSoloLectu
             ) : (
               <button 
                 onClick={onClose}
-                className="w-full py-5 rounded-[2rem] font-black text-slate-400 bg-slate-50 border border-slate-100 text-xs tracking-widest uppercase hover:bg-slate-100 transition-all"
+                className="w-full py-5 rounded-4xl font-black text-slate-400 bg-slate-50 border border-slate-100 text-xs tracking-widest uppercase hover:bg-slate-100 transition-all"
               >
                 Cerrar Visualización
               </button>

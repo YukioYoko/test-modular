@@ -134,7 +134,10 @@ export async function sendOrder(idComanda: number, carrito: any[], token: string
         if (detalleCompleto) resultados.push(detalleCompleto);
       }
       return resultados;
-    });
+    }, {
+  maxWait: 10000, // Tiempo máximo para esperar una conexión (10s)
+  timeout: 20000, // Tiempo máximo para ejecutar la transacción (20s)
+});
 
     return { 
       success: true, 
