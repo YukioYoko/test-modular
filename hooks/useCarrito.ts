@@ -7,6 +7,7 @@ import { getSugerenciasApriori } from "@/components/products/action";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 const CART_COOKIE_NAME = "foodlify_cart";
+const CART_EVENT_NAME = "foodlify_cart_updated"; // Nombre del evento de sincronización
 
 export function useCarrito(idComanda: number, token: string | null, esSoloLectura: boolean) {
   const [isPending, startTransition] = useTransition();
@@ -15,21 +16,45 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
   const [sugerenciasData, setSugerenciasData] = useState<{ nombre: string; productos: any[] } | null>(null);
   const socketRef = useRef<Socket | null>(null);
 
-  // Cargar cookies al iniciar
-  useEffect(() => {
+  // 1. Función para cargar datos de la cookie al estado de React
+  const cargarCarritoDesdeCookie = () => {
     const saved = Cookies.get(CART_COOKIE_NAME);
-    if (saved) setCarrito(JSON.parse(saved));
+    if (saved) {
+      try {
+        setCarrito(JSON.parse(saved));
+      } catch (e) {
+        setCarrito([]);
+      }
+    } else {
+      setCarrito([]);
+    }
+  };
+
+  // 2. Efecto de sincronización y Socket
+  useEffect(() => {
+    cargarCarritoDesdeCookie();
+
+    // Escuchador de eventos para actualizarse entre pestañas/componentes sin refrescar
+    const escucharCambios = () => cargarCarritoDesdeCookie();
+    window.addEventListener(CART_EVENT_NAME, escucharCambios);
     
     if (!esSoloLectura) {
       socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
-      return () => { socketRef.current?.disconnect(); };
+      return () => {
+        socketRef.current?.disconnect();
+        window.removeEventListener(CART_EVENT_NAME, escucharCambios);
+      };
     }
+    return () => window.removeEventListener(CART_EVENT_NAME, escucharCambios);
   }, [esSoloLectura]);
 
-  // Función núcleo para persistir cambios
+  // 3. Función núcleo: Actualiza estado, cookie y EMITE el evento global
   const actualizarCarritoYCookies = (nuevoCarrito: any[]) => {
     setCarrito(nuevoCarrito);
     Cookies.set(CART_COOKIE_NAME, JSON.stringify(nuevoCarrito), { expires: 7 });
+    
+    // Dispara el evento para que otros componentes se actualicen al instante
+    window.dispatchEvent(new Event(CART_EVENT_NAME));
   };
 
   const agregarAlCarritoBase = (item: any) => {
@@ -81,8 +106,10 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
     startTransition(async () => {
       const result = await sendOrder(idComanda, carrito, token);
       if (result.success) {
-        socketRef.current?.emit("new_order", { items: result.ordenCreada, fecha: new Date() });
-        actualizarCarritoYCookies([]); // Limpiar cookies al terminar
+        if (socketRef.current) {
+          socketRef.current.emit("new_order", { items: result.ordenCreada, fecha: new Date() });
+        }
+        actualizarCarritoYCookies([]); // Limpia cookies y notifica a todos
         setShowSuccess(true);
       }
     });
@@ -90,11 +117,11 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
 
   return {
     carrito,
-    setCarrito,
+    setCarrito: actualizarCarritoYCookies, // Aseguramos que setCarrito también dispare el evento
     agregarAlCarritoBase,
     agregarRapido,
     actualizarCantidad,
-    eliminarProducto, // Nueva función expuesta
+    eliminarProducto,
     enviarPedido,
     isPending,
     showSuccess,

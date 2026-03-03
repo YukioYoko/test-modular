@@ -32,6 +32,7 @@ export default function MenuCategoriasComponent({
     agregarRapido,
     actualizarCantidad,
     enviarPedido,
+    eliminarProducto,
     isPending,
     showSuccess,
     setShowSuccess,
@@ -100,12 +101,7 @@ export default function MenuCategoriasComponent({
           {/* Botón flotante del carrito (Lee el estado sincronizado) */}
           <CartButton
             items={carrito}
-            onRemoveItem={(i) => {
-               const nuevo = carrito.filter((_, idx) => idx !== i);
-               // Al usar Cookies en el Hook, asegúrate de que el Hook exponga 
-               // una función para remover o usa setCarrito si el Hook lo permite.
-               setCarrito(nuevo); 
-            }}
+            onRemoveItem={eliminarProducto}
             onUpdateQuantity={actualizarCantidad}
             onSubmit={enviarPedido}
             isPending={isPending}
