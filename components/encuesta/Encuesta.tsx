@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { guardarEncuestaIA } from "./action";
+import Link from 'next/link';
 
 const CATEGORIAS_IA = [
   { id: "entradas", label: "Entradas", icon: "🥗" },
