@@ -84,7 +84,7 @@ export const  SeccionEncuesta = ({ idComanda }: { idComanda: number }) => {
         </button>
 
 
-          {setEnviado && (
+          {enviado && (
  <Link 
             href="/menuPrueba" 
             
