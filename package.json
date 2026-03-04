@@ -32,7 +32,8 @@
     "react-dom": "19.2.3",
     "react-paypal-js": "^0.0.1-security",
     "socket.io": "^4.8.3",
-    "socket.io-client": "^4.8.3"
+    "socket.io-client": "^4.8.3",
+    "timezone-date.ts": "^2.1.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -78,6 +78,11 @@ export type Categoria = $Result.DefaultSelection<Prisma.$CategoriaPayload>
  * 
  */
 export type SubCategoria = $Result.DefaultSelection<Prisma.$SubCategoriaPayload>
+/**
+ * Model EncuestaSatisfaccion
+ * 
+ */
+export type EncuestaSatisfaccion = $Result.DefaultSelection<Prisma.$EncuestaSatisfaccionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -325,6 +330,16 @@ export class PrismaClient<
     * ```
     */
   get subCategoria(): Prisma.SubCategoriaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.encuestaSatisfaccion`: Exposes CRUD operations for the **EncuestaSatisfaccion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EncuestaSatisfaccions
+    * const encuestaSatisfaccions = await prisma.encuestaSatisfaccion.findMany()
+    * ```
+    */
+  get encuestaSatisfaccion(): Prisma.EncuestaSatisfaccionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -771,7 +786,8 @@ export namespace Prisma {
     ProductoImagen: 'ProductoImagen',
     HistorialAnalitico: 'HistorialAnalitico',
     Categoria: 'Categoria',
-    SubCategoria: 'SubCategoria'
+    SubCategoria: 'SubCategoria',
+    EncuestaSatisfaccion: 'EncuestaSatisfaccion'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -787,7 +803,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "mesero" | "mesa" | "producto" | "aditamento" | "productoAditamentos" | "comandas" | "detalleComanda" | "comandaAditamentos" | "productoImagen" | "historialAnalitico" | "categoria" | "subCategoria"
+      modelProps: "usuario" | "mesero" | "mesa" | "producto" | "aditamento" | "productoAditamentos" | "comandas" | "detalleComanda" | "comandaAditamentos" | "productoImagen" | "historialAnalitico" | "categoria" | "subCategoria" | "encuestaSatisfaccion"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1753,6 +1769,80 @@ export namespace Prisma {
           }
         }
       }
+      EncuestaSatisfaccion: {
+        payload: Prisma.$EncuestaSatisfaccionPayload<ExtArgs>
+        fields: Prisma.EncuestaSatisfaccionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EncuestaSatisfaccionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EncuestaSatisfaccionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>
+          }
+          findFirst: {
+            args: Prisma.EncuestaSatisfaccionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EncuestaSatisfaccionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>
+          }
+          findMany: {
+            args: Prisma.EncuestaSatisfaccionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>[]
+          }
+          create: {
+            args: Prisma.EncuestaSatisfaccionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>
+          }
+          createMany: {
+            args: Prisma.EncuestaSatisfaccionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EncuestaSatisfaccionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>[]
+          }
+          delete: {
+            args: Prisma.EncuestaSatisfaccionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>
+          }
+          update: {
+            args: Prisma.EncuestaSatisfaccionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>
+          }
+          deleteMany: {
+            args: Prisma.EncuestaSatisfaccionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EncuestaSatisfaccionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EncuestaSatisfaccionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>[]
+          }
+          upsert: {
+            args: Prisma.EncuestaSatisfaccionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EncuestaSatisfaccionPayload>
+          }
+          aggregate: {
+            args: Prisma.EncuestaSatisfaccionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEncuestaSatisfaccion>
+          }
+          groupBy: {
+            args: Prisma.EncuestaSatisfaccionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EncuestaSatisfaccionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EncuestaSatisfaccionCountArgs<ExtArgs>
+            result: $Utils.Optional<EncuestaSatisfaccionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1874,6 +1964,7 @@ export namespace Prisma {
     historialAnalitico?: HistorialAnaliticoOmit
     categoria?: CategoriaOmit
     subCategoria?: SubCategoriaOmit
+    encuestaSatisfaccion?: EncuestaSatisfaccionOmit
   }
 
   /* Types for Logging */
@@ -16978,6 +17069,1124 @@ export namespace Prisma {
 
 
   /**
+   * Model EncuestaSatisfaccion
+   */
+
+  export type AggregateEncuestaSatisfaccion = {
+    _count: EncuestaSatisfaccionCountAggregateOutputType | null
+    _avg: EncuestaSatisfaccionAvgAggregateOutputType | null
+    _sum: EncuestaSatisfaccionSumAggregateOutputType | null
+    _min: EncuestaSatisfaccionMinAggregateOutputType | null
+    _max: EncuestaSatisfaccionMaxAggregateOutputType | null
+  }
+
+  export type EncuestaSatisfaccionAvgAggregateOutputType = {
+    id: number | null
+    id_comanda: number | null
+    score_entradas: number | null
+    score_fuertes: number | null
+    score_postres: number | null
+    score_bebidas: number | null
+    recomendacion_app: number | null
+  }
+
+  export type EncuestaSatisfaccionSumAggregateOutputType = {
+    id: number | null
+    id_comanda: number | null
+    score_entradas: number | null
+    score_fuertes: number | null
+    score_postres: number | null
+    score_bebidas: number | null
+    recomendacion_app: number | null
+  }
+
+  export type EncuestaSatisfaccionMinAggregateOutputType = {
+    id: number | null
+    id_comanda: number | null
+    score_entradas: number | null
+    score_fuertes: number | null
+    score_postres: number | null
+    score_bebidas: number | null
+    recomendacion_app: number | null
+    funcional: boolean | null
+    comentarios: string | null
+    fecha: Date | null
+  }
+
+  export type EncuestaSatisfaccionMaxAggregateOutputType = {
+    id: number | null
+    id_comanda: number | null
+    score_entradas: number | null
+    score_fuertes: number | null
+    score_postres: number | null
+    score_bebidas: number | null
+    recomendacion_app: number | null
+    funcional: boolean | null
+    comentarios: string | null
+    fecha: Date | null
+  }
+
+  export type EncuestaSatisfaccionCountAggregateOutputType = {
+    id: number
+    id_comanda: number
+    score_entradas: number
+    score_fuertes: number
+    score_postres: number
+    score_bebidas: number
+    recomendacion_app: number
+    funcional: number
+    comentarios: number
+    fecha: number
+    _all: number
+  }
+
+
+  export type EncuestaSatisfaccionAvgAggregateInputType = {
+    id?: true
+    id_comanda?: true
+    score_entradas?: true
+    score_fuertes?: true
+    score_postres?: true
+    score_bebidas?: true
+    recomendacion_app?: true
+  }
+
+  export type EncuestaSatisfaccionSumAggregateInputType = {
+    id?: true
+    id_comanda?: true
+    score_entradas?: true
+    score_fuertes?: true
+    score_postres?: true
+    score_bebidas?: true
+    recomendacion_app?: true
+  }
+
+  export type EncuestaSatisfaccionMinAggregateInputType = {
+    id?: true
+    id_comanda?: true
+    score_entradas?: true
+    score_fuertes?: true
+    score_postres?: true
+    score_bebidas?: true
+    recomendacion_app?: true
+    funcional?: true
+    comentarios?: true
+    fecha?: true
+  }
+
+  export type EncuestaSatisfaccionMaxAggregateInputType = {
+    id?: true
+    id_comanda?: true
+    score_entradas?: true
+    score_fuertes?: true
+    score_postres?: true
+    score_bebidas?: true
+    recomendacion_app?: true
+    funcional?: true
+    comentarios?: true
+    fecha?: true
+  }
+
+  export type EncuestaSatisfaccionCountAggregateInputType = {
+    id?: true
+    id_comanda?: true
+    score_entradas?: true
+    score_fuertes?: true
+    score_postres?: true
+    score_bebidas?: true
+    recomendacion_app?: true
+    funcional?: true
+    comentarios?: true
+    fecha?: true
+    _all?: true
+  }
+
+  export type EncuestaSatisfaccionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EncuestaSatisfaccion to aggregate.
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EncuestaSatisfaccions to fetch.
+     */
+    orderBy?: EncuestaSatisfaccionOrderByWithRelationInput | EncuestaSatisfaccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EncuestaSatisfaccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EncuestaSatisfaccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EncuestaSatisfaccions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EncuestaSatisfaccions
+    **/
+    _count?: true | EncuestaSatisfaccionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EncuestaSatisfaccionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EncuestaSatisfaccionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EncuestaSatisfaccionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EncuestaSatisfaccionMaxAggregateInputType
+  }
+
+  export type GetEncuestaSatisfaccionAggregateType<T extends EncuestaSatisfaccionAggregateArgs> = {
+        [P in keyof T & keyof AggregateEncuestaSatisfaccion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEncuestaSatisfaccion[P]>
+      : GetScalarType<T[P], AggregateEncuestaSatisfaccion[P]>
+  }
+
+
+
+
+  export type EncuestaSatisfaccionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EncuestaSatisfaccionWhereInput
+    orderBy?: EncuestaSatisfaccionOrderByWithAggregationInput | EncuestaSatisfaccionOrderByWithAggregationInput[]
+    by: EncuestaSatisfaccionScalarFieldEnum[] | EncuestaSatisfaccionScalarFieldEnum
+    having?: EncuestaSatisfaccionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EncuestaSatisfaccionCountAggregateInputType | true
+    _avg?: EncuestaSatisfaccionAvgAggregateInputType
+    _sum?: EncuestaSatisfaccionSumAggregateInputType
+    _min?: EncuestaSatisfaccionMinAggregateInputType
+    _max?: EncuestaSatisfaccionMaxAggregateInputType
+  }
+
+  export type EncuestaSatisfaccionGroupByOutputType = {
+    id: number
+    id_comanda: number
+    score_entradas: number | null
+    score_fuertes: number | null
+    score_postres: number | null
+    score_bebidas: number | null
+    recomendacion_app: number
+    funcional: boolean
+    comentarios: string | null
+    fecha: Date
+    _count: EncuestaSatisfaccionCountAggregateOutputType | null
+    _avg: EncuestaSatisfaccionAvgAggregateOutputType | null
+    _sum: EncuestaSatisfaccionSumAggregateOutputType | null
+    _min: EncuestaSatisfaccionMinAggregateOutputType | null
+    _max: EncuestaSatisfaccionMaxAggregateOutputType | null
+  }
+
+  type GetEncuestaSatisfaccionGroupByPayload<T extends EncuestaSatisfaccionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EncuestaSatisfaccionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EncuestaSatisfaccionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EncuestaSatisfaccionGroupByOutputType[P]>
+            : GetScalarType<T[P], EncuestaSatisfaccionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EncuestaSatisfaccionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_comanda?: boolean
+    score_entradas?: boolean
+    score_fuertes?: boolean
+    score_postres?: boolean
+    score_bebidas?: boolean
+    recomendacion_app?: boolean
+    funcional?: boolean
+    comentarios?: boolean
+    fecha?: boolean
+  }, ExtArgs["result"]["encuestaSatisfaccion"]>
+
+  export type EncuestaSatisfaccionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_comanda?: boolean
+    score_entradas?: boolean
+    score_fuertes?: boolean
+    score_postres?: boolean
+    score_bebidas?: boolean
+    recomendacion_app?: boolean
+    funcional?: boolean
+    comentarios?: boolean
+    fecha?: boolean
+  }, ExtArgs["result"]["encuestaSatisfaccion"]>
+
+  export type EncuestaSatisfaccionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_comanda?: boolean
+    score_entradas?: boolean
+    score_fuertes?: boolean
+    score_postres?: boolean
+    score_bebidas?: boolean
+    recomendacion_app?: boolean
+    funcional?: boolean
+    comentarios?: boolean
+    fecha?: boolean
+  }, ExtArgs["result"]["encuestaSatisfaccion"]>
+
+  export type EncuestaSatisfaccionSelectScalar = {
+    id?: boolean
+    id_comanda?: boolean
+    score_entradas?: boolean
+    score_fuertes?: boolean
+    score_postres?: boolean
+    score_bebidas?: boolean
+    recomendacion_app?: boolean
+    funcional?: boolean
+    comentarios?: boolean
+    fecha?: boolean
+  }
+
+  export type EncuestaSatisfaccionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_comanda" | "score_entradas" | "score_fuertes" | "score_postres" | "score_bebidas" | "recomendacion_app" | "funcional" | "comentarios" | "fecha", ExtArgs["result"]["encuestaSatisfaccion"]>
+
+  export type $EncuestaSatisfaccionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EncuestaSatisfaccion"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_comanda: number
+      score_entradas: number | null
+      score_fuertes: number | null
+      score_postres: number | null
+      score_bebidas: number | null
+      recomendacion_app: number
+      funcional: boolean
+      comentarios: string | null
+      fecha: Date
+    }, ExtArgs["result"]["encuestaSatisfaccion"]>
+    composites: {}
+  }
+
+  type EncuestaSatisfaccionGetPayload<S extends boolean | null | undefined | EncuestaSatisfaccionDefaultArgs> = $Result.GetResult<Prisma.$EncuestaSatisfaccionPayload, S>
+
+  type EncuestaSatisfaccionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EncuestaSatisfaccionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EncuestaSatisfaccionCountAggregateInputType | true
+    }
+
+  export interface EncuestaSatisfaccionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EncuestaSatisfaccion'], meta: { name: 'EncuestaSatisfaccion' } }
+    /**
+     * Find zero or one EncuestaSatisfaccion that matches the filter.
+     * @param {EncuestaSatisfaccionFindUniqueArgs} args - Arguments to find a EncuestaSatisfaccion
+     * @example
+     * // Get one EncuestaSatisfaccion
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EncuestaSatisfaccionFindUniqueArgs>(args: SelectSubset<T, EncuestaSatisfaccionFindUniqueArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one EncuestaSatisfaccion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EncuestaSatisfaccionFindUniqueOrThrowArgs} args - Arguments to find a EncuestaSatisfaccion
+     * @example
+     * // Get one EncuestaSatisfaccion
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EncuestaSatisfaccionFindUniqueOrThrowArgs>(args: SelectSubset<T, EncuestaSatisfaccionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EncuestaSatisfaccion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionFindFirstArgs} args - Arguments to find a EncuestaSatisfaccion
+     * @example
+     * // Get one EncuestaSatisfaccion
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EncuestaSatisfaccionFindFirstArgs>(args?: SelectSubset<T, EncuestaSatisfaccionFindFirstArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EncuestaSatisfaccion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionFindFirstOrThrowArgs} args - Arguments to find a EncuestaSatisfaccion
+     * @example
+     * // Get one EncuestaSatisfaccion
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EncuestaSatisfaccionFindFirstOrThrowArgs>(args?: SelectSubset<T, EncuestaSatisfaccionFindFirstOrThrowArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more EncuestaSatisfaccions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EncuestaSatisfaccions
+     * const encuestaSatisfaccions = await prisma.encuestaSatisfaccion.findMany()
+     * 
+     * // Get first 10 EncuestaSatisfaccions
+     * const encuestaSatisfaccions = await prisma.encuestaSatisfaccion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const encuestaSatisfaccionWithIdOnly = await prisma.encuestaSatisfaccion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EncuestaSatisfaccionFindManyArgs>(args?: SelectSubset<T, EncuestaSatisfaccionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a EncuestaSatisfaccion.
+     * @param {EncuestaSatisfaccionCreateArgs} args - Arguments to create a EncuestaSatisfaccion.
+     * @example
+     * // Create one EncuestaSatisfaccion
+     * const EncuestaSatisfaccion = await prisma.encuestaSatisfaccion.create({
+     *   data: {
+     *     // ... data to create a EncuestaSatisfaccion
+     *   }
+     * })
+     * 
+     */
+    create<T extends EncuestaSatisfaccionCreateArgs>(args: SelectSubset<T, EncuestaSatisfaccionCreateArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many EncuestaSatisfaccions.
+     * @param {EncuestaSatisfaccionCreateManyArgs} args - Arguments to create many EncuestaSatisfaccions.
+     * @example
+     * // Create many EncuestaSatisfaccions
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EncuestaSatisfaccionCreateManyArgs>(args?: SelectSubset<T, EncuestaSatisfaccionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EncuestaSatisfaccions and returns the data saved in the database.
+     * @param {EncuestaSatisfaccionCreateManyAndReturnArgs} args - Arguments to create many EncuestaSatisfaccions.
+     * @example
+     * // Create many EncuestaSatisfaccions
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EncuestaSatisfaccions and only return the `id`
+     * const encuestaSatisfaccionWithIdOnly = await prisma.encuestaSatisfaccion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EncuestaSatisfaccionCreateManyAndReturnArgs>(args?: SelectSubset<T, EncuestaSatisfaccionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a EncuestaSatisfaccion.
+     * @param {EncuestaSatisfaccionDeleteArgs} args - Arguments to delete one EncuestaSatisfaccion.
+     * @example
+     * // Delete one EncuestaSatisfaccion
+     * const EncuestaSatisfaccion = await prisma.encuestaSatisfaccion.delete({
+     *   where: {
+     *     // ... filter to delete one EncuestaSatisfaccion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EncuestaSatisfaccionDeleteArgs>(args: SelectSubset<T, EncuestaSatisfaccionDeleteArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one EncuestaSatisfaccion.
+     * @param {EncuestaSatisfaccionUpdateArgs} args - Arguments to update one EncuestaSatisfaccion.
+     * @example
+     * // Update one EncuestaSatisfaccion
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EncuestaSatisfaccionUpdateArgs>(args: SelectSubset<T, EncuestaSatisfaccionUpdateArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more EncuestaSatisfaccions.
+     * @param {EncuestaSatisfaccionDeleteManyArgs} args - Arguments to filter EncuestaSatisfaccions to delete.
+     * @example
+     * // Delete a few EncuestaSatisfaccions
+     * const { count } = await prisma.encuestaSatisfaccion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EncuestaSatisfaccionDeleteManyArgs>(args?: SelectSubset<T, EncuestaSatisfaccionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EncuestaSatisfaccions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EncuestaSatisfaccions
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EncuestaSatisfaccionUpdateManyArgs>(args: SelectSubset<T, EncuestaSatisfaccionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EncuestaSatisfaccions and returns the data updated in the database.
+     * @param {EncuestaSatisfaccionUpdateManyAndReturnArgs} args - Arguments to update many EncuestaSatisfaccions.
+     * @example
+     * // Update many EncuestaSatisfaccions
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EncuestaSatisfaccions and only return the `id`
+     * const encuestaSatisfaccionWithIdOnly = await prisma.encuestaSatisfaccion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EncuestaSatisfaccionUpdateManyAndReturnArgs>(args: SelectSubset<T, EncuestaSatisfaccionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one EncuestaSatisfaccion.
+     * @param {EncuestaSatisfaccionUpsertArgs} args - Arguments to update or create a EncuestaSatisfaccion.
+     * @example
+     * // Update or create a EncuestaSatisfaccion
+     * const encuestaSatisfaccion = await prisma.encuestaSatisfaccion.upsert({
+     *   create: {
+     *     // ... data to create a EncuestaSatisfaccion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EncuestaSatisfaccion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EncuestaSatisfaccionUpsertArgs>(args: SelectSubset<T, EncuestaSatisfaccionUpsertArgs<ExtArgs>>): Prisma__EncuestaSatisfaccionClient<$Result.GetResult<Prisma.$EncuestaSatisfaccionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of EncuestaSatisfaccions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionCountArgs} args - Arguments to filter EncuestaSatisfaccions to count.
+     * @example
+     * // Count the number of EncuestaSatisfaccions
+     * const count = await prisma.encuestaSatisfaccion.count({
+     *   where: {
+     *     // ... the filter for the EncuestaSatisfaccions we want to count
+     *   }
+     * })
+    **/
+    count<T extends EncuestaSatisfaccionCountArgs>(
+      args?: Subset<T, EncuestaSatisfaccionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EncuestaSatisfaccionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EncuestaSatisfaccion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EncuestaSatisfaccionAggregateArgs>(args: Subset<T, EncuestaSatisfaccionAggregateArgs>): Prisma.PrismaPromise<GetEncuestaSatisfaccionAggregateType<T>>
+
+    /**
+     * Group by EncuestaSatisfaccion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncuestaSatisfaccionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EncuestaSatisfaccionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EncuestaSatisfaccionGroupByArgs['orderBy'] }
+        : { orderBy?: EncuestaSatisfaccionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EncuestaSatisfaccionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEncuestaSatisfaccionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EncuestaSatisfaccion model
+   */
+  readonly fields: EncuestaSatisfaccionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EncuestaSatisfaccion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EncuestaSatisfaccionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EncuestaSatisfaccion model
+   */
+  interface EncuestaSatisfaccionFieldRefs {
+    readonly id: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly id_comanda: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly score_entradas: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly score_fuertes: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly score_postres: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly score_bebidas: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly recomendacion_app: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly funcional: FieldRef<"EncuestaSatisfaccion", 'Boolean'>
+    readonly comentarios: FieldRef<"EncuestaSatisfaccion", 'String'>
+    readonly fecha: FieldRef<"EncuestaSatisfaccion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EncuestaSatisfaccion findUnique
+   */
+  export type EncuestaSatisfaccionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * Filter, which EncuestaSatisfaccion to fetch.
+     */
+    where: EncuestaSatisfaccionWhereUniqueInput
+  }
+
+  /**
+   * EncuestaSatisfaccion findUniqueOrThrow
+   */
+  export type EncuestaSatisfaccionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * Filter, which EncuestaSatisfaccion to fetch.
+     */
+    where: EncuestaSatisfaccionWhereUniqueInput
+  }
+
+  /**
+   * EncuestaSatisfaccion findFirst
+   */
+  export type EncuestaSatisfaccionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * Filter, which EncuestaSatisfaccion to fetch.
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EncuestaSatisfaccions to fetch.
+     */
+    orderBy?: EncuestaSatisfaccionOrderByWithRelationInput | EncuestaSatisfaccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EncuestaSatisfaccions.
+     */
+    cursor?: EncuestaSatisfaccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EncuestaSatisfaccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EncuestaSatisfaccions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EncuestaSatisfaccions.
+     */
+    distinct?: EncuestaSatisfaccionScalarFieldEnum | EncuestaSatisfaccionScalarFieldEnum[]
+  }
+
+  /**
+   * EncuestaSatisfaccion findFirstOrThrow
+   */
+  export type EncuestaSatisfaccionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * Filter, which EncuestaSatisfaccion to fetch.
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EncuestaSatisfaccions to fetch.
+     */
+    orderBy?: EncuestaSatisfaccionOrderByWithRelationInput | EncuestaSatisfaccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EncuestaSatisfaccions.
+     */
+    cursor?: EncuestaSatisfaccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EncuestaSatisfaccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EncuestaSatisfaccions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EncuestaSatisfaccions.
+     */
+    distinct?: EncuestaSatisfaccionScalarFieldEnum | EncuestaSatisfaccionScalarFieldEnum[]
+  }
+
+  /**
+   * EncuestaSatisfaccion findMany
+   */
+  export type EncuestaSatisfaccionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * Filter, which EncuestaSatisfaccions to fetch.
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EncuestaSatisfaccions to fetch.
+     */
+    orderBy?: EncuestaSatisfaccionOrderByWithRelationInput | EncuestaSatisfaccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EncuestaSatisfaccions.
+     */
+    cursor?: EncuestaSatisfaccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EncuestaSatisfaccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EncuestaSatisfaccions.
+     */
+    skip?: number
+    distinct?: EncuestaSatisfaccionScalarFieldEnum | EncuestaSatisfaccionScalarFieldEnum[]
+  }
+
+  /**
+   * EncuestaSatisfaccion create
+   */
+  export type EncuestaSatisfaccionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a EncuestaSatisfaccion.
+     */
+    data: XOR<EncuestaSatisfaccionCreateInput, EncuestaSatisfaccionUncheckedCreateInput>
+  }
+
+  /**
+   * EncuestaSatisfaccion createMany
+   */
+  export type EncuestaSatisfaccionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EncuestaSatisfaccions.
+     */
+    data: EncuestaSatisfaccionCreateManyInput | EncuestaSatisfaccionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EncuestaSatisfaccion createManyAndReturn
+   */
+  export type EncuestaSatisfaccionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * The data used to create many EncuestaSatisfaccions.
+     */
+    data: EncuestaSatisfaccionCreateManyInput | EncuestaSatisfaccionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EncuestaSatisfaccion update
+   */
+  export type EncuestaSatisfaccionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a EncuestaSatisfaccion.
+     */
+    data: XOR<EncuestaSatisfaccionUpdateInput, EncuestaSatisfaccionUncheckedUpdateInput>
+    /**
+     * Choose, which EncuestaSatisfaccion to update.
+     */
+    where: EncuestaSatisfaccionWhereUniqueInput
+  }
+
+  /**
+   * EncuestaSatisfaccion updateMany
+   */
+  export type EncuestaSatisfaccionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EncuestaSatisfaccions.
+     */
+    data: XOR<EncuestaSatisfaccionUpdateManyMutationInput, EncuestaSatisfaccionUncheckedUpdateManyInput>
+    /**
+     * Filter which EncuestaSatisfaccions to update
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * Limit how many EncuestaSatisfaccions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EncuestaSatisfaccion updateManyAndReturn
+   */
+  export type EncuestaSatisfaccionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * The data used to update EncuestaSatisfaccions.
+     */
+    data: XOR<EncuestaSatisfaccionUpdateManyMutationInput, EncuestaSatisfaccionUncheckedUpdateManyInput>
+    /**
+     * Filter which EncuestaSatisfaccions to update
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * Limit how many EncuestaSatisfaccions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EncuestaSatisfaccion upsert
+   */
+  export type EncuestaSatisfaccionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the EncuestaSatisfaccion to update in case it exists.
+     */
+    where: EncuestaSatisfaccionWhereUniqueInput
+    /**
+     * In case the EncuestaSatisfaccion found by the `where` argument doesn't exist, create a new EncuestaSatisfaccion with this data.
+     */
+    create: XOR<EncuestaSatisfaccionCreateInput, EncuestaSatisfaccionUncheckedCreateInput>
+    /**
+     * In case the EncuestaSatisfaccion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EncuestaSatisfaccionUpdateInput, EncuestaSatisfaccionUncheckedUpdateInput>
+  }
+
+  /**
+   * EncuestaSatisfaccion delete
+   */
+  export type EncuestaSatisfaccionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+    /**
+     * Filter which EncuestaSatisfaccion to delete.
+     */
+    where: EncuestaSatisfaccionWhereUniqueInput
+  }
+
+  /**
+   * EncuestaSatisfaccion deleteMany
+   */
+  export type EncuestaSatisfaccionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EncuestaSatisfaccions to delete
+     */
+    where?: EncuestaSatisfaccionWhereInput
+    /**
+     * Limit how many EncuestaSatisfaccions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EncuestaSatisfaccion without action
+   */
+  export type EncuestaSatisfaccionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncuestaSatisfaccion
+     */
+    select?: EncuestaSatisfaccionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EncuestaSatisfaccion
+     */
+    omit?: EncuestaSatisfaccionOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -17136,6 +18345,22 @@ export namespace Prisma {
   };
 
   export type SubCategoriaScalarFieldEnum = (typeof SubCategoriaScalarFieldEnum)[keyof typeof SubCategoriaScalarFieldEnum]
+
+
+  export const EncuestaSatisfaccionScalarFieldEnum: {
+    id: 'id',
+    id_comanda: 'id_comanda',
+    score_entradas: 'score_entradas',
+    score_fuertes: 'score_fuertes',
+    score_postres: 'score_postres',
+    score_bebidas: 'score_bebidas',
+    recomendacion_app: 'recomendacion_app',
+    funcional: 'funcional',
+    comentarios: 'comentarios',
+    fecha: 'fecha'
+  };
+
+  export type EncuestaSatisfaccionScalarFieldEnum = (typeof EncuestaSatisfaccionScalarFieldEnum)[keyof typeof EncuestaSatisfaccionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -18061,6 +19286,85 @@ export namespace Prisma {
     id_categoria?: IntWithAggregatesFilter<"SubCategoria"> | number
   }
 
+  export type EncuestaSatisfaccionWhereInput = {
+    AND?: EncuestaSatisfaccionWhereInput | EncuestaSatisfaccionWhereInput[]
+    OR?: EncuestaSatisfaccionWhereInput[]
+    NOT?: EncuestaSatisfaccionWhereInput | EncuestaSatisfaccionWhereInput[]
+    id?: IntFilter<"EncuestaSatisfaccion"> | number
+    id_comanda?: IntFilter<"EncuestaSatisfaccion"> | number
+    score_entradas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_fuertes?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_postres?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_bebidas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    recomendacion_app?: IntFilter<"EncuestaSatisfaccion"> | number
+    funcional?: BoolFilter<"EncuestaSatisfaccion"> | boolean
+    comentarios?: StringNullableFilter<"EncuestaSatisfaccion"> | string | null
+    fecha?: DateTimeFilter<"EncuestaSatisfaccion"> | Date | string
+  }
+
+  export type EncuestaSatisfaccionOrderByWithRelationInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrderInput | SortOrder
+    score_fuertes?: SortOrderInput | SortOrder
+    score_postres?: SortOrderInput | SortOrder
+    score_bebidas?: SortOrderInput | SortOrder
+    recomendacion_app?: SortOrder
+    funcional?: SortOrder
+    comentarios?: SortOrderInput | SortOrder
+    fecha?: SortOrder
+  }
+
+  export type EncuestaSatisfaccionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    id_comanda?: number
+    AND?: EncuestaSatisfaccionWhereInput | EncuestaSatisfaccionWhereInput[]
+    OR?: EncuestaSatisfaccionWhereInput[]
+    NOT?: EncuestaSatisfaccionWhereInput | EncuestaSatisfaccionWhereInput[]
+    score_entradas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_fuertes?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_postres?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_bebidas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    recomendacion_app?: IntFilter<"EncuestaSatisfaccion"> | number
+    funcional?: BoolFilter<"EncuestaSatisfaccion"> | boolean
+    comentarios?: StringNullableFilter<"EncuestaSatisfaccion"> | string | null
+    fecha?: DateTimeFilter<"EncuestaSatisfaccion"> | Date | string
+  }, "id" | "id_comanda">
+
+  export type EncuestaSatisfaccionOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrderInput | SortOrder
+    score_fuertes?: SortOrderInput | SortOrder
+    score_postres?: SortOrderInput | SortOrder
+    score_bebidas?: SortOrderInput | SortOrder
+    recomendacion_app?: SortOrder
+    funcional?: SortOrder
+    comentarios?: SortOrderInput | SortOrder
+    fecha?: SortOrder
+    _count?: EncuestaSatisfaccionCountOrderByAggregateInput
+    _avg?: EncuestaSatisfaccionAvgOrderByAggregateInput
+    _max?: EncuestaSatisfaccionMaxOrderByAggregateInput
+    _min?: EncuestaSatisfaccionMinOrderByAggregateInput
+    _sum?: EncuestaSatisfaccionSumOrderByAggregateInput
+  }
+
+  export type EncuestaSatisfaccionScalarWhereWithAggregatesInput = {
+    AND?: EncuestaSatisfaccionScalarWhereWithAggregatesInput | EncuestaSatisfaccionScalarWhereWithAggregatesInput[]
+    OR?: EncuestaSatisfaccionScalarWhereWithAggregatesInput[]
+    NOT?: EncuestaSatisfaccionScalarWhereWithAggregatesInput | EncuestaSatisfaccionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"EncuestaSatisfaccion"> | number
+    id_comanda?: IntWithAggregatesFilter<"EncuestaSatisfaccion"> | number
+    score_entradas?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
+    score_fuertes?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
+    score_postres?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
+    score_bebidas?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
+    recomendacion_app?: IntWithAggregatesFilter<"EncuestaSatisfaccion"> | number
+    funcional?: BoolWithAggregatesFilter<"EncuestaSatisfaccion"> | boolean
+    comentarios?: StringNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | string | null
+    fecha?: DateTimeWithAggregatesFilter<"EncuestaSatisfaccion"> | Date | string
+  }
+
   export type UsuarioCreateInput = {
     usuario: string
     email: string
@@ -18828,6 +20132,94 @@ export namespace Prisma {
     id_subcategoria?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     id_categoria?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EncuestaSatisfaccionCreateInput = {
+    id_comanda: number
+    score_entradas?: number | null
+    score_fuertes?: number | null
+    score_postres?: number | null
+    score_bebidas?: number | null
+    recomendacion_app: number
+    funcional?: boolean
+    comentarios?: string | null
+    fecha?: Date | string
+  }
+
+  export type EncuestaSatisfaccionUncheckedCreateInput = {
+    id?: number
+    id_comanda: number
+    score_entradas?: number | null
+    score_fuertes?: number | null
+    score_postres?: number | null
+    score_bebidas?: number | null
+    recomendacion_app: number
+    funcional?: boolean
+    comentarios?: string | null
+    fecha?: Date | string
+  }
+
+  export type EncuestaSatisfaccionUpdateInput = {
+    id_comanda?: IntFieldUpdateOperationsInput | number
+    score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_postres?: NullableIntFieldUpdateOperationsInput | number | null
+    score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
+    recomendacion_app?: IntFieldUpdateOperationsInput | number
+    funcional?: BoolFieldUpdateOperationsInput | boolean
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EncuestaSatisfaccionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_comanda?: IntFieldUpdateOperationsInput | number
+    score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_postres?: NullableIntFieldUpdateOperationsInput | number | null
+    score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
+    recomendacion_app?: IntFieldUpdateOperationsInput | number
+    funcional?: BoolFieldUpdateOperationsInput | boolean
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EncuestaSatisfaccionCreateManyInput = {
+    id?: number
+    id_comanda: number
+    score_entradas?: number | null
+    score_fuertes?: number | null
+    score_postres?: number | null
+    score_bebidas?: number | null
+    recomendacion_app: number
+    funcional?: boolean
+    comentarios?: string | null
+    fecha?: Date | string
+  }
+
+  export type EncuestaSatisfaccionUpdateManyMutationInput = {
+    id_comanda?: IntFieldUpdateOperationsInput | number
+    score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_postres?: NullableIntFieldUpdateOperationsInput | number | null
+    score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
+    recomendacion_app?: IntFieldUpdateOperationsInput | number
+    funcional?: BoolFieldUpdateOperationsInput | boolean
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EncuestaSatisfaccionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_comanda?: IntFieldUpdateOperationsInput | number
+    score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_postres?: NullableIntFieldUpdateOperationsInput | number | null
+    score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
+    recomendacion_app?: IntFieldUpdateOperationsInput | number
+    funcional?: BoolFieldUpdateOperationsInput | boolean
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -19657,6 +21049,90 @@ export namespace Prisma {
   export type SubCategoriaSumOrderByAggregateInput = {
     id_subcategoria?: SortOrder
     id_categoria?: SortOrder
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type EncuestaSatisfaccionCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrder
+    score_fuertes?: SortOrder
+    score_postres?: SortOrder
+    score_bebidas?: SortOrder
+    recomendacion_app?: SortOrder
+    funcional?: SortOrder
+    comentarios?: SortOrder
+    fecha?: SortOrder
+  }
+
+  export type EncuestaSatisfaccionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrder
+    score_fuertes?: SortOrder
+    score_postres?: SortOrder
+    score_bebidas?: SortOrder
+    recomendacion_app?: SortOrder
+  }
+
+  export type EncuestaSatisfaccionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrder
+    score_fuertes?: SortOrder
+    score_postres?: SortOrder
+    score_bebidas?: SortOrder
+    recomendacion_app?: SortOrder
+    funcional?: SortOrder
+    comentarios?: SortOrder
+    fecha?: SortOrder
+  }
+
+  export type EncuestaSatisfaccionMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrder
+    score_fuertes?: SortOrder
+    score_postres?: SortOrder
+    score_bebidas?: SortOrder
+    recomendacion_app?: SortOrder
+    funcional?: SortOrder
+    comentarios?: SortOrder
+    fecha?: SortOrder
+  }
+
+  export type EncuestaSatisfaccionSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_comanda?: SortOrder
+    score_entradas?: SortOrder
+    score_fuertes?: SortOrder
+    score_postres?: SortOrder
+    score_bebidas?: SortOrder
+    recomendacion_app?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -20547,6 +22023,10 @@ export namespace Prisma {
     deleteMany?: ProductoScalarWhereInput | ProductoScalarWhereInput[]
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -20764,6 +22244,31 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type ComandasCreateWithoutMeseroInput = {
