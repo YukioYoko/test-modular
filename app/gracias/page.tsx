@@ -1,8 +1,13 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { SeccionEncuesta } from "@/components/ui/SeccionEncuesta";
 
 export default function GraciasPage() {
+  const searchParams = useSearchParams();
+  // Obtenemos el ID de la URL. Si no existe, usamos un valor por defecto o 0
+  const idComanda = Number(searchParams.get('idComanda')) || 0;
+
   return (
     <div className="min-h-screen bg-(--light-green) flex items-center justify-center p-6">
       <div className="bg-white w-full max-w-md rounded-[3.5rem] p-10 shadow-2xl text-center border border-(--mint-green)/30 animate-in fade-in zoom-in duration-500">
@@ -15,14 +20,17 @@ export default function GraciasPage() {
           ¡Gracias por tu visita!
         </h1>
 
-        <p className="text-slate-500 font-bold text-sm mb-10 leading-relaxed uppercase tracking-widest opacity-70">
-          Esperamos que hayas disfrutado tu experiencia en <span className="text-(--militar-green)">Foodlify</span>. Tu mesa ha sido liberada exitosamente.
+        <p className="text-slate-500 font-bold text-sm mb-6 leading-relaxed uppercase tracking-widest opacity-70">
+          Esperamos que hayas disfrutado tu experiencia en <span className="text-(--militar-green)">Foodlify</span>.
         </p>
 
-        <div className="space-y-4">
+        {/* Pasamos el ID recuperado de la URL al componente de feedback */}
+        {idComanda > 0 && <SeccionEncuesta idComanda={idComanda} />}
+
+        <div className="space-y-4 mt-10">
           <Link 
             href="/menu" 
-            className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
+            className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.02] transition-all"
           >
             Volver al Menú Principal
           </Link>
