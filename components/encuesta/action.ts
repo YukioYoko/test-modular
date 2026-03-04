@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
+import { TimezoneDate } from 'timezone-date.ts'
 
 export async function guardarEncuestaIA(data: any) {
   try {
@@ -13,6 +14,7 @@ export async function guardarEncuestaIA(data: any) {
         recomendacion_app: data.recomendacionApp,
         funcional: data.funcional,
         comentarios: data.comentarios,
+        fehca: new TimezoneDate(Date.now(), { timezone: 'America/New_York' })
       },
     });
     return { success: true };
