@@ -41,12 +41,15 @@ export default function GraciasPage() {
         </Suspense>
 
         <div className="space-y-4 mt-10">
-          <Link 
+          {/**
+           * <Link 
             href="/menu" 
             className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.02] transition-all"
           >
             Volver al Menú Principal
-          </Link>
+          </Link> 
+          */}
+          
           
           <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest pt-4">
             Foodlify Platform • Guadalajara, Jal.

@@ -82,6 +82,18 @@ export const  SeccionEncuesta = ({ idComanda }: { idComanda: number }) => {
         >
           Finalizar y Enviar
         </button>
+
+
+          {setEnviado && (
+ <Link 
+            href="/menuPrueba" 
+            
+            className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.02] transition-all"
+          >
+            Hacer otra prueba
+          </Link> 
+          )}
+       
       </div>
     </div>
   );
