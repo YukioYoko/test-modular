@@ -1,7 +1,27 @@
 'use client';
+import { Suspense } from 'react'; // Paso 1: Importar Suspense
 import Link from 'next/link';
-import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { SeccionEncuesta } from "@/components";
 
+// Paso 2: Crear un sub-componente que use los searchParams
+function ContenidoGracias() {
+  const searchParams = useSearchParams();
+  const idComanda = Number(searchParams.get('idComanda')) || 0;
+
+  return (
+    <>
+      <p className="text-slate-500 font-bold text-sm mb-6 leading-relaxed uppercase tracking-widest opacity-70">
+        Esperamos que hayas disfrutado tu experiencia en <span className="text-(--militar-green)">Foodlify</span>.
+      </p>
+
+      {/* Pasamos el ID recuperado de la URL al componente de feedback */}
+      {idComanda > 0 && <SeccionEncuesta idComanda={idComanda} />}
+    </>
+  );
+}
+
+// Paso 3: Envolver el componente principal con Suspense
 export default function GraciasPage() {
   return (
     <div className="min-h-screen bg-(--light-green) flex items-center justify-center p-6">
@@ -15,17 +35,21 @@ export default function GraciasPage() {
           ¡Gracias por tu visita!
         </h1>
 
-        <p className="text-slate-500 font-bold text-sm mb-10 leading-relaxed uppercase tracking-widest opacity-70">
-          Esperamos que hayas disfrutado tu experiencia en <span className="text-(--militar-green)">Foodlify</span>. Tu mesa ha sido liberada exitosamente.
-        </p>
+        {/* El Suspense envuelve la parte que depende de la URL */}
+        <Suspense fallback={<p className="text-xs font-black animate-pulse">Cargando evaluación...</p>}>
+          <ContenidoGracias />
+        </Suspense>
 
-        <div className="space-y-4">
-          <Link 
+        <div className="space-y-4 mt-10">
+          {/**
+           * <Link 
             href="/menu" 
-            className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
+            className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.02] transition-all"
           >
             Volver al Menú Principal
-          </Link>
+          </Link> 
+          */}
+          
           
           <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest pt-4">
             Foodlify Platform • Guadalajara, Jal.
