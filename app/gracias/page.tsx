@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { SeccionEncuesta } from "@/components/ui/SeccionEncuesta";
+import { SeccionEncuesta } from "@/components";
 
 export default function GraciasPage() {
   const searchParams = useSearchParams();

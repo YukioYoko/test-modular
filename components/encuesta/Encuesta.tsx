@@ -9,7 +9,7 @@ const CATEGORIAS_IA = [
   { id: "bebidas", label: "Bebidas", icon: "🍹" },
 ];
 
-export function SeccionEncuesta({ idComanda }: { idComanda: number }) {
+export const  SeccionEncuesta = ({ idComanda }: { idComanda: number }) => {
   const [enviado, setEnviado] = useState(false);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [recomendacionApp, setRecomendacionApp] = useState(0);
