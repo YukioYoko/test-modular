@@ -88,9 +88,38 @@ except Exception as e:
     print(f"⚠️ Error al cargar modelo: {e}")
 
 
+
 # ─────────────────────────────────────────────
 # FUNCIONES AUXILIARES
 # ─────────────────────────────────────────────
+import threading
+import time
+
+def auto_peticion():
+    """
+    Función que realiza una petición al endpoint de salud cada 12 minutos
+    para evitar que Render entre en modo de suspensión.
+    """
+    # Esperar a que el servidor arranque completamente
+    time.sleep(10) 
+    url_self = "https://test-modular.onrender.com/health"
+    
+    while True:
+        try:
+            # En producción (Render), podrías usar la URL pública si prefieres, 
+            # pero localmente 127.0.0.1 funciona para mantener el proceso activo.
+            requests.get(url_self, timeout=10)
+            print(f"[{datetime.datetime.now()}] 💓 Auto-petición enviada para mantener la instancia activa.")
+        except Exception as e:
+            print(f"⚠️ Error en auto-petición: {e}")
+        
+        # Esperar 12 minutos (720 segundos)
+        time.sleep(720) 
+
+# Iniciar el hilo de persistencia al arrancar la app
+# daemon=True asegura que el hilo se cierre cuando se detenga el servidor
+threading.Thread(target=auto_peticion, daemon=True).start()
+
 def get_datos_contextuales():
     """
     Obtiene el clima y la hora local exacta desde la API de WeatherAPI.
@@ -290,4 +319,6 @@ def health():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    import os
+    port = int(os.environ.get("PORT", 8000)) # Lee el puerto de Render o usa 8000 localmente
+    uvicorn.run(app, host="0.0.0.0", port=port)

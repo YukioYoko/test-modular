@@ -2,7 +2,9 @@ fastapi==0.115.0
 uvicorn==0.30.0
 scikit-learn>=1.0.0
 joblib==1.4.2
-pandas>=2.2.2
+pandas>=2.0.0
 numpy==1.26.4
 requests==2.32.3
 holidays==0.56
+python-multipart
+pydantic-settings
