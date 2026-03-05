@@ -228,6 +228,19 @@ exports.Prisma.SubCategoriaScalarFieldEnum = {
   id_categoria: 'id_categoria'
 };
 
+exports.Prisma.EncuestaSatisfaccionScalarFieldEnum = {
+  id: 'id',
+  id_comanda: 'id_comanda',
+  score_entradas: 'score_entradas',
+  score_fuertes: 'score_fuertes',
+  score_postres: 'score_postres',
+  score_bebidas: 'score_bebidas',
+  recomendacion_app: 'recomendacion_app',
+  funcional: 'funcional',
+  comentarios: 'comentarios',
+  fecha: 'fecha'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -257,7 +270,8 @@ exports.Prisma.ModelName = {
   ProductoImagen: 'ProductoImagen',
   HistorialAnalitico: 'HistorialAnalitico',
   Categoria: 'Categoria',
-  SubCategoria: 'SubCategoria'
+  SubCategoria: 'SubCategoria',
+  EncuestaSatisfaccion: 'EncuestaSatisfaccion'
 };
 
 /**

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { registrarPagoEfectivo } from '@/app/(clientView)/cuenta/action';
+import Cookies from "js-cookie";
 
 export default function BotonEfectivo({ idComanda, desglose }: { idComanda: number, desglose: any }) {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,10 @@ export default function BotonEfectivo({ idComanda, desglose }: { idComanda: numb
 
     if (res.success) {
       alert("Pedido finalizado. Por favor pasa a caja a liquidar.");
-      router.push('/gracias'); // O a una página de agradecimiento
+      Cookies.remove("foodlify_cart"); 
+      
+      // Pasamos el idComanda por la URL
+      router.push(`/gracias?idComanda=${idComanda}`);// O a una página de agradecimiento
     } else {
       alert(res.message);
     }

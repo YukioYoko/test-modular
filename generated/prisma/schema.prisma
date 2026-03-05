@@ -172,3 +172,18 @@ model SubCategoria {
 
   @@map("subcategorias")
 }
+
+model EncuestaSatisfaccion {
+  id                Int      @id @default(autoincrement())
+  id_comanda        Int      @unique
+  // Calificaciones por categoría (1-5)
+  score_entradas    Int?
+  score_fuertes     Int?
+  score_postres     Int?
+  score_bebidas     Int?
+  // Calificación general
+  recomendacion_app Int // Del 1 al 5
+  funcional         Boolean  @default(true)
+  comentarios       String?  @db.Text
+  fecha             DateTime @default(now())
+}

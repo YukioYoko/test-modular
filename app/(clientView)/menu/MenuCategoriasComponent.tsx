@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { CartButton } from "@/components/cart/cartButton";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductDetailModal } from "@/components/products/ProductDetailModal";
@@ -17,11 +17,10 @@ export default function MenuCategoriasComponent({
   idComanda: number;
   esSoloLectura?: boolean;
 }) {
-  const router = useRouter();
   const params = useSearchParams();
   const token = params.get("token");
 
- 
+  // Estado local solo para la navegación de la UI (modales)
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
 
   // Usamos el Hook centralizado. Toda la lógica de Carrito, Cookies, 
@@ -60,8 +59,7 @@ export default function MenuCategoriasComponent({
       {selectedProduct && (
         <ProductDetailModal
           producto={selectedProduct}
-          // Pasamos el modo lectura al modal para que esconda el botón "Agregar"
-          esSoloLectura={esSoloLectura} 
+          esSoloLectura={esSoloLectura}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={(itemArmado) => {
             // Se sincroniza automáticamente con Cookies y estado local
@@ -91,7 +89,6 @@ export default function MenuCategoriasComponent({
                 });
               }}
               onSelectProduct={(prod: any) => {
-                // Si quieren ver detalle de la sugerencia
                 setSugerenciasData(null);
                 setSelectedProduct(prod);
               }}
@@ -99,10 +96,7 @@ export default function MenuCategoriasComponent({
             />
           )}
 
-          {/* Modal de Éxito */}
-          {showSuccess && (
-             <OrderSuccessModal onClose={() => setShowSuccess(false)} />
-          )}
+          {showSuccess && <OrderSuccessModal onClose={() => setShowSuccess(false)} />}
 
           {/* Botón flotante del carrito (Lee el estado sincronizado) */}
           <CartButton
@@ -111,8 +105,6 @@ export default function MenuCategoriasComponent({
             onUpdateQuantity={actualizarCantidad}
             onSubmit={enviarPedido}
             isPending={isPending}
-            idComanda={idComanda}
-            token={token}
           />
         </>
       )}
