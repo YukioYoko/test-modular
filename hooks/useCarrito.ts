@@ -112,7 +112,7 @@ const router = useRouter();
         }
         actualizarCarritoYCookies([]); // Limpia cookies y notifica a todos
         setShowSuccess(true);
-        router.push(`/cuenta?comanda=${idComanda}token=${token}`);
+        router.push(`/cuenta?comanda=${idComanda}&token=${token}`);
       }
     });
   };
