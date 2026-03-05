@@ -1,9 +1,16 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { TimezoneDate } from 'timezone-date.ts'
 
 export async function guardarEncuestaIA(data: any) {
   try {
+    // 1. Obtenemos la hora actual del sistema (que suele ser UTC en Vercel/Render)
+    const ahora = new Date();
+    
+    // 2. Calculamos el desfase de Ciudad de México (CST es UTC-6)
+    // Usamos un offset fijo de -6 horas para asegurar consistencia con Guadalajara
+    const offsetMexico = -6; 
+    const fechaMexico = new Date(ahora.getTime() + (offsetMexico * 60 * 60 * 1000));
+
     const nuevaEncuesta = await prisma.encuestaSatisfaccion.create({
       data: {
         id_comanda: data.idComanda,
@@ -14,12 +21,14 @@ export async function guardarEncuestaIA(data: any) {
         recomendacion_app: data.recomendacionApp,
         funcional: data.funcional,
         comentarios: data.comentarios,
-        fecha: new TimezoneDate(Date.now(), { timezone: 'America/New_York' })
+        // Forzamos la fecha calculada manualmente
+        fecha: fechaMexico, 
       },
     });
-    return { success: true };
+    
+    return { success: true, fecha: fechaMexico };
   } catch (error) {
-    console.error("Error al guardar encuesta:", error);
+    console.error("Error en guardarEncuestaIA:", error);
     return { success: false };
   }
 }
