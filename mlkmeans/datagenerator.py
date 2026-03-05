@@ -69,5 +69,57 @@ def generar_datos_parejos(n_comandas=400):
     pd.DataFrame(historial).to_sql('historial_analitico', engine, if_exists='append', index=False)
     print(f"✅ Se insertaron {n_comandas} comandas usando todo el catálogo de productos.")
 
+def generar_datos_sesgados_postres_v2(n_comandas=30):
+    start_id = 1058  # Ajusta según tu secuencia
+    comandas, detalles, historial = [], [], []
+
+    # ID de Postres: 13: Tiramisú, 14: Panna Cotta, 15: Gelato, 16: Otros
+    print(f"🔄 Generando {n_comandas} ejemplos con lógica de 3 climas...")
+
+    for i in range(n_comandas):
+        id_c = start_id + i
+        
+        # Rotación de clima: 0 (Sol), 1 (Nublado), 2 (Lluvia)
+        clima = i % 3 
+        hora = random.choice([22, 0]) # Tarde o Noche
+        dia = random.randint(0, 6)
+        festivo = random.choice([True, False])
+
+        # Lógica de sesgo por Clima
+        if clima == 0:
+            # Calor: Preferencia alta por Gelato (ID 15)
+            p_id = random.choices([15, 14, 13], weights=[75, 15, 10], k=1)[0]
+        elif clima == 1:
+            # Nublado: Preferencia balanceada, inclinada a Panna Cotta (ID 14)
+            p_id = random.choices([14, 13, 16], weights=[60, 30, 10], k=1)[0]
+        else:
+            # Lluvia: Preferencia alta por Tiramisú (ID 13) y postres densos
+            p_id = random.choices([13, 16, 14], weights=[80, 15, 5], k=1)[0]
+
+        precio_p = precios[p_id]
+
+        detalles.append({
+            "id_comanda": id_c, "id_producto": p_id, "cantidad": 1, 
+            "hora": hora, "status": "Servido"
+        })
+        
+        historial.append({
+            "id_producto": p_id, "id_categoria": 4, "id_subcategoria": 1,
+            "hora": hora, "dia_semana": dia, "es_festivo": festivo, "clima_id": clima
+        })
+
+        comandas.append({
+            "id_comanda": id_c, "id_mesa": 1, "id_mesero": 1,
+            "estado": "Cerrada", "pagado": True, "sub_total": precio_p, "total": precio_p
+        })
+
+    # Inserción masiva a la DB usando pandas
+    pd.DataFrame(comandas).to_sql('comandas', engine, if_exists='append', index=False)
+    pd.DataFrame(detalles).to_sql('detalle_comanda', engine, if_exists='append', index=False)
+    pd.DataFrame(historial).to_sql('historial_analitico', engine, if_exists='append', index=False)
+    
+    print(f"✅ Éxito: Se inyectaron 30 registros distribuidos en Sol, Nubes y Lluvia.")
+
 if __name__ == "__main__":
-    generar_datos_parejos(400)
+   # generar_datos_parejos(400)
+   generar_datos_sesgados_postres_v2(50)
