@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { io, Socket } from "socket.io-client";
 import { sendOrder } from "@/app/(clientView)/menu/action"; 
 import { getSugerenciasApriori } from "@/components/products/action";
+import { useRouter } from "next/navigation";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 const CART_COOKIE_NAME = "foodlify_cart";
@@ -104,6 +105,7 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
 
   const enviarPedido = () => {
     startTransition(async () => {
+      const router = useRouter();
       const result = await sendOrder(idComanda, carrito, token);
       if (result.success) {
         if (socketRef.current) {
@@ -111,6 +113,7 @@ export function useCarrito(idComanda: number, token: string | null, esSoloLectur
         }
         actualizarCarritoYCookies([]); // Limpia cookies y notifica a todos
         setShowSuccess(true);
+        router.push(`/cuenta?comanda=${idComanda}token=${token}`);
       }
     });
   };
