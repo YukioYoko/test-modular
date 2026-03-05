@@ -40,7 +40,7 @@ export default function RecomendacionMenu({ idComanda, esSoloLectura = false }: 
         {data?.recomendaciones?.map((cat: any, idx: number) => (
           <div key={idx} className="space-y-4 bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
             {/* Título de la Categoría */}
-            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 border-b border-slate-50 pb-2">
+            <h3 className="text-base font-black text-black uppercase tracking-[0.3em] text-slate-400 border-b border-slate-50 pb-2">
               {cat.categoria}
             </h3>
             
