@@ -66,7 +66,7 @@ export const SeccionEncuesta = ({ idComanda }: { idComanda: number }) => {
 
             <textarea
               placeholder="COMENTARIOS ADICIONALES (OPCIONAL)..."
-              className="w-full mt-8 bg-white rounded-2xl p-4 text-[10px] font-black uppercase border-none focus:ring-2 focus:ring-green-400 min-h-[100px]"
+              className="w-full mt-8 bg-white rounded-2xl p-4 text-[10px] font-black uppercase border-none focus:ring-2 focus:ring-green-400 min-h-25"
               onChange={(e) => setComentarios(e.target.value)}
             />
 
