@@ -14,7 +14,7 @@ export async function guardarEncuestaIA(data: any) {
         recomendacion_app: data.recomendacionApp,
         funcional: data.funcional,
         comentarios: data.comentarios,
-        fehca: new TimezoneDate(Date.now(), { timezone: 'America/New_York' })
+        fecha: new TimezoneDate(Date.now(), { timezone: 'America/New_York' })
       },
     });
     return { success: true };
