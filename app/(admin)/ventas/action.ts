@@ -45,7 +45,7 @@ export async function getVentasFiltradas(filtros: {
   try {
     const ventas = await prisma.comandas.findMany({
       where,
-      take: 30, // Limitamos a las últimas 30 como pediste
+       // Limitamos a las últimas 30 como pediste
       orderBy: { fecha_hora: 'desc' },
       include: {
         mesa: true,
