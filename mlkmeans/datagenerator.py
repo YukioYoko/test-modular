@@ -1,7 +1,8 @@
 import pandas as pd
 import random
 import datetime
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
+import sqlalchemy
 
 # Configuración de tu conexión a Neon
 DATABASE_URL = "postgresql://neondb_owner:npg_Qqc7DRHTp6lS@ep-withered-river-ahnhmx9o-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require" 
@@ -120,6 +121,130 @@ def generar_datos_sesgados_postres_v2(n_comandas=30):
     
     print(f"✅ Éxito: Se inyectaron 30 registros distribuidos en Sol, Nubes y Lluvia.")
 
+
+def generar_comandas_personalizadas(n_comandas=20, hora_fija=14, clima_fijo=0, categorias_objetivo=[[33,5],[32,5]]):
+    # 1. Obtener el último id_comanda de la base de datos para evitar duplicados
+    try:
+        query_max_id = "SELECT MAX(id_comanda) FROM comandas"
+        with engine.connect() as connection:
+            result = connection.execute(sqlalchemy.text(query_max_id))
+            max_id = result.scalar()
+            # Si la tabla está vacía, empezamos en 1, si no, en el siguiente
+            start_id = (max_id if max_id is not None else 0) + 1
+    except Exception as e:
+        print(f"⚠️ Error al obtener el ID máximo: {e}. Usando valor por defecto.")
+        start_id = 1500 # Valor de respaldo
+
+    comandas, detalles, historial = [], [], []
+
+    print(f"🚀 Generando {n_comandas} comandas personalizadas (Hora: {hora_fija}:00, Clima: {clima_fijo})...")
+    print(f"🆔 Empezando desde el ID de comanda: {start_id}")
+
+    for i in range(n_comandas):
+        id_c = start_id + i
+        dia = random.randint(0, 6)
+        festivo = random.choice([True, False])
+        
+        total_comanda = 0
+        
+        for p_info in categorias_objetivo:
+            prod_id = p_info[0] 
+            cat_id = p_info[1]
+            
+            precio_p = precios[prod_id]
+            total_comanda += precio_p
+
+            detalles.append({
+                "id_comanda": id_c, 
+                "id_producto": prod_id, 
+                "cantidad": 1, 
+                "hora": hora_fija, 
+                "status": "Servido"
+            })
+            
+            historial.append({
+                "id_producto": prod_id, 
+                "id_categoria": cat_id, 
+                "id_subcategoria": 1,
+                "hora": hora_fija, 
+                "dia_semana": dia, 
+                "es_festivo": festivo, 
+                "clima_id": clima_fijo
+            })
+
+        comandas.append({
+            "id_comanda": id_c, "id_mesa": 1, "id_mesero": 1,
+            "estado": "Cerrada", "pagado": True, "sub_total": total_comanda, "total": total_comanda
+        })
+
+    # Inserción a la DB
+    pd.DataFrame(comandas).to_sql('comandas', engine, if_exists='append', index=False)
+    pd.DataFrame(detalles).to_sql('detalle_comanda', engine, if_exists='append', index=False)
+    pd.DataFrame(historial).to_sql('historial_analitico', engine, if_exists='append', index=False)
+    
+    print(f"✅ Inserción completada exitosamente desde el ID {start_id} al {id_c}.")
+
+def llenar_encuestas_satisfaccion():
+    """
+    Genera encuestas para las comandas existentes que aún no tienen una.
+    """
+    print("🔍 Consultando comandas disponibles...")
+    
+    # 1. Obtener IDs de comandas que NO tienen encuesta aún
+    query_comandas = """
+        SELECT c.id_comanda 
+        FROM comandas c
+        LEFT JOIN "EncuestaSatisfaccion" e ON c.id_comanda = e.id_comanda
+        WHERE e.id_comanda IS NULL 
+        AND c.id_comanda > 853;
+    """
+    
+    with engine.connect() as conn:
+        ids_comandas = [row[0] for row in conn.execute(text(query_comandas))]
+
+    if not ids_comandas:
+        print("✅ Todas las comandas ya tienen encuestas asociadas.")
+        return
+
+    encuestas = []
+    comentarios_positivos = ["Excelentes recomendaciones", "Las recomendaciones son buenas y se me antojo la comida", "Me agradaron las recomendaciones, justo lo que queria pedir", "Muy buenas recomendaciones"]
+    comentarios_neutrales = ["Estan bien las recomendaciones pero se repite mucho el plato fuerte", "Me gustaron las recomendaciones", "Buenas recomendaciones", "Estan bien las recomendaciones"]
+
+    print(f"✍️ Generando {len(ids_comandas)} encuestas...")
+
+    for id_c in ids_comandas:
+        # Generamos scores (1 a 5)
+        score_ent = random.randint(3, 5)
+        score_fuer = random.randint(3, 5)
+        score_post = random.randint(4, 5)
+        score_bebi = random.randint(4, 5)
+        
+        # Promedio simple para decidir el comentario
+        promedio = (score_ent + score_fuer + score_post + score_bebi) / 4
+        
+        encuestas.append({
+            "id_comanda": id_c,
+            "score_entradas": score_ent,
+            "score_fuertes": score_fuer,
+            "score_postres": score_post,
+            "score_bebidas": score_bebi,
+            "recomendacion_app": random.randint(4, 5), # Sesgo positivo para la App
+            "funcional": True, # Según tu esquema 'funcional' default true
+            "comentarios": random.choice(comentarios_positivos if promedio >= 4 else comentarios_neutrales)
+        })
+
+    # 2. Inserción a la base de datos
+    try:
+        df_encuestas = pd.DataFrame(encuestas)
+        # Nota: Asegúrate que el nombre de la tabla coincida exactamente (mayúsculas/minúsculas)
+        df_encuestas.to_sql('EncuestaSatisfaccion', engine, if_exists='append', index=False)
+        print(f"✅ Éxito: Se insertaron {len(encuestas)} nuevas encuestas.")
+    except Exception as e:
+        print(f"❌ Error al insertar: {e}")
+
 if __name__ == "__main__":
-   # generar_datos_parejos(400)
-   generar_datos_sesgados_postres_v2(50)
+    # EJEMPLO 1: Forzar consumo de Ensaladas (6) y Bebidas (5) a la hora de la comida con Sol
+    #generar_comandas_personalizadas(n_comandas=60, hora_fija=16, clima_fijo=1, categorias_objetivo=[[33,5],[32,5],[8,2],[4,4]])
+    llenar_encuestas_satisfaccion()
+    # EJEMPLO 2: Forzar consumo de Pastas (2) y Postres (4) en la cena con Lluvia
+    # generar_comandas_personalizadas(n_comandas=25, hora_fija=21, clima_fijo=2, categorias_objetivo=[2, 4])
