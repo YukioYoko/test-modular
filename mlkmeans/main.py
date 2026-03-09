@@ -181,28 +181,53 @@ def construir_features(hora: int, dia_semana: int, es_festivo: int, clima_id: in
 
 
 def obtener_recomendaciones(cluster_id: int, top_n: int = TOP_N_POR_CATEGORIA) -> dict:
-    """Top N productos por categoría con fallback a popularidad global."""
+    """
+    Top N productos por categoría aplicando una penalización a la popularidad global
+    para favorecer el descubrimiento de productos contextuales.
+    """
     recomendaciones = {}
     cluster_dist = distribuciones.get(cluster_id, {})
+    
+    # Factor de penalización (0.0 a 1.0). 
+    # 0.4 es un buen equilibrio para no ocultar los favoritos pero dar variedad.
+    PENALIZACION = 0.4 
 
     for cat_id, cat_nombre in CATEGORIAS.items():
         prod_probs = cluster_dist.get(cat_id, {})
+        
+        # Fallback a popularidad global si el cluster no tiene datos de esta categoría
         if not prod_probs:
             prod_probs = popularidad_global.get(cat_id, {})
+            fuente = "global"
+        else:
+            fuente = "cluster"
+
         if not prod_probs:
             continue
 
-        sorted_prods = sorted(prod_probs.items(), key=lambda x: -x[1])
-        top_productos = [
-            {"id_producto": int(prod_id), "score": round(prob * 100, 1)}
-            for prod_id, prob in sorted_prods[:top_n]
-        ]
+        # Aplicar Penalización de Popularidad
+        # Score = Prob_Local * (1 - (Prob_Global * Penalización))
+        prods_con_score = []
+        for prod_id, prob_local in prod_probs.items():
+            prob_global = popularidad_global.get(cat_id, {}).get(prod_id, 0)
+            
+            # Si el producto es muy común globalmente, su score baja ligeramente
+            score_ajustado = prob_local * (1 - (prob_global * PENALIZACION))
+            
+            prods_con_score.append({
+                "id_producto": int(prod_id),
+                "score_original": round(prob_local * 100, 1),
+                "score_relevancia": round(score_ajustado * 100, 1)
+            })
+
+        # Ordenar por el nuevo score de relevancia
+        sorted_prods = sorted(prods_con_score, key=lambda x: -x["score_relevancia"])
 
         recomendaciones[cat_id] = {
             "categoria": cat_nombre,
             "key": CAT_KEY_MAP.get(cat_id, f"cat_{cat_id}"),
-            "productos": top_productos,
-            "fuente": "cluster" if cat_id in cluster_dist else "global",
+            "productos": sorted_prods[:top_n],
+            "fuente": fuente,
         }
 
     return recomendaciones

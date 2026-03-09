@@ -35,12 +35,12 @@ CAT_COLUMNS = {
 
 # Pesos para las features contextuales
 WEIGHTS = {
-    "hora": 1.5,
-    "dia_semana": 0.5,
-    "es_festivo": 1.0,
-    "clima_id": 3.0,
+    "hora": 3.0,
+    "dia_semana": 2.5,    # 🔥 Aumentado de 0.5 para dar relevancia al día específico
+    "es_festivo": 2.0,    # 🔥 Aumentado de 1.0 para captar días especiales
+    "clima_id": 3.0,      # ⚖️ Reducido de 5.0 para que no opaque a los demás
     "franja": 2.5,
-    "es_finsemana": 0.8,
+    "es_finsemana": 2.5,
 }
 
 OUTPUT_PATH = os.path.join("ml", "modelo_kmeans.pkl")
