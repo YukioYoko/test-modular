@@ -5,8 +5,9 @@ import { getVentasFiltradas } from './action';
 export default function VentasPage() {
   const [ventas, setVentas] = useState<any[]>([]);
   const [cargando, setCargando] = useState(true);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const itemsPorPagina = 50;
 
-  // Estados de filtros con la fecha de hoy por defecto
   const [filtros, setFiltros] = useState({
     busqueda: '',
     status: 'Todos',
@@ -15,19 +16,27 @@ export default function VentasPage() {
     fechaFin: new Date().toISOString().split('T')[0]
   });
 
+  // Reiniciar a página 1 cuando cambien los filtros
   useEffect(() => {
     setCargando(true);
     getVentasFiltradas(filtros).then(data => {
       setVentas(data);
+      setPaginaActual(1);
       setCargando(false);
     });
   }, [filtros]);
 
-  // Cálculo de totales rápidos para el dashboard
+  // Lógica de Paginación en Cliente
+  const ventasPaginadas = useMemo(() => {
+    const inicio = (paginaActual - 1) * itemsPorPagina;
+    return ventas.slice(inicio, inicio + itemsPorPagina);
+  }, [ventas, paginaActual]);
+
+  const totalPaginas = Math.ceil(ventas.length / itemsPorPagina);
+
   const totalVendido = useMemo(() => {
     return ventas.reduce((acc, v) => acc + Number(v.total || 0), 0);
   }, [ventas]);
-
   return (
     <div className="p-4 md:p-10 bg-(--light-green) min-h-screen font-sans">
       {/* HEADER & RESUMEN */}
@@ -120,45 +129,63 @@ export default function VentasPage() {
             <tbody className="divide-y divide-(--light-green)">
               {cargando ? (
                 <tr><td colSpan={5} className="p-20 text-center font-bold text-(--militar-green) animate-pulse">CARGANDO VENTAS...</td></tr>
-              ) : ventas.map((v) => (
+              ) : ventasPaginadas.map((v) => (
                 <tr key={v.id_comanda} className="hover:bg-(--light-green)/30 transition-colors">
+                  {/* ... (Celdas de la tabla se mantienen igual) ... */}
                   <td className="p-6">
-                    <div className="text-sm font-bold text-(--militar-green)">
-                      {new Date(v.fecha_hora).toLocaleDateString()}
-                    </div>
-                    <div className="text-[10px] font-medium text-gray-400 uppercase">
-                      {new Date(v.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </div>
+                    <div className="text-sm font-bold text-(--militar-green)">{new Date(v.fecha_hora).toLocaleDateString()}</div>
+                    <div className="text-[10px] font-medium text-gray-400 uppercase">{new Date(v.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                   </td>
                   <td className="p-6">
                     <div className="font-black text-(--militar-green) text-sm uppercase">Mesa {v.id_mesa}</div>
                     <div className="text-[10px] font-bold text-gray-400 uppercase">Mesero: {v.id_mesero}</div>
                   </td>
                   <td className="p-6">
-                    <span className="font-mono text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-lg border border-blue-100 uppercase">
-                      {v.token || 'S/N'}
-                    </span>
+                    <span className="font-mono text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-lg border border-blue-100 uppercase">{v.token || 'S/N'}</span>
                   </td>
                   <td className="p-6">
-                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase ${
-                      v.estado === 'Pagada' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'
-                    }`}>
+                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase ${v.estado === 'Pagada' || v.estado === 'Cerrada' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
                       {v.estado}
                     </span>
                   </td>
                   <td className="p-6 text-right">
-                    <div className="text-xl font-black text-(--militar-green)">
-                      ${Number(v.total).toFixed(2)}
-                    </div>
-                    <div className="text-[9px] font-black text-gray-300 uppercase">
-                      {v.metodo_pago?.includes('Efectivo') ? '💵 Efectivo' : '💳 Tarjeta'}
-                    </div>
+                    <div className="text-xl font-black text-(--militar-green)">${Number(v.total).toFixed(2)}</div>
+                    <div className="text-[9px] font-black text-gray-300 uppercase">{v.metodo_pago}</div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* CONTROLES DE PAGINACIÓN */}
+        {!cargando && ventas.length > 0 && (
+          <div className="p-6 bg-gray-50/50 border-t border-(--light-green) flex justify-between items-center">
+            <span className="text-xs font-bold text-gray-400 uppercase">
+              Mostrando {ventasPaginadas.length} de {ventas.length} comandas
+            </span>
+            <div className="flex gap-2">
+              <button 
+                disabled={paginaActual === 1}
+                onClick={() => setPaginaActual(prev => prev - 1)}
+                className="px-4 py-2 rounded-xl font-black text-xs uppercase bg-white border border-(--mint-green) disabled:opacity-30 text-(--militar-green)"
+              >
+                Anterior
+              </button>
+              <div className="flex items-center px-4 font-black text-(--militar-green) text-sm">
+                {paginaActual} / {totalPaginas}
+              </div>
+              <button 
+                disabled={paginaActual === totalPaginas}
+                onClick={() => setPaginaActual(prev => prev + 1)}
+                className="px-4 py-2 rounded-xl font-black text-xs uppercase bg-(--militar-green) text-white disabled:opacity-30"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        )}
+
         {!cargando && ventas.length === 0 && (
           <div className="p-20 text-center">
             <div className="text-4xl mb-4">🏜️</div>
