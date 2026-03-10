@@ -1,10 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react'; // Importamos Suspense
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { confirmarPagoCaja, buscarComandaParaCobro } from './action';
 import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle } from 'lucide-react';
 
-export default function CajaPage() {
+// 1. Movemos toda tu lógica actual a un componente interno
+function CajaContent() {
   const [comanda, setComanda] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [pagoExitoso, setPagoExitoso] = useState(false);
@@ -48,7 +49,7 @@ export default function CajaPage() {
     setComanda(null);
     setPagoExitoso(false);
     setError("");
-    window.location.reload(); // Reiniciar scanner
+    window.location.reload(); 
   };
 
   return (
@@ -61,7 +62,6 @@ export default function CajaPage() {
       </header>
 
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* ESCÁNER Y BÚSQUEDA */}
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-bold text-xs uppercase italic">
@@ -82,7 +82,6 @@ export default function CajaPage() {
           </div>
         </section>
 
-        {/* DETALLE DE COBRO */}
         <section className="bg-white rounded-[2rem] shadow-xl border border-slate-100 p-8 flex flex-col justify-between">
           {comanda ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -140,5 +139,18 @@ export default function CajaPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+// 2. Exportamos la página envuelta en Suspense
+export default function CajaPage() {
+  return (
+    <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center bg-slate-50">
+            <Loader2 className="animate-spin text-emerald-500" size={48} />
+        </div>
+    }>
+      <CajaContent />
+    </Suspense>
   );
 }
