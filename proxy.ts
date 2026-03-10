@@ -15,7 +15,7 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
 
   if (esRutaPublica) {
     // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
-    if (pathname === '/login') {
+    if (pathname === '/login' && session) {
       try {
         const user = JSON.parse(session.value);
         const rol = user.rol?.toLowerCase();
