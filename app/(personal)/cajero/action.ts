@@ -29,7 +29,7 @@ export async function confirmarPagoCaja(id_comanda: number, metodo: string = 'Ef
       });
 
       // 2. Liberar mesa
-      await tx.mesas.update({
+      await tx.mesa.update({
         where: { id_mesa: comanda.id_mesa },
         data: { estado: 'Libre' }
       });
