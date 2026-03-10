@@ -33,7 +33,7 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
   // 2. PROTECCIÓN GLOBAL: Si no hay sesión, todos al login
   // =========================================================
   if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/menu', request.url));
   }
 
   try {
@@ -54,6 +54,12 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
       if (rol === 'hostess') return NextResponse.next();
       return NextResponse.redirect(new URL(`/${rol}`, request.url));
     }
+
+    if (pathname.startsWith('/cajero')) {
+      if (rol === 'cajero') return NextResponse.next();
+      return NextResponse.redirect(new URL(`/${rol}`, request.url));
+    }
+
 
     // C. REGLAS PARA COCINA / COCINERO
     if (pathname.startsWith('/cocina') || pathname.startsWith('/cocinero')) {
