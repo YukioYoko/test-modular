@@ -18,6 +18,8 @@ export async function guardarEncuestaIA(data: any) {
         score_fuertes: data.scores.fuertes,
         score_postres: data.scores.postres,
         score_bebidas: data.scores.bebidas,
+        score_pastas: data.scores.pastas,
+        score_ensaladas: data.scores.ensaladas,
         recomendacion_app: data.recomendacionApp,
         funcional: data.funcional,
         comentarios: data.comentarios,

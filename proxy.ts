@@ -62,7 +62,7 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
     }
 
     // D. RUTAS DE ADMINISTRACIÓN
-    const rutasPrivadasAdmin = ['/home', '/ventas', '/productos', '/usuarios', '/categorias', '/aditamentos', '/personal'];
+    const rutasPrivadasAdmin = ['/home', '/ventas', '/productos', '/usuarios', '/categorias', '/aditamentos', '/personal', '/menuPrueba'];
     const intentaEntrarAAdmin = rutasPrivadasAdmin.some(ruta => pathname.startsWith(ruta));
 
     if (intentaEntrarAAdmin && rol !== 'admin') {

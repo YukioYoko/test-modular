@@ -2,7 +2,6 @@
 
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
-// Importación con ruta relativa física para evitar errores de alias en (groups)
 import { registrarPagoExitoso } from "../../app/(clientView)/cuenta/action";
 
 interface Props {
@@ -49,7 +48,7 @@ export default function PaypalBut({ amount, idComanda, desglose }: Props) {
             );
 
             if (result.success) {
-              router.push('/gracias'); // O la página de éxito que prefieras
+              router.push(`/gracias?idComanda=${idComanda}`);
             } else {
               alert(`Error: El pago se procesó pero la mesa sigue ocupada. Contacta al mesero. ${result.message}`);
             }
