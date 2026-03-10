@@ -5,16 +5,11 @@ export function proxy(request: NextRequest) {
   const session = request.cookies.get('session_user');
   const { pathname } = request.nextUrl;
 
-  // =========================================================
   // 1. EXCEPCIONES: Rutas que NO requieren sesión (Públicas)
-  // =========================================================
-  
-  // Agregamos /menu para que los clientes puedan ver los productos
- // En middleware.ts
-const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || pathname === '/gracias' || pathname === '/cuenta';
+  const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || pathname === '/gracias' || pathname === '/cuenta';
 
   if (esRutaPublica) {
-    // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
+    // Si ya tiene sesión, lo mandamos a su ruta base
     if (pathname === '/login' && session) {
       try {
         const user = JSON.parse(session.value);
@@ -25,25 +20,17 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
         return NextResponse.next();
       }
     }
-    // Si es /menu o /login sin sesión, permitimos el paso
     return NextResponse.next();
   }
-
-  // =========================================================
   // 2. PROTECCIÓN GLOBAL: Si no hay sesión, todos al login
-  // =========================================================
   if (!session) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
   try {
+    // REGLAS POR JERARQUÍA (Solo usuarios con sesión)
     const userData = JSON.parse(session.value);
     const rol = userData.rol?.toLowerCase();
-
-    // ==========================================
-    // REGLAS POR JERARQUÍA (Solo usuarios con sesión)
-    // ==========================================
-
     // A. El ADMIN puede entrar a TODO
     if (rol === 'admin') {
       return NextResponse.next();
@@ -70,7 +57,6 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
     }
 
   } catch (error) {
-    // Si la cookie está corrupta
     const response = NextResponse.redirect(new URL('/login', request.url));
     response.cookies.delete('session_user');
     return response;

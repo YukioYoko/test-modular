@@ -241,10 +241,107 @@ def llenar_encuestas_satisfaccion():
         print(f"✅ Éxito: Se insertaron {len(encuestas)} nuevas encuestas.")
     except Exception as e:
         print(f"❌ Error al insertar: {e}")
+import random
+from sqlalchemy import text
+
+def modificar_totales_masivos(id_inicio, id_fin):
+    """
+    Modifica el total de un rango de comandas con valores aleatorios entre 2700 y 3600.
+    Recalcula sub_total e iva (16%) para cada una.
+    """
+    iva_factor = 1.16
+    actualizados = 0
+
+    print(f"Update: Iniciando actualización masiva desde ID {id_inicio} hasta {id_fin}...")
+
+    # Usamos una transacción para asegurar que los datos sean consistentes
+    try:
+        with engine.begin() as connection:
+            for id_c in range(id_inicio, id_fin + 1):
+                # Generar total aleatorio
+                nuevo_total = float(random.randint(2200, 2400))
+                
+                # Calcular desgloses
+                subtotal = round(nuevo_total / iva_factor, 2)
+                impuestos = round(nuevo_total - subtotal, 2)
+
+                query = text("""
+                    UPDATE comandas 
+                    SET total = :total, 
+                        sub_total = :subtotal,
+                        impuestos = :impuestos
+                    WHERE id_comanda = :id_comanda
+                """)
+
+                result = connection.execute(query, {
+                    "total": nuevo_total,
+                    "subtotal": subtotal,
+                    "impuestos": impuestos,
+                    "id_comanda": id_c
+                })
+                
+                if result.rowcount > 0:
+                    actualizados += result.rowcount
+
+        print(f"✅ Éxito: Se actualizaron {actualizados} comandas con totales aleatorios.")
+        
+    except Exception as e:
+        print(f"❌ Error durante la actualización masiva: {e}")
+
+def corregir_comandas_en_cero():
+    """
+    Busca todas las comandas con total 0 y les asigna un valor aleatorio 
+    entre 2700 y 3600, recalculando sub_total e iva.
+    """
+    iva_factor = 1.16
+    
+    # 1. Primero identificamos qué IDs están en cero
+    query_busqueda = text("SELECT id_comanda FROM comandas WHERE total = 0 OR total IS NULL")
+    
+    try:
+        with engine.connect() as conn:
+            ids_a_corregir = [row[0] for row in conn.execute(query_busqueda)]
+        
+        if not ids_a_corregir:
+            print("✅ No se encontraron comandas con valor $0. Todo está en orden.")
+            return
+
+        print(f"🛠️ Se encontraron {len(ids_a_corregir)} comandas en cero. Corrigiendo...")
+
+        # 2. Actualizamos masivamente en una transacción
+        with engine.begin() as connection:
+            for id_c in ids_a_corregir:
+                nuevo_total = float(random.randint(1000, 2500))
+                subtotal = round(nuevo_total / iva_factor, 2)
+                impuestos = round(nuevo_total - subtotal, 2)
+
+                query_update = text("""
+                    UPDATE comandas 
+                    SET total = :total, 
+                        sub_total = :subtotal,
+                        impuestos = :impuestos,
+                        estado = 'Cerrada',
+                        pagado = True
+                    WHERE id_comanda = :id_comanda
+                """)
+
+                connection.execute(query_update, {
+                    "total": nuevo_total,
+                    "subtotal": subtotal,
+                    "impuestos": impuestos,
+                    "id_comanda": id_c
+                })
+
+        print(f"✅ Éxito: Se corrigieron {len(ids_a_corregir)} registros que estaban en cero.")
+
+    except Exception as e:
+        print(f"❌ Error al corregir comandas: {e}")
 
 if __name__ == "__main__":
     # EJEMPLO 1: Forzar consumo de Ensaladas (6) y Bebidas (5) a la hora de la comida con Sol
     #generar_comandas_personalizadas(n_comandas=60, hora_fija=16, clima_fijo=1, categorias_objetivo=[[33,5],[32,5],[8,2],[4,4]])
-    llenar_encuestas_satisfaccion()
+    #llenar_encuestas_satisfaccion()
     # EJEMPLO 2: Forzar consumo de Pastas (2) y Postres (4) en la cena con Lluvia
     # generar_comandas_personalizadas(n_comandas=25, hora_fija=21, clima_fijo=2, categorias_objetivo=[2, 4])
+    modificar_totales_masivos(1557, 1656)
+    #corregir_comandas_en_cero()
