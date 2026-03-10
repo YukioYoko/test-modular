@@ -7,9 +7,10 @@ import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle, Phone } 
 export default function CajaClient() {
   const [comanda, setComanda] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [pagoExitoso, setPagoExitoso] = useState(false);
-  const [waLinkBase, setWaLinkBase] = useState(""); // El mensaje sin el teléfono
-  const [telefono, setTelefono] = useState(""); // El número que ingrese el cajero
+  const [pagado, setPagado] = useState(false); // Estado de la BD
+  const [pagoExitoso, setPagoExitoso] = useState(false); // Éxito de la transacción actual
+  const [waLinkBase, setWaLinkBase] = useState(""); 
+  const [telefono, setTelefono] = useState(""); 
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -36,11 +37,12 @@ export default function CajaClient() {
     if (isNaN(id)) return;
     setLoading(true);
     setPagoExitoso(false);
-    setTelefono(""); // Limpiar teléfono previo
+    setTelefono("");
     setError("");
     const res = await buscarComandaParaCobro(id);
     if (res) {
         setComanda(res);
+        setPagado(res.pagado); // Sincronizamos si ya fue pagada antes
     } else {
         setError("Comanda no encontrada");
         setComanda(null);
@@ -53,8 +55,9 @@ export default function CajaClient() {
     setLoading(true);
     const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
     if (res.success) {
-      setWaLinkBase(res.waLink || ""); // Guardamos el link con el mensaje
+      setWaLinkBase(res.waLink || ""); 
       setPagoExitoso(true);
+      setPagado(true);
     } else {
       setError(res.error || "Error al procesar el pago");
     }
@@ -64,18 +67,16 @@ export default function CajaClient() {
   const resetCaja = () => {
     setComanda(null);
     setPagoExitoso(false);
+    setPagado(false);
     setTelefono("");
     setError("");
     window.location.reload(); 
   };
 
-  // Función para construir el link final con el teléfono dinámico
   const getWhatsAppFinalLink = () => {
     if (!waLinkBase) return "#";
-    // Si el cajero ingresa el número, lo unimos al link base de wa.me
-    // Quitamos espacios o caracteres especiales que el cajero pudiera meter
     const numLimpio = telefono.replace(/\D/g, '');
-    const prefix = numLimpio.startsWith('52') ? '' : '52'; // Asumimos México si no trae prefijo
+    const prefix = numLimpio.startsWith('52') ? '' : '52';
     return `${waLinkBase.replace('https://wa.me/?text=', `https://wa.me/${prefix}${numLimpio}?text=`)}`;
   };
 
@@ -91,10 +92,9 @@ export default function CajaClient() {
       </header>
 
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* SECCIÓN ESCÁNER */}
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
-            <div className="flex items-center gap-2 mb-4 text-slate-400 font-bold text-xs uppercase italic">
+            <div className="flex items-center gap-2 mb-4 text-slate-400 font-bold text-xs uppercase italic text-center justify-center">
               <Camera size={16} /> Escanear QR del Cliente
             </div>
             <div id="reader" className="rounded-2xl overflow-hidden border-0 bg-slate-100 min-h-[300px]"></div>
@@ -119,7 +119,6 @@ export default function CajaClient() {
           </div>
         </section>
 
-        {/* SECCIÓN DETALLE Y COBRO */}
         <section className="bg-white rounded-[2rem] shadow-xl border border-slate-100 p-8 flex flex-col justify-between min-h-[500px]">
           {comanda ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -130,7 +129,9 @@ export default function CajaClient() {
                 </div>
                 <div className="text-right text-[10px] font-bold text-slate-400 uppercase">
                   <p>Estado</p>
-                  <p className="text-orange-500">{comanda.estado}</p>
+                  <p className={pagado ? "text-emerald-500" : "text-orange-500"}>
+                    {pagado ? "LIQUIDADA" : "PENDIENTE"}
+                  </p>
                 </div>
               </div>
 
@@ -144,29 +145,38 @@ export default function CajaClient() {
               </div>
 
               <div className="bg-slate-900 text-white p-6 rounded-[1.5rem] mb-6 shadow-inner">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Total a Cobrar</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Total de la cuenta</p>
                 <h3 className="text-4xl font-black">${Number(comanda.total).toFixed(2)}</h3>
               </div>
 
               {!pagoExitoso ? (
                 <button 
                   onClick={handleCobrar} 
-                  disabled={loading}
-                  className="w-full bg-emerald-500 text-white py-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-emerald-600 transition-all disabled:opacity-50 shadow-lg shadow-emerald-100"
+                  disabled={loading || pagado}
+                  className={`w-full py-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-lg 
+                    ${pagado 
+                      ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200' 
+                      : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-100'
+                    } disabled:opacity-50`}
                 >
-                  {loading ? <Loader2 className="animate-spin" /> : <CheckCircle2 />}
-                  Registrar Pago y Cerrar Mesa
+                  {loading ? (
+                    <Loader2 className="animate-spin" />
+                  ) : pagado ? (
+                    <> <CheckCircle2 size={20} /> Cuenta Liquidada </>
+                  ) : (
+                    <> <CheckCircle2 size={20} /> Registrar Pago y Liberar Mesa </>
+                  )}
                 </button>
               ) : (
                 <div className="space-y-4 animate-in zoom-in duration-300">
                   <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-2 block tracking-widest">Enviar Ticket Digital</label>
+                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-2 block tracking-widest">Enviar Ticket por WhatsApp</label>
                     <div className="flex gap-2">
                         <div className="relative flex-1">
                             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
                             <input 
                                 type="tel" 
-                                placeholder="WhatsApp (10 dígitos)"
+                                placeholder="Teléfono del cliente"
                                 value={telefono}
                                 onChange={(e) => setTelefono(e.target.value)}
                                 className="w-full bg-white pl-10 pr-4 py-3 rounded-xl font-bold text-sm border-2 border-emerald-200 focus:border-emerald-500 outline-none transition-all"
@@ -175,7 +185,7 @@ export default function CajaClient() {
                         <a 
                             href={getWhatsAppFinalLink()} 
                             target="_blank" 
-                            className={`p-3 rounded-xl flex items-center justify-center transition-all ${telefono.length >= 10 ? 'bg-[#25D366] text-white' : 'bg-slate-200 text-slate-400 pointer-events-none'}`}
+                            className={`p-3 rounded-xl flex items-center justify-center transition-all ${telefono.length >= 10 ? 'bg-[#25D366] text-white shadow-md' : 'bg-slate-200 text-slate-400 pointer-events-none'}`}
                         >
                             <MessageCircle fill={telefono.length >= 10 ? "white" : "currentColor"} />
                         </a>
@@ -197,7 +207,7 @@ export default function CajaClient() {
                 <Search size={48} />
               </div>
               <p className="font-black text-[10px] uppercase tracking-[0.2em] text-center leading-relaxed">
-                Esperando lectura de QR <br/> o búsqueda por folio
+                Escanea el QR de la mesa <br/> o busca por folio manual
               </p>
             </div>
           )}
