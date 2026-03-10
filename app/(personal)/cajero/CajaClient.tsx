@@ -2,17 +2,17 @@
 import { useState, useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { confirmarPagoCaja, buscarComandaParaCobro } from './action';
-import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle } from 'lucide-react';
+import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle, Phone } from 'lucide-react';
 
 export default function CajaClient() {
   const [comanda, setComanda] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [pagoExitoso, setPagoExitoso] = useState(false);
-  const [waLink, setWaLink] = useState("");
+  const [waLinkBase, setWaLinkBase] = useState(""); // El mensaje sin el teléfono
+  const [telefono, setTelefono] = useState(""); // El número que ingrese el cajero
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Configuración del escáner
     const scanner = new Html5QrcodeScanner("reader", { 
         fps: 10, 
         qrbox: { width: 250, height: 250 },
@@ -29,15 +29,14 @@ export default function CajaClient() {
       }
     }, () => {});
 
-    return () => { 
-        scanner.clear().catch(() => {}); 
-    };
+    return () => { scanner.clear().catch(() => {}); };
   }, []);
 
   const handleBuscar = async (id: number) => {
     if (isNaN(id)) return;
     setLoading(true);
     setPagoExitoso(false);
+    setTelefono(""); // Limpiar teléfono previo
     setError("");
     const res = await buscarComandaParaCobro(id);
     if (res) {
@@ -52,9 +51,9 @@ export default function CajaClient() {
   const handleCobrar = async () => {
     if (!comanda) return;
     setLoading(true);
-    const res = await confirmarPagoCaja(comanda.id_comanda);
+    const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
     if (res.success) {
-      setWaLink(res.waLink || "");
+      setWaLinkBase(res.waLink || ""); // Guardamos el link con el mensaje
       setPagoExitoso(true);
     } else {
       setError(res.error || "Error al procesar el pago");
@@ -65,8 +64,19 @@ export default function CajaClient() {
   const resetCaja = () => {
     setComanda(null);
     setPagoExitoso(false);
+    setTelefono("");
     setError("");
     window.location.reload(); 
+  };
+
+  // Función para construir el link final con el teléfono dinámico
+  const getWhatsAppFinalLink = () => {
+    if (!waLinkBase) return "#";
+    // Si el cajero ingresa el número, lo unimos al link base de wa.me
+    // Quitamos espacios o caracteres especiales que el cajero pudiera meter
+    const numLimpio = telefono.replace(/\D/g, '');
+    const prefix = numLimpio.startsWith('52') ? '' : '52'; // Asumimos México si no trae prefijo
+    return `${waLinkBase.replace('https://wa.me/?text=', `https://wa.me/${prefix}${numLimpio}?text=`)}`;
   };
 
   return (
@@ -124,7 +134,7 @@ export default function CajaClient() {
                 </div>
               </div>
 
-              <div className="space-y-3 mb-8 max-h-[200px] overflow-y-auto pr-2">
+              <div className="space-y-3 mb-8 max-h-[150px] overflow-y-auto pr-2">
                 {comanda.detalles?.map((d: any) => (
                   <div key={d.id_detalle} className="flex justify-between text-sm font-medium text-slate-600 border-b border-slate-50 pb-2">
                     <span>{d.cantidad}x {d.producto.nombre}</span>
@@ -133,9 +143,9 @@ export default function CajaClient() {
                 ))}
               </div>
 
-              <div className="bg-slate-900 text-white p-8 rounded-[1.5rem] mb-6 shadow-inner">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Total a Cobrar</p>
-                <h3 className="text-5xl font-black">${Number(comanda.total).toFixed(2)}</h3>
+              <div className="bg-slate-900 text-white p-6 rounded-[1.5rem] mb-6 shadow-inner">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Total a Cobrar</p>
+                <h3 className="text-4xl font-black">${Number(comanda.total).toFixed(2)}</h3>
               </div>
 
               {!pagoExitoso ? (
@@ -149,16 +159,32 @@ export default function CajaClient() {
                 </button>
               ) : (
                 <div className="space-y-4 animate-in zoom-in duration-300">
-                  <a 
-                    href={waLink} 
-                    target="_blank" 
-                    className="w-full bg-[#25D366] text-white py-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-lg shadow-emerald-200"
-                  >
-                    <MessageCircle fill="white" /> Enviar Ticket WhatsApp
-                  </a>
+                  <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-2 block tracking-widest">Enviar Ticket Digital</label>
+                    <div className="flex gap-2">
+                        <div className="relative flex-1">
+                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
+                            <input 
+                                type="tel" 
+                                placeholder="WhatsApp (10 dígitos)"
+                                value={telefono}
+                                onChange={(e) => setTelefono(e.target.value)}
+                                className="w-full bg-white pl-10 pr-4 py-3 rounded-xl font-bold text-sm border-2 border-emerald-200 focus:border-emerald-500 outline-none transition-all"
+                            />
+                        </div>
+                        <a 
+                            href={getWhatsAppFinalLink()} 
+                            target="_blank" 
+                            className={`p-3 rounded-xl flex items-center justify-center transition-all ${telefono.length >= 10 ? 'bg-[#25D366] text-white' : 'bg-slate-200 text-slate-400 pointer-events-none'}`}
+                        >
+                            <MessageCircle fill={telefono.length >= 10 ? "white" : "currentColor"} />
+                        </a>
+                    </div>
+                  </div>
+
                   <button 
                     onClick={resetCaja} 
-                    className="w-full text-slate-400 font-black text-[10px] uppercase tracking-widest hover:text-slate-900 transition-colors"
+                    className="w-full text-slate-400 font-black text-[10px] uppercase tracking-widest hover:text-slate-900 transition-colors pt-2"
                   >
                     Atender Siguiente Cliente →
                   </button>
