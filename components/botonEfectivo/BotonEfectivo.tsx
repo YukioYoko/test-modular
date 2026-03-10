@@ -18,9 +18,16 @@ export default function BotonEfectivo({ idComanda, desglose }: { idComanda: numb
     const handleIniciarPago = async () => {
         setLoading(true);
         // Registramos en la BD que el cliente intentará pagar en efectivo
-        Cookies.remove("foodlify_cart");
-        setShowModal(true);
+        const res = await registrarPagoEfectivo(idComanda, desglose);
         setLoading(false);
+
+        if (res.success) {
+            // Si la BD se actualizó, limpiamos carrito y mostramos el QR
+            Cookies.remove("foodlify_cart");
+            setShowModal(true);
+        } else {
+            alert(res.message || "Error al procesar la solicitud");
+        }
     };
 
     return (

@@ -44,8 +44,6 @@ export async function registrarPagoEfectivo(
       prisma.comandas.update({
         where: { id_comanda: idComanda },
         data: {
-          estado: "Cerrada",
-          pagado: true,
           fecha_pagado: fechaOficial, // <--- GUARDADO AQUÍ
           transaccion_id: `CASH-${Date.now()}`,
           sub_total: desglose.sub_total,
@@ -53,15 +51,10 @@ export async function registrarPagoEfectivo(
           total: desglose.total,
           metodo_pago: 'Efectivo',
         },
-      }),
-      prisma.mesa.update({
-        where: { id_mesa: comandaActual.id_mesa },
-        data: { estado: "Libre" },
-      }),
+      })
     ]);
 
     revalidatePath("/cuenta");
-    revalidatePath("/hostess");
     
     return { success: true };
   } catch (error) {
