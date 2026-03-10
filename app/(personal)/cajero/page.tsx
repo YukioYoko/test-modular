@@ -1,10 +1,12 @@
 'use client'
-import { useState, useEffect, Suspense } from 'react'; // Importamos Suspense
+import { useState, useEffect, Suspense } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { confirmarPagoCaja, buscarComandaParaCobro } from './action';
 import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle } from 'lucide-react';
 
-// 1. Movemos toda tu lógica actual a un componente interno
+// --- PASO 1: Forzar renderizado dinámico para evitar el error de Prerender ---
+export const dynamic = 'force-dynamic';
+
 function CajaContent() {
   const [comanda, setComanda] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -142,7 +144,7 @@ function CajaContent() {
   );
 }
 
-// 2. Exportamos la página envuelta en Suspense
+// --- PASO 2: Exportar con Suspense ---
 export default function CajaPage() {
   return (
     <Suspense fallback={
