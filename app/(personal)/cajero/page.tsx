@@ -143,16 +143,3 @@ function CajaContent() {
     </div>
   );
 }
-
-// --- PASO 2: Exportar con Suspense ---
-export default function CajaPage() {
-  return (
-    <Suspense fallback={
-        <div className="min-h-screen flex items-center justify-center bg-slate-50">
-            <Loader2 className="animate-spin text-emerald-500" size={48} />
-        </div>
-    }>
-      <CajaContent />
-    </Suspense>
-  );
-}
