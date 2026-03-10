@@ -45,7 +45,7 @@ export async function registrarPagoEfectivo(
         where: { id_comanda: idComanda },
         data: {
           fecha_pagado: fechaOficial, // <--- GUARDADO AQUÍ
-          transaccion_id: `CASH-${Date.now()}`,
+          transaccion_id: `CASH-${fechaOficial}`,
           sub_total: desglose.sub_total,
           impuestos: desglose.ivaTotal,
           total: desglose.total,
