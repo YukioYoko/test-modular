@@ -30,7 +30,7 @@ export async function confirmarPagoCaja(id_comanda: number, telefono?: string, m
       });
 
       // 2. Liberar mesa (Corregido a 'mesas' según tu esquema Prisma)
-      await tx.mesas.update({
+      await tx.mesa.update({
         where: { id_mesa: comanda.id_mesa },
         data: { estado: 'Libre' }
       });
