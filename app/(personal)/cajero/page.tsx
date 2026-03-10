@@ -7,7 +7,7 @@ import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle } from 'l
 // --- PASO 1: Forzar renderizado dinámico para evitar el error de Prerender ---
 export const dynamic = 'force-dynamic';
 
-function CajaContent() {
+export default async function CajaContent() {
   const [comanda, setComanda] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [pagoExitoso, setPagoExitoso] = useState(false);
