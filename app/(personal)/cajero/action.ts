@@ -35,7 +35,8 @@ export async function confirmarPagoCaja(id_comanda: number, telefono?: string, m
 
     revalidatePath('/admin/ventas');
     revalidatePath('/hostess');
-    
+    revalidatePath('/menu?comanda=${resultado.id_comanda}&token={resultado.token}');
+    revalidatePath('/cuenta?comanda=${resultado.id_comanda}&token={resultado.token}');
     // Generar el link con el nuevo formato seguro
     const waLink = generarLinkWhatsApp(resultado, telefono);
     
