@@ -15,12 +15,12 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
 
   if (esRutaPublica) {
     // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
-    if (pathname === '/login') {
+    if (pathname === '/login' && session) {
       try {
         const user = JSON.parse(session.value);
         const rol = user.rol?.toLowerCase();
         if (rol === 'admin') return NextResponse.redirect(new URL('/home', request.url));
-        return NextResponse.redirect(new URL(`/${rol}`, request.url));
+        return NextResponse.redirect(new URL(`/login`, request.url));
       } catch {
         return NextResponse.next();
       }
@@ -61,13 +61,8 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
       return NextResponse.redirect(new URL(`/${rol}`, request.url));
     }
 
-    if (pathname.startsWith('/cajero')) {
-      if (rol === 'cajero') return NextResponse.next();
-      return NextResponse.redirect(new URL(`/${rol}`, request.url));
-    }
-
     // D. RUTAS DE ADMINISTRACIÓN
-    const rutasPrivadasAdmin = ['/home', '/ventas', '/productos', '/usuarios', '/categorias', '/aditamentos', '/personal', '/menuPrueba'];
+    const rutasPrivadasAdmin = ['/home', '/ventas', '/productos', '/usuarios', '/categorias', '/aditamentos', '/personal'];
     const intentaEntrarAAdmin = rutasPrivadasAdmin.some(ruta => pathname.startsWith(ruta));
 
     if (intentaEntrarAAdmin && rol !== 'admin') {
