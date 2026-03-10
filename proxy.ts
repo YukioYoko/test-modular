@@ -15,7 +15,7 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
 
   if (esRutaPublica) {
     // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
-    if (pathname === '/login' && session) {
+    if (pathname === '/login') {
       try {
         const user = JSON.parse(session.value);
         const rol = user.rol?.toLowerCase();
@@ -58,6 +58,11 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
     // C. REGLAS PARA COCINA / COCINERO
     if (pathname.startsWith('/cocina') || pathname.startsWith('/cocinero')) {
       if (rol === 'cocina') return NextResponse.next();
+      return NextResponse.redirect(new URL(`/${rol}`, request.url));
+    }
+
+    if (pathname.startsWith('/cajero')) {
+      if (rol === 'cajero') return NextResponse.next();
       return NextResponse.redirect(new URL(`/${rol}`, request.url));
     }
 
