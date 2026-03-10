@@ -15,12 +15,12 @@ const esRutaPublica = pathname === '/login' || pathname.startsWith('/menu') || p
 
   if (esRutaPublica) {
     // Si ya tiene sesión y trata de ir al login, lo mandamos a su ruta base
-    if (pathname === '/login' && session) {
+    if (pathname === '/login') {
       try {
         const user = JSON.parse(session.value);
         const rol = user.rol?.toLowerCase();
         if (rol === 'admin') return NextResponse.redirect(new URL('/home', request.url));
-        return NextResponse.redirect(new URL(`/${rol}`, request.url));
+        return NextResponse.redirect(new URL(`/login`, request.url));
       } catch {
         return NextResponse.next();
       }
