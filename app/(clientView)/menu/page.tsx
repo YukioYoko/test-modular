@@ -4,6 +4,7 @@ import RecomendacionMenu from '@/components/recomendacion/RecomendacionMenu';
 import MenuCategoriasComponent from './MenuCategoriasComponent';
 import { Categories } from '@/components/categories/categories';
 import { getCategorias } from './action';
+import SincronizadorCuenta from '@/components/sincronizadorCuenta/SincronizadorCuenta';
 
 export default async function MenuPage({ 
   searchParams 

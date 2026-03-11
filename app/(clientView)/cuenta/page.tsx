@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import PaypalBut from '@/components/paypal/PaypalBut';
 import BotonEfectivo from '@/components/botonEfectivo/BotonEfectivo';
-import SincronizadorCuenta from '@/components/SincronizadorCuenta';
+import SincronizadorCuenta from '@/components/sincronizadorCuenta/SincronizadorCuenta';
 
 export default async function CuentaPage({ 
   searchParams 
