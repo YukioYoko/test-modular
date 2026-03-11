@@ -18,6 +18,14 @@ export default function CajaClient() {
   const [historial, setHistorial] = useState<any[]>([]);
   const socketRef = useRef<Socket | null>(null);
 
+  // --- LÓGICA DE CÁLCULO IDÉNTICA A CUENTA ---
+  const [datosCalculados, setDatosCalculados] = useState({
+    sub_total: 0,
+    ivaTotal: 0,
+    total: 0,
+    items: [] as any[]
+  });
+
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", { 
         fps: 10, 
@@ -38,6 +46,39 @@ export default function CajaClient() {
     return () => { scanner.clear().catch(() => {}); };
   }, []);
 
+  // Efecto para recalcular montos cada vez que cambia la comanda (Verificación en tiempo real)
+  useEffect(() => {
+    if (!comanda || !comanda.detalles) return;
+
+    let acumuladoTotal = 0;
+    const items = comanda.detalles.map((detalle: any) => {
+      const precioBase = Number(detalle.producto.precio);
+      const precioExtras = detalle.aditamentos?.reduce(
+        (acc: number, a: any) => acc + Number(a.aditamento.precio || 0), 0
+      ) || 0;
+      
+      const subtotalItem = Math.round(((precioBase + precioExtras) * detalle.cantidad) * 100) / 100;
+      acumuladoTotal += subtotalItem;
+
+      return {
+        nombre: detalle.producto.nombre,
+        cantidad: detalle.cantidad,
+        subtotal: subtotalItem
+      };
+    });
+
+    const totalFinal = Math.round(acumuladoTotal * 100) / 100;
+    const ivaTotal = Math.round((totalFinal - (totalFinal / 1.16)) * 100) / 100;
+    const subtotalFiscal = Math.round((totalFinal - ivaTotal) * 100) / 100;
+
+    setDatosCalculados({
+      sub_total: subtotalFiscal,
+      ivaTotal: ivaTotal,
+      total: totalFinal,
+      items
+    });
+  }, [comanda]);
+
   const handleBuscar = async (id: number) => {
     if (isNaN(id)) return;
     setLoading(true);
@@ -56,17 +97,14 @@ export default function CajaClient() {
     setLoading(false);
   };
 
-  // CajaClient.tsx -> dentro de handleCobrar
-const handleCobrar = async () => {
+  const handleCobrar = async () => {
     if (!comanda) return;
     setLoading(true);
+    // IMPORTANTE: El servidor hará su propia verificación, pero aquí ya sabemos el total
     const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
     
-    // Al entrar en este if, TypeScript ya sabe que res.success es true
-    // Pero aún así, validamos que res.data exista para el historial
     if (res.success && res.data) {
       const comandaActualizada = res.data; 
-
       setWaLinkBase(res.waLink || ""); 
       setPagoExitoso(true);
       setPagado(true);
@@ -74,7 +112,7 @@ const handleCobrar = async () => {
       const nuevoRegistro = {
         id: comandaActualizada.id_comanda,
         mesa: comandaActualizada.mesa?.numero_mesa,
-        total: comandaActualizada.total,
+        total: comandaActualizada.total, // El total persistido en BD
         fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       
@@ -85,7 +123,6 @@ const handleCobrar = async () => {
       }
       socketRef.current.emit("order_pay", { idComanda: comandaActualizada.id_comanda });
     } else {
-      // Si llegamos aquí, mostramos el error que mandó el servidor
       setError(res.error || "Error al procesar el pago");
     }
     setLoading(false);
@@ -97,14 +134,13 @@ const handleCobrar = async () => {
     setPagado(false);
     setTelefono("");
     setError("");
+    setDatosCalculados({ sub_total: 0, ivaTotal: 0, total: 0, items: [] });
   };
 
-  // --- FUNCIÓN RECUPERADA ---
   const getWhatsAppFinalLink = () => {
     if (!waLinkBase) return "#";
     const numLimpio = telefono.replace(/\D/g, '');
     const prefix = numLimpio.startsWith('52') ? '' : '52';
-    // Reemplazamos el placeholder del link base generado por el server action
     return `${waLinkBase.replace('https://wa.me/?text=', `https://wa.me/${prefix}${numLimpio}?text=`)}`;
   };
 
@@ -134,10 +170,7 @@ const handleCobrar = async () => {
                 className="flex-1 bg-slate-100 p-3 rounded-xl font-bold outline-none focus:ring-2 focus:ring-emerald-500"
                 onKeyDown={(e) => e.key === 'Enter' && handleBuscar(parseInt(e.currentTarget.value))}
               />
-              <button onClick={() => {
-                const input = document.querySelector('input[type="number"]') as HTMLInputElement;
-                handleBuscar(parseInt(input.value));
-              }} className="bg-slate-900 text-white p-3 rounded-xl"><Search size={18} /></button>
+              <button onClick={() => handleBuscar(parseInt((document.querySelector('input[type="number"]') as HTMLInputElement).value))} className="bg-slate-900 text-white p-3 rounded-xl"><Search size={18} /></button>
             </div>
           </section>
 
@@ -161,11 +194,11 @@ const handleCobrar = async () => {
           </section>
         </div>
 
-        {/* COLUMNA DERECHA: DETALLE */}
+        {/* COLUMNA DERECHA: DETALLE CON VERIFICACIÓN FISCAL */}
         <section className={`lg:col-span-8 bg-white rounded-[2rem] shadow-2xl border-2 p-6 md:p-8 flex flex-col justify-between min-h-[500px] transition-all duration-500 ${comanda ? 'border-emerald-500 ring-8 ring-emerald-500/5' : 'border-slate-100'}`}>
           {comanda ? (
             <div className="animate-in fade-in zoom-in duration-500">
-              <div className="flex justify-between items-start border-b border-slate-50 pb-6 mb-6">
+              <div className="flex justify-between items-start border-b border-slate-50 pb-4 mb-4">
                 <div>
                   <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter italic">Mesa {comanda.mesa?.numero_mesa || 'N/A'}</h2>
                   <p className="text-xs font-bold text-emerald-500 uppercase tracking-widest mt-1">Folio #{comanda.id_comanda}</p>
@@ -175,19 +208,30 @@ const handleCobrar = async () => {
                 </div>
               </div>
 
-              <div className="space-y-3 mb-8 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
-                {comanda.detalles?.map((d: any) => (
-                  <div key={d.id_detalle} className="flex justify-between text-sm font-medium text-slate-600 border-b border-slate-50 pb-2">
-                    <span>{d.cantidad}x {d.producto.nombre}</span>
-                    <span className="font-bold text-slate-900">${(Number(d.producto.precio) * d.cantidad).toFixed(2)}</span>
+              {/* Lista Desglosada (Verificación de ítems) */}
+              <div className="space-y-2 mb-6 max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
+                {datosCalculados.items.map((item: any, idx: number) => (
+                  <div key={idx} className="flex justify-between text-[13px] font-bold text-slate-600 border-b border-slate-50 pb-1">
+                    <span>{item.cantidad}x {item.nombre}</span>
+                    <span className="text-slate-900">${item.subtotal.toFixed(2)}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="bg-slate-900 text-white p-8 rounded-[2rem] mb-8 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10"><ArrowUpRight size={80}/></div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-2">Total a Liquidar</p>
-                <h3 className="text-5xl font-black tracking-tighter">${Number(comanda.total).toFixed(2)}</h3>
+              {/* Desglose Fiscal (Igual que en la cuenta) */}
+              <div className="bg-slate-50 p-4 rounded-2xl mb-6 space-y-1 border border-slate-100">
+                <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <span>Subtotal Fiscal</span>
+                  <span>${datosCalculados.sub_total.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200 pb-1">
+                  <span>IVA Trasladado (16%)</span>
+                  <span>${datosCalculados.ivaTotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-xl font-black text-slate-900 pt-1">
+                  <span className="italic tracking-tighter">TOTAL VERIFICADO</span>
+                  <span className="tracking-tighter">${datosCalculados.total.toFixed(2)}</span>
+                </div>
               </div>
 
               {!pagoExitoso ? (
@@ -197,7 +241,7 @@ const handleCobrar = async () => {
               ) : (
                 <div className="space-y-4 animate-in slide-in-from-bottom-4">
                   <div className="bg-emerald-50 p-6 rounded-3xl border-2 border-emerald-100">
-                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-3 block tracking-widest text-center">Ticket Digital enviado</label>
+                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-3 block tracking-widest text-center">Enviar Ticket Digital</label>
                     <div className="flex gap-2">
                       <input type="tel" placeholder="WhatsApp..." value={telefono} onChange={(e) => setTelefono(e.target.value)} className="flex-1 bg-white px-5 py-4 rounded-2xl font-bold border-2 border-emerald-200 outline-none" />
                       <a href={getWhatsAppFinalLink()} target="_blank" className={`p-4 rounded-2xl flex items-center justify-center transition-all ${telefono.length >= 10 ? 'bg-[#25D366] text-white shadow-lg' : 'bg-slate-200 text-slate-400 pointer-events-none'}`}><MessageCircle fill="white" /></a>
@@ -210,10 +254,9 @@ const handleCobrar = async () => {
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-slate-200 space-y-6 py-24">
               <div className="p-12 bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-100"><Search size={64} /></div>
-              <p className="font-black text-[12px] uppercase tracking-[0.4em] text-center leading-relaxed">Listo para escanear</p>
+              <p className="font-black text-[12px] uppercase tracking-[0.4em] text-center leading-relaxed">Esperando escaneo...</p>
             </div>
           )}
-          {error && <div className="mt-4 p-4 bg-red-50 text-red-500 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 border border-red-100 animate-bounce"><XCircle size={14}/> {error}</div>}
         </section>
       </main>
     </div>
