@@ -17,8 +17,8 @@ export default function CajaClient() {
   const [error, setError] = useState("");
   const [historial, setHistorial] = useState<any[]>([]);
   const socketRef = useRef<Socket | null>(null);
+  const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
-  // --- LÓGICA DE CÁLCULO IDÉNTICA A CUENTA ---
   const [datosCalculados, setDatosCalculados] = useState({
     sub_total: 0,
     ivaTotal: 0,
@@ -26,27 +26,38 @@ export default function CajaClient() {
     items: [] as any[]
   });
 
+  // --- ESCÁNER CONTINUO ---
   useEffect(() => {
-    const scanner = new Html5QrcodeScanner("reader", { 
-        fps: 10, 
-        qrbox: { width: 250, height: 250 },
-        aspectRatio: 1.0 
-    }, false);
+    if (!scannerRef.current) {
+      scannerRef.current = new Html5QrcodeScanner("reader", { 
+          fps: 10, 
+          qrbox: { width: 250, height: 250 },
+          aspectRatio: 1.0 
+      }, false);
 
-    scanner.render((text) => {
-      try {
-        const data = JSON.parse(text);
-        handleBuscar(data.id);
-        scanner.clear();
-      } catch { 
-        handleBuscar(parseInt(text)); 
+      scannerRef.current.render((text) => {
+        try {
+          // Intentamos parsear JSON o tomar el ID directo
+          const data = JSON.parse(text);
+          handleBuscar(data.id);
+        } catch { 
+          handleBuscar(parseInt(text)); 
+        }
+        // NOTA: Eliminamos scanner.clear() para mantener la cámara activa
+      }, (error) => {
+        // Silenciamos errores de escaneo (no detectó nada en este frame)
+      });
+    }
+
+    return () => {
+      // Solo limpiamos al desmontar el componente completo
+      if (scannerRef.current) {
+        scannerRef.current.clear().catch(console.error);
+        scannerRef.current = null;
       }
-    }, () => {});
-
-    return () => { scanner.clear().catch(() => {}); };
+    };
   }, []);
 
-  // Efecto para recalcular montos cada vez que cambia la comanda (Verificación en tiempo real)
   useEffect(() => {
     if (!comanda || !comanda.detalles) return;
 
@@ -80,11 +91,12 @@ export default function CajaClient() {
   }, [comanda]);
 
   const handleBuscar = async (id: number) => {
-    if (isNaN(id)) return;
+    if (isNaN(id) || loading) return;
     setLoading(true);
     setPagoExitoso(false);
     setTelefono("");
     setError("");
+    
     const res = await buscarComandaParaCobro(id);
     if (res) {
         setComanda(res);
@@ -100,7 +112,6 @@ export default function CajaClient() {
   const handleCobrar = async () => {
     if (!comanda) return;
     setLoading(true);
-    // IMPORTANTE: El servidor hará su propia verificación, pero aquí ya sabemos el total
     const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
     
     if (res.success && res.data) {
@@ -112,7 +123,7 @@ export default function CajaClient() {
       const nuevoRegistro = {
         id: comandaActualizada.id_comanda,
         mesa: comandaActualizada.mesa?.numero_mesa,
-        total: comandaActualizada.total, // El total persistido en BD
+        total: comandaActualizada.total,
         fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       
@@ -135,6 +146,7 @@ export default function CajaClient() {
     setTelefono("");
     setError("");
     setDatosCalculados({ sub_total: 0, ivaTotal: 0, total: 0, items: [] });
+    // La cámara sigue activa gracias al useEffect inicial
   };
 
   const getWhatsAppFinalLink = () => {
@@ -146,6 +158,7 @@ export default function CajaClient() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-6 font-sans text-slate-900">
+      {/* HEADER */}
       <header className="max-w-6xl mx-auto mb-6 flex justify-between items-end">
         <div>
           <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase italic text-slate-900">
@@ -158,25 +171,31 @@ export default function CajaClient() {
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* COLUMNA IZQUIERDA: ESCÁNER E HISTORIAL */}
         <div className="lg:col-span-4 space-y-6 order-last lg:order-first">
-          <section className={`bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100 transition-opacity ${comanda ? 'opacity-40' : 'opacity-100'}`}>
+          <section className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-bold text-xs uppercase italic justify-center">
-              <Camera size={16} /> Escáner
+              <Camera size={16} /> Cámara Activa
             </div>
+            {/* ID del contenedor del escáner */}
             <div id="reader" className="rounded-2xl overflow-hidden bg-slate-100 min-h-[250px]"></div>
+            
             <div className="mt-4 flex gap-2">
               <input 
                 type="number" 
-                placeholder="Folio..." 
+                placeholder="ID Manual..." 
                 className="flex-1 bg-slate-100 p-3 rounded-xl font-bold outline-none focus:ring-2 focus:ring-emerald-500"
                 onKeyDown={(e) => e.key === 'Enter' && handleBuscar(parseInt(e.currentTarget.value))}
               />
-              <button onClick={() => handleBuscar(parseInt((document.querySelector('input[type="number"]') as HTMLInputElement).value))} className="bg-slate-900 text-white p-3 rounded-xl"><Search size={18} /></button>
+              <button onClick={() => {
+                const input = document.querySelector('input[type="number"]') as HTMLInputElement;
+                handleBuscar(parseInt(input.value));
+              }} className="bg-slate-900 text-white p-3 rounded-xl"><Search size={18} /></button>
             </div>
           </section>
 
+          {/* SECCIÓN HISTORIAL */}
           <section className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-black text-[10px] uppercase tracking-widest">
-              <History size={14} /> Últimos Cobros
+              <History size={14} /> Cobros Recientes
             </div>
             <div className="space-y-3">
               {historial.length > 0 ? historial.map((h, i) => (
@@ -188,13 +207,13 @@ export default function CajaClient() {
                   <p className="font-black text-emerald-600 text-sm">${Number(h.total).toFixed(2)}</p>
                 </div>
               )) : (
-                <p className="text-[10px] text-slate-300 font-bold text-center py-4 uppercase tracking-tighter italic">No hay cobros recientes</p>
+                <p className="text-[10px] text-slate-300 font-bold text-center py-4 uppercase tracking-tighter italic">Esperando transacciones...</p>
               )}
             </div>
           </section>
         </div>
 
-        {/* COLUMNA DERECHA: DETALLE CON VERIFICACIÓN FISCAL */}
+        {/* COLUMNA DERECHA: DETALLE */}
         <section className={`lg:col-span-8 bg-white rounded-[2rem] shadow-2xl border-2 p-6 md:p-8 flex flex-col justify-between min-h-[500px] transition-all duration-500 ${comanda ? 'border-emerald-500 ring-8 ring-emerald-500/5' : 'border-slate-100'}`}>
           {comanda ? (
             <div className="animate-in fade-in zoom-in duration-500">
@@ -208,7 +227,6 @@ export default function CajaClient() {
                 </div>
               </div>
 
-              {/* Lista Desglosada (Verificación de ítems) */}
               <div className="space-y-2 mb-6 max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
                 {datosCalculados.items.map((item: any, idx: number) => (
                   <div key={idx} className="flex justify-between text-[13px] font-bold text-slate-600 border-b border-slate-50 pb-1">
@@ -218,7 +236,6 @@ export default function CajaClient() {
                 ))}
               </div>
 
-              {/* Desglose Fiscal (Igual que en la cuenta) */}
               <div className="bg-slate-50 p-4 rounded-2xl mb-6 space-y-1 border border-slate-100">
                 <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">
                   <span>Subtotal Fiscal</span>
@@ -229,34 +246,35 @@ export default function CajaClient() {
                   <span>${datosCalculados.ivaTotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-xl font-black text-slate-900 pt-1">
-                  <span className="italic tracking-tighter">TOTAL VERIFICADO</span>
+                  <span className="italic tracking-tighter uppercase">Total Verificado</span>
                   <span className="tracking-tighter">${datosCalculados.total.toFixed(2)}</span>
                 </div>
               </div>
 
               {!pagoExitoso ? (
-                <button onClick={handleCobrar} disabled={loading || pagado} className={`w-full py-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all ${pagado ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-600 hover:scale-[1.01] shadow-xl shadow-emerald-200'} disabled:opacity-50`}>
+                <button onClick={handleCobrar} disabled={loading || pagado} className={`w-full py-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all ${pagado ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-xl shadow-emerald-200'} disabled:opacity-50`}>
                   {loading ? <Loader2 className="animate-spin" /> : <><CheckCircle2 size={24} /> Registrar Pago</>}
                 </button>
               ) : (
                 <div className="space-y-4 animate-in slide-in-from-bottom-4">
                   <div className="bg-emerald-50 p-6 rounded-3xl border-2 border-emerald-100">
-                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-3 block tracking-widest text-center">Enviar Ticket Digital</label>
+                    <label className="text-[10px] font-black text-emerald-700 uppercase mb-3 block tracking-widest text-center">Ticket Digital</label>
                     <div className="flex gap-2">
                       <input type="tel" placeholder="WhatsApp..." value={telefono} onChange={(e) => setTelefono(e.target.value)} className="flex-1 bg-white px-5 py-4 rounded-2xl font-bold border-2 border-emerald-200 outline-none" />
                       <a href={getWhatsAppFinalLink()} target="_blank" className={`p-4 rounded-2xl flex items-center justify-center transition-all ${telefono.length >= 10 ? 'bg-[#25D366] text-white shadow-lg' : 'bg-slate-200 text-slate-400 pointer-events-none'}`}><MessageCircle fill="white" /></a>
                     </div>
                   </div>
-                  <button onClick={resetCaja} className="w-full text-slate-400 font-black text-[10px] uppercase tracking-widest hover:text-slate-900 py-4 transition-colors">Siguiente Cliente →</button>
+                  <button onClick={resetCaja} className="w-full text-slate-400 font-black text-[10px] uppercase tracking-widest hover:text-slate-900 py-4 transition-colors">Siguiente Cobro →</button>
                 </div>
               )}
             </div>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-slate-200 space-y-6 py-24">
               <div className="p-12 bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-100"><Search size={64} /></div>
-              <p className="font-black text-[12px] uppercase tracking-[0.4em] text-center leading-relaxed">Esperando escaneo...</p>
+              <p className="font-black text-[12px] uppercase tracking-[0.4em] text-center leading-relaxed italic opacity-50">Escanea un código para comenzar</p>
             </div>
           )}
+          {error && <div className="mt-4 p-4 bg-red-50 text-red-500 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 border border-red-100 animate-bounce"><XCircle size={14}/> {error}</div>}
         </section>
       </main>
     </div>
