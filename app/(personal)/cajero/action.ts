@@ -1,6 +1,10 @@
 'use server'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
+import { io, Socket } from 'socket.io-client';
+import {  useRef } from "react";
+
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
 export async function confirmarPagoCaja(id_comanda: number, telefono?: string, metodo: string = 'Efectivo') {
   try {
@@ -32,11 +36,13 @@ export async function confirmarPagoCaja(id_comanda: number, telefono?: string, m
 
       return actualizada;
     });
-
+    const socketRef = useRef<Socket | null>(null);
+    socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
+    socketRef.current.emit("order_pay", { comanda: resultado });
     revalidatePath('/admin/ventas');
     revalidatePath('/hostess');
-    revalidatePath(`/menu?comanda=${resultado.id_comanda}&token=${resultado.token}`);
-    revalidatePath(`/cuenta?comanda=${resultado.id_comanda}&token=${resultado.token}`);
+    //revalidatePath(`/menu?comanda=${resultado.id_comanda}&token=${resultado.token}`);
+    //revalidatePath(`/cuenta?comanda=${resultado.id_comanda}&token=${resultado.token}`);
     // Generar el link con el nuevo formato seguro
     const waLink = generarLinkWhatsApp(resultado, telefono);
     
