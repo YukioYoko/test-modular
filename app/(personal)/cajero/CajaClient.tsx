@@ -65,7 +65,7 @@ export default function CajaClient() {
       setPagoExitoso(true);
       setPagado(true);
       socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
-      socketRef.current.emit("order_pay", { comanda: comanda });
+      socketRef.current.emit("order_pay", { idComanda: comanda.id_comanda });
     } else {
       setError(res.error || "Error al procesar el pago");
     }
