@@ -15,10 +15,7 @@ export default function CajaClient() {
   const [waLinkBase, setWaLinkBase] = useState(""); 
   const [telefono, setTelefono] = useState(""); 
   const [error, setError] = useState("");
-  
-  // NUEVO: Estado para el historial
   const [historial, setHistorial] = useState<any[]>([]);
-  
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
@@ -69,7 +66,6 @@ export default function CajaClient() {
       setPagoExitoso(true);
       setPagado(true);
 
-      // AGREGAR AL HISTORIAL (Mantener solo los últimos 3)
       const nuevoRegistro = {
         id: comanda.id_comanda,
         mesa: comanda.mesa?.numero_mesa,
@@ -94,7 +90,15 @@ export default function CajaClient() {
     setPagado(false);
     setTelefono("");
     setError("");
-    // No usamos reload para no perder el historial de la sesión
+  };
+
+  // --- FUNCIÓN RECUPERADA ---
+  const getWhatsAppFinalLink = () => {
+    if (!waLinkBase) return "#";
+    const numLimpio = telefono.replace(/\D/g, '');
+    const prefix = numLimpio.startsWith('52') ? '' : '52';
+    // Reemplazamos el placeholder del link base generado por el server action
+    return `${waLinkBase.replace('https://wa.me/?text=', `https://wa.me/${prefix}${numLimpio}?text=`)}`;
   };
 
   return (
@@ -109,11 +113,8 @@ export default function CajaClient() {
       </header>
 
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        {/* COLUMNA IZQUIERDA: ESCÁNER E HISTORIAL (4 columnas) */}
+        {/* COLUMNA IZQUIERDA: ESCÁNER E HISTORIAL */}
         <div className="lg:col-span-4 space-y-6 order-last lg:order-first">
-          
-          {/* SECCIÓN ESCÁNER */}
           <section className={`bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100 transition-opacity ${comanda ? 'opacity-40' : 'opacity-100'}`}>
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-bold text-xs uppercase italic justify-center">
               <Camera size={16} /> Escáner
@@ -126,11 +127,13 @@ export default function CajaClient() {
                 className="flex-1 bg-slate-100 p-3 rounded-xl font-bold outline-none focus:ring-2 focus:ring-emerald-500"
                 onKeyDown={(e) => e.key === 'Enter' && handleBuscar(parseInt(e.currentTarget.value))}
               />
-              <button onClick={() => handleBuscar(parseInt((document.querySelector('input[type="number"]') as HTMLInputElement).value))} className="bg-slate-900 text-white p-3 rounded-xl"><Search size={18} /></button>
+              <button onClick={() => {
+                const input = document.querySelector('input[type="number"]') as HTMLInputElement;
+                handleBuscar(parseInt(input.value));
+              }} className="bg-slate-900 text-white p-3 rounded-xl"><Search size={18} /></button>
             </div>
           </section>
 
-          {/* SECCIÓN HISTORIAL (NUEVO) */}
           <section className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-black text-[10px] uppercase tracking-widest">
               <History size={14} /> Últimos Cobros
@@ -151,11 +154,10 @@ export default function CajaClient() {
           </section>
         </div>
 
-        {/* COLUMNA DERECHA: DETALLE (8 columnas) */}
+        {/* COLUMNA DERECHA: DETALLE */}
         <section className={`lg:col-span-8 bg-white rounded-[2rem] shadow-2xl border-2 p-6 md:p-8 flex flex-col justify-between min-h-[500px] transition-all duration-500 ${comanda ? 'border-emerald-500 ring-8 ring-emerald-500/5' : 'border-slate-100'}`}>
           {comanda ? (
             <div className="animate-in fade-in zoom-in duration-500">
-              {/* Contenido de la comanda (Igual al anterior) */}
               <div className="flex justify-between items-start border-b border-slate-50 pb-6 mb-6">
                 <div>
                   <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter italic">Mesa {comanda.mesa?.numero_mesa || 'N/A'}</h2>
