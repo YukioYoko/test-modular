@@ -34,8 +34,10 @@ io.on('connection', (socket) => {
 
   // 3. Pago en efectivo recibido (Desde el Cajero)
   socket.on('order_pay', (data) => {
-    console.log('📦 Comanda pagada');
-    io.emit('order_paid', data); 
+    console.log('💰 Pago recibido para comanda:', data.comanda?.id_comanda);
+    io.emit('order_paid', { 
+      id_comanda: data.comanda?.id_comanda 
+    }); 
   });
 
   socket.on('disconnect', () => {
