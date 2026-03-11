@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { confirmarPagoCaja, buscarComandaParaCobro } from './action';
 import { CheckCircle2, Search, Camera, XCircle, Loader2, MessageCircle, Phone } from 'lucide-react';
+import { io, Socket } from 'socket.io-client';
+import {  useRef } from "react";
+
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
 export default function CajaClient() {
   const [comanda, setComanda] = useState<any>(null);
@@ -12,6 +16,8 @@ export default function CajaClient() {
   const [waLinkBase, setWaLinkBase] = useState(""); 
   const [telefono, setTelefono] = useState(""); 
   const [error, setError] = useState("");
+  const socketRef = useRef<Socket | null>(null);
+    
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", { 
@@ -58,6 +64,8 @@ export default function CajaClient() {
       setWaLinkBase(res.waLink || ""); 
       setPagoExitoso(true);
       setPagado(true);
+      socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
+      socketRef.current.emit("order_pay", { comanda: comanda });
     } else {
       setError(res.error || "Error al procesar el pago");
     }
