@@ -4,8 +4,10 @@ import { guardarEncuestaIA } from "./action";
 import Link from 'next/link';
 
 const CATEGORIAS_IA = [
-  { id: "entradas", label: "Entradas", icon: "🥗" },
-  { id: "fuertes", label: "Platos Fuertes", icon: "🍝" },
+  { id: "entradas", label: "Entradas", icon: "🥙" },
+  { id: "ensaladas", label: "Ensaladas", icon: "🥗" },
+  { id: "pastas", label: "Pastas", icon: "🍝" },
+  { id: "fuertes", label: "Platos Fuertes", icon: "🍖" },
   { id: "postres", label: "Postres", icon: "🍰" },
   { id: "bebidas", label: "Bebidas", icon: "🍹" },
 ];
@@ -83,14 +85,14 @@ export const SeccionEncuesta = ({ idComanda }: { idComanda: number }) => {
           <div className="text-center space-y-6 py-4 animate-in zoom-in duration-300">
             <div className="space-y-2">
               <p className="text-green-600 font-black uppercase tracking-tighter text-xl">¡Feedback recibido!</p>
-              <p className="text-slate-400 text-xs font-bold">Tus respuestas ayudarán a mejorar mi IA.</p>
+              <p className="text-slate-400 text-xs font-bold">Tus respuestas ayudarán a mejorar nuestras recomendaciones.</p>
             </div>
             
             <Link 
-              href="/menuPrueba" 
+              href="/menu" 
               className="block w-full py-5 bg-(--militar-green) text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg hover:scale-[1.05] active:scale-95 transition-all"
             >
-              Hacer otra prueba
+              Ver menú
             </Link> 
           </div>
         )}

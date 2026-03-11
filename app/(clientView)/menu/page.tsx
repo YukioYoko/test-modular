@@ -4,6 +4,7 @@ import RecomendacionMenu from '@/components/recomendacion/RecomendacionMenu';
 import MenuCategoriasComponent from './MenuCategoriasComponent';
 import { Categories } from '@/components/categories/categories';
 import { getCategorias } from './action';
+import SincronizadorCuenta from '@/components/sincronizadorCuenta/SincronizadorCuenta';
 
 export default async function MenuPage({ 
   searchParams 
@@ -63,7 +64,7 @@ export default async function MenuPage({
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] pb-20">
-      
+      <SincronizadorCuenta idComanda={idComanda ?? 0} />
       {!idComanda && (
         <div className="bg-amber-500 text-white text-center py-2 text-[10px] font-black uppercase tracking-widest sticky top-20 z-50">
           Modo Catálogo • Escanea el código de tu mesa para pedir

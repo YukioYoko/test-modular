@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 const CART_COOKIE_NAME = "foodlify_cart";
-const CART_EVENT_NAME = "foodlify_cart_updated"; // Nombre del evento de sincronización
+const CART_EVENT_NAME = "foodlify_cart_updated"; 
 
 export function useCarrito(idComanda: number, token: string | null, esSoloLectura: boolean) {
   const [isPending, startTransition] = useTransition();
@@ -112,14 +112,13 @@ const router = useRouter();
         }
         actualizarCarritoYCookies([]); // Limpia cookies y notifica a todos
         setShowSuccess(true);
-        router.push(`/cuenta?comanda=${idComanda}&token=${token}`);
       }
     });
   };
 
   return {
     carrito,
-    setCarrito: actualizarCarritoYCookies, // Aseguramos que setCarrito también dispare el evento
+    setCarrito: actualizarCarritoYCookies, 
     agregarAlCarritoBase,
     agregarRapido,
     actualizarCantidad,

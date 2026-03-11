@@ -32,12 +32,18 @@ io.on('connection', (socket) => {
     io.emit("estatus_cambiado", data);
   });
 
+  // 3. Pago en efectivo recibido (Desde el Cajero)
+  socket.on('order_pay', (data) => {
+    console.log('📦 Comanda pagada');
+    io.emit('order_paid', data); 
+  });
+
   socket.on('disconnect', () => {
     console.log('Desconectado');
   });
 });
 
-// Railway asigna el puerto automáticamente
+// Render asigna el puerto automáticamente
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor de Sockets activo en puerto ${PORT}`);

@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -179,6 +178,8 @@ model EncuestaSatisfaccion {
   // Calificaciones por categoría (1-5)
   score_entradas    Int?
   score_fuertes     Int?
+  score_pastas     Int?
+  score_ensaladas     Int?
   score_postres     Int?
   score_bebidas     Int?
   // Calificación general
