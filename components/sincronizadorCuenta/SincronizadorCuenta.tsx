@@ -25,7 +25,7 @@ export default function SincronizadorCuenta({ idComanda }: { idComanda: number }
         console.log("🚀 Pago confirmado. Redirigiendo...");
         
         // 3. Importante: usamos backticks y la ruta completa
-        router.push(`/gracias/${idComanda}`);
+        router.push(`/gracias/?idComanda=${idComanda}`);
       }
     });
 
