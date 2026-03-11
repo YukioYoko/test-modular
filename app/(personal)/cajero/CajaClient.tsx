@@ -58,36 +58,38 @@ export default function CajaClient() {
 
   // CajaClient.tsx -> dentro de handleCobrar
 const handleCobrar = async () => {
-  if (!comanda) return;
-  setLoading(true);
-  const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
-  
-  if (res.success) {
-    // La data que viene de 'res' ya trae el total recalculado por el servidor
-    const comandaActualizada = res.data; 
-
-    setWaLinkBase(res.waLink || ""); 
-    setPagoExitoso(true);
-    setPagado(true);
-
-    const nuevoRegistro = {
-      id: comandaActualizada.id_comanda,
-      mesa: comandaActualizada.mesa?.numero_mesa,
-      total: comandaActualizada.total, // Usamos el total real confirmado
-      fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
+    if (!comanda) return;
+    setLoading(true);
+    const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
     
-    setHistorial(prev => [nuevoRegistro, ...prev].slice(0, 3));
+    // Al entrar en este if, TypeScript ya sabe que res.success es true
+    // Pero aún así, validamos que res.data exista para el historial
+    if (res.success && res.data) {
+      const comandaActualizada = res.data; 
 
-    if (!socketRef.current) {
-        socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
+      setWaLinkBase(res.waLink || ""); 
+      setPagoExitoso(true);
+      setPagado(true);
+
+      const nuevoRegistro = {
+        id: comandaActualizada.id_comanda,
+        mesa: comandaActualizada.mesa?.numero_mesa,
+        total: comandaActualizada.total,
+        fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      
+      setHistorial(prev => [nuevoRegistro, ...prev].slice(0, 3));
+
+      if (!socketRef.current) {
+          socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
+      }
+      socketRef.current.emit("order_pay", { idComanda: comandaActualizada.id_comanda });
+    } else {
+      // Si llegamos aquí, mostramos el error que mandó el servidor
+      setError(res.error || "Error al procesar el pago");
     }
-    socketRef.current.emit("order_pay", { idComanda: comandaActualizada.id_comanda });
-  } else {
-    setError(res.error || "Error al procesar el pago");
-  }
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   const resetCaja = () => {
     setComanda(null);

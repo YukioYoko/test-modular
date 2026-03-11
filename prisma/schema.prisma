@@ -174,7 +174,7 @@ model SubCategoria {
 
 model EncuestaSatisfaccion {
   id                Int      @id @default(autoincrement())
-  id_comanda        Int      @unique
+  id_comanda        Int      
   // Calificaciones por categoría (1-5)
   score_entradas    Int?
   score_fuertes     Int?
