@@ -70,7 +70,7 @@ export default async function CuentaPage({
   return (
     <div className="min-h-screen bg-white pb-24 font-sans">
       {/* Sincronizador en tiempo real */}
-      <SincronizadorCuenta idComanda={idComanda} />
+      <SincronizadorCuenta idComanda={idComanda ?? 0} />
 
       <div className="max-w-md mx-auto p-6">
         
