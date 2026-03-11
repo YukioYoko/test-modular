@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import PaypalBut from '@/components/paypal/PaypalBut';
 import BotonEfectivo from '@/components/botonEfectivo/BotonEfectivo';
 import SincronizadorCuenta from '@/components/sincronizadorCuenta/SincronizadorCuenta';
+import { ShoppingBag } from 'lucide-react'; // Opcional para el icono
 
 export default async function CuentaPage({ 
   searchParams 
@@ -34,6 +35,9 @@ export default async function CuentaPage({
   });
 
   if (!comanda) redirect('/acceso-denegado');
+
+  // --- LÓGICA DE VERIFICACIÓN DE CONTENIDO ---
+  const tieneProductos = comanda.detalles.length > 0;
 
   let acumuladoTotal = 0;
 
@@ -69,7 +73,6 @@ export default async function CuentaPage({
 
   return (
     <div className="min-h-screen bg-white pb-24 font-sans">
-      {/* Sincronizador en tiempo real */}
       <SincronizadorCuenta idComanda={idComanda ?? 0} />
 
       <div className="max-w-md mx-auto p-6">
@@ -85,61 +88,95 @@ export default async function CuentaPage({
           <div className="border-b-2 border-dashed border-slate-200 mt-6"></div>
         </header>
 
-        <div className="space-y-6 mb-10">
-          {itemsTicket.map((item, index) => (
-            <div key={index} className="flex justify-between items-start text-sm">
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="font-black text-slate-400 text-xs">{item.cantidad}x</span>
-                  <p className="font-bold text-slate-900 uppercase tracking-tight">{item.nombre}</p>
-                </div>
-                {item.extras.map((ex, i) => (
-                  <div key={i} className="flex justify-between text-[10px] text-slate-400 ml-6 mt-1 italic font-medium">
-                    <span>+ {ex.nombre}</span>
-                    <span>${ex.precio.toFixed(2)}</span>
+        {/* LISTADO DE PRODUCTOS O MENSAJE DE VACÍO */}
+        {tieneProductos ? (
+          <div className="space-y-6 mb-10 animate-in fade-in duration-500">
+            {itemsTicket.map((item, index) => (
+              <div key={index} className="flex justify-between items-start text-sm">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-slate-400 text-xs">{item.cantidad}x</span>
+                    <p className="font-bold text-slate-900 uppercase tracking-tight">{item.nombre}</p>
                   </div>
-                ))}
+                  {item.extras.map((ex, i) => (
+                    <div key={i} className="flex justify-between text-[10px] text-slate-400 ml-6 mt-1 italic font-medium">
+                      <span>+ {ex.nombre}</span>
+                      <span>${ex.precio.toFixed(2)}</span>
+                    </div>
+                  ))}
+                </div>
+                <span className="font-black text-slate-900 ml-4 tracking-tighter">
+                  ${item.subtotal.toFixed(2)}
+                </span>
               </div>
-              <span className="font-black text-slate-900 ml-4 tracking-tighter">
-                ${item.subtotal.toFixed(2)}
-              </span>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 px-4 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-200 mb-10">
+            <div className="bg-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <ShoppingBag className="text-slate-300" size={24} />
             </div>
-          ))}
-        </div>
+            <p className="text-sm font-black text-slate-900 uppercase tracking-tight">Tu cuenta está vacía</p>
+            <p className="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-widest">
+              Agrega productos del menú para poder realizar el pago
+            </p>
+          </div>
+        )}
 
-        <div className="border-t-4 border-slate-900 pt-6 space-y-3">
-          <div className="flex justify-between text-slate-500 text-[10px] font-black tracking-widest uppercase">
-            <span>Subtotal (Base Gravable)</span>
-            <span>${datosParaPago.sub_total.toFixed(2)}</span>
+        {/* DESGLOSE FINAL - Solo se muestra si hay productos */}
+        {tieneProductos && (
+          <div className="border-t-4 border-slate-900 pt-6 space-y-3 animate-in slide-in-from-bottom-2 duration-500">
+            <div className="flex justify-between text-slate-500 text-[10px] font-black tracking-widest uppercase">
+              <span>Subtotal (Base Gravable)</span>
+              <span>${datosParaPago.sub_total.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-slate-500 text-[10px] font-black tracking-widest uppercase">
+              <span>IVA Trasladado (16%)</span>
+              <span>${datosParaPago.ivaTotal.toFixed(2)}</span>
+            </div>
+            
+            <div className="flex justify-between text-2xl font-black text-slate-900 pt-4 border-t border-dashed border-slate-200 mt-2">
+              <span className="italic tracking-tighter">TOTAL</span>
+              <span className="tracking-tighter">${datosParaPago.total.toFixed(2)}</span>
+            </div>
           </div>
-          <div className="flex justify-between text-slate-500 text-[10px] font-black tracking-widest uppercase">
-            <span>IVA Trasladado (16%)</span>
-            <span>${datosParaPago.ivaTotal.toFixed(2)}</span>
-          </div>
-          
-          <div className="flex justify-between text-2xl font-black text-slate-900 pt-4 border-t border-dashed border-slate-200 mt-2">
-            <span className="italic tracking-tighter">TOTAL</span>
-            <span className="tracking-tighter">${datosParaPago.total.toFixed(2)}</span>
-          </div>
-        </div>
+        )}
 
-        <div className="mt-12 bg-slate-50 p-4 rounded-3xl border border-slate-100">
-          <p className="text-[9px] font-black text-center text-slate-400 uppercase tracking-[0.2em] mb-4">
-            Procesamiento de Pago Seguro
-          </p>
-          
-          <BotonEfectivo idComanda={idComanda} desglose={datosParaPago} />
-          
-          <PaypalBut 
-            amount={datosParaPago.total.toFixed(2)} 
-            idComanda={idComanda} 
-            desglose={datosParaPago} 
-          />
-        </div>
+        {/* SECCIÓN DE PAGO CONDICIONAL */}
+        {tieneProductos ? (
+          <div className="mt-12 bg-slate-50 p-4 rounded-3xl border border-slate-100 animate-in fade-in zoom-in duration-500">
+            <p className="text-[9px] font-black text-center text-slate-400 uppercase tracking-[0.2em] mb-4">
+              Procesamiento de Pago Seguro
+            </p>
+            
+            <div className="flex flex-col gap-4">
+              <BotonEfectivo 
+                idComanda={idComanda} 
+                desglose={datosParaPago} 
+              />
+              <div className="relative z-10">
+                <PaypalBut 
+                  amount={datosParaPago.total.toFixed(2)} 
+                  idComanda={idComanda} 
+                  desglose={datosParaPago} 
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-10">
+            <button 
+              disabled
+              className="w-full py-4 bg-slate-100 text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] cursor-not-allowed border border-slate-200"
+            >
+              Módulo de pago inactivo
+            </button>
+          </div>
+        )}
 
         <footer className="mt-10 text-center">
           <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-            ¡Gracias por tu preferencia!
+            {tieneProductos ? '¡Gracias por tu preferencia!' : 'Foodlify System'}
           </p>
         </footer>
       </div>

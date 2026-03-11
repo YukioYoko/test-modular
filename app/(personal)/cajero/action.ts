@@ -1,21 +1,35 @@
 'use server'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
-
+// action.ts
 export async function confirmarPagoCaja(id_comanda: number, telefono?: string, metodo: string = 'Efectivo') {
   try {
     const resultado = await prisma.$transaction(async (tx) => {
+      // 1. Buscamos la comanda con sus detalles y aditamentos (si tienes)
       const comanda = await tx.comandas.findUnique({
         where: { id_comanda },
-        include: { mesa: true, detalles: { include: { producto: true } } }
+        include: { 
+          mesa: true, 
+          detalles: { 
+            include: { producto: true } 
+          } 
+        }
       });
 
       if (!comanda) throw new Error("Comanda no encontrada");
       if (comanda.pagado) throw new Error("Esta comanda ya ha sido liquidada");
 
+      // 2. RECALCULAR EL TOTAL REAL (Validación de integridad)
+      // Sumamos el (precio del producto * cantidad) de cada detalle
+      const totalReal = comanda.detalles.reduce((acc, detalle) => {
+        return acc + (Number(detalle.producto.precio) * detalle.cantidad);
+      }, 0);
+
+      // 3. ACTUALIZAR Y CERRAR
       const actualizada = await tx.comandas.update({
         where: { id_comanda },
         data: {
+          total: totalReal, // Guardamos el total recalculado
           pagado: true,
           estado: 'Cerrada',
           fecha_pagado: new Date(),
@@ -24,7 +38,7 @@ export async function confirmarPagoCaja(id_comanda: number, telefono?: string, m
         include: { mesa: true, detalles: { include: { producto: true } } }
       });
 
-      // Asegúrate que el modelo sea 'mesa' o 'mesas' según tu schema
+      // 4. LIBERAR MESA
       await tx.mesa.update({
         where: { id_mesa: comanda.id_mesa },
         data: { estado: 'Libre' }
@@ -35,11 +49,8 @@ export async function confirmarPagoCaja(id_comanda: number, telefono?: string, m
     
     revalidatePath('/admin/ventas');
     revalidatePath('/hostess');
-    //revalidatePath(`/menu?comanda=${resultado.id_comanda}&token=${resultado.token}`);
-    //revalidatePath(`/cuenta?comanda=${resultado.id_comanda}&token=${resultado.token}`);
-    // Generar el link con el nuevo formato seguro
-    const waLink = generarLinkWhatsApp(resultado, telefono);
     
+    const waLink = generarLinkWhatsApp(resultado, telefono);
     return { success: true, data: resultado, waLink };
   } catch (error: any) {
     console.error("Error en confirmarPagoCaja:", error.message);
