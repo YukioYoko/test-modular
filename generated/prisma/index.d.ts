@@ -90,7 +90,9 @@ export type EncuestaSatisfaccion = $Result.DefaultSelection<Prisma.$EncuestaSati
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Usuarios
  * const usuarios = await prisma.usuario.findMany()
  * ```
@@ -111,7 +113,9 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Usuarios
    * const usuarios = await prisma.usuario.findMany()
    * ```
@@ -191,7 +195,7 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
@@ -390,8 +394,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.2.0
-   * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
+   * Prisma Client JS version: 7.4.2
+   * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
    */
   export type PrismaVersion = {
     client: string
@@ -17085,6 +17089,8 @@ export namespace Prisma {
     id_comanda: number | null
     score_entradas: number | null
     score_fuertes: number | null
+    score_pastas: number | null
+    score_ensaladas: number | null
     score_postres: number | null
     score_bebidas: number | null
     recomendacion_app: number | null
@@ -17095,6 +17101,8 @@ export namespace Prisma {
     id_comanda: number | null
     score_entradas: number | null
     score_fuertes: number | null
+    score_pastas: number | null
+    score_ensaladas: number | null
     score_postres: number | null
     score_bebidas: number | null
     recomendacion_app: number | null
@@ -17105,6 +17113,8 @@ export namespace Prisma {
     id_comanda: number | null
     score_entradas: number | null
     score_fuertes: number | null
+    score_pastas: number | null
+    score_ensaladas: number | null
     score_postres: number | null
     score_bebidas: number | null
     recomendacion_app: number | null
@@ -17118,6 +17128,8 @@ export namespace Prisma {
     id_comanda: number | null
     score_entradas: number | null
     score_fuertes: number | null
+    score_pastas: number | null
+    score_ensaladas: number | null
     score_postres: number | null
     score_bebidas: number | null
     recomendacion_app: number | null
@@ -17131,6 +17143,8 @@ export namespace Prisma {
     id_comanda: number
     score_entradas: number
     score_fuertes: number
+    score_pastas: number
+    score_ensaladas: number
     score_postres: number
     score_bebidas: number
     recomendacion_app: number
@@ -17146,6 +17160,8 @@ export namespace Prisma {
     id_comanda?: true
     score_entradas?: true
     score_fuertes?: true
+    score_pastas?: true
+    score_ensaladas?: true
     score_postres?: true
     score_bebidas?: true
     recomendacion_app?: true
@@ -17156,6 +17172,8 @@ export namespace Prisma {
     id_comanda?: true
     score_entradas?: true
     score_fuertes?: true
+    score_pastas?: true
+    score_ensaladas?: true
     score_postres?: true
     score_bebidas?: true
     recomendacion_app?: true
@@ -17166,6 +17184,8 @@ export namespace Prisma {
     id_comanda?: true
     score_entradas?: true
     score_fuertes?: true
+    score_pastas?: true
+    score_ensaladas?: true
     score_postres?: true
     score_bebidas?: true
     recomendacion_app?: true
@@ -17179,6 +17199,8 @@ export namespace Prisma {
     id_comanda?: true
     score_entradas?: true
     score_fuertes?: true
+    score_pastas?: true
+    score_ensaladas?: true
     score_postres?: true
     score_bebidas?: true
     recomendacion_app?: true
@@ -17192,6 +17214,8 @@ export namespace Prisma {
     id_comanda?: true
     score_entradas?: true
     score_fuertes?: true
+    score_pastas?: true
+    score_ensaladas?: true
     score_postres?: true
     score_bebidas?: true
     recomendacion_app?: true
@@ -17292,6 +17316,8 @@ export namespace Prisma {
     id_comanda: number
     score_entradas: number | null
     score_fuertes: number | null
+    score_pastas: number | null
+    score_ensaladas: number | null
     score_postres: number | null
     score_bebidas: number | null
     recomendacion_app: number
@@ -17324,6 +17350,8 @@ export namespace Prisma {
     id_comanda?: boolean
     score_entradas?: boolean
     score_fuertes?: boolean
+    score_pastas?: boolean
+    score_ensaladas?: boolean
     score_postres?: boolean
     score_bebidas?: boolean
     recomendacion_app?: boolean
@@ -17337,6 +17365,8 @@ export namespace Prisma {
     id_comanda?: boolean
     score_entradas?: boolean
     score_fuertes?: boolean
+    score_pastas?: boolean
+    score_ensaladas?: boolean
     score_postres?: boolean
     score_bebidas?: boolean
     recomendacion_app?: boolean
@@ -17350,6 +17380,8 @@ export namespace Prisma {
     id_comanda?: boolean
     score_entradas?: boolean
     score_fuertes?: boolean
+    score_pastas?: boolean
+    score_ensaladas?: boolean
     score_postres?: boolean
     score_bebidas?: boolean
     recomendacion_app?: boolean
@@ -17363,6 +17395,8 @@ export namespace Prisma {
     id_comanda?: boolean
     score_entradas?: boolean
     score_fuertes?: boolean
+    score_pastas?: boolean
+    score_ensaladas?: boolean
     score_postres?: boolean
     score_bebidas?: boolean
     recomendacion_app?: boolean
@@ -17371,7 +17405,7 @@ export namespace Prisma {
     fecha?: boolean
   }
 
-  export type EncuestaSatisfaccionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_comanda" | "score_entradas" | "score_fuertes" | "score_postres" | "score_bebidas" | "recomendacion_app" | "funcional" | "comentarios" | "fecha", ExtArgs["result"]["encuestaSatisfaccion"]>
+  export type EncuestaSatisfaccionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_comanda" | "score_entradas" | "score_fuertes" | "score_pastas" | "score_ensaladas" | "score_postres" | "score_bebidas" | "recomendacion_app" | "funcional" | "comentarios" | "fecha", ExtArgs["result"]["encuestaSatisfaccion"]>
 
   export type $EncuestaSatisfaccionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EncuestaSatisfaccion"
@@ -17381,6 +17415,8 @@ export namespace Prisma {
       id_comanda: number
       score_entradas: number | null
       score_fuertes: number | null
+      score_pastas: number | null
+      score_ensaladas: number | null
       score_postres: number | null
       score_bebidas: number | null
       recomendacion_app: number
@@ -17814,6 +17850,8 @@ export namespace Prisma {
     readonly id_comanda: FieldRef<"EncuestaSatisfaccion", 'Int'>
     readonly score_entradas: FieldRef<"EncuestaSatisfaccion", 'Int'>
     readonly score_fuertes: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly score_pastas: FieldRef<"EncuestaSatisfaccion", 'Int'>
+    readonly score_ensaladas: FieldRef<"EncuestaSatisfaccion", 'Int'>
     readonly score_postres: FieldRef<"EncuestaSatisfaccion", 'Int'>
     readonly score_bebidas: FieldRef<"EncuestaSatisfaccion", 'Int'>
     readonly recomendacion_app: FieldRef<"EncuestaSatisfaccion", 'Int'>
@@ -18352,6 +18390,8 @@ export namespace Prisma {
     id_comanda: 'id_comanda',
     score_entradas: 'score_entradas',
     score_fuertes: 'score_fuertes',
+    score_pastas: 'score_pastas',
+    score_ensaladas: 'score_ensaladas',
     score_postres: 'score_postres',
     score_bebidas: 'score_bebidas',
     recomendacion_app: 'recomendacion_app',
@@ -19294,6 +19334,8 @@ export namespace Prisma {
     id_comanda?: IntFilter<"EncuestaSatisfaccion"> | number
     score_entradas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     score_fuertes?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_pastas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_ensaladas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     score_postres?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     score_bebidas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     recomendacion_app?: IntFilter<"EncuestaSatisfaccion"> | number
@@ -19307,6 +19349,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrderInput | SortOrder
     score_fuertes?: SortOrderInput | SortOrder
+    score_pastas?: SortOrderInput | SortOrder
+    score_ensaladas?: SortOrderInput | SortOrder
     score_postres?: SortOrderInput | SortOrder
     score_bebidas?: SortOrderInput | SortOrder
     recomendacion_app?: SortOrder
@@ -19323,6 +19367,8 @@ export namespace Prisma {
     NOT?: EncuestaSatisfaccionWhereInput | EncuestaSatisfaccionWhereInput[]
     score_entradas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     score_fuertes?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_pastas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
+    score_ensaladas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     score_postres?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     score_bebidas?: IntNullableFilter<"EncuestaSatisfaccion"> | number | null
     recomendacion_app?: IntFilter<"EncuestaSatisfaccion"> | number
@@ -19336,6 +19382,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrderInput | SortOrder
     score_fuertes?: SortOrderInput | SortOrder
+    score_pastas?: SortOrderInput | SortOrder
+    score_ensaladas?: SortOrderInput | SortOrder
     score_postres?: SortOrderInput | SortOrder
     score_bebidas?: SortOrderInput | SortOrder
     recomendacion_app?: SortOrder
@@ -19357,6 +19405,8 @@ export namespace Prisma {
     id_comanda?: IntWithAggregatesFilter<"EncuestaSatisfaccion"> | number
     score_entradas?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
     score_fuertes?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
+    score_pastas?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
+    score_ensaladas?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
     score_postres?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
     score_bebidas?: IntNullableWithAggregatesFilter<"EncuestaSatisfaccion"> | number | null
     recomendacion_app?: IntWithAggregatesFilter<"EncuestaSatisfaccion"> | number
@@ -20138,6 +20188,8 @@ export namespace Prisma {
     id_comanda: number
     score_entradas?: number | null
     score_fuertes?: number | null
+    score_pastas?: number | null
+    score_ensaladas?: number | null
     score_postres?: number | null
     score_bebidas?: number | null
     recomendacion_app: number
@@ -20151,6 +20203,8 @@ export namespace Prisma {
     id_comanda: number
     score_entradas?: number | null
     score_fuertes?: number | null
+    score_pastas?: number | null
+    score_ensaladas?: number | null
     score_postres?: number | null
     score_bebidas?: number | null
     recomendacion_app: number
@@ -20163,6 +20217,8 @@ export namespace Prisma {
     id_comanda?: IntFieldUpdateOperationsInput | number
     score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
     score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_pastas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_ensaladas?: NullableIntFieldUpdateOperationsInput | number | null
     score_postres?: NullableIntFieldUpdateOperationsInput | number | null
     score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
     recomendacion_app?: IntFieldUpdateOperationsInput | number
@@ -20176,6 +20232,8 @@ export namespace Prisma {
     id_comanda?: IntFieldUpdateOperationsInput | number
     score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
     score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_pastas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_ensaladas?: NullableIntFieldUpdateOperationsInput | number | null
     score_postres?: NullableIntFieldUpdateOperationsInput | number | null
     score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
     recomendacion_app?: IntFieldUpdateOperationsInput | number
@@ -20189,6 +20247,8 @@ export namespace Prisma {
     id_comanda: number
     score_entradas?: number | null
     score_fuertes?: number | null
+    score_pastas?: number | null
+    score_ensaladas?: number | null
     score_postres?: number | null
     score_bebidas?: number | null
     recomendacion_app: number
@@ -20201,6 +20261,8 @@ export namespace Prisma {
     id_comanda?: IntFieldUpdateOperationsInput | number
     score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
     score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_pastas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_ensaladas?: NullableIntFieldUpdateOperationsInput | number | null
     score_postres?: NullableIntFieldUpdateOperationsInput | number | null
     score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
     recomendacion_app?: IntFieldUpdateOperationsInput | number
@@ -20214,6 +20276,8 @@ export namespace Prisma {
     id_comanda?: IntFieldUpdateOperationsInput | number
     score_entradas?: NullableIntFieldUpdateOperationsInput | number | null
     score_fuertes?: NullableIntFieldUpdateOperationsInput | number | null
+    score_pastas?: NullableIntFieldUpdateOperationsInput | number | null
+    score_ensaladas?: NullableIntFieldUpdateOperationsInput | number | null
     score_postres?: NullableIntFieldUpdateOperationsInput | number | null
     score_bebidas?: NullableIntFieldUpdateOperationsInput | number | null
     recomendacion_app?: IntFieldUpdateOperationsInput | number
@@ -21067,6 +21131,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrder
     score_fuertes?: SortOrder
+    score_pastas?: SortOrder
+    score_ensaladas?: SortOrder
     score_postres?: SortOrder
     score_bebidas?: SortOrder
     recomendacion_app?: SortOrder
@@ -21080,6 +21146,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrder
     score_fuertes?: SortOrder
+    score_pastas?: SortOrder
+    score_ensaladas?: SortOrder
     score_postres?: SortOrder
     score_bebidas?: SortOrder
     recomendacion_app?: SortOrder
@@ -21090,6 +21158,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrder
     score_fuertes?: SortOrder
+    score_pastas?: SortOrder
+    score_ensaladas?: SortOrder
     score_postres?: SortOrder
     score_bebidas?: SortOrder
     recomendacion_app?: SortOrder
@@ -21103,6 +21173,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrder
     score_fuertes?: SortOrder
+    score_pastas?: SortOrder
+    score_ensaladas?: SortOrder
     score_postres?: SortOrder
     score_bebidas?: SortOrder
     recomendacion_app?: SortOrder
@@ -21116,6 +21188,8 @@ export namespace Prisma {
     id_comanda?: SortOrder
     score_entradas?: SortOrder
     score_fuertes?: SortOrder
+    score_pastas?: SortOrder
+    score_ensaladas?: SortOrder
     score_postres?: SortOrder
     score_bebidas?: SortOrder
     recomendacion_app?: SortOrder
