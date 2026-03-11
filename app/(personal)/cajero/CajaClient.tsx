@@ -56,33 +56,38 @@ export default function CajaClient() {
     setLoading(false);
   };
 
-  const handleCobrar = async () => {
-    if (!comanda) return;
-    setLoading(true);
-    const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
+  // CajaClient.tsx -> dentro de handleCobrar
+const handleCobrar = async () => {
+  if (!comanda) return;
+  setLoading(true);
+  const res = await confirmarPagoCaja(comanda.id_comanda, telefono);
+  
+  if (res.success) {
+    // La data que viene de 'res' ya trae el total recalculado por el servidor
+    const comandaActualizada = res.data; 
+
+    setWaLinkBase(res.waLink || ""); 
+    setPagoExitoso(true);
+    setPagado(true);
+
+    const nuevoRegistro = {
+      id: comandaActualizada.id_comanda,
+      mesa: comandaActualizada.mesa?.numero_mesa,
+      total: comandaActualizada.total, // Usamos el total real confirmado
+      fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
     
-    if (res.success) {
-      setWaLinkBase(res.waLink || ""); 
-      setPagoExitoso(true);
-      setPagado(true);
+    setHistorial(prev => [nuevoRegistro, ...prev].slice(0, 3));
 
-      const nuevoRegistro = {
-        id: comanda.id_comanda,
-        mesa: comanda.mesa?.numero_mesa,
-        total: comanda.total,
-        fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setHistorial(prev => [nuevoRegistro, ...prev].slice(0, 3));
-
-      if (!socketRef.current) {
-          socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
-      }
-      socketRef.current.emit("order_pay", { idComanda: comanda.id_comanda });
-    } else {
-      setError(res.error || "Error al procesar el pago");
+    if (!socketRef.current) {
+        socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
     }
-    setLoading(false);
-  };
+    socketRef.current.emit("order_pay", { idComanda: comandaActualizada.id_comanda });
+  } else {
+    setError(res.error || "Error al procesar el pago");
+  }
+  setLoading(false);
+};
 
   const resetCaja = () => {
     setComanda(null);
