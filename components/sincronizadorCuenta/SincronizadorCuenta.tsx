@@ -1,21 +1,26 @@
-'use client' // Importante: Este sí es de cliente
-
+'use client'
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
-
-const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
 export default function SincronizadorCuenta({ idComanda }: { idComanda: number }) {
   const router = useRouter();
 
   useEffect(() => {
-    const socket = io(SOCKET_URL);
+    // Asegúrate de que esta URL sea la de tu servicio en Render
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001");
+
+    socket.on('connect', () => {
+      console.log("Conectado al socket para comanda:", idComanda);
+    });
 
     socket.on('order_paid', (data: any) => {
-      // Validamos que el pago sea de ESTA comanda
-      if (Number(data.id_comanda) === idComanda) {
-        // Usamos backticks para la ruta dinámica
+      console.log("Evento recibido en cliente:", data);
+      
+      // Comparamos usando == para evitar problemas de string vs number
+      if (data.id_comanda == idComanda) {
+        console.log("Redirigiendo...");
+        // Forzamos la redirección con backticks
         router.push(`/gracias/${idComanda}`);
       }
     });
@@ -25,5 +30,5 @@ export default function SincronizadorCuenta({ idComanda }: { idComanda: number }
     };
   }, [idComanda, router]);
 
-  return null; // No muestra nada en la UI
+  return null;
 }
