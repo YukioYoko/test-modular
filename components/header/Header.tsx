@@ -37,7 +37,7 @@ export const Header = () => {
 
           {idComanda && idComanda !== "null" ? (
             <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-1">
-               Mesa {idComanda}
+               Comanda #{idComanda}
             </p>
           ) : (
             isMenu && (
