@@ -128,13 +128,21 @@ export default async function CuentaPage({
             Procesamiento de Pago Seguro
           </p>
           
-          <BotonEfectivo idComanda={idComanda} desglose={datosParaPago} />
-          
-          <PaypalBut 
-            amount={datosParaPago.total.toFixed(2)} 
-            idComanda={idComanda} 
-            desglose={datosParaPago} 
-          />
+         <div className="flex flex-col gap-4">
+    <BotonEfectivo 
+      idComanda={idComanda} 
+      desglose={datosParaPago} 
+    />
+    
+    {/* Envolvemos PayPal en un div con z-index controlado */}
+    <div className="relative z-10">
+      <PaypalBut 
+        amount={datosParaPago.total.toFixed(2)} 
+        idComanda={idComanda} 
+        desglose={datosParaPago} 
+      />
+    </div>
+  </div>
         </div>
 
         <footer className="mt-10 text-center">

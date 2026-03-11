@@ -17,7 +17,6 @@ export default function SincronizadorCuenta({ idComanda }: { idComanda: number }
     });
 
     socket.on('order_paid', (data: any) => {
-      console.log("📩 Evento recibido:", data);
       
       // 2. Usamos Number() para asegurar que la comparación sea entre tipos iguales
       // y validamos que el objeto traiga la propiedad que el servidor envía
