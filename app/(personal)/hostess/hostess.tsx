@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { gestionarMesas, liberarMesas } from './actions';
 import { QRCodeSVG } from 'qrcode.react';
+import SincronizadorMesas from '@/components/sincronizadorMesas/SincronizadorMesas';
 
 interface Mesa {
   id_mesa: number;
@@ -41,7 +42,9 @@ export default function HostessClient({ mesasIniciales }: { mesasIniciales: Mesa
   };
 
   return (
+    
     <div className="space-y-8">
+      <SincronizadorMesas />
       {/* Grid de Mesas */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
         {mesasIniciales.map((mesa) => {

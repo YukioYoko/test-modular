@@ -132,7 +132,7 @@ export default function CajaClient() {
       if (!socketRef.current) {
           socketRef.current = io(SOCKET_URL, { transports: ["websocket"] });
       }
-      socketRef.current.emit("order_pay", { idComanda: comandaActualizada.id_comanda });
+      socketRef.current.emit("order_pay", { idComanda: comandaActualizada.id_comanda, idMesa: comandaActualizada.mesa?.numero_mesa });
     } else {
       setError(res.error || "Error al procesar el pago");
     }
@@ -171,12 +171,12 @@ export default function CajaClient() {
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* COLUMNA IZQUIERDA: ESCÁNER E HISTORIAL */}
         <div className="lg:col-span-4 space-y-6 order-last lg:order-first">
-          <section className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100">
+          <section className="bg-white p-6 rounded-4xl shadow-xl border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-bold text-xs uppercase italic justify-center">
               <Camera size={16} /> Cámara Activa
             </div>
             {/* ID del contenedor del escáner */}
-            <div id="reader" className="rounded-2xl overflow-hidden bg-slate-100 min-h-[250px]"></div>
+            <div id="reader" className="rounded-2xl overflow-hidden bg-slate-100 min-h-62.5"></div>
             
             <div className="mt-4 flex gap-2">
               <input 
@@ -193,7 +193,7 @@ export default function CajaClient() {
           </section>
 
           {/* SECCIÓN HISTORIAL */}
-          <section className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-100">
+          <section className="bg-white p-6 rounded-4xl shadow-lg border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-400 font-black text-[10px] uppercase tracking-widest">
               <History size={14} /> Cobros Recientes
             </div>
@@ -214,7 +214,7 @@ export default function CajaClient() {
         </div>
 
         {/* COLUMNA DERECHA: DETALLE */}
-        <section className={`lg:col-span-8 bg-white rounded-[2rem] shadow-2xl border-2 p-6 md:p-8 flex flex-col justify-between min-h-[500px] transition-all duration-500 ${comanda ? 'border-emerald-500 ring-8 ring-emerald-500/5' : 'border-slate-100'}`}>
+        <section className={`lg:col-span-8 bg-white rounded-4xl shadow-2xl border-2 p-6 md:p-8 flex flex-col justify-between min-h-125 transition-all duration-500 ${comanda ? 'border-emerald-500 ring-8 ring-emerald-500/5' : 'border-slate-100'}`}>
           {comanda ? (
             <div className="animate-in fade-in zoom-in duration-500">
               <div className="flex justify-between items-start border-b border-slate-50 pb-4 mb-4">
@@ -227,7 +227,7 @@ export default function CajaClient() {
                 </div>
               </div>
 
-              <div className="space-y-2 mb-6 max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-2 mb-6 max-h-45 overflow-y-auto pr-2 custom-scrollbar">
                 {datosCalculados.items.map((item: any, idx: number) => (
                   <div key={idx} className="flex justify-between text-[13px] font-bold text-slate-600 border-b border-slate-50 pb-1">
                     <span>{item.cantidad}x {item.nombre}</span>

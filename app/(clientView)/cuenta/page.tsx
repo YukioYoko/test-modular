@@ -112,7 +112,7 @@ export default async function CuentaPage({
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 px-4 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-200 mb-10">
+          <div className="text-center py-12 px-4 bg-slate-50 rounded-4xl border-2 border-dashed border-slate-200 mb-10">
             <div className="bg-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
               <ShoppingBag className="text-slate-300" size={24} />
             </div>
