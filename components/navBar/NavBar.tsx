@@ -37,7 +37,7 @@ export const NavBar = () => {
               key={link.name}
               href={fullHref}
               className={`
-                flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-sm font-bold transition-all border
+                shrink-0 snap-start px-5 py-2.5 rounded-full text-sm font-bold transition-all border
                 ${
                   isActive
                     ? "bg-orange-600 text-white border-orange-600 shadow-lg shadow-orange-200"
@@ -50,7 +50,7 @@ export const NavBar = () => {
           );
         })}
         {/* Espacio extra al final para que el último item no quede pegado al borde */}
-        <div className="w-4 flex-shrink-0" />
+        <div className="w-4 shrink-0" />
       </nav>
     </div>
   );

@@ -38,6 +38,9 @@ io.on('connection', (socket) => {
     io.emit('order_paid', { 
       id_comanda: data.idComanda 
     }); 
+    io.emit('free_table', { 
+      id_mesa: data.idMesa
+    }); 
   });
 
   socket.on('disconnect', () => {

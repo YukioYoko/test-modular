@@ -58,7 +58,6 @@ export async function confirmarPagoCaja(id_comanda: number, telefono?: string, m
   }
 }
 
-
 export async function buscarComandaParaCobro(id_comanda: number) {
   try {
     return await prisma.comandas.findUnique({
