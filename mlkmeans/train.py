@@ -35,12 +35,12 @@ CAT_COLUMNS = {
 
 # Pesos para las features contextuales
 WEIGHTS = {
-    "hora": 3.0,
-    "dia_semana": 2.5,    # 🔥 Aumentado de 0.5 para dar relevancia al día específico
-    "es_festivo": 2.0,    # 🔥 Aumentado de 1.0 para captar días especiales
-    "clima_id": 3.0,      # ⚖️ Reducido de 5.0 para que no opaque a los demás
+    "hora": 1.5,
+    "dia_semana": 0.5,
+    "es_festivo": 1.0,
+    "clima_id": 3.0,
     "franja": 2.5,
-    "es_finsemana": 2.5,
+    "es_finsemana": 0.8,
 }
 
 OUTPUT_PATH = os.path.join("ml", "modelo_kmeans.pkl")
@@ -131,7 +131,7 @@ def escalar_y_ponderar(features: pd.DataFrame) -> tuple:
 # ─────────────────────────────────────────────
 # 3. ENCONTRAR K ÓPTIMO
 # ─────────────────────────────────────────────
-def encontrar_k_optimo(X: pd.DataFrame, k_range=range(4, 13)) -> int:
+def encontrar_k_optimo(X: pd.DataFrame, k_range=range(12, 18)) -> int:
     """Usa Silhouette Score para encontrar el K óptimo."""
     scores = {}
     print("\n🔍 Buscando K óptimo...")
