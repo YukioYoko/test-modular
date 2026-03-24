@@ -85,13 +85,13 @@ export async function gestionarMesas(idsMesas: number[], operacion: 'activar' | 
     if (typeof (resultado) === 'string') {
       return { 
         success: true, 
-        url: `${BASE_URL}/check-in?mesa=${idReferencia}&token=${resultado}` 
+        url: `${BASE_URL}check-in?mesa=${idReferencia}&token=${resultado}` 
       };
     }
     
     return { 
       success: true, 
-      url: `${BASE_URL}/check-in?mesa=${idReferencia}&token=${sessionToken}` 
+      url: `${BASE_URL}check-in?mesa=${idReferencia}&token=${sessionToken}` 
     };
   } catch (error) {
     console.error("Error en gestión de mesas:", error);
