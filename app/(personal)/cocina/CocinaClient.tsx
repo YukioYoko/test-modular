@@ -13,7 +13,7 @@ function ElapsedTime({ fecha_hora }: { fecha_hora: string | null }) {
     const calcular = () => {
       if (!fecha_hora) { setMins(null); return; }
       const diff = Date.now() - new Date(fecha_hora).getTime();
-      setMins(Math.floor(diff / 60000));
+      setMins(Math.floor(diff / 60000)-370);
     };
     calcular();
     const interval = setInterval(calcular, 30000);
