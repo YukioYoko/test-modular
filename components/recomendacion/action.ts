@@ -41,11 +41,13 @@ async function buscarProducto(id: number, score?: number) {
   };
 }
 
-export async function getRecomendacionIA() {
+export async function getRecomendacionIA(recom:string = "") {
   const baseUrl = process.env.NEXT_PUBLIC_IA_API_URL || "http://127.0.0.1:8000";
+  if (!recom) recom = "" 
+const queryString = recom ? (recom.startsWith('?') ? recom : `?${recom}`) : "";
 
   try {
-    const res = await fetch(`${baseUrl}/recomendar-menu`, { 
+    const res = await fetch(`${baseUrl}/recomendar-menu${queryString}`, {
   cache: 'no-store',
   signal: AbortSignal.timeout(60000) // Aumenta el tiempo de espera a 60 segundos
 });
